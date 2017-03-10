@@ -79,9 +79,9 @@ declaration
     ;
 
 type_variable
-    : 'CHAR'
-    | 'INT32'
-    | 'INT64'
+    : CHAR
+    | INT32
+    | INT64
     ;
 
 multiple_declaration_variable
@@ -114,7 +114,7 @@ operator_assignment
 
 declaration_function
     : type_function ID '(' ')' declaration_function_statement
-    | type_function ID '(' 'VOID' ')' declaration_function_statement
+    | type_function ID '(' VOID ')' declaration_function_statement
     | type_function ID '(' arguments_list ')' declaration_function_statement
     ;
 
@@ -126,7 +126,7 @@ declaration_function_statement
 
 type_function
     : type_variable 
-    | 'VOID'
+    | VOID
     ;
 
 argument
@@ -156,13 +156,13 @@ multiple_statement
 
 
 return
-    : 'RETURN'
-    | 'RETURN' expression
+    : RETURN
+    | RETURN expression
 ;
 
 iteration_statement
-    : 'WHILE' '(' expression ')' statement
-    | 'FOR' '(' loop_expression ';' loop_expression ';' loop_expression ')' statement
+    : WHILE '(' expression ')' statement
+    | FOR '(' loop_expression ';' loop_expression ';' loop_expression ')' statement
     ;
 
 statement
@@ -206,8 +206,8 @@ expr_var
 ;
 
 selection_statement
-    : 'IF' '(' expression ')' statement 'ELSE' statement
-    | 'IF' '(' expression ')' statement
+    : IF '(' expression ')' statement ELSE statement
+    | IF '(' expression ')' statement
     ;
 
 argument_list_call
