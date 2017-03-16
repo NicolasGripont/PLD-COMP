@@ -5,12 +5,14 @@
 %}
 %option noyywrap
 
-chiffre	[0-9]
-lettre	[a-zA-Z]
+chiffre	   [0-9]
+lettre	   [a-zA-Z]
 underscore _
+
 %%
+
 [ \n\t]      		{ /* ignore */ }
-\/\/.*			{ /* ignore */ }
+\/\/.*			    { /* ignore */ }
 \/\*(.*\n)*.*\*\/	{ /* ignore */ }
 ^"#"{lettre}+" ".+	{ /* ignore */ }
 
@@ -28,46 +30,46 @@ underscore _
 "|="		return OU_AFFECT;
 "^="		return OU_EXCL_AFFECT;
 
-"++"         	return INCREMENT;
-"--"         	return DECREMENT;
+"++"        return INCREMENT;
+"--"        return DECREMENT;
 
 ">>"		return DEC_DROITE;
 "<<"		return DEC_GAUCHE;
 
-">="         	return SUPERIEUR_EGAL;
-"<="         	return INFERIEUR_EGAL;
-"!="         	return DIFF;
-"=="         	return EGAL;
-"&&"         	return ET;
-"||"         	return OU;
+">="        return SUPERIEUR_EGAL;
+"<="        return INFERIEUR_EGAL;
+"!="        return DIFF;
+"=="        return EGAL;
+"&&"        return ET;
+"||"        return OU;
 
-"="		return '=';
-"+"          	return '+;
-"-"          	return '-';
-"/"          	return '/;
-"*"         	return '*;
-"%"         	return '%';
-"&"         	return '&';
-"|"         	return '|';
-"!"         	return '!';
-"~"         	return '~';
-"^"         	return '^';
+"="		    return '=';
+"+"         return '+';
+"-"         return '-';
+"/"         return '/';
+"*"         return '*';
+"%"         return '%';
+"&"         return '&';
+"|"         return '|';
+"!"         return '!';
+"~"         return '~';
+"^"         return '^';
 
-">"         	return '>';
-"<"         	return '<';
+">"         return '>';
+"<"         return '<';
 
-"?"         	return '?';
-":"         	return ':';
+"?"         return '?';
+":"         return ':';
 
-";"		return ';';
-","		return ',';
+";"		    return ';';
+","		    return ',';
 
-"{"         	return '{';
-"}"         	return '}';
-"("         	return '(';
-")"		return ')';
-"["		return '[';
-"]"		return ']';
+"{"         return '{';
+"}"         return '}';
+"("         return '(';
+")"	        return ')';
+"["         return '[';
+"]"		    return ']';
 
 "void"		return VOID;
 "char"		return CHAR;
@@ -83,7 +85,7 @@ underscore _
 "if"		return IF;
 "else"		return ELSE;
 
-({lettre}|{underscore})({lettre}|{chiffre}|{underscore})*	return ID;
-{chiffre}+	{yylval.i = atoi(yytext); return INT; }
+({lettre}|{underscore})({lettre}|{chiffre}|{underscore})* return ID;
+{chiffre}+ {yylval.i = atoi(yytext); return INT;}
 
 %%

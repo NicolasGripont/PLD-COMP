@@ -6,25 +6,31 @@
     #include <stdio.h>
 
     extern int yylex(void);
-    void yyerror(int* res, const char* msg);
+    void yyerror(const char* msg);
 %}
+
 /**************/
 /* STRUCTURES */
 /**************/
-
+%union {
+    int i;
+}
 
 /**********/
 /* TOKENS */
 /**********/
+// Liste des tokens issus de Flex (comp.l)
 %token ELLIPSE VOID
 %token DEC_GAUCHE_AFFECT DEC_DROITE_AFFECT
 %token PLUS_AFFECT MOINS_AFFECT DIV_AFFECT MUL_AFFECT
 %token MOD_AFFECT ET_AFFECT OU_AFFECT OU_EXCL_AFFECT
-%token DEC_DROITE_AFFECT DEC_GAUCHE_AFFECT
+%token DEC_DROITE DEC_GAUCHE
 %token SUPERIEUR_EGAL INFERIEUR_EGAL DIFF EGAL
 %token ET OU INCREMENT DECREMENT
 %token CHAR INT32 INT64
-%token BREAK CONTINUE DO WHILE IF ELSE
+%token BREAK RETURN CONTINUE DO WHILE FOR IF ELSE
+%token ID
+%token <i> INT
 
 /*********/
 /* TYPES */
@@ -40,7 +46,7 @@
 %left INCREMENT DECREMENT
 %right '!' '~' '-' '+' '&'
 %right '*' '/' '%'
-%left '+' '-'
+%left '+' '-' // Erreur ici
 %left DEC_DROITE DEC_GAUCHE
 %left '<' INFERIEUR_EGAL '>' SUPERIEUR_EGAL
 %left EGAL DIFF
@@ -57,14 +63,15 @@
 /**************/
 /* PARAMETERS */
 /**************/
-
+//%parse-param {int* res}
 
 /***********/
 /* GRAMMAR */
 /***********/
 %%
-program :
-    genesis
+
+program
+    : genesis
     ;
 
 genesis
@@ -91,12 +98,12 @@ multiple_declaration_variable
 
 declaration_variable
     : ID
-    | ID '[' CONSTANT ']'
+    | ID '[' INT ']'
     | ID '=' expression
     ;
 
 assignment_variable // utilisé pour affecter une valeur à une variable en dehors de son initialisation (int a; a = 3;)
-    : expr_var operator_asignement expression
+    : expr_var operator_assignment expression
     ;
 
 operator_assignment
@@ -125,7 +132,7 @@ declaration_function_statement
 
 
 type_function
-    : type_variable 
+    : type_variable
     | VOID
     ;
 
@@ -136,9 +143,9 @@ argument
     ;
 
 arguments_list
-: argument
-| arguments_list ',' argument
-
+    : argument
+    | arguments_list ',' argument
+    ;
 
 simple_statement
     : iteration_statement
@@ -152,13 +159,12 @@ simple_statement
 multiple_statement
     : multiple_statement statement
     | statement
-;
-
+    ;
 
 return
     : RETURN
     | RETURN expression
-;
+    ;
 
 iteration_statement
     : WHILE '(' expression ')' statement
@@ -172,7 +178,7 @@ statement
 
 loop_expression
     : expression
-    | ε
+    //| ε // Erreur ici : invalid character
     ; 
 
 operator_comparison
@@ -192,7 +198,7 @@ expression
     | assignment_variable
     | unary_operator expression
     | expression binary_operator expression
-    | CONSTANT
+    | INT
     | operator_crementation expr_var
     | expr_var operator_crementation 
     | expr_var
@@ -203,7 +209,7 @@ expression
 expr_var
     : ID '[' expression ']'
     | ID
-;
+    ;
 
 selection_statement
     : IF '(' expression ')' statement ELSE statement
@@ -243,21 +249,22 @@ operator_agregation
     : ET
     | OU
     ;
+
 %%
 
 /***********************/
 /* PROGRAMME PRINCIPAL */
 /***********************/
-void yyerror(int* res, const char* msg)
+void yyerror(const char* msg)
 {
     printf("Syntax error: %s\n", msg);
 }
 
-int main(int arg, char* argv[])
+int main(void)
 {
     int res = 0;
     //yydebug = 1;
-    yyparse(&res);
+    //yyparse(&res);
 
     printf("Result: %d\n", res);
 
