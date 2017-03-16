@@ -6,7 +6,7 @@
     #include <stdio.h>
 
     extern int yylex(void);
-    void yyerror(const char* msg);
+    void yyerror(int* res, const char* msg);
 %}
 
 /**************/
@@ -29,8 +29,7 @@
 %token ET OU INCREMENT DECREMENT
 %token CHAR INT32 INT64
 %token BREAK RETURN CONTINUE DO WHILE FOR IF ELSE
-%token ID
-%token <i> INT
+%token ID INT
 
 /*********/
 /* TYPES */
@@ -63,7 +62,7 @@
 /**************/
 /* PARAMETERS */
 /**************/
-//%parse-param {int* res}
+%parse-param {int* res}
 
 /***********/
 /* GRAMMAR */
@@ -255,16 +254,47 @@ operator_agregation
 /***********************/
 /* PROGRAMME PRINCIPAL */
 /***********************/
-void yyerror(const char* msg)
+void yyerror(int* res, const char* msg)
 {
     printf("Syntax error: %s\n", msg);
 }
 
-int main(void)
+int main(int argc, char* argv[])
 {
+    printf(" -=[ Compilator ]=-\n");
+    
+    // Test parameters
+    if (argc <= 1)
+    {
+        printf("Error: no input filename given.\n");
+        printf("Example of use: ~$ ./comp codeFile\n");
+        return 1;
+    }
+    
+    // Read file
+    int c;
+    FILE *file;
+    file = fopen(argv[1], "r");
+    if (file)
+    {
+        while ((c = getc(file)) != EOF)
+        {
+            putchar(c);
+        }
+        fclose(file);
+    }
+    else
+    {
+        printf("Error: unable to open file '%s'.\n", argv[1]);
+        return 1;
+    }
+    
+    // Compilation
+    printf("Compilation of file '%s'...\n", argv[1]);
+    
     int res = 0;
     //yydebug = 1;
-    //yyparse(&res);
+    yyparse(&res);
 
     printf("Result: %d\n", res);
 

@@ -86,6 +86,7 @@ underscore _
 "else"		return ELSE;
 
 ({lettre}|{underscore})({lettre}|{chiffre}|{underscore})* return ID;
-{chiffre}+ {yylval.i = atoi(yytext); return INT;}
+{chiffre}+ { yylval.i = atoi(yytext);
+             return INT; }
 
 %%
