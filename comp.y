@@ -2,11 +2,15 @@
 /* HEADER */
 /**********/
 %{
-    #include <stdlib.h>
-    #include <stdio.h>
+    #include <cstdio>
+    #include <iostream>
+
+    using namespace std;
 
     extern int yylex(void);
-    void yyerror(int* res, const char* msg);
+    void yyerror(const char* msg);
+    
+    extern FILE* yyin;
 %}
 
 /**************/
@@ -62,7 +66,8 @@
 /**************/
 /* PARAMETERS */
 /**************/
-%parse-param {int* res}
+
+//%parse-param {}
 
 /***********/
 /* GRAMMAR */
@@ -222,49 +227,37 @@ selection_statement
 /***********************/
 /* PROGRAMME PRINCIPAL */
 /***********************/
-void yyerror(int* res, const char* msg)
+void yyerror(const char* msg)
 {
-    printf("Syntax error: %s\n", msg);
+    cout << "Syntax error: " << msg << endl;
 }
 
 int main(int argc, char* argv[])
 {
-    printf(" -=[ Compilator ]=-\n");
+    cout << " -=[ Compilator ]=- " << endl;
     
     // Test parameters
     if (argc <= 1)
     {
-        printf("Error: no input filename given.\n");
-        printf("Example of use: ~$ ./comp codeFile\n");
+        cout << "Error: no input filename given." << endl;
+        cout << "Example of use: ~$ ./comp codeFile" << endl;
         return 1;
     }
     
-    // Read file
-    int c;
-    FILE *file;
-    file = fopen(argv[1], "r");
-    if (file)
-    {
-        while ((c = getc(file)) != EOF)
-        {
-            putchar(c);
-        }
-        fclose(file);
-    }
-    else
+    // Compilation
+    cout << "Compilation of file '" << argv[1] << "'..." << endl;
+    
+    //yydebug = 1;
+    
+    yyin = fopen(argv[1], "r");
+    if (!yyin)
     {
         printf("Error: unable to open file '%s'.\n", argv[1]);
         return 1;
     }
     
-    // Compilation
-    printf("Compilation of file '%s'...\n", argv[1]);
+    yyparse();
     
-    int res = 0;
-    //yydebug = 1;
-    yyparse(&res);
-
-    printf("Result: %d\n", res);
-
+    cout << "Compilation finished." << endl;
     return 0;
 }
