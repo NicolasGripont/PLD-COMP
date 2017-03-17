@@ -289,7 +289,6 @@ int main(int argc, char* argv[])
     
     yyparse();
 
-    cout << "Compilation terminated." << endl;
-
+    cout << "Compilation finished." << endl;
     return 0;
 }
