@@ -20,30 +20,30 @@ underscore _
 
 "..."		return ELLIPSE;
 
-">>="		return DEC_DROITE_AFFECT;
-"<<="		return DEC_GAUCHE_AFFECT;
+">>="		return RIGHT_DEC_ASSIGN;
+"<<="		return LEFT_DEC_ASSIGN;
 
-"+="		return PLUS_AFFECT;
-"-="		return MOINS_AFFECT;
-"/="		return DIV_AFFECT;
-"*="		return MUL_AFFECT;
-"%="		return MOD_AFFECT;
-"&="		return ET_AFFECT;
-"|="		return OU_AFFECT;
-"^="		return OU_EXCL_AFFECT;
+"+="		return PLUS_ASSIGN;
+"-="		return MINUS_ASSIGN;
+"/="		return DIV_ASSIGN;
+"*="		return MUL_ASSIGN;
+"%="		return MOD_ASSIGN;
+"&="		return AND_ASSIGN;
+"|="		return OR_ASSIGN;
+"^="		return OR_EXCL_ASSIGN;
 
 "++"        return INCREMENT;
 "--"        return DECREMENT;
 
-">>"		return DEC_DROITE;
-"<<"		return DEC_GAUCHE;
+">>"		return RIGHT_DEC;
+"<<"		return LEFT_DEC;
 
-">="        return SUPERIEUR_EGAL;
-"<="        return INFERIEUR_EGAL;
+">="        return MORE_THAN;
+"<="        return LESS_THAN;
 "!="        return DIFF;
-"=="        return EGAL;
-"&&"        return ET;
-"||"        return OU;
+"=="        return EQUAL;
+"&&"        return AND;
+"||"        return OR;
 
 "="		    return '=';
 "+"         return '+';

@@ -25,12 +25,12 @@
 /**********/
 // Liste des tokens issus de Flex (comp.l)
 %token ELLIPSE VOID
-%token DEC_GAUCHE_AFFECT DEC_DROITE_AFFECT
-%token PLUS_AFFECT MOINS_AFFECT DIV_AFFECT MUL_AFFECT
-%token MOD_AFFECT ET_AFFECT OU_AFFECT OU_EXCL_AFFECT
-%token DEC_DROITE DEC_GAUCHE
-%token SUPERIEUR_EGAL INFERIEUR_EGAL DIFF EGAL
-%token ET OU INCREMENT DECREMENT
+%token LEFT_DEC_ASSIGN RIGHT_DEC_ASSIGN
+%token PLUS_ASSIGN MINUS_ASSIGN DIV_ASSIGN MUL_ASSIGN
+%token MOD_ASSIGN AND_ASSIGN OR_ASSIGN OR_EXCL_ASSIGN
+%token RIGHT_DEC LEFT_DEC
+%token MORE_THAN LESS_THAN DIFF EQUAL
+%token AND OR INCREMENT DECREMENT
 %token CHAR INT32 INT64
 %token BREAK RETURN CONTINUE WHILE FOR IF ELSE
 %token ID INT
@@ -47,16 +47,16 @@
 // Voir https://c.developpez.com/cours/bernard-cassagne/node101.php#footmp10620
 
 %left ','
-%right DEC_DROITE_AFFECT DEC_GAUCHE_AFFECT ET_AFFECT OU_EXCL_AFFECT OU_AFFECT
-%right '=' PLUS_AFFECT MOINS_AFFECT MUL_AFFECT DIV_AFFECT MOD_AFFECT
+%right RIGHT_DEC_ASSIGN LEFT_DEC_ASSIGN AND_ASSIGN OR_EXCL_ASSIGN OR_ASSIGN
+%right '=' PLUS_ASSIGN MINUS_ASSIGN MUL_ASSIGN DIV_ASSIGN MOD_ASSIGN
 %right '?' ':'
-%left OU
-%left ET
+%left OR
+%left AND
 %left '|'
 %left '^'
-%left EGAL DIFF
-%left '<' INFERIEUR_EGAL '>' SUPERIEUR_EGAL
-%left DEC_DROITE DEC_GAUCHE
+%left EQUAL DIFF
+%left '<' LESS_THAN '>' MORE_THAN
+%left RIGHT_DEC LEFT_DEC
 %left '+' '-'
 %nonassoc NEG
 %right '*' '/' '%'
@@ -109,15 +109,15 @@ declaration_variable
 
 assignment_variable // utilisé pour affecter une valeur à une variable en dehors de son initialisation (int a; a = 3;)
     : expr_var '=' expression
-    : expr_var MUL_AFFECT expression
-    : expr_var DIV_AFFECT expression
-    : expr_var MOD_AFFECT expression
-    : expr_var PLUS_AFFECT expression
-    : expr_var MOINS_AFFECT expression
-    : expr_var DEC_GAUCHE_AFFECT expression
-    : expr_var DEC_DROITE_AFFECT expression
-    : expr_var ET_AFFECT expression
-    : expr_var OU_EXCL_AFFECT expression
+    : expr_var MUL_ASSIGN expression
+    : expr_var DIV_ASSIGN expression
+    : expr_var MOD_ASSIGN expression
+    : expr_var PLUS_ASSIGN expression
+    : expr_var MINUS_ASSIGN expression
+    : expr_var LEFT_DEC_ASSIGN expression
+    : expr_var RIGHT_DEC_ASSIGN expression
+    : expr_var AND_ASSIGN expression
+    : expr_var OR_EXCL_ASSIGN expression
     ;
 
 declaration_function
@@ -180,14 +180,14 @@ loop_expression
 expression
     : '(' expression ')'
     | expression ',' expression
-    | expression EGAL expression
+    | expression EQUAL expression
     | expression DIFF expression
     | expression '<' expression
-    | expression INFERIEUR_EGAL expression
+    | expression LESS_THAN expression
     | expression '>' expression
-    | expression SUPERIEUR_EGAL expression
-    | expression ET expression
-    | expression OU expression
+    | expression MORE_THAN expression
+    | expression AND expression
+    | expression OR expression
     | assignment_variable
     | '-' expression %prec NEG
     | '~' expression
@@ -208,8 +208,8 @@ expression
     | expression '&' expression
     | expression '|' expression
     | expression '^' expression
-    | expression DEC_GAUCHE expression
-    | expression DEC_DROITE expression
+    | expression LEFT_DEC expression
+    | expression RIGHT_DEC expression
     ;
 
 expr_var
