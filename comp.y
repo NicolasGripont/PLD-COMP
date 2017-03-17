@@ -4,6 +4,8 @@
 %{
     #include <cstdio>
     #include <iostream>
+    
+    #include "structure/header/Genesis.h"
 
     using namespace std;
 
