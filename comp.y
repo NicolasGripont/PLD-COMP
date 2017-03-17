@@ -2,14 +2,11 @@
 /* HEADER */
 /**********/
 %{
-    #include <iostream>
-    #include <fstream>
-    #include <string>
-
-    using namespace std;
+    #include <stdlib.h>
+    #include <stdio.h>
 
     extern int yylex(void);
-    void yyerror(string code, const char* msg);
+    void yyerror(int* res, const char* msg);
 %}
 
 /**************/
@@ -31,7 +28,7 @@
 %token SUPERIEUR_EGAL INFERIEUR_EGAL DIFF EGAL
 %token ET OU INCREMENT DECREMENT
 %token CHAR INT32 INT64
-%token BREAK RETURN CONTINUE DO WHILE FOR IF ELSE
+%token BREAK RETURN CONTINUE WHILE FOR IF ELSE
 %token ID INT
 
 /*********/
@@ -44,28 +41,28 @@
 /************/
 // Pour la priorité des opérateurs qui a été définie
 // Voir https://c.developpez.com/cours/bernard-cassagne/node101.php#footmp10620
-/*
-%left INCREMENT DECREMENT
-%right '!' '~' '-' '+' '&'
-%right '*' '/' '%'
-%left '+' '-' // Erreur ici
-%left DEC_DROITE DEC_GAUCHE
-%left '<' INFERIEUR_EGAL '>' SUPERIEUR_EGAL
-%left EGAL DIFF
-%left '^'
-%left '|'
-%left ET
-%left OU
-%right '?' ':'
-%right '=' PLUS_AFFECT MOINS_AFFECT MUL_AFFECT DIV_AFFECT MOD_AFFECT
-%right DEC_DROITE_AFFECT DEC_GAUCHE_AFFECT ET_AFFECT OU_EXCL_AFFECT OU_AFFECT
+
 %left ','
-*/
+%right DEC_DROITE_AFFECT DEC_GAUCHE_AFFECT ET_AFFECT OU_EXCL_AFFECT OU_AFFECT
+%right '=' PLUS_AFFECT MOINS_AFFECT MUL_AFFECT DIV_AFFECT MOD_AFFECT
+%right '?' ':'
+%left OU
+%left ET
+%left '|'
+%left '^'
+%left EGAL DIFF
+%left '<' INFERIEUR_EGAL '>' SUPERIEUR_EGAL
+%left DEC_DROITE DEC_GAUCHE
+%left '+' '-'
+%nonassoc NEG
+%right '*' '/' '%'
+%right '!' '~' '&'
+%left INCREMENT DECREMENT
 
 /**************/
 /* PARAMETERS */
 /**************/
-%parse-param {string code}
+%parse-param {int* res}
 
 /***********/
 /* GRAMMAR */
@@ -83,12 +80,13 @@ genesis
     ;
 
 declaration
-    : type_variable multiple_declaration_variable ';'
+    : type multiple_declaration_variable ';'
     | declaration_function
     ;
 
-type_variable
-    : CHAR
+type
+    : VOID
+    | CHAR
     | INT32
     | INT64
     ;
@@ -105,26 +103,21 @@ declaration_variable
     ;
 
 assignment_variable // utilisé pour affecter une valeur à une variable en dehors de son initialisation (int a; a = 3;)
-    : expr_var operator_assignment expression
-    ;
-
-operator_assignment
-    : '='
-    | MUL_AFFECT
-    | DIV_AFFECT
-    | MOD_AFFECT
-    | PLUS_AFFECT
-    | MOINS_AFFECT
-    | DEC_GAUCHE_AFFECT
-    | DEC_DROITE_AFFECT
-    | ET_AFFECT
-    | OU_EXCL_AFFECT
+    : expr_var '=' expression
+    : expr_var MUL_AFFECT expression
+    : expr_var DIV_AFFECT expression
+    : expr_var MOD_AFFECT expression
+    : expr_var PLUS_AFFECT expression
+    : expr_var MOINS_AFFECT expression
+    : expr_var DEC_GAUCHE_AFFECT expression
+    : expr_var DEC_DROITE_AFFECT expression
+    : expr_var ET_AFFECT expression
+    : expr_var OU_EXCL_AFFECT expression
     ;
 
 declaration_function
-    : type_function ID '(' ')' declaration_function_statement
-    | type_function ID '(' VOID ')' declaration_function_statement
-    | type_function ID '(' arguments_list ')' declaration_function_statement
+    : type ID '(' ')' declaration_function_statement
+    | type ID '(' arguments_list ')' declaration_function_statement
     ;
 
 declaration_function_statement
@@ -133,15 +126,11 @@ declaration_function_statement
     ;
 
 
-type_function
-    : type_variable
-    | VOID
-    ;
 
 argument
-    : type_variable
-    | type_variable ID
-    | type_variable ID '[' ']'
+    : type
+    | type ID
+    | type ID '[' ']'
     ;
 
 arguments_list
@@ -152,7 +141,7 @@ arguments_list
 simple_statement
     : iteration_statement
     | selection_statement
-    | type_variable declaration_variable ';'
+    | type declaration_variable ';'
     | expression ';'
     | return ';'
     | ';'
@@ -180,32 +169,42 @@ statement
 
 loop_expression
     : expression
-    |
+    //| ε // Erreur ici : invalid character
     ; 
-
-operator_comparison
-    : EGAL
-    | DIFF
-    | '<'
-    | INFERIEUR_EGAL
-    | '>'
-    | SUPERIEUR_EGAL
-    ;
 
 expression
     : '(' expression ')'
     | expression ',' expression
-    | expression operator_comparison expression
-    | expression operator_agregation expression
+    | expression EGAL expression
+    | expression DIFF expression
+    | expression '<' expression
+    | expression INFERIEUR_EGAL expression
+    | expression '>' expression
+    | expression SUPERIEUR_EGAL expression
+    | expression ET expression
+    | expression OU expression
     | assignment_variable
-    | unary_operator expression
-    | expression binary_operator expression
+    | '-' expression %prec NEG
+    | '~' expression
+    | '!' expression
     | INT
-    | operator_crementation expr_var
-    | expr_var operator_crementation 
+    | INCREMENT expr_var
+    | DECREMENT expr_var
+    | expr_var INCREMENT 
+    | expr_var DECREMENT 
     | expr_var
-    | ID '(' argument_list_call ')'
+    | ID '(' expression ')'
     | ID '(' ')'
+    | expression '+' expression
+    | expression '-' expression
+    | expression '*' expression
+    | expression '/' expression
+    | expression '%' expression
+    | expression '&' expression
+    | expression '|' expression
+    | expression '^' expression
+    | expression DEC_GAUCHE expression
+    | expression DEC_DROITE expression
     ;
 
 expr_var
@@ -218,88 +217,54 @@ selection_statement
     | IF '(' expression ')' statement
     ;
 
-argument_list_call
-    : expression
-    | argument_list_call ',' expression
-    ;
-
-operator_crementation
-    : INCREMENT
-    | DECREMENT
-    ;
-
-binary_operator
-    : '+'
-    | '-'
-    | '*'
-    | '/'
-    | '%'
-    | '&'
-    | '|'
-    | '^'
-    | DEC_GAUCHE
-    | DEC_DROITE
-    ;
-
-unary_operator
-    : '-'
-    | '~'
-    | '!'
-    ;
-
-operator_agregation
-    : ET
-    | OU
-    ;
-
 %%
 
 /***********************/
 /* PROGRAMME PRINCIPAL */
 /***********************/
-void yyerror(string res, const char* msg)
+void yyerror(int* res, const char* msg)
 {
-    cout << "Syntax error: " << msg << endl;
+    printf("Syntax error: %s\n", msg);
 }
 
 int main(int argc, char* argv[])
 {
-    cout << " -=[ Compilator ]=- " << endl;
+    printf(" -=[ Compilator ]=-\n");
     
     // Test parameters
     if (argc <= 1)
     {
-        cout << "Error: no input filename given." << endl;
-        cout << "Example of use: ~$ ./comp codeFile" << endl;
+        printf("Error: no input filename given.\n");
+        printf("Example of use: ~$ ./comp codeFile\n");
         return 1;
     }
     
     // Read file
-    string code;
-    string line;
-    ifstream file(argv[1]);
-    if (file.is_open())
+    int c;
+    FILE *file;
+    file = fopen(argv[1], "r");
+    if (file)
     {
-        while (getline(file, line))
+        while ((c = getc(file)) != EOF)
         {
-            cout << line << endl;
-            code += line;
+            putchar(c);
         }
-        file.close();
+        fclose(file);
     }
     else
     {
-        cout << "Error: unable to open file '" << argv[1] << "'" << endl;
+        printf("Error: unable to open file '%s'.\n", argv[1]);
         return 1;
     }
     
     // Compilation
-    cout << "Compilation of file '" << argv[1] << "'..." << endl;
+    printf("Compilation of file '%s'...\n", argv[1]);
     
+    int res = 0;
     //yydebug = 1;
-    yyparse(code);
+    yyparse(&res);
 
-    cout << "Result: "<< code << endl;
+    printf("Result: %d\n", res);
 
     return 0;
 }

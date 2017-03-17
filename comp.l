@@ -60,9 +60,6 @@ underscore _
 ">"         return '>';
 "<"         return '<';
 
-"?"         return '?';
-":"         return ':';
-
 ";"		    return ';';
 ","		    return ',';
 
@@ -81,7 +78,6 @@ underscore _
 "break"		return BREAK;
 "return"	return RETURN;
 "continue"	return CONTINUE;
-"do"		return DO;
 "while"		return WHILE;
 "for"		return FOR;
 "if"		return IF;
