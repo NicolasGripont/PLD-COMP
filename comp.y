@@ -174,7 +174,7 @@ statement
 
 loop_expression
     : expression
-    //| ε // Erreur ici : invalid character
+    |
     ; 
 
 expression
