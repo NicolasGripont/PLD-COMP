@@ -2,11 +2,14 @@
 /* HEADER */
 /**********/
 %{
-    #include <stdlib.h>
-    #include <stdio.h>
+    #include <iostream>
+    #include <fstream>
+    #include <string>
+
+    using namespace std;
 
     extern int yylex(void);
-    void yyerror(int* res, const char* msg);
+    void yyerror(string code, const char* msg);
 %}
 
 /**************/
@@ -62,7 +65,7 @@
 /**************/
 /* PARAMETERS */
 /**************/
-%parse-param {int* res}
+%parse-param {string code}
 
 /***********/
 /* GRAMMAR */
@@ -177,7 +180,7 @@ statement
 
 loop_expression
     : expression
-    //| ε // Erreur ici : invalid character
+    |
     ; 
 
 operator_comparison
@@ -254,49 +257,49 @@ operator_agregation
 /***********************/
 /* PROGRAMME PRINCIPAL */
 /***********************/
-void yyerror(int* res, const char* msg)
+void yyerror(string res, const char* msg)
 {
-    printf("Syntax error: %s\n", msg);
+    cout << "Syntax error: " << msg << endl;
 }
 
 int main(int argc, char* argv[])
 {
-    printf(" -=[ Compilator ]=-\n");
+    cout << " -=[ Compilator ]=- " << endl;
     
     // Test parameters
     if (argc <= 1)
     {
-        printf("Error: no input filename given.\n");
-        printf("Example of use: ~$ ./comp codeFile\n");
+        cout << "Error: no input filename given." << endl;
+        cout << "Example of use: ~$ ./comp codeFile" << endl;
         return 1;
     }
     
     // Read file
-    int c;
-    FILE *file;
-    file = fopen(argv[1], "r");
-    if (file)
+    string code;
+    string line;
+    ifstream file(argv[1]);
+    if (file.is_open())
     {
-        while ((c = getc(file)) != EOF)
+        while (getline(file, line))
         {
-            putchar(c);
+            cout << line << endl;
+            code += line;
         }
-        fclose(file);
+        file.close();
     }
     else
     {
-        printf("Error: unable to open file '%s'.\n", argv[1]);
+        cout << "Error: unable to open file '" << argv[1] << "'" << endl;
         return 1;
     }
     
     // Compilation
-    printf("Compilation of file '%s'...\n", argv[1]);
+    cout << "Compilation of file '" << argv[1] << "'..." << endl;
     
-    int res = 0;
     //yydebug = 1;
-    yyparse(&res);
+    yyparse(code);
 
-    printf("Result: %d\n", res);
+    cout << "Result: "<< code << endl;
 
     return 0;
 }
