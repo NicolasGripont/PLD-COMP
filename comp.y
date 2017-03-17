@@ -2,14 +2,15 @@
 /* HEADER */
 /**********/
 %{
+    #include <cstdio>
     #include <iostream>
-    #include <fstream>
-    #include <string>
 
     using namespace std;
 
     extern int yylex(void);
-    void yyerror(string code, const char* msg);
+    void yyerror(const char* msg);
+    
+    extern FILE* yyin;
 %}
 
 /**************/
@@ -65,7 +66,7 @@
 /**************/
 /* PARAMETERS */
 /**************/
-%parse-param {string code}
+//%parse-param {}
 
 /***********/
 /* GRAMMAR */
@@ -257,7 +258,7 @@ operator_agregation
 /***********************/
 /* PROGRAMME PRINCIPAL */
 /***********************/
-void yyerror(string res, const char* msg)
+void yyerror(const char* msg)
 {
     cout << "Syntax error: " << msg << endl;
 }
@@ -274,32 +275,21 @@ int main(int argc, char* argv[])
         return 1;
     }
     
-    // Read file
-    string code;
-    string line;
-    ifstream file(argv[1]);
-    if (file.is_open())
-    {
-        while (getline(file, line))
-        {
-            cout << line << endl;
-            code += line;
-        }
-        file.close();
-    }
-    else
-    {
-        cout << "Error: unable to open file '" << argv[1] << "'" << endl;
-        return 1;
-    }
-    
     // Compilation
     cout << "Compilation of file '" << argv[1] << "'..." << endl;
     
     //yydebug = 1;
-    yyparse(code);
 
-    cout << "Result: "<< code << endl;
+    yyin = fopen(argv[1], "r");
+    if (!yyin)
+    {
+        printf("Error: unable to open file '%s'.\n", argv[1]);
+        return 1;
+    }
+    
+    yyparse();
+
+    cout << "Compilation terminated." << endl;
 
     return 0;
 }
