@@ -27,3 +27,10 @@
 *.exe
 *.out
 *.app
+
+# Generated files from Bison/Flex
+comp
+comp.output
+comp.tab.c
+comp.tab.h
+lex.yy.c
