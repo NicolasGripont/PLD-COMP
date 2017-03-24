@@ -86,6 +86,6 @@ underscore _
 ({lettre}|{underscore})({lettre}|{chiffre}|{underscore})* return ID;
 {chiffre}+ { yylval.i = atoi(yytext);
              return INT; }
-{lettre} { yylval.i = yytext;
+{lettre} { yylval.c = yytext[0];
 			 return CHAR; }
 %%
