@@ -4,7 +4,6 @@
 %{
     #include <cstdio>
     #include <iostream>
-    
     #include "structure/header/Genesis.h"
 
     using namespace std;
@@ -69,7 +68,7 @@
 /* PARAMETERS */
 /**************/
 
-//%parse-param {}
+//%parse-param { }
 
 /***********/
 /* GRAMMAR */
@@ -77,16 +76,16 @@
 %%
 
 program
-    : genesis
+    : genesis {cout << "program" << endl;}
     ;
 
 genesis
     : genesis declaration
-    | declaration
+    | declaration {cout << "genesis" << endl;}
     ;
 
 declaration
-    : type multiple_declaration_variable ';'
+    : type multiple_declaration_variable ';' {cout << "declaration" << endl;}
     | declaration_function
     ;
 
@@ -248,7 +247,7 @@ int main(int argc, char* argv[])
     // Compilation
     cout << "Compilation of file '" << argv[1] << "'..." << endl;
     
-    //yydebug = 1;
+    yydebug = 1;
     
     yyin = fopen(argv[1], "r");
     if (!yyin)
