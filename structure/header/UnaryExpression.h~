@@ -1,0 +1,14 @@
+#ifndef _UNARYEXPRESSION_H
+#define _UNARYEXPRESSION
+
+class UnaryExpression
+{
+public:
+    UnaryExpression();
+    ~UnaryExpression();
+
+private:
+
+};
+
+#endif // UNARYEXPRESSION_H

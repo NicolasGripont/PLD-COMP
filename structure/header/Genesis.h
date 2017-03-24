@@ -1,14 +1,14 @@
-#ifndef _GENESIS
-#define _GENESIS
+#ifndef _GENESIS_H
+#define _GENESIS_H
 
 class Genesis
 {
-    public:
-        Genesis();
-        ~Genesis();
+public:
+    Genesis();
+    ~Genesis();
 
-    private:
+private:
 
 };
 
-#endif
+#endif // _GENESIS_H

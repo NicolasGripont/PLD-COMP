@@ -1,0 +1,12 @@
+#include "../header/Genesis.h"
+#include <iostream>
+
+public BinaryExpression::BinaryExpression()
+{
+	std::cout<<"Genesis - Constructor"<<std::endl;
+}
+
+public BinaryExpression::~BinaryExpression()
+{
+
+}
