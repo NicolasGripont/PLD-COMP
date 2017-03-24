@@ -83,7 +83,6 @@ program
 genesis
     : genesis declaration
     | declaration
-    | '{' multiple_statement '}'
     ;
 
 declaration
@@ -132,8 +131,6 @@ declaration_function_statement
     | '{' multiple_statement '}'
     ;
 
-
-
 argument
     : type
     | type ID
@@ -148,15 +145,15 @@ arguments_list
 simple_statement
     : iteration_statement
     | selection_statement
-    | type declaration_variable ';'
+    | type multiple_declaration_variable ';'
     | expression ';'
     | return ';'
     | ';'
     ;
 
 multiple_statement
-    : multiple_statement statement
-    | statement
+    : multiple_statement simple_statement
+    | simple_statement
     ;
 
 return
