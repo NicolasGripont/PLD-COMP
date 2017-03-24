@@ -20,7 +20,6 @@
 /**************/
 %union {
     int i;
-    char c;
 }
 
 /**********/
@@ -193,7 +192,6 @@ expression
     | '~' expression
     | '!' expression
     | INT
-    | '\'' CHAR '\''
     | INCREMENT expr_var
     | DECREMENT expr_var
     | expr_var INCREMENT 

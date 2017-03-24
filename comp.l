@@ -10,6 +10,7 @@
 chiffre	   [0-9]
 lettre	   [a-zA-Z]
 underscore _
+quote '
 
 %%
 
@@ -83,9 +84,10 @@ underscore _
 "if"		return IF;
 "else"		return ELSE;
 
+{quote}{lettre}{quote} { yylval.i = yytext[1];
+			 				return INT; }
 ({lettre}|{underscore})({lettre}|{chiffre}|{underscore})* return ID;
 {chiffre}+ { yylval.i = atoi(yytext);
              return INT; }
-{lettre} { yylval.c = yytext[0];
-			 return CHAR; }
+
 %%
