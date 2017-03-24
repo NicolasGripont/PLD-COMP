@@ -3,7 +3,7 @@
 
 public MultipleStatement::MultipleStatement()
 {
-    std::cout<<"MultipleArgument - Constructor"<<std::endl;
+    std::cout<<"MultipleStatement - Constructor"<<std::endl;
 }
 
 public MultipleStatement::~MultipleStatement()
