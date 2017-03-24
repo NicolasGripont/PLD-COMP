@@ -3,7 +3,7 @@
 
 public Genesis::Genesis()
 {
-	std::cout<<"Genesis - Constructor"<<std::endl;
+    std::cout<<"Genesis - Constructor"<<std::endl;
 }
 
 public Genesis::~Genesis()
