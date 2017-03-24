@@ -118,6 +118,7 @@ assignment_variable // utilisé pour affecter une valeur à une variable en deho
     : expr_var LEFT_DEC_ASSIGN expression
     : expr_var RIGHT_DEC_ASSIGN expression
     : expr_var AND_ASSIGN expression
+    : expr_var OR_ASSIGN expression
     : expr_var OR_EXCL_ASSIGN expression
     ;
 
@@ -188,6 +189,7 @@ expression
     | expression AND expression
     | expression OR expression
     | assignment_variable
+    | '+' expression
     | '-' expression %prec NEG
     | '~' expression
     | '!' expression
