@@ -1,7 +1,9 @@
 #ifndef MULTIPLEDECLARATIONVARIABLELOCAL_H
 #define MULTIPLEDECLARATIONVARIABLELOCAL_H
 
-class MultipleDeclarationVariableLocal
+#include "SimpleStatement.h"
+
+class MultipleDeclarationVariableLocal : public SimpleStatement
 {
 public:
     MultipleDeclarationVariableLocal();

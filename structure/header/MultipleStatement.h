@@ -1,7 +1,9 @@
 #ifndef MULTIPLESTATEMENT_H
 #define MULTIPLESTATEMENT_H
 
-class MultipleStatement
+#include "Statement.h"
+
+class MultipleStatement : public Statement
 {
 public:
     MultipleStatement();

@@ -1,7 +1,9 @@
 #ifndef IFELSESTATEMENT_H
 #define IFELSESTATEMENT_H
 
-class IfElseStatement
+#include "IfElseStatement.h"
+
+class IfElseStatement : public IfElseStatement
 {
 public:
     IfElseStatement();

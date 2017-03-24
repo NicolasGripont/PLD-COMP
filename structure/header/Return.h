@@ -1,7 +1,9 @@
 #ifndef RETURN_H
 #define RETURN_H
 
-class Return
+#include "SimpleStatement.h"
+
+class Return : public SimpleStatement
 {
 public:
     Return();

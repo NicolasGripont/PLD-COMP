@@ -1,7 +1,9 @@
 #ifndef IFSTATEMENT_H
 #define IFSTATEMENT_H
 
-class IfStatement
+#include "SelectionStatement.h"
+
+class IfStatement : public SelectionStatement
 {
 public:
     IfStatement();

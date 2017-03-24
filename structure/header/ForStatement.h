@@ -1,7 +1,9 @@
 #ifndef FORSTATEMENT_H
 #define FORSTATEMENT_H
 
-class ForStatement
+#include "IterationStatement.h"
+
+class ForStatement : public IterationStatement
 {
 public:
     ForStatement();

@@ -1,7 +1,9 @@
 #ifndef ITERATIONSTATEMENT_H
 #define ITERATIONSTATEMENT_H
 
-class IterationStatement
+#include "SimpleStatement.h"
+
+class IterationStatement : public SimpleStatement
 {
 public:
     IterationStatement();

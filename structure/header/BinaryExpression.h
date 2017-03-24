@@ -1,7 +1,9 @@
 #ifndef _BINARYEXPRESSION_H
 #define _BINARYEXPRESSION_H
 
-class BinaryExpression
+#include "Expression.h"
+
+class BinaryExpression : public Expression
 {
 public:
     BinaryExpression();

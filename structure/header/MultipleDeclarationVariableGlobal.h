@@ -1,7 +1,9 @@
 #ifndef MULTIPLEDECLARATIONVARIABLEGLOBAL_H
 #define MULTIPLEDECLARATIONVARIABLEGLOBAL_H
 
-class MultipleDeclarationVariableGlobal
+#include "Declaration.h"
+
+class MultipleDeclarationVariableGlobal : public Declaration
 {
 public:
     MultipleDeclarationVariableGlobal();

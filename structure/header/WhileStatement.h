@@ -1,7 +1,9 @@
 #ifndef WHILESTATEMENT_H
 #define WHILESTATEMENT_H
 
-class WhileStatement
+#include "IterationStatement.h"
+
+class WhileStatement : public IterationStatement
 {
 public:
     WhileStatement();

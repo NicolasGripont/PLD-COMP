@@ -1,7 +1,9 @@
 #ifndef FUNCTIONDECLARATION_H
 #define FUNCTIONDECLARATION_H
 
-class FunctionDeclaration
+#include "Declaration.h"
+
+class FunctionDeclaration : public Declaration
 {
 public:
     FunctionDeclaration();

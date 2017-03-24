@@ -1,7 +1,9 @@
 #ifndef SELECTIONSTATEMENT_H
 #define SELECTIONSTATEMENT_H
 
-class SelectionStatement
+#include "SimpleStatement.h"
+
+class SelectionStatement : public SimpleStatement
 {
 public:
     SelectionStatement();

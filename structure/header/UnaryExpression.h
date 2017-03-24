@@ -1,7 +1,9 @@
 #ifndef _UNARYEXPRESSION_H
 #define _UNARYEXPRESSION_H
 
-class UnaryExpression
+#include "Expression.h"
+
+class UnaryExpression : public Expression
 {
 public:
     UnaryExpression();

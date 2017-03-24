@@ -1,6 +1,8 @@
 #ifndef _EXPRESSION_H
 #define _EXPRESSION_H
 
+#include "SimpleStatement.h"
+
 class Expression : public SimpleStatement
 {
 public:
