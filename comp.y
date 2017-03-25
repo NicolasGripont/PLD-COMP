@@ -4,7 +4,9 @@
 %{
     #include <cstdio>
     #include <iostream>
+    #include <libgen.h>
     #include "structure/header/Genesis.h"
+    char* filename;
 
     using namespace std;
 
@@ -12,6 +14,8 @@
     void yyerror(const char* msg);
     
     extern FILE* yyin;
+    extern int yylineno;
+    extern int column;
 %}
 
 /**************/
@@ -229,7 +233,7 @@ selection_statement
 /***********************/
 void yyerror(const char* msg)
 {
-    cout << "Syntax error: " << msg << endl;
+    cout << filename << ":" << yylineno << "." << column <<": syntax error: " << msg << endl;
 }
 
 int main(int argc, char* argv[])
@@ -247,7 +251,7 @@ int main(int argc, char* argv[])
     // Compilation
     cout << "Compilation of file '" << argv[1] << "'..." << endl;
     
-    yydebug = 1;
+    //yydebug = 1;
     
     yyin = fopen(argv[1], "r");
     if (!yyin)
@@ -256,6 +260,9 @@ int main(int argc, char* argv[])
         return 1;
     }
     
+    filename = basename(argv[1]);
+    yylineno = 1;
+
     yyparse();
     
     cout << "Compilation finished." << endl;
