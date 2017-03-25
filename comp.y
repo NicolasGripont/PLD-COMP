@@ -115,16 +115,16 @@ declaration_variable
 
 assignment_variable // utilisé pour affecter une valeur à une variable en dehors de son initialisation (int a; a = 3;)
     : expr_var '=' expression
-    : expr_var MUL_ASSIGN expression
-    : expr_var DIV_ASSIGN expression
-    : expr_var MOD_ASSIGN expression
-    : expr_var PLUS_ASSIGN expression
-    : expr_var MINUS_ASSIGN expression
-    : expr_var LEFT_DEC_ASSIGN expression
-    : expr_var RIGHT_DEC_ASSIGN expression
-    : expr_var AND_ASSIGN expression
-    : expr_var OR_ASSIGN expression
-    : expr_var OR_EXCL_ASSIGN expression
+    | expr_var MUL_ASSIGN expression
+    | expr_var DIV_ASSIGN expression
+    | expr_var MOD_ASSIGN expression
+    | expr_var PLUS_ASSIGN expression
+    | expr_var MINUS_ASSIGN expression
+    | expr_var LEFT_DEC_ASSIGN expression
+    | expr_var RIGHT_DEC_ASSIGN expression
+    | expr_var AND_ASSIGN expression
+    | expr_var OR_ASSIGN expression
+    | expr_var OR_EXCL_ASSIGN expression
     ;
 
 declaration_function
@@ -135,6 +135,7 @@ declaration_function
 declaration_function_statement
     : ';'
     | '{' multiple_statement '}'
+    | '{' '}'
     ;
 
 argument
