@@ -89,5 +89,7 @@ quote '
 ({lettre}|{underscore})({lettre}|{chiffre}|{underscore})* return ID;
 {chiffre}+ { yylval.i = atoi(yytext);
              return INT; }
+			 
+.     return yytext[0];
 
 %%
