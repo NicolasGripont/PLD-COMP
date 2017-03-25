@@ -6,6 +6,7 @@
 	#include "comp.tab.h"
 
 	void compterColonne();
+	void leverErreurSyntaxe(std::string);
 %}
 %option noyywrap
 %option yylineno
@@ -91,12 +92,22 @@ quote '
 ({lettre}|{underscore})({lettre}|{chiffre}|{underscore})* { compterColonne(); return ID;}
 {chiffre}+ 	{ compterColonne(); yylval.i = atoi(yytext); return INT; }
 
+"/*"  { compterColonne(); leverErreurSyntaxe("Commentaire '/*' non fermé"); return yytext[0];}
+
 .     { compterColonne(); return yytext[0];}
 
 %%
 
 int column = 0;
 int nextColumn = 0;
+bool hasSyntaxError = false;
+std::string syntaxError;
+
+void leverErreurSyntaxe(std::string err)
+{
+	hasSyntaxError = true;
+	syntaxError = err;
+}
 
 void compterColonne()
 {

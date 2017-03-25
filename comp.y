@@ -16,6 +16,8 @@
     extern FILE* yyin;
     extern int yylineno;
     extern int column;
+    extern bool hasSyntaxError;
+    extern std::string syntaxError;
 %}
 
 /**************/
@@ -233,7 +235,12 @@ selection_statement
 /***********************/
 void yyerror(const char* msg)
 {
-    cout << filename << ":" << yylineno << "." << column <<": syntax error: " << msg << endl;
+    if(hasSyntaxError){
+        cout << filename << ":" << yylineno << "." << column <<": syntax error : " << syntaxError << endl;
+        hasSyntaxError = false;
+    } else {
+        cout << filename << ":" << yylineno << "." << column <<": error : " << msg << endl;
+    }
 }
 
 int main(int argc, char* argv[])
