@@ -94,7 +94,7 @@ quote '
 
 "/*"  { compterColonne(); leverErreurSyntaxe("Commentaire '/*' non fermé"); return yytext[0];}
 
-.     { compterColonne(); return yytext[0];}
+.     { compterColonne(); leverErreurSyntaxe("Symbole non reconnu : "+std::string(yytext)); return yytext[0];}
 
 %%
 
