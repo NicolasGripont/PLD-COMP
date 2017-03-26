@@ -2,13 +2,10 @@
 /* HEADER */
 /**********/
 %{
-    #include <cstdio>
     #include <iostream>
     #include <libgen.h>
     #include "structure/header/Expressions.h"
     char* filename;
-
-    using namespace std;
 
     extern int yylex(void);
     void yyerror(Genesis** g, const char* msg);
@@ -64,7 +61,7 @@
 %token <s> ID
 %token <i> INT
 
-// Type permettant la creation de la structure de donnees
+// Type permettant la création de la structure de données
 %type <g> genesis
 %type <d> declaration
 %type <mdv> multiple_declaration_variable
@@ -176,9 +173,9 @@ declaration_function
     ;
 
 declaration_function_statement
-    : ';' {$$=new PureDeclarationFonctionStatement();}
-    | '{' multiple_statement '}' {$$=new InitFonctionStatement($2);}
-    | '{' '}' {$$=new InitFonctionStatement(new MultipleStatement());}
+    : ';' {$$ = new PureDeclarationFonctionStatement();}
+    | '{' multiple_statement '}' {$$ = new InitFonctionStatement($2);}
+    | '{' '}' {$$ = new InitFonctionStatement(new MultipleStatement());}
     ;
 
 argument
@@ -202,8 +199,8 @@ simple_statement
     ;
 
 multiple_statement
-    : multiple_statement simple_statement { $$ = $1; $1->addStatement($2);}
-    | simple_statement { $$ = new MultipleStatement(); $$->addStatement($1);}
+    : multiple_statement simple_statement {$$ = $1; $1->addStatement($2);}
+    | simple_statement {$$ = new MultipleStatement(); $$->addStatement($1);}
     ;
 
 return
@@ -277,21 +274,26 @@ selection_statement
 /***********************/
 /* PROGRAMME PRINCIPAL */
 /***********************/
-void resoudrePortee(Genesis* g) {
+void resoudrePortee(Genesis* g)
+{
 	int countDeclaration = g->countDeclaration();
-	for(int i=0;i<countDeclaration;i++){
+	for (int i=0 ; i<countDeclaration ; i++)
+    {
 		Declaration* dec = (*g)[i];
-		cout<<"cocorico"<<endl;
+		std::cout << "cocorico" << std::endl;
 	}
 }
 
 void yyerror(Genesis** g, const char* msg)
 {
-    if(hasSyntaxError){
-        cout << filename << ":" << yylineno << "." << column <<": syntax error : " << syntaxError << endl;
+    if(hasSyntaxError)
+    {
+        std::cout << filename << ":" << yylineno << "." << column <<" - erreur de syntaxe : " << syntaxError << std::endl;
         hasSyntaxError = false;
-    } else {
-        cout << filename << ":" << yylineno << "." << column <<": error : " << msg << endl;
+    }
+    else
+    {
+        std::cout << filename << ":" << yylineno << "." << column <<" - erreur : " << msg << std::endl;
     }
 }
 
@@ -300,31 +302,48 @@ int main(int argc, char* argv[])
     // Test parameters
     if (argc <= 1)
     {
-        cout << "Error: no input filename given." << endl;
-        cout << "Example of use: ~$ ./comp codeFile" << endl;
+        std::cout << "Erreur : pas de nom de fichier donné en entrée." << std::endl;
+        std::cout << "Exemple d'utilisation : ~$ ./comp monFichier" << std::endl;
         return 1;
     }
-
-    // Compilation
-    cout << "Compilation of file '" << argv[1] << "'..." << endl;
 
     //yydebug = 1;
 
     yyin = fopen(argv[1], "r");
     if (!yyin)
     {
-        printf("Error: unable to open file '%s'.\n", argv[1]);
+        std::cout << "Erreur : impossible d'ouvrir le fichier '" << argv[1] << "'." << std::endl;
         return 1;
     }
+
+    // Compilation
+    std::cout << "Compilation du fichier '" << argv[1] << "' en cours..." << std::endl;
 
     filename = basename(argv[1]);
     yylineno = 1;
 
     Genesis* g = 0;
-    yyparse(&g);
+    int status = yyparse(&g);
 
 	//resoudrePortee(g);
 
-    cout << "Compilation finished." << endl;
+    // Error status
+    if (status == 0) // Success
+    {
+        std::cout << "Le fichier correspond à la grammaire." << std::endl << "Compilation terminée avec succès." << std::endl;
+    }
+    else if (status == 1) // Syntax error
+    {
+        std::cout << "Compilation abandonnée (erreur de syntaxe)." << std::endl;
+    }
+    else if (status == 2) // Out of memory
+    {
+        std::cout << "Compilation abandonnée (mémoire insuffisante)." << std::endl;
+    }
+    else
+    {
+        std::cout << "Compilation abandonnée." << std::endl;
+    }
+
     return 0;
 }
