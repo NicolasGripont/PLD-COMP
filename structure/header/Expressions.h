@@ -26,6 +26,14 @@ public:
 	void addDeclaration(Declaration* declaration){
 		declarations.push_back(declaration);
 	}
+
+	int countDeclaration() {
+		return declarations.size();
+	}
+
+	Declaration*& operator[] (int i) {
+		return declarations[i];
+	}
 private:
 	std::vector<Declaration*> declarations;
 };
@@ -258,8 +266,11 @@ public:
 };
 
 class IterationStatement : public SimpleStatement {
+protected:
+	Statement* statement;
 public:
-	IterationStatement():SimpleStatement(){};
+	IterationStatement(Statement* _statement)
+	:SimpleStatement(), statement(_statement){};
 };
 
 class SelectionStatement : public SimpleStatement {
@@ -323,11 +334,10 @@ public:
 class WhileLoop : public IterationStatement{
 private:
 	Expression* expr;
-	Statement* statement;
 public:
 	WhileLoop(Expression* _expr, Statement* _statement)
-	:expr(_expr),statement(_statement)
-	,IterationStatement(){};
+	:expr(_expr)
+	,IterationStatement(_statement){};
 };
 
 class ForLoop : public IterationStatement {
@@ -335,11 +345,10 @@ private:
 	LoopExpression* expr1;
 	LoopExpression* expr2;
 	LoopExpression* expr3;
-	Statement* statement;
 public:
 	ForLoop(LoopExpression* _expr1, LoopExpression* _expr2, LoopExpression* _expr3, Statement* _statement)
-	:expr1(_expr1),expr2(_expr2),expr3(_expr3),statement(_statement)
-	,IterationStatement(){};
+	:expr1(_expr1),expr2(_expr2),expr3(_expr3)
+	,IterationStatement(_statement){};
 };
 
 #endif

@@ -277,6 +277,14 @@ selection_statement
 /***********************/
 /* PROGRAMME PRINCIPAL */
 /***********************/
+void resoudrePortee(Genesis* g) {
+	int countDeclaration = g->countDeclaration();
+	for(int i=0;i<countDeclaration;i++){
+		Declaration* dec = (*g)[i];
+		cout<<"cocorico"<<endl;
+	}
+}
+
 void yyerror(Genesis** g, const char* msg)
 {
     if(hasSyntaxError){
@@ -314,6 +322,8 @@ int main(int argc, char* argv[])
 
     Genesis* g = 0;
     yyparse(&g);
+
+	//resoudrePortee(g);
 
     cout << "Compilation finished." << endl;
     return 0;
