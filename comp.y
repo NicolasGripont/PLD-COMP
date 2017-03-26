@@ -128,6 +128,7 @@ declaration_function
 
 declaration_function_statement
     : ';'
+    | '{' '}'
     | '{' multiple_statement '}'
     ;
 
@@ -192,12 +193,12 @@ expression
     | '-' expression %prec NEG
     | '~' expression
     | '!' expression
-    | INT
     | INCREMENT expr_var
     | DECREMENT expr_var
     | expr_var INCREMENT 
     | expr_var DECREMENT 
     | expr_var
+    | INT
     | ID '(' expression ')'
     | ID '(' ')'
     | expression '+' expression
