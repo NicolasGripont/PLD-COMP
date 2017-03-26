@@ -6,12 +6,16 @@
 
 using namespace std;
 
-class DeclarationInitVariable : public DeclarationVariable {
-private:
-	Expression* expr;
+class DeclarationInitVariable : public DeclarationVariable
+{
 public:
 	DeclarationInitVariable(TYPE _type, string _id, Expression* _expr);
+	
+	DeclarationInitVariable(char*&, Expression*&);
+	
 	virtual ~DeclarationInitVariable();
 	virtual string print() const;
+private:
+	Expression* expr;
 };
 #endif

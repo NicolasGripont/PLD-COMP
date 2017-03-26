@@ -5,6 +5,7 @@
     #include <cstdio>
     #include <iostream>
     #include <libgen.h>
+
     #include "declaration.h"
 	#include "expression.h"
 	#include "genesis.h"
@@ -30,6 +31,10 @@
 	#include "expressionvariable.h" 
 	#include "expressionarrayvariable.h"
 	#include "assignmentexpression.h"
+	#include "type.h"
+	#include "globaldeclarationvariable.h"
+	#include "assignmentvariable.h"
+	#include "assignmentoperationvariable.h"
 
     char* filename;
 
@@ -54,10 +59,12 @@
 
     Genesis* g;
 	Declaration* d;
-	MultipleDeclarationVariable* mdv;
+	//MultipleDeclarationVariable* mdv; // Erreur ici : MultipleDeclarationVariableGlobal ou MultipleDeclarationVariableLocal ?
+	MultipleDeclarationVariableLocal* mdv; // Global ou Local ?
+	
 	DeclarationFunction* df;
 	DeclarationVariable* dv;
-	Type type;
+	TYPE type;
 	Expression* expr;
 	ExpressionVariable* exprVar;
 	AssignmentExpression* assignExpr;
@@ -71,6 +78,7 @@
 	Return* ret;
 	Statement* stat;
 	Expression* loopexpr;
+	AssignmentVariable* assignVar;
 }
 
 /**********/
@@ -164,14 +172,15 @@ declaration
     ;
 
 type
-    : VOID {$$ = new Type(VOID);}
-    | CHAR {$$ = new Type(CHAR);}
-    | INT32 {$$ = new Type(INT32);}
-    | INT64 {$$ = new Type(INT64);}
+    : VOID {$$ = TYPE::VOID_T;}
+    | CHAR {$$ = TYPE::CHAR_T;}
+    | INT32 {$$ = TYPE::INT32_T;}
+    | INT64 {$$ = TYPE::INT64_T;}
     ;
 
 multiple_declaration_variable
-    : declaration_variable {$$ = new MultipleDeclarationVariable(); $$->addDeclarationVariable($1);}
+    : declaration_variable //{$$ = new MultipleDeclarationVariable(); $$->addDeclarationVariable($1);} // Erreur ici : global ou local ?
+                             {$$ = new MultipleDeclarationVariableLocal(); $$->addDeclarationVariable($1);}
     | multiple_declaration_variable ',' declaration_variable {$$ = $1; $1->addDeclarationVariable($3);}
     ;
 

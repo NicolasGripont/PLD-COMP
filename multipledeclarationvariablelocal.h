@@ -12,6 +12,8 @@ public:
 	~MultipleDeclarationVariableLocal();
 	void addDeclarationVariable(DeclarationVariable *);
 	virtual string print() const;
+	
+	void setType(int inconnu); // A corriger ici
 private:
 	vector<DeclarationVariable *> declarations;
 };
