@@ -11,7 +11,7 @@
     using namespace std;
 
     extern int yylex(void);
-    void yyerror(const char* msg);
+    void yyerror(Genesis** g, const char* msg);
     
     extern FILE* yyin;
     extern int yylineno;
@@ -25,6 +25,7 @@
 /**************/
 %union {
     int i;
+    Genesis* g;
 }
 
 /**********/
@@ -41,6 +42,9 @@
 %token CHAR INT32 INT64
 %token BREAK RETURN CONTINUE WHILE FOR IF ELSE
 %token ID INT
+
+// Type permettant la creation de la structure de donnees
+%type <g> genesis
 
 /*********/
 /* TYPES */
@@ -74,7 +78,7 @@
 /* PARAMETERS */
 /**************/
 
-//%parse-param { }
+%parse-param { Genesis** g }
 
 /***********/
 /* GRAMMAR */
@@ -82,7 +86,7 @@
 %%
 
 program
-    : genesis {cout << "program" << endl;}
+    : genesis {*g = $1;}
     ;
 
 genesis
@@ -234,7 +238,7 @@ selection_statement
 /***********************/
 /* PROGRAMME PRINCIPAL */
 /***********************/
-void yyerror(const char* msg)
+void yyerror(Genesis** g, const char* msg)
 {
     if(hasSyntaxError){
         cout << filename << ":" << yylineno << "." << column <<": syntax error : " << syntaxError << endl;
@@ -245,9 +249,7 @@ void yyerror(const char* msg)
 }
 
 int main(int argc, char* argv[])
-{
-    cout << " -=[ Compilator ]=- " << endl;
-    
+{    
     // Test parameters
     if (argc <= 1)
     {
@@ -271,7 +273,8 @@ int main(int argc, char* argv[])
     filename = basename(argv[1]);
     yylineno = 1;
 
-    yyparse();
+    Genesis* g = 0;
+    yyparse(&g);
     
     cout << "Compilation finished." << endl;
     return 0;
