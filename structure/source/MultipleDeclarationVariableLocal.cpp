@@ -1,12 +1,20 @@
 #include "../header/MultipleDeclarationVariableLocal.h"
 #include <iostream>
 
-public MultipleDeclarationVariableLocal::MultipleDeclarationVariableLocal()
+MultipleDeclarationVariableLocal::MultipleDeclarationVariableLocal()
 {
     std::cout<<"MultipleDeclarationVariableLocal - Constructor"<<std::endl;
 }
 
-public MultipleDeclarationVariableLocal::~MultipleDeclarationVariableLocal()
+MultipleDeclarationVariableLocal::~MultipleDeclarationVariableLocal()
 {
+    for(auto node : listSimpleStatements)
+    {
+        delete node;
+    }
+}
 
+MultipleDeclarationVariableLocal::addSimpleStatement(const SimpleStatement * simpleStatement)
+{
+    listSimpleStatements.push_back(simpleStatement);
 }

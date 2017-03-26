@@ -34,3 +34,10 @@ comp.output
 comp.tab.c
 comp.tab.h
 lex.yy.c
+
+# Qt Creator files
+*.creator
+*.creator.user
+*.files
+*.includes
+*.config

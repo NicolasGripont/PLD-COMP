@@ -1,12 +1,12 @@
 #include "../header/BinaryExpression.h"
 #include <iostream>
 
-public BinaryExpression::BinaryExpression()
+BinaryExpression::BinaryExpression()
 {
 	std::cout<<"BinaryExpression - Constructor"<<std::endl;
 }
 
-public BinaryExpression::~BinaryExpression()
+BinaryExpression::~BinaryExpression()
 {
 
 }

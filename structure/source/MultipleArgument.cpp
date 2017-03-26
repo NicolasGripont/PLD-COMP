@@ -1,12 +1,20 @@
 #include "../header/MultipleArgument.h"
 #include <iostream>
 
-public MultipleArgument::MultipleArgument()
+MultipleArgument::MultipleArgument()
 {
     std::cout<<"MultipleArgument - Constructor"<<std::endl;
 }
 
-public MultipleArgument::~MultipleArgument()
+MultipleArgument::~MultipleArgument()
 {
+    for(auto arg : listArguments)
+    {
+        delete arg;
+    }
+}
 
+void MultipleArgument::addArgument(Argument *arg)
+{
+    listArguments.push_back(arg);
 }

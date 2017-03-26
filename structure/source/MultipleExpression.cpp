@@ -1,12 +1,20 @@
 #include "../header/MultipleExpression.h"
 #include <iostream>
 
-public MultipleExpression::MultipleExpression()
+MultipleExpression::MultipleExpression()
 {
     std::cout<<"MultipleExpression - Constructor"<<std::endl;
 }
 
-public MultipleExpression::~MultipleExpression()
+MultipleExpression::~MultipleExpression()
 {
+    for(auto expr : listExpressions)
+    {
+        delete expr;
+    }
+}
 
+void MultipleExpression::addExpression(Expression *expr)
+{
+    listExpressions.push_back(expr);
 }

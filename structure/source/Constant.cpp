@@ -1,12 +1,12 @@
 #include "../header/Constant.h"
 #include <iostream>
 
-public Constant::Constant()
+Constant::Constant()
 {
     std::cout<<"Constant - Constructor"<<std::endl;
 }
 
-public Constant::~Constant()
+Constant::~Constant()
 {
 
 }

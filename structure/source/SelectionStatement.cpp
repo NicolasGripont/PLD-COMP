@@ -1,12 +1,12 @@
 #include "../header/SelectionStatement.h"
 #include <iostream>
 
-public SelectionStatement::SelectionStatement()
+SelectionStatement::SelectionStatement()
 {
     std::cout<<"SelectionStatement - Constructor"<<std::endl;
 }
 
-public SelectionStatement::~SelectionStatement()
+SelectionStatement::~SelectionStatement()
 {
 
 }

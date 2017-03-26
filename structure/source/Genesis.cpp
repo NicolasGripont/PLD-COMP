@@ -1,12 +1,20 @@
 #include "../header/Genesis.h"
 #include <iostream>
 
-public Genesis::Genesis()
+Genesis::Genesis()
 {
     std::cout<<"Genesis - Constructor"<<std::endl;
 }
 
-public Genesis::~Genesis()
+Genesis::~Genesis()
 {
+    for(auto decl : declarations)
+    {
+        delete decl;
+    }
+}
 
+void Genesis::addDeclaration(const Declaration *dec)
+{
+    declarations.push_back(dec);
 }

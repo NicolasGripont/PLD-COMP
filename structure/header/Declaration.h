@@ -4,11 +4,11 @@
 class Declaration
 {
 public:
-    Declaration();
+    Declaration(Declaration * nextNode);
     ~Declaration();
 
 private:
-
+    Declaration * nextNode;
 };
 
 #endif // DECLARATION_H

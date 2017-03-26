@@ -2,15 +2,18 @@
 #define WHILESTATEMENT_H
 
 #include "IterationStatement.h"
+#include "Expression.h"
+#include "Statement.h"
 
 class WhileStatement : public IterationStatement
 {
 public:
-    WhileStatement();
+    WhileStatement(Expression * expr, Statement * state);
     ~WhileStatement();
 
 private:
-
+    Expression * expression;
+    Statement * statement;
 };
 
 #endif // WHILESTATEMENT_H

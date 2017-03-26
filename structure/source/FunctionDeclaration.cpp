@@ -1,12 +1,15 @@
 #include "../header/FunctionDeclaration.h"
 #include <iostream>
 
-public FunctionDeclaration::FunctionDeclaration()
+FunctionDeclaration::FunctionDeclaration(Type atype, MultipleArgument *args,
+                                         FunctionDefinition *def)
+    : returnType(atype), arguments(args), definition(def)
 {
     std::cout<<"FunctionDeclaration - Constructor"<<std::endl;
 }
 
-public FunctionDeclaration::~FunctionDeclaration()
+FunctionDeclaration::~FunctionDeclaration()
 {
-
+    delete arguments;
+    delete definition;
 }

@@ -1,12 +1,20 @@
 #include "../header/MultipleStatement.h"
 #include <iostream>
 
-public MultipleStatement::MultipleStatement()
+MultipleStatement::MultipleStatement()
 {
     std::cout<<"MultipleStatement - Constructor"<<std::endl;
 }
 
-public MultipleStatement::~MultipleStatement()
+MultipleStatement::~MultipleStatement()
 {
+    for (auto statement : listStatements)
+    {
+        delete statement;
+    }
+}
 
+void MultipleStatement::addStatement(Statement * state)
+{
+    listStatements.push_back(state);
 }

@@ -1,12 +1,13 @@
 #include "../header/WhileStatement.h"
 #include <iostream>
 
-public WhileStatement::WhileStatement()
+WhileStatement::WhileStatement(Expression *expr, Statement *state) : expression(expr), statement(state)
 {
     std::cout<<"WhileStatement - Constructor"<<std::endl;
 }
 
-public WhileStatement::~WhileStatement()
+WhileStatement::~WhileStatement()
 {
-
+    delete expression;
+    delete statement;
 }
