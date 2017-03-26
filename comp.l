@@ -1,9 +1,9 @@
 %{
     #include <string>
-    
+
 	using namespace std;
-    
-    #include "structure/header/Genesis.h"
+
+    #include "structure/header/Expressions.h"
 	#include "comp.tab.h"
 
 	void compterColonne();
