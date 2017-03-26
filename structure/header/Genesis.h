@@ -11,14 +11,6 @@ class Genesis
 {
 public:
 
-    enum class Type
-    {
-        VOID,
-        INT32_T,
-        INT64_T,
-        CHAR
-    };
-
     Genesis();
     ~Genesis();
 
