@@ -5,7 +5,32 @@
     #include <cstdio>
     #include <iostream>
     #include <libgen.h>
-    #include "structure/header/Expressions.h"
+    #include "declaration.h"
+	#include "expression.h"
+	#include "genesis.h"
+	#include "declarationvariable.h" 
+	#include "declarationfunction.h"
+	#include "multipledeclarationvariableglobal.h"
+	#include "multipleargument.h" 
+	#include "argument.h" 
+	#include "statement.h" 
+	#include "multiplestatement.h" 
+	#include "multipledeclarationvariablelocal.h" 
+	#include "declarationinitvariable.h" 
+	#include "declarationarrayvariable.h" 
+	#include "binaryoperatorexpression.h"
+	#include "return.h" 
+	#include "iterationstatement.h"
+	#include "whileloop.h"
+	#include "forloop.h"
+	#include "selectionstatement.h" 
+	#include "ifelsestatement.h" 
+	#include "unaryoperatorexpression.h" 
+	#include "expressioninteger.h" 
+	#include "expressionvariable.h" 
+	#include "expressionarrayvariable.h"
+	#include "assignmentexpression.h"
+
     char* filename;
 
     using namespace std;
@@ -30,22 +55,22 @@
     Genesis* g;
 	Declaration* d;
 	MultipleDeclarationVariable* mdv;
-	DeclarationFonction* df;
+	DeclarationFunction* df;
 	DeclarationVariable* dv;
-	Type* type;
+	Type type;
 	Expression* expr;
 	ExpressionVariable* exprVar;
-	AssignmentVariable* assignVar;
-	DeclarationFonctionStatement* dfs;
-	ArgumentList* al;
+	AssignmentExpression* assignExpr;
+	MultipleStatement* dfs;
+	MultipleArgument* al;
 	MultipleStatement* ms;
 	Argument* arg;
-	SimpleStatement* ss;
+	Statement* ss;
 	IterationStatement* iss;
 	SelectionStatement* sss;
 	Return* ret;
 	Statement* stat;
-	LoopExpression* loopexpr;
+	Expression* loopexpr;
 }
 
 /**********/

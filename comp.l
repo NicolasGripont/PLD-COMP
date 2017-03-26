@@ -1,10 +1,32 @@
 %{
     #include <string>
-
-	using namespace std;
-
-    #include "structure/header/Expressions.h"
+	#include "declaration.h"
+	#include "expression.h"
+	#include "genesis.h"
+	#include "declarationvariable.h" 
+	#include "declarationfunction.h"
+	#include "multipledeclarationvariableglobal.h"
+	#include "multipleargument.h" 
+	#include "argument.h" 
+	#include "statement.h" 
+	#include "multiplestatement.h" 
+	#include "multipledeclarationvariablelocal.h" 
+	#include "declarationinitvariable.h" 
+	#include "declarationarrayvariable.h" 
+	#include "binaryoperatorexpression.h"
+	#include "return.h" 
+	#include "iterationstatement.h"
+	#include "whileloop.h"
+	#include "forloop.h"
+	#include "selectionstatement.h" 
+	#include "ifelsestatement.h" 
+	#include "unaryoperatorexpression.h" 
+	#include "expressioninteger.h" 
+	#include "expressionvariable.h" 
+	#include "expressionarrayvariable.h"
+	#include "assignmentexpression.h"
 	#include "comp.tab.h"
+	using namespace std;
 
 	void compterColonne();
 	void leverErreurSyntaxe(std::string);
@@ -104,18 +126,14 @@ int nextColumn = 0;
 bool hasSyntaxError = false;
 std::string syntaxError;
 
-void leverErreurSyntaxe(std::string err)
-{
+void leverErreurSyntaxe(std::string err) {
 	hasSyntaxError = true;
 	syntaxError = err;
 }
 
-void compterColonne()
-{
+void compterColonne() {
 	column = nextColumn;
-
 	int i;
-
 	for (i = 0; yytext[i] != '\0'; ++i, ++nextColumn)
 		if (yytext[i] == '\n')
 			nextColumn = 0;
