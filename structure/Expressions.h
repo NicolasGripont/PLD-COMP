@@ -165,17 +165,6 @@ public:
 	:DeclarationFonctionStatement(),multipleStatement(_multipleStatement){};
 };
 
-class ArgumentList {
-private:
-	std::vector<Argument*> arguments;
-public:
-	ArgumentList(){};
-
-	void addArgument(Argument* arg){
-		arguments.push_back(arg);
-	}
-};
-
 class MultipleStatement {
 private:
 	std::vector<SimpleStatement*> statements;
@@ -185,16 +174,6 @@ public:
 	void addStatement(SimpleStatement* statement){
 		statements.push_back(statement);
 	}
-};
-
-class Argument {
-private:
-	Type* type;
-	char* id;
-	bool isArray;
-public:
-	Argument(Type* _type, char* _id=nullptr, bool _isArray = false)
-	:type(_type),id(_id),isArray(_isArray){};
 };
 
 class SimpleStatement{
