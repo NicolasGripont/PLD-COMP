@@ -19,16 +19,18 @@
 #include "ExpressionInteger.h"
 #include "CrementVariable.h"
 
+#include "SimpleStatement.h"
+#include "MultipleStatement.h"
+#include "Statement.h"
+#include "IterationStatement.h"
 #include "LoopExpression.h"
+#include "WhileLoop.h"
 
 class DeclarationFonction;
 class DeclarationFonctionStatement;
-class MultipleStatement;
 class GlobalDeclarationVariable;
-class SimpleStatement;
 class Return;
 class ExpressionVariable;
-class Statement;
 class DeclarationInitVariable;
 class DeclarationArrayVariable;
 class GlobalDeclarationVariable;
@@ -114,22 +116,6 @@ public:
 	:DeclarationFonctionStatement(false),multipleStatement(_multipleStatement){};
 };
 
-class MultipleStatement {
-private:
-	std::vector<SimpleStatement*> statements;
-public:
-	MultipleStatement(){};
-
-	void addStatement(SimpleStatement* statement){
-		statements.push_back(statement);
-	}
-};
-
-class SimpleStatement{
-public:
-	SimpleStatement(){};
-};
-
 // Declaration de variable dans un block
 class BlockDeclarationVariable : public SimpleStatement {
 private:
@@ -138,14 +124,6 @@ private:
 public:
 	BlockDeclarationVariable(MultipleDeclarationVariable* _multipleDeclarationVariable)
 	:SimpleStatement(),multipleDeclarationVariable(_multipleDeclarationVariable){};
-};
-
-class IterationStatement : public SimpleStatement {
-protected:
-	Statement* statement;
-public:
-	IterationStatement(Statement* _statement)
-	:SimpleStatement(), statement(_statement){};
 };
 
 class SelectionStatement : public SimpleStatement {
@@ -190,22 +168,6 @@ private:
 	Expression* expr;
 public:
 	Return(Expression* _expr):expr(_expr){};
-};
-
-class Statement {
-private:
-	MultipleStatement* multipleStatement;
-public:
-	Statement(MultipleStatement* _multipleStatement):multipleStatement(_multipleStatement){};
-};
-
-class WhileLoop : public IterationStatement{
-private:
-	Expression* expr;
-public:
-	WhileLoop(Expression* _expr, Statement* _statement)
-	:expr(_expr)
-	,IterationStatement(_statement){};
 };
 
 class ForLoop : public IterationStatement {

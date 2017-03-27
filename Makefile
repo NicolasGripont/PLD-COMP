@@ -36,7 +36,13 @@ UnaryOperatorExpression.o: UnaryOperatorExpression.cpp Expression.h
 ExpressionInteger.o: ExpressionInteger.cpp Expression.h
 ExpressionVariable.o: ExpressionVariable.cpp Expression.h
 CrementVariable.o: CrementVariable.cpp ExpressionVariable.h Expression.h
+
+SimpleStatement.o: SimpleStatement.cpp
+MultipleStatement.o: MultipleStatement.cpp SimpleStatement.h
+Statement.o: Statement.cpp MultipleStatement.h
+IterationStatement.o : IterationStatement.cpp SimpleStatement.h Statement.h
 LoopExpression.o: LoopExpression.cpp Expression.h
+WhileLoop.o: WhileLoop.cpp IterationStatement.h Expression.h
 
 clean:
 	rm comp comp.tab.c comp.tab.h comp.output lex.yy.c $(BUILDIR)*.o
