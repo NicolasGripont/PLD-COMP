@@ -20,12 +20,7 @@ class Return;
 class ExpressionVariable;
 class Statement;
 
-class DeclarationInitVariable : public DeclarationVariable {
-private:
-	Expression* expr;
-public:
-	DeclarationInitVariable(char* _id, Expression* _expr):DeclarationVariable(_id),expr(_expr){};
-};
+class DeclarationInitVariable;
 
 class DeclarationArrayVariable : public DeclarationVariable {
 private:

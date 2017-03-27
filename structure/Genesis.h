@@ -1,5 +1,5 @@
 #ifndef _GENESIS_H
-#define _GENESIS_h
+#define _GENESIS_H
 
 #include <vector>
 
