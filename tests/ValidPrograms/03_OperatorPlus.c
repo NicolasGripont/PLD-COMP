@@ -1,7 +1,7 @@
 #include <stdint.h>
 
 int32_t tonfrere;
-int32_t tonpere;
+int32_t tonfrere;
 
 void main() {
    int32_t a;

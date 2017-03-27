@@ -6,7 +6,7 @@
     #include "structure/DeclarationVariable.h"
     #include "structure/Type.h"
     #include "structure/MultipleDeclarationVariable.h"
-    
+
     #include "structure/Expressions.h"
 
 	#include "comp.tab.h"
@@ -24,7 +24,7 @@ quote '
 
 %%
 
-[ \t\v\n\f] 		{ compterColonne(); }
+[ \t\v\r\n\f] 		{ compterColonne(); }
 \/\/.*			    { compterColonne(); }
 \/\*(.*\n)*.*\*\/	{ compterColonne(); }
 ^"#"{lettre}+" ".+	{ compterColonne(); }
