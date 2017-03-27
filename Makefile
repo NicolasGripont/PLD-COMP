@@ -3,7 +3,13 @@
 ####################
 
 # --- Add header files here:
-INT = Declaration.h Genesis.h DeclarationVariable.h Type.h MultipleDeclarationVariable.h ArgumentList.h Argument.h Expression.h DeclarationInitVariable.h DeclarationArrayVariable.h GlobalDeclarationVariable.h FunctionCallExpression.h BinaryOperatorExpression.h UnaryOperatorExpression.h ExpressionInteger.h ExpressionVariable.h CrementVariable.h DeclarationFunctionStatement.h Return.h SimpleStatement.h MultipleStatement.h Statement.h IterationStatement.h LoopExpression.h WhileLoop.h ForLoop.h DeclarationFunction.h
+INT = Declaration.h Genesis.h DeclarationVariable.h Type.h MultipleDeclarationVariable.h ArgumentList.h \
+Argument.h Expression.h DeclarationInitVariable.h DeclarationArrayVariable.h GlobalDeclarationVariable.h \
+FunctionCallExpression.h BinaryOperatorExpression.h UnaryOperatorExpression.h ExpressionInteger.h \
+ExpressionVariable.h CrementVariable.h DeclarationFunctionStatement.h \
+\
+Return.h SimpleStatement.h ReturnStatement.h MultipleStatement.h Statement.h IterationStatement.h \
+LoopExpression.h WhileLoop.h ForLoop.h DeclarationFunction.h
 
 BUILDIR = structure/
 OBJ = $(addprefix $(BUILDIR), $(INT:.h=.o))
@@ -37,8 +43,10 @@ ExpressionInteger.o: ExpressionInteger.cpp Expression.h
 ExpressionVariable.o: ExpressionVariable.cpp Expression.h
 CrementVariable.o: CrementVariable.cpp ExpressionVariable.h Expression.h
 DeclarationFunctionStatement.o: DeclarationFunctionStatement.cpp
+
 Return.o: Return.cpp Expression.h
 SimpleStatement.o: SimpleStatement.cpp
+ReturnStatement.o: ReturnStatement.cpp SimpleStatement.h Return.h
 MultipleStatement.o: MultipleStatement.cpp SimpleStatement.h
 Statement.o: Statement.cpp MultipleStatement.h
 IterationStatement.o: IterationStatement.cpp SimpleStatement.h Statement.h

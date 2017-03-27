@@ -22,6 +22,7 @@
 
 #include "Return.h"
 #include "SimpleStatement.h"
+#include "ReturnStatement.h"
 #include "MultipleStatement.h"
 #include "Statement.h"
 #include "IterationStatement.h"
@@ -41,15 +42,7 @@ class UnaryOperatorExpression;
 class ExpressionInteger;
 class ExpressionVariable;
 class CrementVariable;
-class DeclarationFunctionStatement;
-class SimpleStatement;
-class MultipleStatement;
-class Statement;
-class IterationStatement;
-class LoopExpression;
-class WhileLoop;
-class DeclarationFunction;
-
+class DeclarationVariableStatement;
 
 class ExpressionSimpleVariable : public ExpressionVariable {
 private:
@@ -134,13 +127,6 @@ public:
 class UselessStatement : public SimpleStatement {
 public:
 	UselessStatement():SimpleStatement(){};
-};
-
-class ReturnStatement : public SimpleStatement {
-private:
-	Return* ret;
-public:
-	ReturnStatement(Return* _ret):SimpleStatement(),ret(_ret){};
 };
 
 class DeclarationVariableStatement : public SimpleStatement {

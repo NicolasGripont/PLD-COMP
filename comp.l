@@ -19,8 +19,10 @@
     #include "structure/ExpressionVariable.h"
     #include "structure/CrementVariable.h"
     #include "structure/DeclarationFunctionStatement.h"
+    
     #include "structure/Return.h"
     #include "structure/SimpleStatement.h"
+    #include "structure/ReturnStatement.h"
     #include "structure/MultipleStatement.h"
     #include "structure/Statement.h"
     #include "structure/LoopExpression.h"
