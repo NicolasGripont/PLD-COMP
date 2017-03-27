@@ -228,7 +228,24 @@ declaration_function
         }
         functions.push_back(func);
     }
-    | type ID '(' arguments_list ')' declaration_function_statement {$$ = new DeclarationFonction($1, $2, $4, $6);}
+    | type ID '(' arguments_list ')' declaration_function_statement
+    {
+        $$ = new DeclarationFonction($1, $2, $4, $6);
+        FunctionContainer* func;
+        bool isDeclaration = $6->isDeclaration();
+        func = new FunctionContainer($2, $1->getType(), isDeclaration);
+
+        for(int i=0;i<functions.size();++i)
+        {
+            FunctionContainer* currFunc = functions[i];
+            if(strcmp(func->name, currFunc->name)==0 && !(func->declaration) && !(currFunc->declaration))
+            {
+                yyerror(g, ("La fonction "+std::string(func->name)+" a déjà été définie.").c_str());
+                YYABORT;
+            }
+        }
+        functions.push_back(func);
+    }
     ;
 
 declaration_function_statement
@@ -328,8 +345,82 @@ expression
     | expr_var INCREMENT {$$ = new CrementVariable($1, true, false);}
     | expr_var DECREMENT {$$ = new CrementVariable($1, false, false);}
     | expr_var {$$ = $1;}
-    | ID '(' expression ')' {$$ = new FunctionCallExpression($1, $3);}
-    | ID '(' ')' {$$ = new FunctionCallExpression($1, nullptr);}
+    | ID '(' expression ')'
+    {
+        $$ = new FunctionCallExpression($1, $3);
+        int state=0;
+
+        for(int i=0;i<functions.size();++i)
+        {
+            FunctionContainer* currFunc = functions[i];
+
+            // 0 = fonction n'existe pas. 1 = seulement le prototype. 2 = correct
+
+
+            if(strcmp($1, currFunc->name)==0)
+            {
+                if(currFunc->declaration)
+                {
+                    state = 1;
+                }
+                else
+                {
+                    state = 2;
+                    break;
+                }
+            }
+        }
+
+        if(state == 0)
+        {
+            yyerror(g, ("La fonction "+std::string($1)+" n'est pas définie.").c_str());
+            YYABORT;
+        }
+
+        if(state == 1)
+        {
+            yyerror(g, ("La fonction "+std::string($1)+" est déclarée mais jamais définie.").c_str());
+            YYABORT;
+        }
+    }
+    | ID '(' ')'
+    {
+        $$ = new FunctionCallExpression($1, nullptr);
+        int state=0;
+
+        for(int i=0;i<functions.size();++i)
+        {
+            FunctionContainer* currFunc = functions[i];
+
+            // 0 = fonction n'existe pas. 1 = seulement le prototype. 2 = correct
+
+
+            if(strcmp($1, currFunc->name)==0)
+            {
+                if(currFunc->declaration)
+                {
+                    state = 1;
+                }
+                else
+                {
+                    state = 2;
+                    break;
+                }
+            }
+        }
+
+        if(state == 0)
+        {
+            yyerror(g, ("La fonction "+std::string($1)+" n'est pas définie.").c_str());
+            YYABORT;
+        }
+
+        if(state == 1)
+        {
+            yyerror(g, ("La fonction "+std::string($1)+" est déclarée mais jamais définie.").c_str());
+            YYABORT;
+        }
+    }
     | expression '+' expression {$$ = new BinaryOperatorExpression($1,$3,'+');}
     | expression '-' expression {$$ = new BinaryOperatorExpression($1,$3,'-');}
     | expression '*' expression {$$ = new BinaryOperatorExpression($1,$3,'*');}
