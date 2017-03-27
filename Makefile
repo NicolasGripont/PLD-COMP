@@ -3,7 +3,7 @@
 ####################
 
 # --- Add header files here:
-INT = Declaration.h Genesis.h DeclarationVariable.h Type.h MultipleDeclarationVariable.h ArgumentList.h Argument.h
+INT = Declaration.h Genesis.h DeclarationVariable.h Type.h MultipleDeclarationVariable.h ArgumentList.h Argument.h Expression.h
 
 BUILDIR = structure/
 OBJ = $(addprefix $(BUILDIR), $(INT:.h=.o))
@@ -26,6 +26,7 @@ Type.o: Type.cpp
 MultipleDeclarationVariable.o: MultipleDeclarationVariable.cpp Type.h
 Argument.o: Argument.cpp Type.h
 ArgumentList.o: ArgumentList.cpp Argument.h
+Expression.o: Expression.cpp
 
 clean:
 	rm comp comp.tab.c comp.tab.h comp.output lex.yy.c $(BUILDIR)*.o

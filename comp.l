@@ -8,6 +8,7 @@
     #include "structure/MultipleDeclarationVariable.h"
     #include "structure/Argument.h"
     #include "structure/ArgumentList.h"
+    #include "structure/Expression.h"
 
     #include "structure/Expressions.h"
 

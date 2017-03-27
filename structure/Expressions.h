@@ -7,13 +7,13 @@
 #include "DeclarationVariable.h"
 #include "Type.h"
 #include "MultipleDeclarationVariable.h"
+#include "Argument.h"
+#include "ArgumentList.h"
+#include "Expression.h"
 
 class DeclarationFonction;
-class Expression;
 class DeclarationFonctionStatement;
-class ArgumentList;
 class MultipleStatement;
-class Argument;
 class GlobalDeclarationVariable;
 class SimpleStatement;
 class Return;
@@ -53,11 +53,6 @@ private:
 public:
 	DeclarationFonction(Type* _type, char* _id, ArgumentList* _argumentList, DeclarationFonctionStatement* _decFunctionStatement)
 	:Declaration(),type(_type),id(_id),argumentList(_argumentList),decFunctionStatement(_decFunctionStatement){};
-};
-
-class Expression {
-public:
-	Expression(){};
 };
 
 class FunctionCallExpression : public Expression {
@@ -175,17 +170,6 @@ public:
 	:DeclarationFonctionStatement(false),multipleStatement(_multipleStatement){};
 };
 
-class ArgumentList {
-private:
-	std::vector<Argument*> arguments;
-public:
-	ArgumentList(){};
-
-	void addArgument(Argument* arg){
-		arguments.push_back(arg);
-	}
-};
-
 class MultipleStatement {
 private:
 	std::vector<SimpleStatement*> statements;
@@ -195,16 +179,6 @@ public:
 	void addStatement(SimpleStatement* statement){
 		statements.push_back(statement);
 	}
-};
-
-class Argument {
-private:
-	Type* type;
-	char* id;
-	bool isArray;
-public:
-	Argument(Type* _type, char* _id=nullptr, bool _isArray = false)
-	:type(_type),id(_id),isArray(_isArray){};
 };
 
 class SimpleStatement{
