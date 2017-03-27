@@ -18,6 +18,7 @@
     #include "structure/ExpressionInteger.h"
     #include "structure/ExpressionVariable.h"
     #include "structure/CrementVariable.h"
+
     #include "structure/DeclarationFunctionStatement.h"
     #include "structure/DeclarationFunction.h"
     #include "structure/ExpressionSimpleVariable.h"
@@ -38,6 +39,7 @@
     #include "structure/PureDeclarationFunctionStatement.h"
     #include "structure/LoopExpression.h"
     #include "structure/WhileLoop.h"
+
     #include "structure/ForLoop.h"
     
     #include "structure/Erreur.h"

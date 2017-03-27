@@ -15,6 +15,11 @@ void MultipleDeclarationVariable::setType(Type* t)
     type = t;
 }
 
+Type* MultipleDeclarationVariable::getType()
+{
+    return type;
+}
+
 int MultipleDeclarationVariable::countDeclaration()
 {
     return declarationsVariables.size();

@@ -11,6 +11,9 @@ public:
     MultipleStatement();
 
     void addStatement(SimpleStatement* statement);
+    int countStatements();
+
+    SimpleStatement*& operator[] (int i);
 
 private:
     std::vector<SimpleStatement*> statements;

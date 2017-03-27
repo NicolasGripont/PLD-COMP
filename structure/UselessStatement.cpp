@@ -1,7 +1,7 @@
 #include "UselessStatement.h"
 
 UselessStatement::UselessStatement()
-    : SimpleStatement()
+    : SimpleStatement(USELESS_STATEMENT)
 {
 
 }

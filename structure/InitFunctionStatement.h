@@ -11,6 +11,10 @@ class InitFunctionStatement : public DeclarationFunctionStatement
 public:
     InitFunctionStatement(MultipleStatement* _multipleStatement);
 
+    int countStatements();
+
+    SimpleStatement*& operator[] (int i);
+
 private:
     MultipleStatement* multipleStatement;
 };

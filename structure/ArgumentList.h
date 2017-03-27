@@ -11,6 +11,9 @@ public:
     ArgumentList();
 
     void addArgument(Argument* arg);
+    int countArguments();
+
+    Argument*& operator[] (int i);
 private:
     std::vector<Argument*> arguments;
 };

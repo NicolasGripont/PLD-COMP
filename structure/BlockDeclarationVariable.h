@@ -10,6 +10,8 @@ class BlockDeclarationVariable : public SimpleStatement
 public:
     BlockDeclarationVariable(MultipleDeclarationVariable* _multipleDeclarationVariable);
 
+    MultipleDeclarationVariable* getMultipleDeclarationVariable();
+
 private:
     MultipleDeclarationVariable* multipleDeclarationVariable;
 };
