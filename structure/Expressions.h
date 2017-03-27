@@ -18,6 +18,7 @@
 #include "UnaryOperatorExpression.h"
 #include "ExpressionInteger.h"
 #include "CrementVariable.h"
+#include "DeclarationFonctionStatement.h"
 
 #include "SimpleStatement.h"
 #include "MultipleStatement.h"
@@ -40,6 +41,7 @@ class UnaryOperatorExpression;
 class ExpressionInteger;
 class ExpressionVariable;
 class CrementVariable;
+class DeclarationFonctionStatement;
 
 class DeclarationFonction : public Declaration {
 private:
@@ -86,19 +88,6 @@ public:
 	:AssignmentVariable(_exprVar,_expr),op(_op){};
 };
 
-class DeclarationFonctionStatement {
-private:
-    // Si vrai : Declaration, si faux : initialisation
-    bool declaration;
-public:
-	DeclarationFonctionStatement(bool _declaration)
-    :declaration(_declaration){};
-
-    bool isDeclaration()
-    {
-        return declaration;
-    }
-};
 
 // Declaration sans initialisation de la fonction
 class PureDeclarationFonctionStatement : public DeclarationFonctionStatement {
