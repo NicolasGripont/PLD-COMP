@@ -51,6 +51,7 @@ ReturnStatement.o: ReturnStatement.cpp SimpleStatement.h Return.h
 UselessStatement.o: UselessStatement.cpp SimpleStatement.h
 MultipleStatement.o: MultipleStatement.cpp SimpleStatement.h
 Statement.o: Statement.cpp MultipleStatement.h
+BlockDeclarationVariable.o: BlockDeclarationVariable.cpp SimpleStatement.h MultipleDeclarationVariable.h
 IterationStatement.o: IterationStatement.cpp SimpleStatement.h Statement.h
 SelectionStatement.o: SelectionStatement.cpp SimpleStatement.h Expression.h Statement.h
 ExpressionStatement.o: ExpressionStatement.cpp SimpleStatement.h Expression.h

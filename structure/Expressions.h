@@ -25,6 +25,7 @@
 #include "ReturnStatement.h"
 #include "MultipleStatement.h"
 #include "Statement.h"
+#include "BlockDeclarationVariable.h"
 #include "IterationStatement.h"
 #include "SelectionStatement.h"
 #include "ExpressionStatement.h"
@@ -84,16 +85,6 @@ private:
 public:
 	InitFunctionStatement(MultipleStatement* _multipleStatement)
 	:DeclarationFunctionStatement(false),multipleStatement(_multipleStatement){};
-};
-
-// Declaration de variable dans un block
-class BlockDeclarationVariable : public SimpleStatement {
-private:
-	MultipleDeclarationVariable* multipleDeclarationVariable;
-
-public:
-	BlockDeclarationVariable(MultipleDeclarationVariable* _multipleDeclarationVariable)
-	:SimpleStatement(),multipleDeclarationVariable(_multipleDeclarationVariable){};
 };
 
 // Struct qui n'est pas utilisee dans la structure de donnees

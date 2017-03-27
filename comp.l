@@ -26,6 +26,7 @@
     #include "structure/UselessStatement.h"
     #include "structure/MultipleStatement.h"
     #include "structure/Statement.h"
+    #include "structure/BlockDeclarationVariable.h"
     #include "structure/IterationStatement.h"
     #include "structure/SelectionStatement.h"
     #include "structure/ExpressionStatement.h"
