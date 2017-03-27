@@ -37,6 +37,7 @@
     #include "structure/DeclarationFunction.h"
     #include "structure/ExpressionSimpleVariable.h"
     #include "structure/AssignmentVariable.h"
+    #include "structure/AssignmentOperationVariable.h"
     
     #include "structure/Expressions.h"
 

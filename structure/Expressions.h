@@ -36,19 +36,13 @@
 #include "DeclarationFunction.h"
 #include "ExpressionSimpleVariable.h"
 #include "ExpressionArrayVariable.h"
+#include "AssignmentOperationVariable.h"
 
 class ExpressionVariable;
 class ExpressionSimpleVariable;
 class ExpressionArrayVariable;
 class AssignmentVariable;
-
-class AssignmentOperationVariable : public AssignmentVariable{
-private:
-	int op;
-public:
-	AssignmentOperationVariable(ExpressionVariable* _exprVar, Expression* _expr, int _op)
-	:AssignmentVariable(_exprVar,_expr),op(_op){};
-};
+class AssignmentOperationVariable;
 
 // Declaration sans initialisation de la fonction
 class PureDeclarationFunctionStatement : public DeclarationFunctionStatement {
