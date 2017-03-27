@@ -87,7 +87,7 @@ quote '
 "else"		{ compterColonne(); return ELSE; }
 
 {quote}{lettre}{quote} { compterColonne(); yylval.i = yytext[1]; return INT; }
-({lettre}|{underscore})({lettre}|{chiffre}|{underscore})* { compterColonne(); return ID; }
+({lettre}|{underscore})({lettre}|{chiffre}|{underscore})* { compterColonne(); yylval.s = yytext; return ID; }
 {chiffre}+ { compterColonne(); yylval.i = atoi(yytext); return INT; }
 
 "/*" { compterColonne(); leverErreurSyntaxe("commentaire '/*' non fermé."); return yytext[0]; }

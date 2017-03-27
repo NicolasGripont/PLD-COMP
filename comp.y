@@ -4,6 +4,7 @@
 %{
     #include <iostream>
     #include <libgen.h>
+	#include "string.h"
     #include "structure/header/Expressions.h"
     char* filename;
 
@@ -18,7 +19,7 @@
     extern std::string syntaxError;
 
 	bool variableIsVoid(Type* type);
-	std::vector<GlobalDeclarationVariable*> globalVariables;
+	std::vector<VariableContainer*> globalVariables;
 %}
 
 /**************/
@@ -135,15 +136,33 @@ genesis
     ;
 
 declaration
-    : type multiple_declaration_variable ';' {
+    : type multiple_declaration_variable ';'
+	{
 		GlobalDeclarationVariable* dec = new GlobalDeclarationVariable($2);
 		$$ = dec;
 		$2->setType($1);
-		if(variableIsVoid($1)){
-			yyerror(nullptr, "Une variable ne peut pas être de type void.");
+		if(variableIsVoid($1))
+		{
+			yyerror(nullptr, "une variable ne peut pas être de type void.");
 			YYABORT;
 		}
-		globalVariables.push_back(dec);
+		for(int i=0;i<$2->countDeclaration();++i)
+		{
+			DeclarationVariable* decVar = (*$2)[i];
+			VariableContainer* var = new VariableContainer(decVar->getId(), $1->getType());
+
+			for(int j=0;j<globalVariables.size();j++)
+			{
+				std::cout<<globalVariables[i]->name<<"**"<<var->name<<std::endl;
+				if(strcmp(globalVariables[i]->name,var->name)==0)
+				{
+					yyerror(nullptr, strcat(strcat("la variable globale ", var->name)," a deja ete declaree."));
+					YYABORT;
+				}
+			}
+
+			globalVariables.push_back(var);
+		}
 	}
     | declaration_function {$$ = $1;}
     ;
@@ -195,21 +214,21 @@ argument
     : type {
 		$$=new Argument($1);
 		if(variableIsVoid($1)){
-			yyerror(nullptr, "Une variable ne peut pas être de type void.");
+			yyerror(nullptr, "une variable ne peut pas être de type void.");
 			YYABORT;
 		}
 	}
     | type ID {
 		$$=new Argument($1,$2);
 		if(variableIsVoid($1)){
-			yyerror(nullptr, "Une variable ne peut pas être de type void.");
+			yyerror(nullptr, "une variable ne peut pas être de type void.");
 			YYABORT;
 		}
 	}
     | type ID '[' ']' {
 		$$=new Argument($1,$2,true);
 		if(variableIsVoid($1)){
-			yyerror(nullptr, "Une variable ne peut pas être de type void.");
+			yyerror(nullptr, "une variable ne peut pas être de type void.");
 			YYABORT;
 		}
 	}

@@ -48,6 +48,10 @@ protected:
 	char* id;
 public:
 	DeclarationVariable(char* _id):id(_id){};
+
+	char* getId(){
+		return id;
+	}
 };
 
 class DeclarationInitVariable : public DeclarationVariable {
@@ -87,6 +91,14 @@ public:
 
 	void setType(Type* t){
 		type = t;
+	}
+
+	int countDeclaration() {
+		return declarationsVariables.size();
+	}
+
+	DeclarationVariable*& operator[] (int i) {
+		return declarationsVariables[i];
 	}
 };
 
@@ -353,6 +365,16 @@ public:
 	ForLoop(LoopExpression* _expr1, LoopExpression* _expr2, LoopExpression* _expr3, Statement* _statement)
 	:expr1(_expr1),expr2(_expr2),expr3(_expr3)
 	,IterationStatement(_statement){};
+};
+
+// Struct qui n'est pas utilisee dans la structure de donnees
+// mais qui sert a la detection des Erreur
+struct VariableContainer {
+	char* name;
+	int type;
+
+	VariableContainer(char* _name, int _type):
+	name(_name),type(_type){};
 };
 
 #endif
