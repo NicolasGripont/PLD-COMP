@@ -3,7 +3,7 @@
 ####################
 
 # --- Add header files here:
-INT = Declaration.h Genesis.h DeclarationVariable.h Type.h MultipleDeclarationVariable.h ArgumentList.h \
+INT = Printer.h Declaration.h Genesis.h DeclarationVariable.h Type.h MultipleDeclarationVariable.h ArgumentList.h \
 Argument.h Expression.h DeclarationInitVariable.h DeclarationArrayVariable.h GlobalDeclarationVariable.h \
 FunctionCallExpression.h BinaryOperatorExpression.h UnaryOperatorExpression.h ExpressionInteger.h \
 ExpressionVariable.h CrementVariable.h DeclarationFunctionStatement.h DeclarationFunction.h \
@@ -26,6 +26,7 @@ default: $(OBJ)
 	$(COMP) -o $@ -c $< $(FLAGS)
 
 # --- Add requirement files here:
+Printer.o: Printer.cpp
 Declaration.o: Declaration.cpp
 Genesis.o: Genesis.cpp Declaration.h
 DeclarationVariable.o: DeclarationVariable.cpp
