@@ -21,16 +21,7 @@ class ExpressionVariable;
 class Statement;
 class DeclarationInitVariable;
 class DeclarationArrayVariable;
-
-// Declaration de variable globale
-class GlobalDeclarationVariable : public Declaration {
-private:
-	MultipleDeclarationVariable* multipleDeclarationVariable;
-
-public:
-	GlobalDeclarationVariable(MultipleDeclarationVariable* _multipleDeclarationVariable)
-	:multipleDeclarationVariable(_multipleDeclarationVariable){};
-};
+class GlobalDeclarationVariable;
 
 class DeclarationFonction : public Declaration {
 private:

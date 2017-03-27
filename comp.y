@@ -15,6 +15,7 @@
     #include "structure/Expression.h"
     #include "structure/DeclarationInitVariable.h"
     #include "structure/DeclarationArrayVariable.h"
+    #include "structure/GlobalDeclarationVariable.h"
 
     #include "structure/Expressions.h"
 
