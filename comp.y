@@ -67,6 +67,7 @@
 
     bool tryDefineFunction(Genesis** g, Type* type, char* name, DeclarationFunctionStatement* declFunc);
     bool checkVariableDuplicationInFunction(Genesis** g, char* functionName, ArgumentList* args, DeclarationFunctionStatement* declFunc);
+    bool checkVariableDuplicationInBlock(Genesis** g, MultipleStatement* multStat);
 
     std::vector<VariableContainer*> globalVariables;
     std::vector<FunctionContainer*> functions;
@@ -248,9 +249,8 @@ declaration_function
     ;
 
 declaration_function_statement
-
     : ';'  {  $$ = new PureDeclarationFunctionStatement(); }
-    | '{' multiple_statement '}' {$$ = new InitFunctionStatement($2);}
+    | '{' multiple_statement '}'   { $$ = new InitFunctionStatement($2); }
     | '{' '}' {$$ = new InitFunctionStatement(new MultipleStatement());}
     ;
 
@@ -304,7 +304,11 @@ iteration_statement
     ;
 
 statement
-    : '{' multiple_statement '}' {$$ = new Statement($2);}
+    : '{' multiple_statement '}'
+    {
+        $$ = new Statement($2);
+        if(checkVariableDuplicationInBlock(g,$2)) YYABORT;
+    }
     | simple_statement {MultipleStatement* mult = new MultipleStatement(); mult->addStatement($1); $$ = new Statement(mult);}
     ;
 
@@ -507,13 +511,48 @@ bool checkVariableDuplicationInFunction(Genesis** g, char* functionName, Argumen
                         VariableContainer* currVar = variables[k];
                         if(strcmp(var->name, currVar->name) == 0)
                         {
-                            yyerror(g, ("La fonction "+std::string(functionName)+" contient plusieurs variables nommées "+std::string(var->name)+" dans la même portée.").c_str());
+                            yyerror(g, ("La fonction "+std::string(functionName)+" contient plusieurs variables nommé "+std::string(var->name)+" dans la même portée.").c_str());
                             return true;
                         }
                     }
 
                     variables.push_back(var);
                 }
+            }
+        }
+    }
+
+    return false;
+}
+
+bool checkVariableDuplicationInBlock(Genesis** g, MultipleStatement* multStat)
+{
+    std::vector<VariableContainer*> variables;
+
+    for(int i=0;i<multStat->countStatements();++i)
+    {
+        SimpleStatement* stat = (*multStat)[i];
+        if(stat->getType() == BLOCK_DECLARATION_VARIABLE)
+        {
+            BlockDeclarationVariable* blockDeclVar = (BlockDeclarationVariable*) stat;
+            MultipleDeclarationVariable* multDecl = blockDeclVar->getMultipleDeclarationVariable();
+            for(int j=0;j<multDecl->countDeclaration();++j)
+            {
+                DeclarationVariable* decVar = (*multDecl)[j];
+                VariableContainer* var = new VariableContainer(decVar->getId(), multDecl->getType()->getType());
+                
+                // Regarder si la variable existe déjà
+                for(int k=0;k<variables.size();++k)
+                {
+
+                    VariableContainer* currVar = variables[k];
+                    if(strcmp(var->name, currVar->name) == 0)
+                    {
+                        yyerror(g, ("Plusieurs variables nommé "+std::string(var->name)+" dans la même portée.").c_str());
+                        return true;
+                    }
+                }
+                variables.push_back(var);
             }
         }
     }
