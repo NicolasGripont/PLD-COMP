@@ -26,23 +26,14 @@
 #include "MultipleStatement.h"
 #include "Statement.h"
 #include "IterationStatement.h"
+#include "ExpressionStatement.h"
+#include "DeclarationVariableStatement.h"
 #include "LoopExpression.h"
 #include "WhileLoop.h"
 #include "ForLoop.h"
 #include "DeclarationFunction.h"
 
-class GlobalDeclarationVariable;
 class ExpressionVariable;
-class DeclarationInitVariable;
-class DeclarationArrayVariable;
-class GlobalDeclarationVariable;
-class FunctionCallExpression;
-class BinaryOperatorExpression;
-class UnaryOperatorExpression;
-class ExpressionInteger;
-class ExpressionVariable;
-class CrementVariable;
-class DeclarationVariableStatement;
 
 class ExpressionSimpleVariable : public ExpressionVariable {
 private:
@@ -115,18 +106,6 @@ private:
 public:
 	SelectionStatement(Expression* _expr, Statement* _stat, Statement* _elseStat)
 	:SimpleStatement(), expr(_expr), stat(_stat), elseStat(_elseStat){};
-};
-
-class ExpressionStatement : public SimpleStatement {
-private:
-	Expression* expr;
-public:
-	ExpressionStatement(Expression* _expr):SimpleStatement(),expr(_expr){};
-};
-
-class DeclarationVariableStatement : public SimpleStatement {
-public:
-	DeclarationVariableStatement():SimpleStatement(){};
 };
 
 // Struct qui n'est pas utilisee dans la structure de donnees

@@ -23,13 +23,16 @@
     #include "structure/CrementVariable.h"
     #include "structure/ExpressionVariable.h"
     #include "structure/DeclarationFunctionStatement.h"
-    
+
     #include "structure/Return.h"
     #include "structure/SimpleStatement.h"
     #include "structure/ReturnStatement.h"
     #include "structure/UselessStatement.h"
     #include "structure/MultipleStatement.h"
     #include "structure/Statement.h"
+    #include "structure/IterationStatement.h"
+    #include "structure/ExpressionStatement.h"
+    #include "structure/DeclarationVariableStatement.h"
     #include "structure/LoopExpression.h"
     #include "structure/WhileLoop.h"
     #include "structure/ForLoop.h"
