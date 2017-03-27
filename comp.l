@@ -10,6 +10,7 @@
     #include "structure/ArgumentList.h"
     #include "structure/Expression.h"
 
+    #include "structure/LoopExpression.h"
     #include "structure/Expressions.h"
 
 	#include "comp.tab.h"

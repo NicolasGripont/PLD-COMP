@@ -21,6 +21,7 @@
     #include "structure/UnaryOperatorExpression.h"
     #include "structure/ExpressionInteger.h"
     
+    #include "structure/LoopExpression.h"
     #include "structure/Expressions.h"
 
     char* filename;

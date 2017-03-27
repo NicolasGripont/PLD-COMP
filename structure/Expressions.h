@@ -18,6 +18,8 @@
 #include "UnaryOperatorExpression.h"
 #include "ExpressionInteger.h"
 
+#include "LoopExpression.h"
+
 class DeclarationFonction;
 class DeclarationFonctionStatement;
 class MultipleStatement;
@@ -209,13 +211,6 @@ private:
 	MultipleStatement* multipleStatement;
 public:
 	Statement(MultipleStatement* _multipleStatement):multipleStatement(_multipleStatement){};
-};
-
-class LoopExpression {
-private:
-	Expression* expr;
-public:
-	LoopExpression(Expression* _expr):expr(_expr){};
 };
 
 class WhileLoop : public IterationStatement{
