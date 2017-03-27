@@ -19,6 +19,7 @@
     #include "structure/FunctionCallExpression.h"
     #include "structure/BinaryOperatorExpression.h"
     #include "structure/UnaryOperatorExpression.h"
+    #include "structure/ExpressionInteger.h"
     
     #include "structure/Expressions.h"
 
