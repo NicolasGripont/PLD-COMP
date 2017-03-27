@@ -4,10 +4,11 @@
 #include <vector>
 
 #include "Declaration.h"
+#include "DeclarationVariable.h"
+#include "Type.h"
+#include "MultipleDeclarationVariable.h"
 
-class MultipleDeclarationVariable;
 class DeclarationFonction;
-class Type;
 class Expression;
 class DeclarationFonctionStatement;
 class ArgumentList;
@@ -18,17 +19,6 @@ class SimpleStatement;
 class Return;
 class ExpressionVariable;
 class Statement;
-
-class DeclarationVariable {
-protected:
-	char* id;
-public:
-	DeclarationVariable(char* _id):id(_id){};
-
-	char* getId(){
-		return id;
-	}
-};
 
 class DeclarationInitVariable : public DeclarationVariable {
 private:
@@ -54,30 +44,6 @@ public:
 	:multipleDeclarationVariable(_multipleDeclarationVariable){};
 };
 
-class MultipleDeclarationVariable {
-private:
-	Type* type;
-	std::vector<DeclarationVariable*> declarationsVariables;
-public:
-	MultipleDeclarationVariable(){};
-
-	void addDeclarationVariable(DeclarationVariable* dec) {
-		declarationsVariables.push_back(dec);
-	}
-
-	void setType(Type* t){
-		type = t;
-	}
-
-	int countDeclaration() {
-		return declarationsVariables.size();
-	}
-
-	DeclarationVariable*& operator[] (int i) {
-		return declarationsVariables[i];
-	}
-};
-
 class DeclarationFonction : public Declaration {
 private:
 	Type* type;
@@ -87,17 +53,6 @@ private:
 public:
 	DeclarationFonction(Type* _type, char* _id, ArgumentList* _argumentList, DeclarationFonctionStatement* _decFunctionStatement)
 	:Declaration(),type(_type),id(_id),argumentList(_argumentList),decFunctionStatement(_decFunctionStatement){};
-};
-
-class Type {
-public:
-	Type(int _type):type(_type){}
-
-	int getType(){
-		return type;
-	}
-private:
-	int type;
 };
 
 class Expression {

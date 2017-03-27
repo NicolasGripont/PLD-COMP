@@ -1,8 +1,11 @@
 %{
     #include <string>
     
-    #include "structure/Declaration.h"
     #include "structure/Genesis.h"
+    #include "structure/DeclarationVariable.h"
+    #include "structure/Type.h"
+    #include "structure/MultipleDeclarationVariable.h"
+    
     #include "structure/Expressions.h"
     
 	#include "comp.tab.h"

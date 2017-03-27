@@ -4,7 +4,7 @@
 class Declaration
 {
 public:
-	Declaration();
+    Declaration();
 };
 
 #endif

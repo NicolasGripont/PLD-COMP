@@ -4,10 +4,13 @@
 %{
     #include <iostream>
     #include <libgen.h>
-	#include "string.h"
+	#include <string.h>
 
-    #include "structure/Declaration.h"
     #include "structure/Genesis.h"
+    #include "structure/DeclarationVariable.h"
+    #include "structure/Type.h"
+    #include "structure/MultipleDeclarationVariable.h"
+    
     #include "structure/Expressions.h"
     
     char* filename;
