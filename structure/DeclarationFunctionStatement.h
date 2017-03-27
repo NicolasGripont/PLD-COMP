@@ -1,10 +1,10 @@
 #ifndef _DECLARATIONFUNCTIONSTATEMENT_H
 #define _DECLARATIONFUNCTIONSTATEMENT_H
 
-class DeclarationFonctionStatement 
+class DeclarationFunctionStatement 
 {
 public:
-	DeclarationFonctionStatement(bool _declaration);
+	DeclarationFunctionStatement(bool _declaration);
     bool isDeclaration();
 
 private:

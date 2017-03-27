@@ -22,8 +22,7 @@
     #include "structure/ExpressionInteger.h"
     #include "structure/CrementVariable.h"
     #include "structure/ExpressionVariable.h"
-    #include "structure/DeclarationFonctionStatement.h"
-    
+    #include "structure/DeclarationFunctionStatement.h"
     #include "structure/Return.h"
     #include "structure/SimpleStatement.h"
     #include "structure/MultipleStatement.h"
@@ -31,6 +30,8 @@
     #include "structure/LoopExpression.h"
     #include "structure/WhileLoop.h"
     #include "structure/ForLoop.h"
+    #include "structure/DeclarationFunction.h"
+
     #include "structure/Expressions.h"
 
     char* filename;
@@ -48,7 +49,7 @@
     bool variableIsVoid(Genesis** g, Type* type);
     bool tryCallFunction(Genesis** g, char* functionName);
     bool tryDeclareGlobalVariable(Genesis** g,Type* type, MultipleDeclarationVariable* multDecl);
-    bool tryDefineFunction(Genesis** g, Type* type, char* name, DeclarationFonctionStatement* declFunc);
+    bool tryDefineFunction(Genesis** g, Type* type, char* name, DeclarationFunctionStatement* declFunc);
 
     std::vector<VariableContainer*> globalVariables;
     std::vector<FunctionContainer*> functions;
@@ -64,13 +65,13 @@
     Genesis* g;
     Declaration* d;
     MultipleDeclarationVariable* mdv;
-    DeclarationFonction* df;
+    DeclarationFunction* df;
     DeclarationVariable* dv;
     Type* type;
     Expression* expr;
     ExpressionVariable* exprVar;
     AssignmentVariable* assignVar;
-    DeclarationFonctionStatement* dfs;
+    DeclarationFunctionStatement* dfs;
     ArgumentList* al;
     MultipleStatement* ms;
     Argument* arg;
@@ -214,20 +215,20 @@ assignment_variable // utilisé pour affecter une valeur à une variable en deho
 declaration_function
     : type ID '(' ')' declaration_function_statement
     {
-        $$ = new DeclarationFonction($1, $2, new ArgumentList(), $5);
+        $$ = new DeclarationFunction($1, $2, new ArgumentList(), $5);
         if(!tryDefineFunction(g,$1,$2,$5)) YYABORT;
     }
     | type ID '(' arguments_list ')' declaration_function_statement
     {
-        $$ = new DeclarationFonction($1, $2, $4, $6);
+        $$ = new DeclarationFunction($1, $2, $4, $6);
         if(!tryDefineFunction(g,$1,$2,$6)) YYABORT;
     }
     ;
 
 declaration_function_statement
-    : ';'  {  $$ = new PureDeclarationFonctionStatement(); }
-    | '{' multiple_statement '}' {$$ = new InitFonctionStatement($2);}
-    | '{' '}' {$$ = new InitFonctionStatement(new MultipleStatement());}
+    : ';'  {  $$ = new PureDeclarationFunctionStatement(); }
+    | '{' multiple_statement '}' {$$ = new InitFunctionStatement($2);}
+    | '{' '}' {$$ = new InitFunctionStatement(new MultipleStatement());}
     ;
 
 argument
@@ -412,7 +413,7 @@ bool tryDeclareGlobalVariable(Genesis** g, Type* type, MultipleDeclarationVariab
     return true;
 }
 
-bool tryDefineFunction(Genesis** g, Type* type, char* name, DeclarationFonctionStatement* declFunc)
+bool tryDefineFunction(Genesis** g, Type* type, char* name, DeclarationFunctionStatement* declFunc)
 {
     FunctionContainer* func;
     bool isDeclaration = declFunc->isDeclaration();

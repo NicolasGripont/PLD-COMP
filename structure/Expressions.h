@@ -18,7 +18,7 @@
 #include "UnaryOperatorExpression.h"
 #include "ExpressionInteger.h"
 #include "CrementVariable.h"
-#include "DeclarationFonctionStatement.h"
+#include "DeclarationFunctionStatement.h"
 
 #include "Return.h"
 #include "SimpleStatement.h"
@@ -28,9 +28,8 @@
 #include "LoopExpression.h"
 #include "WhileLoop.h"
 #include "ForLoop.h"
+#include "DeclarationFunction.h"
 
-class DeclarationFonction;
-class DeclarationFonctionStatement;
 class GlobalDeclarationVariable;
 class ExpressionVariable;
 class DeclarationInitVariable;
@@ -42,18 +41,14 @@ class UnaryOperatorExpression;
 class ExpressionInteger;
 class ExpressionVariable;
 class CrementVariable;
-class DeclarationFonctionStatement;
-
-class DeclarationFonction : public Declaration {
-private:
-	Type* type;
-	char* id;
-	DeclarationFonctionStatement* decFunctionStatement;
-	ArgumentList* argumentList;
-public:
-	DeclarationFonction(Type* _type, char* _id, ArgumentList* _argumentList, DeclarationFonctionStatement* _decFunctionStatement)
-	:Declaration(),type(_type),id(_id),argumentList(_argumentList),decFunctionStatement(_decFunctionStatement){};
-};
+class DeclarationFunctionStatement;
+class SimpleStatement;
+class MultipleStatement;
+class Statement;
+class IterationStatement;
+class LoopExpression;
+class WhileLoop;
+class DeclarationFunction;
 
 
 class ExpressionSimpleVariable : public ExpressionVariable {
@@ -91,19 +86,19 @@ public:
 
 
 // Declaration sans initialisation de la fonction
-class PureDeclarationFonctionStatement : public DeclarationFonctionStatement {
+class PureDeclarationFunctionStatement : public DeclarationFunctionStatement {
 public:
-	PureDeclarationFonctionStatement()
-    :DeclarationFonctionStatement(true){};
+	PureDeclarationFunctionStatement()
+    :DeclarationFunctionStatement(true){};
 };
 
 // Initialisation du corps de la fonction
-class InitFonctionStatement : public DeclarationFonctionStatement {
+class InitFunctionStatement : public DeclarationFunctionStatement {
 private:
 	MultipleStatement* multipleStatement;
 public:
-	InitFonctionStatement(MultipleStatement* _multipleStatement)
-	:DeclarationFonctionStatement(false),multipleStatement(_multipleStatement){};
+	InitFunctionStatement(MultipleStatement* _multipleStatement)
+	:DeclarationFunctionStatement(false),multipleStatement(_multipleStatement){};
 };
 
 // Declaration de variable dans un block
