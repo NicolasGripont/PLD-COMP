@@ -14,6 +14,7 @@
     #include "structure/ArgumentList.h"
     #include "structure/Expression.h"
     #include "structure/DeclarationInitVariable.h"
+    #include "structure/DeclarationArrayVariable.h"
 
     #include "structure/Expressions.h"
 

@@ -19,15 +19,8 @@ class SimpleStatement;
 class Return;
 class ExpressionVariable;
 class Statement;
-
 class DeclarationInitVariable;
-
-class DeclarationArrayVariable : public DeclarationVariable {
-private:
-	int size;
-public:
-	DeclarationArrayVariable(char* _id, int _size):DeclarationVariable(_id),size(_size){};
-};
+class DeclarationArrayVariable;
 
 // Declaration de variable globale
 class GlobalDeclarationVariable : public Declaration {
