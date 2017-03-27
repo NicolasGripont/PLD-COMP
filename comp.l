@@ -1,13 +1,14 @@
 %{
     #include <string>
-    
+
+    #include "structure/Declaration.h"
     #include "structure/Genesis.h"
     #include "structure/DeclarationVariable.h"
     #include "structure/Type.h"
     #include "structure/MultipleDeclarationVariable.h"
     
     #include "structure/Expressions.h"
-    
+
 	#include "comp.tab.h"
 
 	void compterColonne();
@@ -94,7 +95,7 @@ quote '
 "else"		{ compterColonne(); return ELSE; }
 
 {quote}{lettre}{quote} { compterColonne(); yylval.i = yytext[1]; return INT; }
-({lettre}|{underscore})({lettre}|{chiffre}|{underscore})* { compterColonne(); yylval.s = yytext; return ID; }
+({lettre}|{underscore})({lettre}|{chiffre}|{underscore})* { compterColonne(); yylval.s = strdup(yytext); return ID; }
 {chiffre}+ { compterColonne(); yylval.i = atoi(yytext); return INT; }
 
 "/*" { compterColonne(); leverErreurSyntaxe("commentaire '/*' non fermé."); return yytext[0]; }
