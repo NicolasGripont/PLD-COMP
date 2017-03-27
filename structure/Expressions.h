@@ -64,7 +64,6 @@ public:
 	:AssignmentVariable(_exprVar,_expr),op(_op){};
 };
 
-
 // Declaration sans initialisation de la fonction
 class PureDeclarationFunctionStatement : public DeclarationFunctionStatement {
 public:

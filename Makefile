@@ -9,8 +9,8 @@ FunctionCallExpression.h BinaryOperatorExpression.h UnaryOperatorExpression.h Ex
 ExpressionVariable.h CrementVariable.h DeclarationFunctionStatement.h \
 \
 Return.h SimpleStatement.h ReturnStatement.h UselessStatement.h MultipleStatement.h Statement.h \
-IterationStatement.h SelectionStatement.h ExpressionStatement.h DeclarationVariableStatement.h LoopExpression.h \
-WhileLoop.h ForLoop.h DeclarationFunction.h ExpressionSimpleVariable.h
+BlockDeclarationVariable.h IterationStatement.h SelectionStatement.h ExpressionStatement.h \
+DeclarationVariableStatement.h LoopExpression.h WhileLoop.h ForLoop.h DeclarationFunction.h ExpressionSimpleVariable.h
 
 BUILDIR = structure/
 OBJ = $(addprefix $(BUILDIR), $(INT:.h=.o))

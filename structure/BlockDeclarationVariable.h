@@ -8,8 +8,7 @@
 class BlockDeclarationVariable : public SimpleStatement
 {
 public:
-    BlockDeclarationVariable(MultipleDeclarationVariable* _multipleDeclarationVariable)
-    :SimpleStatement(),multipleDeclarationVariable(_multipleDeclarationVariable){};
+    BlockDeclarationVariable(MultipleDeclarationVariable* _multipleDeclarationVariable);
 
 private:
     MultipleDeclarationVariable* multipleDeclarationVariable;
