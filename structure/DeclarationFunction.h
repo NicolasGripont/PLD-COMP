@@ -6,10 +6,11 @@
 #include "ArgumentList.h"
 #include "Type.h"
 
-class DeclarationFunction : public Declaration 
+class DeclarationFunction : public Declaration
 {
 public:
 	DeclarationFunction(Type* _type, char* _id, ArgumentList* _argumentList, DeclarationFunctionStatement* _decFunctionStatement);
+	virtual string print();
 
 private:
 	Type* type;

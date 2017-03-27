@@ -4,9 +4,11 @@
 #include "ExpressionVariable.h"
 #include "Expression.h"
 
-class AssignmentVariable : public Expression {
+class AssignmentVariable : public Expression
+{
 public:
 	AssignmentVariable(ExpressionVariable* _exprVar, Expression* _expr);
+	virtual string print();
 
 protected:
 	ExpressionVariable* exprVar;

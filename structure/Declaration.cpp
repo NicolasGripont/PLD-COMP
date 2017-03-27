@@ -1,6 +1,10 @@
 #include "Declaration.h"
 
-Declaration::Declaration()
+Declaration::Declaration() : Printer()
 {
 
+}
+
+string Declaration::print() {
+	return "Declaration";
 }

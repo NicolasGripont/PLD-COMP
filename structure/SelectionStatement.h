@@ -9,6 +9,7 @@ class SelectionStatement : public SimpleStatement
 {
 public:
     SelectionStatement(Expression* _expr, Statement* _stat, Statement* _elseStat);
+    virtual string print();
 
 private:
     // Expression dans le if

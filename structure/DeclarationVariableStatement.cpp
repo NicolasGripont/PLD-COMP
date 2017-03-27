@@ -5,3 +5,7 @@ DeclarationVariableStatement::DeclarationVariableStatement()
 {
 
 }
+
+string DeclarationVariableStatement::print() {
+	return "DeclarationVariableStatement";
+}

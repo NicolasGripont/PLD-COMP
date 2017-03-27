@@ -5,3 +5,7 @@ DeclarationInitVariable::DeclarationInitVariable(char* _id, Expression* _expr)
 {
 
 }
+
+string DeclarationInitVariable::print() {
+	return "DeclarationInitVariable";
+}

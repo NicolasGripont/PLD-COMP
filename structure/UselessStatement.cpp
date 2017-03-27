@@ -5,3 +5,7 @@ UselessStatement::UselessStatement()
 {
 
 }
+
+string UselessStatement::print() {
+	return "UselessStatement";
+}

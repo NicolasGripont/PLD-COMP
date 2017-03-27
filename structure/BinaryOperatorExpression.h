@@ -3,10 +3,11 @@
 
 #include "Expression.h"
 
-class BinaryOperatorExpression : public Expression 
+class BinaryOperatorExpression : public Expression
 {
 public:
 	BinaryOperatorExpression(Expression* _expr1, Expression* _expr2, int _op);
+	virtual string print();
 
 private:
 	Expression* expr1;

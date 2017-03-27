@@ -1,6 +1,6 @@
 #include "Type.h"
 
-Type::Type(int _type) : type(_type)
+Type::Type(int _type) : Printer(), type(_type)
 {
 
 }
@@ -8,4 +8,8 @@ Type::Type(int _type) : type(_type)
 int Type::getType()
 {
     return type;
+}
+
+string Type::print() {
+	return "Type";
 }

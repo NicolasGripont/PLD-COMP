@@ -5,3 +5,7 @@ PureDeclarationFunctionStatement::PureDeclarationFunctionStatement()
 {
 
 }
+
+string PureDeclarationFunctionStatement::print() {
+	return "PureDeclarationFunctionStatement";
+}

@@ -5,3 +5,7 @@ ReturnStatement::ReturnStatement(Return* _ret)
 {
 
 }
+
+string ReturnStatement::print() {
+	return "ReturnStatement";
+}

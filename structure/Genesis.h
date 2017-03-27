@@ -4,14 +4,16 @@
 #include <vector>
 
 #include "Declaration.h"
+#include "Printer.h"
 
-class Genesis
+class Genesis : public Printer
 {
 public:
     Genesis();
 	
     void addDeclaration(Declaration* declaration);
     int countDeclaration();
+	virtual string print();
 
     Declaration*& operator[] (int i);
 

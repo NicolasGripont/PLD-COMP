@@ -5,15 +5,17 @@
 
 #include "DeclarationVariable.h"
 #include "Type.h"
+#include "Printer.h"
 
-class MultipleDeclarationVariable
+class MultipleDeclarationVariable : public Printer
 {
 public:
     MultipleDeclarationVariable();
-
+    virtual string print();
     void addDeclarationVariable(DeclarationVariable* dec);
     void setType(Type* t);
     int countDeclaration();
+
 	
     DeclarationVariable*& operator[] (int i);
 

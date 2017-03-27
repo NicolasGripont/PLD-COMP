@@ -8,6 +8,7 @@ class ExpressionArrayVariable : public ExpressionVariable
 {
 public:
 	ExpressionArrayVariable(char* _id, Expression* _expr);
+	virtual string print();
 	
 private:
 	char* id;

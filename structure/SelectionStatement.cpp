@@ -5,3 +5,7 @@ SelectionStatement::SelectionStatement(Expression* _expr, Statement* _stat, Stat
 {
 
 }
+
+string SelectionStatement::print() {
+	return "SelectionStatement";
+}

@@ -1,7 +1,11 @@
 #include "Statement.h"
 
  Statement::Statement(MultipleStatement* _multipleStatement)
-    : multipleStatement(_multipleStatement)
+    : Printer(), multipleStatement(_multipleStatement)
 {
 
+}
+
+string Statement::print() {
+	return "Statement";
 }

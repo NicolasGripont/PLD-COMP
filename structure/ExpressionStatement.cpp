@@ -5,3 +5,7 @@ ExpressionStatement::ExpressionStatement(Expression* _expr)
 {
 
 }
+
+string ExpressionStatement::print() {
+	return "ExpressionStatement";
+}

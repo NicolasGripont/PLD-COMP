@@ -5,3 +5,7 @@ IterationStatement::IterationStatement(Statement* _statement)
 {
 
 }
+
+string IterationStatement::print() {
+	return "IterationStatement";
+}

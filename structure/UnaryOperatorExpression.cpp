@@ -1,7 +1,11 @@
 #include "UnaryOperatorExpression.h"
 
 UnaryOperatorExpression::UnaryOperatorExpression(Expression* _expr, int _op)
-	:expr(_expr),op(_op),Expression()
+	: Expression(), expr(_expr), op(_op)
 {
 
+}
+
+string UnaryOperatorExpression::print() {
+	return "UnaryOperatorExpression";
 }

@@ -1,10 +1,13 @@
 #ifndef _EXPRESSION_H
 #define _EXPRESSION_H
 
-class Expression
+#include "Printer.h"
+
+class Expression : public Printer
 {
 public:
     Expression();
+    virtual string print();
 };
 
 #endif

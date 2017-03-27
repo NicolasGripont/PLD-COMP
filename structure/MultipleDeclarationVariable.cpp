@@ -1,6 +1,6 @@
 #include "MultipleDeclarationVariable.h"
 
-MultipleDeclarationVariable::MultipleDeclarationVariable()
+MultipleDeclarationVariable::MultipleDeclarationVariable() : Printer()
 {
 
 };
@@ -23,4 +23,8 @@ int MultipleDeclarationVariable::countDeclaration()
 DeclarationVariable*& MultipleDeclarationVariable::operator[] (int i)
 {
     return declarationsVariables[i];
+}
+
+string MultipleDeclarationVariable::print() {
+	return "MultipleDeclarationVariable";
 }

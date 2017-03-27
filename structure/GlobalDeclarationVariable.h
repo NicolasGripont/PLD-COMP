@@ -8,6 +8,7 @@ class GlobalDeclarationVariable : public Declaration
 {
 public:
 	GlobalDeclarationVariable(MultipleDeclarationVariable* _multipleDeclarationVariable);
+	virtual string print();
 
 private:
 	MultipleDeclarationVariable* multipleDeclarationVariable;

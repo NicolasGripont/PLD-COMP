@@ -1,6 +1,6 @@
 #include "MultipleStatement.h"
 
-MultipleStatement::MultipleStatement()
+MultipleStatement::MultipleStatement() : Printer()
 {
 
 }
@@ -8,4 +8,8 @@ MultipleStatement::MultipleStatement()
 void MultipleStatement::addStatement(SimpleStatement* statement)
 {
     statements.push_back(statement);
+}
+
+string MultipleStatement::print() {
+	return "MultipleStatement";
 }

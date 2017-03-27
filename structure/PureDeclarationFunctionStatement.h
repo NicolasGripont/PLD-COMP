@@ -8,6 +8,7 @@ class PureDeclarationFunctionStatement : public DeclarationFunctionStatement
 {
 public:
 	PureDeclarationFunctionStatement();
+	virtual string print();
 };
 
 #endif

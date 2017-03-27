@@ -8,6 +8,7 @@ class WhileLoop : public IterationStatement
 {
 public:
     WhileLoop(Expression* _expr, Statement* _statement);
+    virtual string print();
 
 private:
     Expression* expr;

@@ -5,3 +5,7 @@ InitFunctionStatement::InitFunctionStatement(MultipleStatement* _multipleStateme
 {
 
 }
+
+string InitFunctionStatement::print() {
+	return "InitFunctionStatement";
+}

@@ -7,7 +7,8 @@ class FunctionCallExpression : public Expression
 {
 public:
 	FunctionCallExpression(char* _id, Expression* _expr);
-
+	virtual string print();
+	
 private:
 	char* id;
 	Expression* expr;

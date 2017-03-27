@@ -1,6 +1,6 @@
 #include "ArgumentList.h"
 
-ArgumentList::ArgumentList()
+ArgumentList::ArgumentList() : Printer()
 {
 
 }
@@ -8,4 +8,8 @@ ArgumentList::ArgumentList()
 void ArgumentList::addArgument(Argument* arg)
 {
     arguments.push_back(arg);
+}
+
+string ArgumentList::print() {
+	return "ArgumentList";
 }

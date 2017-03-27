@@ -1,6 +1,10 @@
 #include "ExpressionVariable.h"
 
-ExpressionVariable::ExpressionVariable():Expression()
+ExpressionVariable::ExpressionVariable() : Expression()
 {
 
+}
+
+string ExpressionVariable::print() {
+	return "ExpressionVariable";
 }

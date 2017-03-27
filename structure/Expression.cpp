@@ -1,6 +1,10 @@
 #include "Expression.h"
 
-Expression::Expression()
+Expression::Expression() : Printer()
 {
 
+}
+
+string Expression::print() {
+	return "Expression";
 }

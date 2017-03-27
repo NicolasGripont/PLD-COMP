@@ -7,6 +7,7 @@ class UselessStatement : public SimpleStatement
 {
 public:
 	UselessStatement();
+	virtual string print();
 };
 
 #endif

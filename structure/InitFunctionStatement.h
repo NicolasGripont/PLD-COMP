@@ -10,6 +10,7 @@ class InitFunctionStatement : public DeclarationFunctionStatement
 
 public:
     InitFunctionStatement(MultipleStatement* _multipleStatement);
+    virtual string print();
 
 private:
     MultipleStatement* multipleStatement;

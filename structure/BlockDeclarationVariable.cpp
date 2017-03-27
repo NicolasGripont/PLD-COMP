@@ -5,3 +5,7 @@ BlockDeclarationVariable::BlockDeclarationVariable(MultipleDeclarationVariable* 
 {
 
 }
+
+string BlockDeclarationVariable::print() {
+	return "BlockDeclarationVariable";
+}
