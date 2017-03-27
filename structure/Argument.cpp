@@ -1,7 +1,7 @@
 #include "Argument.h"
 
-Argument::Argument(Type* _type, char* _id, bool _isArray)
-    : Printer(), type(_type), id(_id), isArray(_isArray)
+Argument::Argument(Type* _type, char* _id, bool _array)
+    : Printer(), type(_type), id(_id), array(_array)
 {
 
 }
@@ -24,4 +24,3 @@ bool Argument::isArray()
 {
     return array;
 }
->>>>>>> origin/dev

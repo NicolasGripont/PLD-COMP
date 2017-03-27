@@ -7,7 +7,7 @@
 class Argument : public Printer
 {
 public:
-    Argument(Type* _type, char* _id = nullptr, bool _isArray = false);
+    Argument(Type* _type, char* _id = nullptr, bool _array = false);
     virtual string print();
     Type* getType();
     char* getName();
