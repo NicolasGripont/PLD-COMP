@@ -146,14 +146,24 @@ public:
 };
 
 class DeclarationFonctionStatement {
+private:
+    // Si vrai : Declaration, si faux : initialisation
+    bool declaration;
 public:
-	DeclarationFonctionStatement(){};
+	DeclarationFonctionStatement(bool _declaration)
+    :declaration(_declaration){};
+
+    bool isDeclaration()
+    {
+        return declaration;
+    }
 };
 
 // Declaration sans initialisation de la fonction
 class PureDeclarationFonctionStatement : public DeclarationFonctionStatement {
 public:
-	PureDeclarationFonctionStatement():DeclarationFonctionStatement(){};
+	PureDeclarationFonctionStatement()
+    :DeclarationFonctionStatement(true){};
 };
 
 // Initialisation du corps de la fonction
@@ -162,7 +172,18 @@ private:
 	MultipleStatement* multipleStatement;
 public:
 	InitFonctionStatement(MultipleStatement* _multipleStatement)
-	:DeclarationFonctionStatement(),multipleStatement(_multipleStatement){};
+	:DeclarationFonctionStatement(false),multipleStatement(_multipleStatement){};
+};
+
+class ArgumentList {
+private:
+	std::vector<Argument*> arguments;
+public:
+	ArgumentList(){};
+
+	void addArgument(Argument* arg){
+		arguments.push_back(arg);
+	}
 };
 
 class MultipleStatement {
@@ -174,6 +195,16 @@ public:
 	void addStatement(SimpleStatement* statement){
 		statements.push_back(statement);
 	}
+};
+
+class Argument {
+private:
+	Type* type;
+	char* id;
+	bool isArray;
+public:
+	Argument(Type* _type, char* _id=nullptr, bool _isArray = false)
+	:type(_type),id(_id),isArray(_isArray){};
 };
 
 class SimpleStatement{
@@ -279,12 +310,24 @@ public:
 
 // Struct qui n'est pas utilisee dans la structure de donnees
 // mais qui sert a la detection des Erreur
-struct VariableContainer {
+struct VariableContainer
+{
 	char* name;
 	int type;
 
 	VariableContainer(char* _name, int _type):
 	name(_name),type(_type){};
+};
+
+struct FunctionContainer
+{
+    char* name;
+	int type;
+    // Si vrai : Declaration, si faux : initialisation
+    bool declaration;
+
+	FunctionContainer(char* _name, int _type, bool _declaration):
+	name(_name),type(_type),declaration(_declaration){};
 };
 
 #endif
