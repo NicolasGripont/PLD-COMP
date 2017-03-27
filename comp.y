@@ -10,9 +10,7 @@
     #include "structure/DeclarationVariable.h"
     #include "structure/Type.h"
     #include "structure/MultipleDeclarationVariable.h"
-    #include "structure/Argument.h"
-    #include "structure/ArgumentList.h"
-    
+
     #include "structure/Expressions.h"
 
     char* filename;
@@ -29,6 +27,7 @@
 
     bool variableIsVoid(Type* type);
     std::vector<VariableContainer*> globalVariables;
+    std::vector<FunctionContainer*> functions;
 %}
 
 /**************/
@@ -208,12 +207,29 @@ assignment_variable // utilisé pour affecter une valeur à une variable en deho
     ;
 
 declaration_function
-    : type ID '(' ')' declaration_function_statement {$$ = new DeclarationFonction($1, $2, new ArgumentList(), $5);}
+    : type ID '(' ')' declaration_function_statement
+    {
+        $$ = new DeclarationFonction($1, $2, new ArgumentList(), $5);
+        FunctionContainer* func;
+        bool isDeclaration = $5->isDeclaration();
+        func = new FunctionContainer($2, $1->getType(), isDeclaration);
+
+        for(int i=0;i<functions.size();++i)
+        {
+            FunctionContainer* currFunc = functions[i];
+            if(strcmp(func->name, currFunc->name)==0 && !(func->declaration) && !(currFunc->declaration))
+            {
+                yyerror(g, ("La fonction "+std::string(func->name)+" a déjà été définie.").c_str());
+                YYABORT;
+            }
+        }
+        functions.push_back(func);
+    }
     | type ID '(' arguments_list ')' declaration_function_statement {$$ = new DeclarationFonction($1, $2, $4, $6);}
     ;
 
 declaration_function_statement
-    : ';' {$$ = new PureDeclarationFonctionStatement();}
+    : ';'  {  $$ = new PureDeclarationFonctionStatement(); }
     | '{' multiple_statement '}' {$$ = new InitFonctionStatement($2);}
     | '{' '}' {$$ = new InitFonctionStatement(new MultipleStatement());}
     ;
