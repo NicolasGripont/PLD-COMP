@@ -39,6 +39,7 @@
     #include "structure/WhileLoop.h"
     #include "structure/ForLoop.h"
     #include "structure/DeclarationFunction.h"
+    #include "structure/ExpressionSimpleVariable.h"
 
     #include "structure/Expressions.h"
 

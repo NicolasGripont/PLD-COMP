@@ -34,16 +34,10 @@
 #include "WhileLoop.h"
 #include "ForLoop.h"
 #include "DeclarationFunction.h"
+#include "ExpressionSimpleVariable.h"
 
 class ExpressionVariable;
-
-class ExpressionSimpleVariable : public ExpressionVariable {
-private:
-	char* id;
-public:
-	ExpressionSimpleVariable(char* _id)
-	:ExpressionVariable(),id(_id){};
-};
+class ExpressionSimpleVariable;
 
 class ExpressionArrayVariable : public ExpressionVariable {
 	char* id;
