@@ -3,8 +3,8 @@
 
 #include <vector>
 
-class Genesis;
-class Declaration;
+#include "Declaration.h"
+
 class MultipleDeclarationVariable;
 class DeclarationFonction;
 class Type;
@@ -18,30 +18,6 @@ class SimpleStatement;
 class Return;
 class ExpressionVariable;
 class Statement;
-
-class Genesis {
-public:
-	Genesis(){};
-
-	void addDeclaration(Declaration* declaration){
-		declarations.push_back(declaration);
-	}
-
-	int countDeclaration() {
-		return declarations.size();
-	}
-
-	Declaration*& operator[] (int i) {
-		return declarations[i];
-	}
-private:
-	std::vector<Declaration*> declarations;
-};
-
-class Declaration {
-public:
-	Declaration(){};
-};
 
 class DeclarationVariable {
 protected:

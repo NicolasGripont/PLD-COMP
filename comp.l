@@ -1,6 +1,10 @@
 %{
     #include <string>
-    #include "structure/header/Expressions.h"
+    
+    #include "structure/Declaration.h"
+    #include "structure/Genesis.h"
+    #include "structure/Expressions.h"
+    
 	#include "comp.tab.h"
 
 	void compterColonne();

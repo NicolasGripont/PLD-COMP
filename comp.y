@@ -5,7 +5,11 @@
     #include <iostream>
     #include <libgen.h>
 	#include "string.h"
-    #include "structure/header/Expressions.h"
+
+    #include "structure/Declaration.h"
+    #include "structure/Genesis.h"
+    #include "structure/Expressions.h"
+    
     char* filename;
 
     extern int yylex(void);
