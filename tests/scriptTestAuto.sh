@@ -12,7 +12,7 @@ else
 	 do
 	 		echo "----------------------------------------------------------------"
 	        echo ""
-	 		echo "$1 ./tests/$dirname/$file"
+	 		echo "$1 ./tests/$dirname$file"
 	 		echo ""
 	        $comp $dirname$file
 	        echo ""    
