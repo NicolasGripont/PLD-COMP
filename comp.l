@@ -1,11 +1,21 @@
 %{
     #include <string>
-    
-	using namespace std;
-    
+
+    #include "structure/Declaration.h"
+    #include "structure/Genesis.h"
+    #include "structure/DeclarationVariable.h"
+    #include "structure/Type.h"
+    #include "structure/MultipleDeclarationVariable.h"
+
+    #include "structure/Expressions.h"
+
 	#include "comp.tab.h"
+
+	void compterColonne();
+	void leverErreurSyntaxe(std::string);
 %}
 %option noyywrap
+%option yylineno
 
 chiffre	   [0-9]
 lettre	   [a-zA-Z]
@@ -14,82 +24,105 @@ quote '
 
 %%
 
-[ \n\t]      		{ /* ignore */ }
-\/\/.*			    { /* ignore */ }
-\/\*(.*\n)*.*\*\/	{ /* ignore */ }
-^"#"{lettre}+" ".+	{ /* ignore */ }
+[ \t\v\r\n\f] 		{ compterColonne(); }
+\/\/.*			    { compterColonne(); }
+\/\*(.*\n)*.*\*\/	{ compterColonne(); }
+^"#"{lettre}+" ".+	{ compterColonne(); }
 
-"..."		return ELLIPSE;
+"..."		{ compterColonne(); return ELLIPSE; }
 
-">>="		return RIGHT_DEC_ASSIGN;
-"<<="		return LEFT_DEC_ASSIGN;
+">>="		{ compterColonne(); return RIGHT_DEC_ASSIGN; }
+"<<="		{ compterColonne(); return LEFT_DEC_ASSIGN; }
 
-"+="		return PLUS_ASSIGN;
-"-="		return MINUS_ASSIGN;
-"/="		return DIV_ASSIGN;
-"*="		return MUL_ASSIGN;
-"%="		return MOD_ASSIGN;
-"&="		return AND_ASSIGN;
-"|="		return OR_ASSIGN;
-"^="		return OR_EXCL_ASSIGN;
+"+="		{ compterColonne(); return PLUS_ASSIGN; }
+"-="		{ compterColonne(); return MINUS_ASSIGN; }
+"/="		{ compterColonne(); return DIV_ASSIGN; }
+"*="		{ compterColonne(); return MUL_ASSIGN; }
+"%="		{ compterColonne(); return MOD_ASSIGN; }
+"&="		{ compterColonne(); return AND_ASSIGN; }
+"|="		{ compterColonne(); return OR_ASSIGN; }
+"^="		{ compterColonne(); return OR_EXCL_ASSIGN; }
 
-"++"        return INCREMENT;
-"--"        return DECREMENT;
+"++"        { compterColonne(); return INCREMENT; }
+"--"        { compterColonne(); return DECREMENT; }
 
-">>"		return RIGHT_DEC;
-"<<"		return LEFT_DEC;
+">>"		{ compterColonne(); return RIGHT_DEC; }
+"<<"		{ compterColonne(); return LEFT_DEC; }
 
-">="        return MORE_THAN;
-"<="        return LESS_THAN;
-"!="        return DIFF;
-"=="        return EQUAL;
-"&&"        return AND;
-"||"        return OR;
+">="        { compterColonne(); return MORE_THAN; }
+"<="        { compterColonne(); return LESS_THAN; }
+"!="        { compterColonne(); return DIFF; }
+"=="        { compterColonne(); return EQUAL; }
+"&&"        { compterColonne(); return AND; }
+"||"        { compterColonne(); return OR; }
 
-"="		    return '=';
-"+"         return '+';
-"-"         return '-';
-"/"         return '/';
-"*"         return '*';
-"%"         return '%';
-"&"         return '&';
-"|"         return '|';
-"!"         return '!';
-"~"         return '~';
-"^"         return '^';
+"="		    { compterColonne(); return '='; }
+"+"         { compterColonne(); return '+'; }
+"-"         { compterColonne(); return '-'; }
+"/"         { compterColonne(); return '/'; }
+"*"         { compterColonne(); return '*'; }
+"%"         { compterColonne(); return '%'; }
+"&"         { compterColonne(); return '&'; }
+"|"         { compterColonne(); return '|'; }
+"!"         { compterColonne(); return '!'; }
+"~"         { compterColonne(); return '~'; }
+"^"         { compterColonne(); return '^'; }
 
-">"         return '>';
-"<"         return '<';
+">"         { compterColonne(); return '>'; }
+"<"         { compterColonne(); return '<'; }
 
-";"		    return ';';
-","		    return ',';
+";"		    { compterColonne(); return ';'; }
+","		    { compterColonne(); return ','; }
 
-"{"         return '{';
-"}"         return '}';
-"("         return '(';
-")"	        return ')';
-"["         return '[';
-"]"		    return ']';
+"{"         { compterColonne(); return '{'; }
+"}"         { compterColonne(); return '}'; }
+"("         { compterColonne(); return '('; }
+")"	        { compterColonne(); return ')'; }
+"["         { compterColonne(); return '['; }
+"]"		    { compterColonne(); return ']'; }
 
-"void"		return VOID;
-"char"		return CHAR;
-"int32_t"	return INT32;
-"int64_t"	return INT64;
+"void"		{ compterColonne(); return VOID; }
+"char"		{ compterColonne(); return CHAR; }
+"int32_t"	{ compterColonne(); return INT32; }
+"int64_t"	{ compterColonne(); return INT64; }
 
-"break"		return BREAK;
-"return"	return RETURN;
-"continue"	return CONTINUE;
-"while"		return WHILE;
-"for"		return FOR;
-"if"		return IF;
-"else"		return ELSE;
+"break"		{ compterColonne(); return BREAK; }
+"return"	{ compterColonne(); return RETURN; }
+"continue"	{ compterColonne(); return CONTINUE; }
+"while"		{ compterColonne(); return WHILE; }
+"for"		{ compterColonne(); return FOR; }
+"if"		{ compterColonne(); return IF; }
+"else"		{ compterColonne(); return ELSE; }
 
-{quote}{lettre}{quote} { yylval.i = yytext[1];
-			 				return INT; }
-({lettre}|{underscore})({lettre}|{chiffre}|{underscore})* return ID;
-{chiffre}+ { yylval.i = atoi(yytext);
-             return INT; }
-			 
-.     return yytext[0];
+{quote}{lettre}{quote} { compterColonne(); yylval.i = yytext[1]; return INT; }
+({lettre}|{underscore})({lettre}|{chiffre}|{underscore})* { compterColonne(); yylval.s = strdup(yytext); return ID; }
+{chiffre}+ { compterColonne(); yylval.i = atoi(yytext); return INT; }
+
+"/*" { compterColonne(); leverErreurSyntaxe("commentaire '/*' non fermé."); return yytext[0]; }
+"int "|"float "|"double "|"signed "|"unsigned "|"long " { compterColonne(); leverErreurSyntaxe("type invalide. '" + std::string(yytext) + "' n'est pas reconnu. Essayez int32_t."); return yytext[0]; }
+
+. { compterColonne(); leverErreurSyntaxe("symbole '" + std::string(yytext) + "' non reconnu."); return yytext[0]; }
 
 %%
+
+int column = 0;
+int nextColumn = 0;
+bool hasSyntaxError = false;
+std::string syntaxError;
+
+void leverErreurSyntaxe(std::string err)
+{
+	hasSyntaxError = true;
+	syntaxError = err;
+}
+
+void compterColonne()
+{
+	column = nextColumn;
+
+	int i;
+
+	for (i = 0; yytext[i] != '\0'; ++i, ++nextColumn)
+		if (yytext[i] == '\n')
+			nextColumn = 0;
+}
