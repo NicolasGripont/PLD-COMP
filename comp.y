@@ -41,6 +41,7 @@
     #include "structure/DeclarationFunction.h"
     #include "structure/ExpressionSimpleVariable.h"
     #include "structure/ExpressionArrayVariable.h"
+    #include "structure/AssignmentVariable.h"
 
     #include "structure/Expressions.h"
 

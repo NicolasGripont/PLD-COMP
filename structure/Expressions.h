@@ -40,15 +40,7 @@
 class ExpressionVariable;
 class ExpressionSimpleVariable;
 class ExpressionArrayVariable;
-
-class AssignmentVariable : public Expression {
-protected:
-	ExpressionVariable* exprVar;
-	Expression* expr;
-public:
-	AssignmentVariable(ExpressionVariable* _exprVar, Expression* _expr)
-	:Expression(),exprVar(_exprVar),expr(_expr){};
-};
+class AssignmentVariable;
 
 class AssignmentOperationVariable : public AssignmentVariable{
 private:
