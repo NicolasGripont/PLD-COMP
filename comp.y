@@ -24,6 +24,7 @@
     #include "structure/ExpressionVariable.h"
     #include "structure/DeclarationFonctionStatement.h"
     
+    #include "structure/Return.h"
     #include "structure/SimpleStatement.h"
     #include "structure/MultipleStatement.h"
     #include "structure/Statement.h"

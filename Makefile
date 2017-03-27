@@ -3,7 +3,7 @@
 ####################
 
 # --- Add header files here:
-INT = Declaration.h Genesis.h DeclarationVariable.h Type.h MultipleDeclarationVariable.h ArgumentList.h Argument.h Expression.h DeclarationInitVariable.h DeclarationArrayVariable.h GlobalDeclarationVariable.h FunctionCallExpression.h BinaryOperatorExpression.h UnaryOperatorExpression.h ExpressionInteger.h ExpressionVariable.h CrementVariable.h DeclarationFonctionStatement.h SimpleStatement.h MultipleStatement.h Statement.h IterationStatement.h LoopExpression.h WhileLoop.h ForLoop.h
+INT = Declaration.h Genesis.h DeclarationVariable.h Type.h MultipleDeclarationVariable.h ArgumentList.h Argument.h Expression.h DeclarationInitVariable.h DeclarationArrayVariable.h GlobalDeclarationVariable.h FunctionCallExpression.h BinaryOperatorExpression.h UnaryOperatorExpression.h ExpressionInteger.h ExpressionVariable.h CrementVariable.h DeclarationFonctionStatement.h Return.h SimpleStatement.h MultipleStatement.h Statement.h IterationStatement.h LoopExpression.h WhileLoop.h ForLoop.h
 
 BUILDIR = structure/
 OBJ = $(addprefix $(BUILDIR), $(INT:.h=.o))
@@ -38,6 +38,7 @@ ExpressionVariable.o: ExpressionVariable.cpp Expression.h
 CrementVariable.o: CrementVariable.cpp ExpressionVariable.h Expression.h
 DeclarationFonctionStatement.o: DeclarationFonctionStatement.cpp
 
+Return.o: Return.cpp Expression.h
 SimpleStatement.o: SimpleStatement.cpp
 MultipleStatement.o: MultipleStatement.cpp SimpleStatement.h
 Statement.o: Statement.cpp MultipleStatement.h

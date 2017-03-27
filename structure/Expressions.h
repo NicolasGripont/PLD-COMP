@@ -20,6 +20,7 @@
 #include "CrementVariable.h"
 #include "DeclarationFonctionStatement.h"
 
+#include "Return.h"
 #include "SimpleStatement.h"
 #include "MultipleStatement.h"
 #include "Statement.h"
@@ -31,7 +32,6 @@
 class DeclarationFonction;
 class DeclarationFonctionStatement;
 class GlobalDeclarationVariable;
-class Return;
 class ExpressionVariable;
 class DeclarationInitVariable;
 class DeclarationArrayVariable;
@@ -151,13 +151,6 @@ public:
 class DeclarationVariableStatement : public SimpleStatement {
 public:
 	DeclarationVariableStatement():SimpleStatement(){};
-};
-
-class Return {
-private:
-	Expression* expr;
-public:
-	Return(Expression* _expr):expr(_expr){};
 };
 
 // Struct qui n'est pas utilisee dans la structure de donnees
