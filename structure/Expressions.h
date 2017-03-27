@@ -26,6 +26,7 @@
 #include "MultipleStatement.h"
 #include "Statement.h"
 #include "IterationStatement.h"
+#include "SelectionStatement.h"
 #include "ExpressionStatement.h"
 #include "DeclarationVariableStatement.h"
 #include "LoopExpression.h"
@@ -93,19 +94,6 @@ private:
 public:
 	BlockDeclarationVariable(MultipleDeclarationVariable* _multipleDeclarationVariable)
 	:SimpleStatement(),multipleDeclarationVariable(_multipleDeclarationVariable){};
-};
-
-class SelectionStatement : public SimpleStatement {
-private:
-	// Expression dans le if
-	Expression* expr;
-	// Si la condition est realisee
-	Statement* stat;
-	// Sinon (peut etre = nullptr si on a pas de else)
-	Statement* elseStat;
-public:
-	SelectionStatement(Expression* _expr, Statement* _stat, Statement* _elseStat)
-	:SimpleStatement(), expr(_expr), stat(_stat), elseStat(_elseStat){};
 };
 
 // Struct qui n'est pas utilisee dans la structure de donnees

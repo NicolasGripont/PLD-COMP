@@ -31,6 +31,7 @@
     #include "structure/MultipleStatement.h"
     #include "structure/Statement.h"
     #include "structure/IterationStatement.h"
+    #include "structure/SelectionStatement.h"
     #include "structure/ExpressionStatement.h"
     #include "structure/DeclarationVariableStatement.h"
     #include "structure/LoopExpression.h"
