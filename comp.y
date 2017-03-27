@@ -3,6 +3,7 @@
 /**********/
 %{
     #include <iostream>
+    #include <stack>
     #include <libgen.h>
 	#include <string.h>
 
@@ -54,6 +55,7 @@
     extern int yylex(void);
     void yyerror(Genesis** g, const char* msg);
     void yyerror(const char* msg);
+    void yywarning(const char* msg);
 
     extern FILE* yyin;
     extern int yylineno;
@@ -64,13 +66,32 @@
     bool variableIsVoid(Genesis** g, Type* type);
     bool tryCallFunction(Genesis** g, char* functionName);
     bool tryDeclareGlobalVariable(Genesis** g,Type* type, MultipleDeclarationVariable* multDecl);
-
     bool tryDefineFunction(Genesis** g, Type* type, char* name, DeclarationFunctionStatement* declFunc);
     bool checkVariableDuplicationInFunction(Genesis** g, char* functionName, ArgumentList* args, DeclarationFunctionStatement* declFunc);
     bool checkVariableDuplicationInBlock(Genesis** g, MultipleStatement* multStat);
 
+    int getFunctionType(char* name);
+    // Si on a plusieurs fois une variable de même nom,
+    // renvoi le type de celle du bloc courant
+    int getVariableType(char* name);
+    void pushVariablesInStack(Type* type, MultipleDeclarationVariable* multDecl);
+    void pushVariablesInStack(Argument* arg);
+    void popVariablesFromStack(ArgumentList* args, DeclarationFunctionStatement* stat);
+
     std::vector<VariableContainer*> globalVariables;
     std::vector<FunctionContainer*> functions;
+    // Une "pile" des variables locales courantes (rempli et vidé au fur et a mesure)
+    std::vector<VariableContainer*> currentVars;
+
+    // Donne le type primitif correspondant à un type tableau (ex: INT32[] -> INT32)
+    int primitiveToArrayType(int type);
+    // Donne le type tableau correspondant à un type primitif (ex: INT32 -> INT32[])
+    int arrayToPrimitiveType(int type);
+    bool isArrayType(int type);
+
+    bool checkConflictError(Genesis** g, Expression* expr1, Expression* expr2);
+    std::string getNameOfType(int type);
+    bool checkVariableExist(Genesis** g, char* name);
 %}
 
 /**************/
@@ -213,23 +234,23 @@ multiple_declaration_variable
     ;
 
 declaration_variable
-    : ID {$$ = new DeclarationVariable($1);}
+    : ID {$$ = new DeclarationVariable($1,false);}
     | ID '[' INT ']' {$$ = new DeclarationArrayVariable($1, $3);}
     | ID '=' expression {$$ = new DeclarationInitVariable($1, $3);}
     ;
 
 assignment_variable // utilisé pour affecter une valeur à une variable en dehors de son initialisation (int a; a = 3;)
-    : expr_var '=' expression {$$ = new AssignmentVariable($1,$3);}
-    | expr_var MUL_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,MUL_ASSIGN);}
-    | expr_var DIV_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,DIV_ASSIGN);}
-    | expr_var MOD_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,MOD_ASSIGN);}
-    | expr_var PLUS_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,PLUS_ASSIGN);}
-    | expr_var MINUS_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,MINUS_ASSIGN);}
-    | expr_var LEFT_DEC_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,LEFT_DEC_ASSIGN);}
-    | expr_var RIGHT_DEC_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,RIGHT_DEC_ASSIGN);}
-    | expr_var AND_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,AND_ASSIGN);}
-    | expr_var OR_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,OR_ASSIGN);}
-    | expr_var OR_EXCL_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,OR_EXCL_ASSIGN);}
+    : expr_var '=' expression {$$ = new AssignmentVariable($1,$3); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expr_var MUL_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,MUL_ASSIGN); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expr_var DIV_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,DIV_ASSIGN); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expr_var MOD_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,MOD_ASSIGN); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expr_var PLUS_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,PLUS_ASSIGN); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expr_var MINUS_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,MINUS_ASSIGN); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expr_var LEFT_DEC_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,LEFT_DEC_ASSIGN); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expr_var RIGHT_DEC_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,RIGHT_DEC_ASSIGN); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expr_var AND_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,AND_ASSIGN); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expr_var OR_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,OR_ASSIGN); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expr_var OR_EXCL_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,OR_EXCL_ASSIGN); if(checkConflictError(g,$1,$3)) YYABORT;}
     ;
 
 declaration_function
@@ -239,12 +260,14 @@ declaration_function
         $$ = new DeclarationFunction($1, $2, args, $5);
         if(!tryDefineFunction(g,$1,$2,$5)) YYABORT;
         if(checkVariableDuplicationInFunction(g,$2,args,$5)) YYABORT;
+        popVariablesFromStack(nullptr,$5);
     }
     | type ID '(' arguments_list ')' declaration_function_statement
     {
         $$ = new DeclarationFunction($1, $2, $4, $6);
         if(!tryDefineFunction(g,$1,$2,$6)) YYABORT;
         if(checkVariableDuplicationInFunction(g,$2,$4,$6)) YYABORT;
+        popVariablesFromStack($4,$6);
     }
     ;
 
@@ -270,8 +293,16 @@ argument
     ;
 
 arguments_list
-    : argument {$$ = new ArgumentList(); $$->addArgument($1);}
-    | arguments_list ',' argument {$$ = $1; $1->addArgument($3);}
+    : argument
+    {
+        $$ = new ArgumentList(); $$->addArgument($1);
+        pushVariablesInStack($1);
+    }
+    | arguments_list ',' argument
+    {
+        $$ = $1; $1->addArgument($3);
+        pushVariablesInStack($3);
+    }
     ;
 
 simple_statement
@@ -282,6 +313,7 @@ simple_statement
     {
         $$ = new BlockDeclarationVariable($2); $2->setType($1);
         if(variableIsVoid(g, $1)) YYABORT;
+        pushVariablesInStack($1,$2);
     }
     | expression ';' {$$ = new ExpressionStatement($1);}
     | return ';' {$$ = new ReturnStatement($1);}
@@ -320,20 +352,20 @@ loop_expression
 expression
     : '(' expression ')' {$$ = $2;}
     | expression ',' expression  {$$ = new BinaryOperatorExpression($1,$3,',');}
-    | expression EQUAL expression {$$ = new BinaryOperatorExpression($1,$3,EQUAL);}
-    | expression DIFF expression {$$ = new BinaryOperatorExpression($1,$3,DIFF);}
-    | expression '<' expression {$$ = new BinaryOperatorExpression($1,$3,'<');}
-    | expression LESS_THAN expression {$$ = new BinaryOperatorExpression($1,$3,LESS_THAN);}
-    | expression '>' expression {$$ = new BinaryOperatorExpression($1,$3,'>');}
-    | expression MORE_THAN expression {$$ = new BinaryOperatorExpression($1,$3,MORE_THAN);}
-    | expression AND expression {$$ = new BinaryOperatorExpression($1,$3,AND);}
-    | expression OR expression {$$ = new BinaryOperatorExpression($1,$3,OR);}
+    | expression EQUAL expression {$$ = new BinaryOperatorExpression($1,$3,EQUAL,INT32); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expression DIFF expression {$$ = new BinaryOperatorExpression($1,$3,DIFF,INT32); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expression '<' expression {$$ = new BinaryOperatorExpression($1,$3,'<',INT32); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expression LESS_THAN expression {$$ = new BinaryOperatorExpression($1,$3,LESS_THAN,INT32); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expression '>' expression {$$ = new BinaryOperatorExpression($1,$3,'>',INT32); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expression MORE_THAN expression {$$ = new BinaryOperatorExpression($1,$3,MORE_THAN,INT32); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expression AND expression {$$ = new BinaryOperatorExpression($1,$3,AND,INT32); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expression OR expression {$$ = new BinaryOperatorExpression($1,$3,OR,INT32); if(checkConflictError(g,$1,$3)) YYABORT;}
     | assignment_variable {$$ = $1;}
     | '+' expression {$$ = new UnaryOperatorExpression($2,'+');}
     | '-' expression %prec NEG {$$ = new UnaryOperatorExpression($2,'-');}
     | '~' expression {$$ = new UnaryOperatorExpression($2,'~');}
     | '!' expression {$$ = new UnaryOperatorExpression($2,'!');}
-    | INT {$$ = new ExpressionInteger($1);}
+    | INT {$$ = new ExpressionInteger($1,INT32);}
     | INCREMENT expr_var {$$ = new CrementVariable($2, true, true);}
     | DECREMENT expr_var {$$ = new CrementVariable($2, false, true);}
     | expr_var INCREMENT {$$ = new CrementVariable($1, true, false);}
@@ -341,34 +373,48 @@ expression
     | expr_var {$$ = $1;}
     | ID '(' expression ')'
     {
-        $$ = new FunctionCallExpression($1, $3);
         if(!tryCallFunction(g, $1)) YYABORT;
+        $$ = new FunctionCallExpression($1, $3, getFunctionType($1));
     }
     | ID '(' ')'
     {
-        $$ = new FunctionCallExpression($1, nullptr);
         if(!tryCallFunction(g, $1)) YYABORT;
+        $$ = new FunctionCallExpression($1, nullptr, getFunctionType($1));
     }
-    | expression '+' expression {$$ = new BinaryOperatorExpression($1,$3,'+');}
-    | expression '-' expression {$$ = new BinaryOperatorExpression($1,$3,'-');}
-    | expression '*' expression {$$ = new BinaryOperatorExpression($1,$3,'*');}
-    | expression '/' expression {$$ = new BinaryOperatorExpression($1,$3,'/');}
-    | expression '%' expression {$$ = new BinaryOperatorExpression($1,$3,'%');}
-    | expression '&' expression {$$ = new BinaryOperatorExpression($1,$3,'&');}
-    | expression '|' expression {$$ = new BinaryOperatorExpression($1,$3,'|');}
-    | expression '^' expression {$$ = new BinaryOperatorExpression($1,$3,'^');}
-    | expression LEFT_DEC expression {$$ = new BinaryOperatorExpression($1,$3,LEFT_DEC);}
-    | expression RIGHT_DEC expression {$$ = new BinaryOperatorExpression($1,$3,RIGHT_DEC);}
+    | expression '+' expression {$$ = new BinaryOperatorExpression($1,$3,'+'); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expression '-' expression {$$ = new BinaryOperatorExpression($1,$3,'-'); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expression '*' expression {$$ = new BinaryOperatorExpression($1,$3,'*'); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expression '/' expression {$$ = new BinaryOperatorExpression($1,$3,'/'); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expression '%' expression {$$ = new BinaryOperatorExpression($1,$3,'%'); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expression '&' expression {$$ = new BinaryOperatorExpression($1,$3,'&'); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expression '|' expression {$$ = new BinaryOperatorExpression($1,$3,'|'); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expression '^' expression {$$ = new BinaryOperatorExpression($1,$3,'^'); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expression LEFT_DEC expression {$$ = new BinaryOperatorExpression($1,$3,LEFT_DEC); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expression RIGHT_DEC expression {$$ = new BinaryOperatorExpression($1,$3,RIGHT_DEC); if(checkConflictError(g,$1,$3)) YYABORT;}
     ;
 
 expr_var
-    : ID '[' expression ']' {$$ = new ExpressionArrayVariable($1, $3);}
-    | ID {$$ = new ExpressionSimpleVariable($1);}
+    : ID '[' expression ']'
+    {
+        if(!checkVariableExist(g,$1)) YYABORT;
+        if(!isArrayType(getVariableType($1)))
+        {
+            yyerror(g, ("tentative d'utilisation de l'opérateur indice de tableau sur la variable non-tableau "+std::string($1)+".").c_str());
+            YYABORT;
+        }
+        $$ = new ExpressionArrayVariable($1, $3, arrayToPrimitiveType(getVariableType($1)));
+    }
+    | ID
+    {
+        if(!checkVariableExist(g,$1)) YYABORT;
+        $$ = new ExpressionSimpleVariable($1, getVariableType($1));
+    }
     ;
 
 selection_statement
     : IF '(' expression ')' statement ELSE statement {$$ = new SelectionStatement($3,$5,$7);}
     | IF '(' expression ')' statement {$$ = new SelectionStatement($3,$5,nullptr);}
+    | IF '(' expression ')' '{' '}' {$$ = new SelectionStatement($3,nullptr,nullptr);}
     ;
 
 %%
@@ -540,7 +586,7 @@ bool checkVariableDuplicationInBlock(Genesis** g, MultipleStatement* multStat)
             {
                 DeclarationVariable* decVar = (*multDecl)[j];
                 VariableContainer* var = new VariableContainer(decVar->getId(), multDecl->getType()->getType());
-                
+
                 // Regarder si la variable existe déjà
                 for(int k=0;k<variables.size();++k)
                 {
@@ -560,14 +606,154 @@ bool checkVariableDuplicationInBlock(Genesis** g, MultipleStatement* multStat)
     return false;
 }
 
-void resoudrePortee(Genesis* g)
+int getFunctionType(char* name)
 {
-    int countDeclaration = g->countDeclaration();
-    for (int i=0 ; i<countDeclaration ; i++)
+    for(int i=0;i<functions.size();++i)
     {
-        Declaration* dec = (*g)[i];
-        std::cout << "cocorico" << std::endl;
+        FunctionContainer* func = functions[i];
+        if(strcmp(name,func->name)==0)
+        {
+            return func->type;
+        }
     }
+    return INT32;
+}
+
+int getVariableType(char* name)
+{
+    // Recherche dans les variables locales
+    for(int i=currentVars.size()-1;i>=0;--i)
+    {
+        VariableContainer* var = currentVars[i];
+        if(strcmp(name,var->name)==0)
+        {
+            return var->type;
+        }
+    }
+
+    // Recherche dans les variables globales
+    for(int i=0;i<globalVariables.size();++i)
+    {
+        VariableContainer* var = globalVariables[i];
+        if(strcmp(name,var->name)==0)
+        {
+            return var->type;
+        }
+    }
+
+    return INT32;
+}
+
+void pushVariablesInStack(Type* type, MultipleDeclarationVariable* multDecl)
+{
+    int typeVar = type->getType();
+    for(int i=0;i<multDecl->countDeclaration();++i)
+    {
+        DeclarationVariable* decVar = (*multDecl)[i];
+
+        if(decVar->isArray())
+        {
+            typeVar = primitiveToArrayType(typeVar);
+        }
+
+        VariableContainer* var = new VariableContainer(decVar->getId(), typeVar);
+        currentVars.push_back(var);
+    }
+}
+
+bool checkVariableExist(Genesis** g, char* name)
+{
+    for(int i=0;i<currentVars.size();++i)
+    {
+        if(strcmp(name,currentVars[i]->name)==0)
+        {
+            return true;
+        }
+    }
+
+    for(int i=0;i<globalVariables.size();++i)
+    {
+        if(strcmp(name,globalVariables[i]->name)==0)
+        {
+            return true;
+        }
+    }
+    yyerror(g, ("La variable "+std::string(name)+" est utilisée mais jamais définie.").c_str());
+    return false;
+}
+
+void pushVariablesInStack(Argument* arg)
+{
+    int typeVar = arg->getType()->getType();
+    if(arg->isArray())
+    {
+        typeVar = primitiveToArrayType(typeVar);
+    }
+    VariableContainer* var = new VariableContainer(arg->getName(), typeVar);
+    currentVars.push_back(var);
+}
+
+void popVariablesFromStack(ArgumentList* args, DeclarationFunctionStatement* stat)
+{
+    int countVars = 0;
+    if(args != nullptr)
+    {
+        countVars += args->countArguments();
+    }
+
+    // Si on dispose du corps de la fonction
+    if(!stat->isDeclaration())
+    {
+        InitFunctionStatement* funcBody = (InitFunctionStatement*)stat;
+        for(int i=0;i<funcBody->countStatements();++i)
+        {
+            SimpleStatement* stat = (*funcBody)[i];
+            if(stat->getType() == BLOCK_DECLARATION_VARIABLE)
+            {
+                BlockDeclarationVariable* blockDeclVar = (BlockDeclarationVariable*) stat;
+                MultipleDeclarationVariable* multDecl = blockDeclVar->getMultipleDeclarationVariable();
+                countVars += multDecl->countDeclaration();
+            }
+        }
+    }
+
+    for(int i=0;i<countVars;++i)
+    {
+        currentVars.pop_back();
+    }
+}
+
+int primitiveToArrayType(int type)
+{
+    switch(type)
+    {
+        case INT64:
+            return INT64_ARRAY;
+        case CHAR:
+            return CHAR_ARRAY;
+        case INT32:
+        default:
+            return INT32_ARRAY;
+    }
+}
+
+int arrayToPrimitiveType(int type)
+{
+    switch(type)
+    {
+        case INT64_ARRAY:
+            return INT64;
+        case CHAR_ARRAY:
+            return CHAR;
+        case INT32_ARRAY:
+        default:
+            return INT32;
+    }
+}
+
+bool isArrayType(int type)
+{
+    return (type == INT64_ARRAY || type == INT32_ARRAY || type == CHAR_ARRAY);
 }
 
 void yyerror(Genesis** g, const char* msg)
@@ -580,6 +766,53 @@ void yyerror(Genesis** g, const char* msg)
     else
     {
         std::cout << filename << ":" << yylineno << ":" << column <<" - erreur : " << msg << std::endl;
+    }
+}
+
+void yywarning(const char* msg)
+{
+    std::cout << filename << ":" << yylineno << ":" << column <<" - warning : " << msg << std::endl;
+}
+
+bool checkConflictError(Genesis** g, Expression* expr1, Expression* expr2)
+{
+    // Si un est un tableau et l'autre non -> erreur
+    // Si elles sont tableau mais de type different
+    if((isArrayType(expr1->getType()) != isArrayType(expr2->getType()))
+    || (isArrayType(expr1->getType()) && isArrayType(expr2->getType()) && (expr1->getType() != expr2->getType())))
+    {
+        yyerror(g, ("Expression de type "+getNameOfType(expr1->getType())+
+        " incompatible avec une expression de type "+getNameOfType(expr2->getType())).c_str());
+        return true;
+    }
+
+    // Si elle sont simple variable de type different -> warning
+    if(expr1->getType() != expr2->getType())
+    {
+        yywarning(("Expression de type "+getNameOfType(expr1->getType())+
+        " associée à une expression de type "+getNameOfType(expr2->getType())+". Conversion forcée.").c_str());
+        return false;
+    }
+    return false;
+}
+
+std::string getNameOfType(int type)
+{
+    switch(type)
+    {
+    case INT64_ARRAY:
+        return "int64_t[]";
+    case CHAR_ARRAY:
+        return "char[]";
+    case INT32_ARRAY:
+        return "int32_t[]";
+    case INT64:
+        return "int64_t";
+    case CHAR:
+        return "char";
+    case INT32:
+    default:
+        return "int32_t";
     }
 }
 
@@ -610,8 +843,6 @@ int main(int argc, char* argv[])
 
     Genesis* g = 0;
     int status = yyparse(&g);
-
-    //resoudrePortee(g);
 
     // Error status
     if (status == 0) // Success

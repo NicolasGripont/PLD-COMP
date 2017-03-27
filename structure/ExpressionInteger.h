@@ -6,7 +6,8 @@
 class ExpressionInteger : public Expression 
 {
 public:
-	ExpressionInteger(int _value);
+
+	ExpressionInteger(int _value, int _type);
 	virtual string print() const;
 
 private:

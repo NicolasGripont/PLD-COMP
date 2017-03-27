@@ -6,11 +6,13 @@
 class FunctionCallExpression : public Expression 
 {
 public:
-	FunctionCallExpression(char* _id, Expression* _expr);
+
+	FunctionCallExpression(char* _id, Expression* _expr, int _type);
 	virtual string print() const;
 	
 private:
 	char* id;
+    // Peut etre nullptr si la fonction ne prend pas de parametres
 	Expression* expr;
 };
 

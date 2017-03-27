@@ -6,12 +6,13 @@
 class DeclarationVariable : public Printer
 {
 public:
-    DeclarationVariable(char* _id);
-    char* getId();
-    virtual string print() const;
-
+ 
+    DeclarationVariable(char* _id, bool _array);
+    char* getId();	bool isArray();
+	virtual string print() const;
 protected:
     char* id;
+    bool array;
 };
 
 #endif
