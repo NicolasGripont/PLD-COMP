@@ -31,7 +31,11 @@
     extern bool hasSyntaxError;
     extern std::string syntaxError;
 
-    bool variableIsVoid(Type* type);
+    bool variableIsVoid(Genesis** g, Type* type);
+    bool tryCallFunction(Genesis** g, char* functionName);
+    bool tryDeclareGlobalVariable(Genesis** g,Type* type, MultipleDeclarationVariable* multDecl);
+    bool tryDefineFunction(Genesis** g, Type* type, char* name, DeclarationFonctionStatement* declFunc);
+
     std::vector<VariableContainer*> globalVariables;
     std::vector<FunctionContainer*> functions;
 %}
@@ -155,27 +159,8 @@ declaration
         GlobalDeclarationVariable* dec = new GlobalDeclarationVariable($2);
         $$ = dec;
         $2->setType($1);
-        if(variableIsVoid($1))
-        {
-            yyerror(nullptr, "une variable ne peut pas être de type void.");
-            YYABORT;
-        }
-        for(int i=0;i<$2->countDeclaration();++i)
-        {
-            DeclarationVariable* decVar = (*$2)[i];
-            VariableContainer* var = new VariableContainer(decVar->getId(), $1->getType());
-
-            for(int j=0;j<globalVariables.size();j++)
-            {
-                if(strcmp(globalVariables[i]->name,var->name)==0)
-                {
-                    yyerror(g, ("la variable globale "+ std::string(var->name)+" a deja ete declaree.").c_str());
-                    YYABORT;
-                }
-            }
-
-            globalVariables.push_back(var);
-        }
+        if(variableIsVoid(g,$1)) YYABORT;
+        if(!tryDeclareGlobalVariable(g,$1,$2)) YYABORT;
     }
     | declaration_function {$$ = $1;}
     ;
@@ -216,38 +201,12 @@ declaration_function
     : type ID '(' ')' declaration_function_statement
     {
         $$ = new DeclarationFonction($1, $2, new ArgumentList(), $5);
-        FunctionContainer* func;
-        bool isDeclaration = $5->isDeclaration();
-        func = new FunctionContainer($2, $1->getType(), isDeclaration);
-
-        for(int i=0;i<functions.size();++i)
-        {
-            FunctionContainer* currFunc = functions[i];
-            if(strcmp(func->name, currFunc->name)==0 && !(func->declaration) && !(currFunc->declaration))
-            {
-                yyerror(g, ("La fonction "+std::string(func->name)+" a déjà été définie.").c_str());
-                YYABORT;
-            }
-        }
-        functions.push_back(func);
+        if(!tryDefineFunction(g,$1,$2,$5)) YYABORT;
     }
     | type ID '(' arguments_list ')' declaration_function_statement
     {
         $$ = new DeclarationFonction($1, $2, $4, $6);
-        FunctionContainer* func;
-        bool isDeclaration = $6->isDeclaration();
-        func = new FunctionContainer($2, $1->getType(), isDeclaration);
-
-        for(int i=0;i<functions.size();++i)
-        {
-            FunctionContainer* currFunc = functions[i];
-            if(strcmp(func->name, currFunc->name)==0 && !(func->declaration) && !(currFunc->declaration))
-            {
-                yyerror(g, ("La fonction "+std::string(func->name)+" a déjà été définie.").c_str());
-                YYABORT;
-            }
-        }
-        functions.push_back(func);
+        if(!tryDefineFunction(g,$1,$2,$6)) YYABORT;
     }
     ;
 
@@ -260,24 +219,15 @@ declaration_function_statement
 argument
     : type {
         $$=new Argument($1);
-        if(variableIsVoid($1)){
-            yyerror(nullptr, "une variable ne peut pas être de type void.");
-            YYABORT;
-        }
+        if(variableIsVoid(g, $1)) YYABORT;
     }
     | type ID {
         $$=new Argument($1,$2);
-        if(variableIsVoid($1)){
-            yyerror(nullptr, "une variable ne peut pas être de type void.");
-            YYABORT;
-        }
+        if(variableIsVoid(g, $1)) YYABORT;
     }
     | type ID '[' ']' {
         $$=new Argument($1,$2,true);
-        if(variableIsVoid($1)){
-            yyerror(nullptr, "une variable ne peut pas être de type void.");
-            YYABORT;
-        }
+        if(variableIsVoid(g, $1)) YYABORT;
     }
     ;
 
@@ -291,10 +241,7 @@ simple_statement
     | selection_statement {$$ = $1;}
     | type multiple_declaration_variable ';' {
         $$ = new BlockDeclarationVariable($2); $2->setType($1);
-        if(variableIsVoid($1)){
-            yyerror(nullptr, "Une variable ne peut pas être de type void.");
-            YYABORT;
-        }
+        if(variableIsVoid(g, $1)) YYABORT;
     }
     | expression ';' {$$ = new ExpressionStatement($1);}
     | return ';' {$$ = new ReturnStatement($1);}
@@ -351,78 +298,12 @@ expression
     | ID '(' expression ')'
     {
         $$ = new FunctionCallExpression($1, $3);
-        int state=0;
-
-        for(int i=0;i<functions.size();++i)
-        {
-            FunctionContainer* currFunc = functions[i];
-
-            // 0 = fonction n'existe pas. 1 = seulement le prototype. 2 = correct
-
-
-            if(strcmp($1, currFunc->name)==0)
-            {
-                if(currFunc->declaration)
-                {
-                    state = 1;
-                }
-                else
-                {
-                    state = 2;
-                    break;
-                }
-            }
-        }
-
-        if(state == 0)
-        {
-            yyerror(g, ("La fonction "+std::string($1)+" n'est pas définie.").c_str());
-            YYABORT;
-        }
-
-        if(state == 1)
-        {
-            yyerror(g, ("La fonction "+std::string($1)+" est déclarée mais jamais définie.").c_str());
-            YYABORT;
-        }
+        if(!tryCallFunction(g, $1)) YYABORT;
     }
     | ID '(' ')'
     {
         $$ = new FunctionCallExpression($1, nullptr);
-        int state=0;
-
-        for(int i=0;i<functions.size();++i)
-        {
-            FunctionContainer* currFunc = functions[i];
-
-            // 0 = fonction n'existe pas. 1 = seulement le prototype. 2 = correct
-
-
-            if(strcmp($1, currFunc->name)==0)
-            {
-                if(currFunc->declaration)
-                {
-                    state = 1;
-                }
-                else
-                {
-                    state = 2;
-                    break;
-                }
-            }
-        }
-
-        if(state == 0)
-        {
-            yyerror(g, ("La fonction "+std::string($1)+" n'est pas définie.").c_str());
-            YYABORT;
-        }
-
-        if(state == 1)
-        {
-            yyerror(g, ("La fonction "+std::string($1)+" est déclarée mais jamais définie.").c_str());
-            YYABORT;
-        }
+        if(!tryCallFunction(g, $1)) YYABORT;
     }
     | expression '+' expression {$$ = new BinaryOperatorExpression($1,$3,'+');}
     | expression '-' expression {$$ = new BinaryOperatorExpression($1,$3,'-');}
@@ -451,9 +332,89 @@ selection_statement
 /***********************/
 /* PROGRAMME PRINCIPAL */
 /***********************/
-bool variableIsVoid(Type* type)
+bool variableIsVoid(Genesis** g, Type* type)
 {
-    return (type->getType() == VOID);
+    if (type->getType() == VOID)
+    {
+        yyerror(g, "Une variable ne peut pas être de type void.");
+        return true;
+    }
+    return false;
+}
+
+bool tryCallFunction(Genesis** g, char* functionName)
+{
+    int state=0;
+
+    for(int i=0;i<functions.size();++i)
+    {
+        FunctionContainer* currFunc = functions[i];
+
+        // 0 = fonction n'existe pas. 1 = seulement le prototype. 2 = correct
+
+        if(strcmp(functionName, currFunc->name)==0)
+        {
+            if(currFunc->declaration)
+            {
+                state = 1;
+            }
+            else
+            {
+                state = 2;
+                break;
+            }
+        }
+    }
+
+    if(state == 0)
+    {
+        yyerror(g, ("La fonction "+std::string(functionName)+" n'est pas définie.").c_str());
+    }
+
+    if(state == 1)
+    {
+        yyerror(g, ("La fonction "+std::string(functionName)+" est déclarée mais jamais définie.").c_str());
+    }
+}
+
+bool tryDeclareGlobalVariable(Genesis** g, Type* type, MultipleDeclarationVariable* multDecl)
+{
+    for(int i=0;i<multDecl->countDeclaration();++i)
+    {
+        DeclarationVariable* decVar = (*multDecl)[i];
+        VariableContainer* var = new VariableContainer(decVar->getId(), type->getType());
+
+        for(int j=0;j<globalVariables.size();j++)
+        {
+            if(strcmp(globalVariables[i]->name,var->name)==0)
+            {
+                yyerror(g, ("la variable globale "+ std::string(var->name)+" a deja ete declaree.").c_str());
+                return false;
+            }
+        }
+
+        globalVariables.push_back(var);
+    }
+    return true;
+}
+
+bool tryDefineFunction(Genesis** g, Type* type, char* name, DeclarationFonctionStatement* declFunc)
+{
+    FunctionContainer* func;
+    bool isDeclaration = declFunc->isDeclaration();
+    func = new FunctionContainer(name, type->getType(), isDeclaration);
+
+    for(int i=0;i<functions.size();++i)
+    {
+        FunctionContainer* currFunc = functions[i];
+        if(strcmp(func->name, currFunc->name)==0 && !(func->declaration) && !(currFunc->declaration))
+        {
+            yyerror(g, ("La fonction "+std::string(func->name)+" a déjà été définie.").c_str());
+            return false;
+        }
+    }
+    functions.push_back(func);
+    return true;
 }
 
 void resoudrePortee(Genesis* g)
