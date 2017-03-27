@@ -26,6 +26,7 @@
 #include "IterationStatement.h"
 #include "LoopExpression.h"
 #include "WhileLoop.h"
+#include "ForLoop.h"
 
 class DeclarationFonction;
 class DeclarationFonctionStatement;
@@ -157,17 +158,6 @@ private:
 	Expression* expr;
 public:
 	Return(Expression* _expr):expr(_expr){};
-};
-
-class ForLoop : public IterationStatement {
-private:
-	LoopExpression* expr1;
-	LoopExpression* expr2;
-	LoopExpression* expr3;
-public:
-	ForLoop(LoopExpression* _expr1, LoopExpression* _expr2, LoopExpression* _expr3, Statement* _statement)
-	:expr1(_expr1),expr2(_expr2),expr3(_expr3)
-	,IterationStatement(_statement){};
 };
 
 // Struct qui n'est pas utilisee dans la structure de donnees

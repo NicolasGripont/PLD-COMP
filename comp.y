@@ -29,6 +29,7 @@
     #include "structure/Statement.h"
     #include "structure/LoopExpression.h"
     #include "structure/WhileLoop.h"
+    #include "structure/ForLoop.h"
     #include "structure/Expressions.h"
 
     char* filename;

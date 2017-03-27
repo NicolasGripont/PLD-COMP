@@ -3,7 +3,7 @@
 ####################
 
 # --- Add header files here:
-INT = Declaration.h Genesis.h DeclarationVariable.h Type.h MultipleDeclarationVariable.h ArgumentList.h Argument.h Expression.h DeclarationInitVariable.h DeclarationArrayVariable.h GlobalDeclarationVariable.h FunctionCallExpression.h BinaryOperatorExpression.h UnaryOperatorExpression.h ExpressionInteger.h ExpressionVariable.h CrementVariable.h DeclarationFonctionStatement.h SimpleStatement.h MultipleStatement.h Statement.h IterationStatement.h LoopExpression.h WhileLoop.h
+INT = Declaration.h Genesis.h DeclarationVariable.h Type.h MultipleDeclarationVariable.h ArgumentList.h Argument.h Expression.h DeclarationInitVariable.h DeclarationArrayVariable.h GlobalDeclarationVariable.h FunctionCallExpression.h BinaryOperatorExpression.h UnaryOperatorExpression.h ExpressionInteger.h ExpressionVariable.h CrementVariable.h DeclarationFonctionStatement.h SimpleStatement.h MultipleStatement.h Statement.h IterationStatement.h LoopExpression.h WhileLoop.h ForLoop.h
 
 BUILDIR = structure/
 OBJ = $(addprefix $(BUILDIR), $(INT:.h=.o))
@@ -44,6 +44,7 @@ Statement.o: Statement.cpp MultipleStatement.h
 IterationStatement.o: IterationStatement.cpp SimpleStatement.h Statement.h
 LoopExpression.o: LoopExpression.cpp Expression.h
 WhileLoop.o: WhileLoop.cpp IterationStatement.h Expression.h
+ForLoop.o: ForLoop.cpp IterationStatement.h LoopExpression.h
 
 clean:
 	rm comp comp.tab.c comp.tab.h comp.output lex.yy.c $(BUILDIR)*.o
