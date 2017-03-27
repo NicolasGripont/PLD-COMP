@@ -7,7 +7,7 @@ class ExpressionSimpleVariable : public ExpressionVariable
 {
 public:
 	ExpressionSimpleVariable(char* _id);
-	virtual string print();
+	virtual string print() const;
 
 private:
 	char* id;

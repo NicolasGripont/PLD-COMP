@@ -5,6 +5,7 @@ Declaration::Declaration() : Printer()
 
 }
 
-string Declaration::print() {
+string Declaration::print() const
+{
 	return "Declaration";
 }

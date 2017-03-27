@@ -5,7 +5,8 @@ SimpleStatement::SimpleStatement(SimpleStatementType _type) : Printer(), type(_t
 
 }
 
-string SimpleStatement::print() {
+string SimpleStatement::print() const
+{
 	return "SimpleStatement";
 }
 

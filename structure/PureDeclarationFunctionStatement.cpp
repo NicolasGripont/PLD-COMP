@@ -6,6 +6,7 @@ PureDeclarationFunctionStatement::PureDeclarationFunctionStatement()
 
 }
 
-string PureDeclarationFunctionStatement::print() {
+string PureDeclarationFunctionStatement::print() const
+{
 	return "PureDeclarationFunctionStatement";
 }

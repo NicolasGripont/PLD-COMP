@@ -6,6 +6,7 @@ CrementVariable::CrementVariable(ExpressionVariable* _exprVar, bool _increment, 
 
 }
 
-string CrementVariable::print() {
+string CrementVariable::print() const
+{
 	return "CrementVariable";
 }

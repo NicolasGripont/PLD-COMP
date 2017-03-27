@@ -8,7 +8,7 @@ class ForLoop : public IterationStatement
 {
 public:
     ForLoop(LoopExpression* _expr1, LoopExpression* _expr2, LoopExpression* _expr3, Statement* _statement);
-	virtual string print();
+	virtual string print() const;
 	
 private:
     LoopExpression* expr1;

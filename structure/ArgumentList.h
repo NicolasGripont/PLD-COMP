@@ -11,7 +11,7 @@ class ArgumentList : public Printer
 {
 public:
     ArgumentList();
-    virtual string print();
+    virtual string print() const;
     void addArgument(Argument* arg);
     int countArguments();
     Argument*& operator[] (int i);

@@ -7,7 +7,7 @@ class Expression : public Printer
 {
 public:
     Expression();
-    virtual string print();
+    virtual string print() const;
 };
 
 #endif

@@ -6,6 +6,7 @@ BinaryOperatorExpression::BinaryOperatorExpression(Expression* _expr1, Expressio
 
 }
 
-string BinaryOperatorExpression::print() {
+string BinaryOperatorExpression::print() const
+{
 	return "BinaryOperatorExpression";
 }

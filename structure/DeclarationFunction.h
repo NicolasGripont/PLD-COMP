@@ -10,7 +10,7 @@ class DeclarationFunction : public Declaration
 {
 public:
 	DeclarationFunction(Type* _type, char* _id, ArgumentList* _argumentList, DeclarationFunctionStatement* _decFunctionStatement);
-	virtual string print();
+	virtual string print() const;
 
 private:
 	Type* type;

@@ -10,7 +10,7 @@ class MultipleStatement : public Printer
 {
 public:
     MultipleStatement();
-	virtual string print();
+	virtual string print() const;
 
     void addStatement(SimpleStatement* statement);
     int countStatements();

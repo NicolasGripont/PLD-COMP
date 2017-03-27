@@ -7,6 +7,7 @@ DeclarationVariableStatement::DeclarationVariableStatement()
 }
 
 
-string DeclarationVariableStatement::print() {
+string DeclarationVariableStatement::print() const
+{
 	return "DeclarationVariableStatement";
 }

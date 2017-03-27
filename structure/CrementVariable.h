@@ -8,7 +8,7 @@ class CrementVariable : public Expression
 {
 public:
 	CrementVariable(ExpressionVariable* _exprVar, bool _increment, bool _preCrement);
-	virtual string print();
+	virtual string print() const;
 
 private:
 	ExpressionVariable* exprVar;

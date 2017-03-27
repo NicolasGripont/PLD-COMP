@@ -6,6 +6,7 @@ DeclarationInitVariable::DeclarationInitVariable(char* _id, Expression* _expr)
 
 }
 
-string DeclarationInitVariable::print() {
+string DeclarationInitVariable::print() const
+{
 	return "DeclarationInitVariable";
 }

@@ -7,7 +7,7 @@ class AssignmentOperationVariable : public AssignmentVariable
 {
 public:
 	AssignmentOperationVariable(ExpressionVariable* _exprVar, Expression* _expr, int _op);
-	virtual string print();
+	virtual string print() const;
 
 private:
 	int op;

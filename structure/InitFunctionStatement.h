@@ -10,7 +10,7 @@ class InitFunctionStatement : public DeclarationFunctionStatement
 
 public:
     InitFunctionStatement(MultipleStatement* _multipleStatement);
-    virtual string print();
+    virtual string print() const;
 
     int countStatements();
 

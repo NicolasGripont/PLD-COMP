@@ -7,7 +7,7 @@ class ExpressionInteger : public Expression
 {
 public:
 	ExpressionInteger(int _value);
-	virtual string print();
+	virtual string print() const;
 
 private:
 	int value;

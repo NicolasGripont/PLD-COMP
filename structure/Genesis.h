@@ -10,10 +10,9 @@ class Genesis : public Printer
 {
 public:
     Genesis();
-	
+	virtual string print() const;
     void addDeclaration(Declaration* declaration);
     int countDeclaration();
-	virtual string print();
 
     Declaration*& operator[] (int i);
 

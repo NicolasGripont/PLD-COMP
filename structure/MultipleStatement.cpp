@@ -5,7 +5,8 @@ MultipleStatement::MultipleStatement() : Printer()
 
 }
 
-string MultipleStatement::print() {
+string MultipleStatement::print() const
+{
 	return "MultipleStatement";
 }
 

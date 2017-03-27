@@ -8,7 +8,7 @@ class DeclarationVariable : public Printer
 public:
     DeclarationVariable(char* _id);
     char* getId();
-    virtual string print();
+    virtual string print() const;
 
 protected:
     char* id;

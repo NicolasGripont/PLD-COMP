@@ -6,6 +6,7 @@ ExpressionStatement::ExpressionStatement(Expression* _expr)
 
 }
 
-string ExpressionStatement::print() {
+string ExpressionStatement::print() const
+{
 	return "ExpressionStatement";
 }

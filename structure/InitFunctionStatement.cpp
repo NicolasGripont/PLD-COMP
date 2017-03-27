@@ -6,7 +6,8 @@ InitFunctionStatement::InitFunctionStatement(MultipleStatement* _multipleStateme
 
 }
 
-string InitFunctionStatement::print() {
+string InitFunctionStatement::print() const
+{
 	return "InitFunctionStatement";
 }
 

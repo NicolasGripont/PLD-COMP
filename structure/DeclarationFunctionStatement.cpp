@@ -11,6 +11,7 @@ bool DeclarationFunctionStatement::isDeclaration()
     return declaration;
 }
 
-string DeclarationFunctionStatement::print() {
+string DeclarationFunctionStatement::print() const
+{
 	return "DeclarationFunctionStatement";
 }

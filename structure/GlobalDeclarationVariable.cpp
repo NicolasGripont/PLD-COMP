@@ -6,6 +6,7 @@ GlobalDeclarationVariable::GlobalDeclarationVariable(MultipleDeclarationVariable
 
 }
 
-string GlobalDeclarationVariable::print() {
+string GlobalDeclarationVariable::print() const
+{
 	return "GlobalDeclarationVariable";
 }

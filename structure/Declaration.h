@@ -7,7 +7,7 @@ class Declaration : public Printer
 {
 public:
     Declaration();
-    virtual string print();
+    virtual string print() const;
 };
 
 #endif

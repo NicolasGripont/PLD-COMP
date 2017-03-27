@@ -6,6 +6,7 @@ ForLoop::ForLoop(LoopExpression* _expr1, LoopExpression* _expr2, LoopExpression*
 
 }
 
-string ForLoop::print() {
+string ForLoop::print() const
+{
 	return "ForLoop";
 }

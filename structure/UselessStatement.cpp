@@ -6,7 +6,8 @@ UselessStatement::UselessStatement()
 
 }
 
-string UselessStatement::print() {
+string UselessStatement::print() const
+{
 	return "UselessStatement";
 }
 

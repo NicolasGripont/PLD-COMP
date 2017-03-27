@@ -6,6 +6,7 @@ LoopExpression::LoopExpression(Expression* _expr)
 
 }
 
-string LoopExpression::print() {
+string LoopExpression::print() const
+{
 	return "LoopExpression";
 }

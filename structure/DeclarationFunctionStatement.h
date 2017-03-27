@@ -10,7 +10,7 @@ public:
 
 	DeclarationFunctionStatement(bool _declaration);
     bool isDeclaration();
-    virtual string print();
+    virtual string print() const;
 
 private:
     // Si vrai : Declaration, si faux : initialisation

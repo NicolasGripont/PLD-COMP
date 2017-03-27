@@ -6,7 +6,8 @@ Argument::Argument(Type* _type, char* _id, bool _array)
 
 }
 
-string Argument::print() {
+string Argument::print() const
+{
 	return "Argument";
 }
 

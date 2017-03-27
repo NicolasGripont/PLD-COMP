@@ -7,7 +7,7 @@ class Type : public Printer
 {
 public:
     Type(int _type);
-    virtual string print();
+    virtual string print() const;
     int getType();
 
 private:

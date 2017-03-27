@@ -6,7 +6,7 @@
 class ExpressionVariable : public Expression {
 public:
 	ExpressionVariable();
-	virtual string print();
+	virtual string print() const;
 };
 
 #endif

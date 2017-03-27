@@ -8,7 +8,7 @@ class ReturnStatement : public SimpleStatement
 {
 public:
     ReturnStatement(Return* _ret);
-    virtual string print();
+    virtual string print() const;
 
 private:
     Return* ret;

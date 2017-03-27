@@ -6,6 +6,7 @@ Return::Return(Expression* _expr)
 
 }
 
-string Return::print() {
+string Return::print() const
+{
 	return "Return";
 }

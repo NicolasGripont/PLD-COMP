@@ -7,7 +7,7 @@ class UnaryOperatorExpression : public Expression
 {
 public:
 	UnaryOperatorExpression(Expression* _expr, int _op);
-	virtual string print();
+	virtual string print() const;
 	
 private:
 	Expression* expr;

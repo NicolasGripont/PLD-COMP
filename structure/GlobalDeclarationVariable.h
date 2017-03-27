@@ -8,7 +8,7 @@ class GlobalDeclarationVariable : public Declaration
 {
 public:
 	GlobalDeclarationVariable(MultipleDeclarationVariable* _multipleDeclarationVariable);
-	virtual string print();
+	virtual string print() const;
 
 private:
 	MultipleDeclarationVariable* multipleDeclarationVariable;

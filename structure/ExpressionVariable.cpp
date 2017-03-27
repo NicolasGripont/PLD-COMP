@@ -5,6 +5,7 @@ ExpressionVariable::ExpressionVariable() : Expression()
 
 }
 
-string ExpressionVariable::print() {
+string ExpressionVariable::print() const
+{
 	return "ExpressionVariable";
 }

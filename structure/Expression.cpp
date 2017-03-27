@@ -5,6 +5,7 @@ Expression::Expression() : Printer()
 
 }
 
-string Expression::print() {
+string Expression::print() const
+{
 	return "Expression";
 }

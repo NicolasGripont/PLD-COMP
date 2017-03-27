@@ -8,7 +8,7 @@ class Argument : public Printer
 {
 public:
     Argument(Type* _type, char* _id = nullptr, bool _array = false);
-    virtual string print();
+    virtual string print() const;
     Type* getType();
     char* getName();
     bool isArray();

@@ -9,7 +9,7 @@ class SelectionStatement : public SimpleStatement
 {
 public:
     SelectionStatement(Expression* _expr, Statement* _stat, Statement* _elseStat);
-    virtual string print();
+    virtual string print() const;
 
 private:
     // Expression dans le if

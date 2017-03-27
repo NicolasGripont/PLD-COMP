@@ -7,7 +7,7 @@ class BinaryOperatorExpression : public Expression
 {
 public:
 	BinaryOperatorExpression(Expression* _expr1, Expression* _expr2, int _op);
-	virtual string print();
+	virtual string print() const;
 
 private:
 	Expression* expr1;

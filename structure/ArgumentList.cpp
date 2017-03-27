@@ -10,7 +10,8 @@ void ArgumentList::addArgument(Argument* arg)
     arguments.push_back(arg);
 }
 
-string ArgumentList::print() {
+string ArgumentList::print() const
+{
 	return "ArgumentList";
 }
 

@@ -6,6 +6,7 @@ FunctionCallExpression::FunctionCallExpression(char* _id, Expression* _expr)
 
 }
 
-string FunctionCallExpression::print() {
+string FunctionCallExpression::print() const
+{
 	return "FunctionCallExpression";
 }

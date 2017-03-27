@@ -8,7 +8,7 @@ class Return : public Printer
 {
 public:
 	Return(Expression* _expr);
-	virtual string print();
+	virtual string print() const;
 
 private:
 	Expression* expr;

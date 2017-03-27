@@ -10,6 +10,7 @@ char* DeclarationVariable::getId()
     return id;
 }
 
-string DeclarationVariable::print() {
+string DeclarationVariable::print() const
+{
 	return "DeclarationVariable";
 }

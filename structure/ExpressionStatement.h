@@ -8,7 +8,7 @@ class ExpressionStatement : public SimpleStatement
 {
 public:
     ExpressionStatement(Expression* _expr);
-	virtual string print();
+	virtual string print() const;
 	
 private:
     Expression* expr;

@@ -6,6 +6,7 @@ AssignmentOperationVariable::AssignmentOperationVariable(ExpressionVariable* _ex
 
 }
 
-string AssignmentOperationVariable::print() {
+string AssignmentOperationVariable::print() const
+{
 	return "AssignmentOperationVariable";
 }

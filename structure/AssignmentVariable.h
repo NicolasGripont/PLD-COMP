@@ -8,7 +8,7 @@ class AssignmentVariable : public Expression
 {
 public:
 	AssignmentVariable(ExpressionVariable* _exprVar, Expression* _expr);
-	virtual string print();
+	virtual string print() const;
 
 protected:
 	ExpressionVariable* exprVar;

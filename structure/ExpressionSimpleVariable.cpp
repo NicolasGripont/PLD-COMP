@@ -6,6 +6,7 @@ ExpressionSimpleVariable::ExpressionSimpleVariable(char* _id)
 
 }
 
-string ExpressionSimpleVariable::print() {
+string ExpressionSimpleVariable::print() const
+{
 	return "ExpressionSimpleVariable";
 }

@@ -6,6 +6,7 @@ SelectionStatement::SelectionStatement(Expression* _expr, Statement* _stat, Stat
 
 }
 
-string SelectionStatement::print() {
+string SelectionStatement::print() const
+{
 	return "SelectionStatement";
 }

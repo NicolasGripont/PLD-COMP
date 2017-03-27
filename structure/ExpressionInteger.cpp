@@ -6,6 +6,7 @@ ExpressionInteger::ExpressionInteger(int _value)
 
 }
 
-string ExpressionInteger::print() {
+string ExpressionInteger::print() const
+{
 	return "ExpressionInteger";
 }
