@@ -10,6 +10,10 @@
 #include "Argument.h"
 #include "ArgumentList.h"
 #include "Expression.h"
+#include "DeclarationInitVariable.h"
+#include "DeclarationArrayVariable.h"
+#include "GlobalDeclarationVariable.h"
+#include "FunctionCallExpression.h"
 
 class DeclarationFonction;
 class DeclarationFonctionStatement;
@@ -22,6 +26,7 @@ class Statement;
 class DeclarationInitVariable;
 class DeclarationArrayVariable;
 class GlobalDeclarationVariable;
+class FunctionCallExpression;
 
 class DeclarationFonction : public Declaration {
 private:
@@ -34,14 +39,6 @@ public:
 	:Declaration(),type(_type),id(_id),argumentList(_argumentList),decFunctionStatement(_decFunctionStatement){};
 };
 
-class FunctionCallExpression : public Expression {
-private:
-	char* id;
-	Expression* expr;
-public:
-	FunctionCallExpression(char* _id, Expression* _expr)
-	:id(_id),expr(_expr),Expression(){};
-};
 
 class BinaryOperatorExpression : public Expression {
 private:
