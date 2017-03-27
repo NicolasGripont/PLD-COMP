@@ -10,7 +10,7 @@ ExpressionVariable.h CrementVariable.h DeclarationFunctionStatement.h \
 \
 Return.h SimpleStatement.h ReturnStatement.h UselessStatement.h MultipleStatement.h Statement.h \
 IterationStatement.h SelectionStatement.h ExpressionStatement.h DeclarationVariableStatement.h LoopExpression.h \
-WhileLoop.h ForLoop.h DeclarationFunction.h
+WhileLoop.h ForLoop.h DeclarationFunction.h ExpressionSimpleVariable.h
 
 BUILDIR = structure/
 OBJ = $(addprefix $(BUILDIR), $(INT:.h=.o))
@@ -59,6 +59,7 @@ LoopExpression.o: LoopExpression.cpp Expression.h
 WhileLoop.o: WhileLoop.cpp IterationStatement.h Expression.h
 ForLoop.o: ForLoop.cpp IterationStatement.h LoopExpression.h
 DeclarationFunction.o: DeclarationFunction.cpp Declaration.h DeclarationFunctionStatement.h ArgumentList.h Type.h
+ExpressionSimpleVariable.o: ExpressionSimpleVariable.cpp ExpressionVariable.h
 
 clean:
 	rm comp comp.tab.c comp.tab.h comp.output lex.yy.c $(BUILDIR)*.o
