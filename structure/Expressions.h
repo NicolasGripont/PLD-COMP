@@ -124,11 +124,6 @@ public:
 	ExpressionStatement(Expression* _expr):SimpleStatement(),expr(_expr){};
 };
 
-class UselessStatement : public SimpleStatement {
-public:
-	UselessStatement():SimpleStatement(){};
-};
-
 class DeclarationVariableStatement : public SimpleStatement {
 public:
 	DeclarationVariableStatement():SimpleStatement(){};

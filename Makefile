@@ -8,8 +8,8 @@ Argument.h Expression.h DeclarationInitVariable.h DeclarationArrayVariable.h Glo
 FunctionCallExpression.h BinaryOperatorExpression.h UnaryOperatorExpression.h ExpressionInteger.h \
 ExpressionVariable.h CrementVariable.h DeclarationFunctionStatement.h \
 \
-Return.h SimpleStatement.h ReturnStatement.h MultipleStatement.h Statement.h IterationStatement.h \
-LoopExpression.h WhileLoop.h ForLoop.h DeclarationFunction.h
+Return.h SimpleStatement.h ReturnStatement.h UselessStatement.h MultipleStatement.h Statement.h \
+IterationStatement.h LoopExpression.h WhileLoop.h ForLoop.h DeclarationFunction.h
 
 BUILDIR = structure/
 OBJ = $(addprefix $(BUILDIR), $(INT:.h=.o))
@@ -47,6 +47,7 @@ DeclarationFunctionStatement.o: DeclarationFunctionStatement.cpp
 Return.o: Return.cpp Expression.h
 SimpleStatement.o: SimpleStatement.cpp
 ReturnStatement.o: ReturnStatement.cpp SimpleStatement.h Return.h
+UselessStatement.o: UselessStatement.cpp SimpleStatement.h
 MultipleStatement.o: MultipleStatement.cpp SimpleStatement.h
 Statement.o: Statement.cpp MultipleStatement.h
 IterationStatement.o: IterationStatement.cpp SimpleStatement.h Statement.h
