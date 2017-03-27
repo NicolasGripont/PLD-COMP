@@ -14,6 +14,7 @@
 #include "DeclarationArrayVariable.h"
 #include "GlobalDeclarationVariable.h"
 #include "FunctionCallExpression.h"
+#include "BinaryOperatorExpression.h"
 
 class DeclarationFonction;
 class DeclarationFonctionStatement;
@@ -27,6 +28,7 @@ class DeclarationInitVariable;
 class DeclarationArrayVariable;
 class GlobalDeclarationVariable;
 class FunctionCallExpression;
+class BinaryOperatorExpression;
 
 class DeclarationFonction : public Declaration {
 private:
@@ -40,15 +42,7 @@ public:
 };
 
 
-class BinaryOperatorExpression : public Expression {
-private:
-	Expression* expr1;
-	Expression* expr2;
-	int op;
-public:
-	BinaryOperatorExpression(Expression* _expr1, Expression* _expr2, int _op)
-	:expr1(_expr1),expr2(_expr1),op(_op),Expression(){};
-};
+
 
 class UnaryOperatorExpression : public Expression {
 private:
