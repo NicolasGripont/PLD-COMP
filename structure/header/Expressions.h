@@ -104,6 +104,10 @@ public:
 class Type {
 public:
 	Type(int _type):type(_type){}
+
+	int getType(){
+		return type;
+	}
 private:
 	int type;
 };

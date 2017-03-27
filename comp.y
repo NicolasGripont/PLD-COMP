@@ -9,12 +9,16 @@
 
     extern int yylex(void);
     void yyerror(Genesis** g, const char* msg);
+	void yyerror(const char* msg);
 
     extern FILE* yyin;
     extern int yylineno;
     extern int column;
     extern bool hasSyntaxError;
     extern std::string syntaxError;
+
+	bool variableIsVoid(Type* type);
+	std::vector<GlobalDeclarationVariable*> globalVariables;
 %}
 
 /**************/
@@ -131,7 +135,16 @@ genesis
     ;
 
 declaration
-    : type multiple_declaration_variable ';' {$$ = new GlobalDeclarationVariable($2); $2->setType($1);}
+    : type multiple_declaration_variable ';' {
+		GlobalDeclarationVariable* dec = new GlobalDeclarationVariable($2);
+		$$ = dec;
+		$2->setType($1);
+		if(variableIsVoid($1)){
+			yyerror(nullptr, "Une variable ne peut pas être de type void.");
+			YYABORT;
+		}
+		globalVariables.push_back(dec);
+	}
     | declaration_function {$$ = $1;}
     ;
 
@@ -179,9 +192,27 @@ declaration_function_statement
     ;
 
 argument
-    : type {$$=new Argument($1);}
-    | type ID {$$=new Argument($1,$2);}
-    | type ID '[' ']' {$$=new Argument($1,$2,true);}
+    : type {
+		$$=new Argument($1);
+		if(variableIsVoid($1)){
+			yyerror(nullptr, "Une variable ne peut pas être de type void.");
+			YYABORT;
+		}
+	}
+    | type ID {
+		$$=new Argument($1,$2);
+		if(variableIsVoid($1)){
+			yyerror(nullptr, "Une variable ne peut pas être de type void.");
+			YYABORT;
+		}
+	}
+    | type ID '[' ']' {
+		$$=new Argument($1,$2,true);
+		if(variableIsVoid($1)){
+			yyerror(nullptr, "Une variable ne peut pas être de type void.");
+			YYABORT;
+		}
+	}
     ;
 
 arguments_list
@@ -192,7 +223,13 @@ arguments_list
 simple_statement
     : iteration_statement {$$ = $1;}
     | selection_statement {$$ = $1;}
-    | type multiple_declaration_variable ';' {$$ = new BlockDeclarationVariable($2); $2->setType($1);}
+    | type multiple_declaration_variable ';' {
+		$$ = new BlockDeclarationVariable($2); $2->setType($1);
+		if(variableIsVoid($1)){
+			yyerror(nullptr, "Une variable ne peut pas être de type void.");
+			YYABORT;
+		}
+	}
     | expression ';' {$$ = new ExpressionStatement($1);}
     | return ';' {$$ = new ReturnStatement($1);}
     | ';'  {$$ = new UselessStatement();}
@@ -274,6 +311,11 @@ selection_statement
 /***********************/
 /* PROGRAMME PRINCIPAL */
 /***********************/
+bool variableIsVoid(Type* type)
+{
+	return (type->getType() == VOID);
+}
+
 void resoudrePortee(Genesis* g)
 {
 	int countDeclaration = g->countDeclaration();
@@ -291,10 +333,10 @@ void yyerror(Genesis** g, const char* msg)
         std::cout << filename << ":" << yylineno << "." << column <<" - erreur de syntaxe : " << syntaxError << std::endl;
         hasSyntaxError = false;
     }
-    else
-    {
-        std::cout << filename << ":" << yylineno << "." << column <<" - erreur : " << msg << std::endl;
-    }
+	else
+	{
+		std::cout << filename << ":" << yylineno << "." << column <<" - erreur : " << msg << std::endl;
+	}
 }
 
 int main(int argc, char* argv[])

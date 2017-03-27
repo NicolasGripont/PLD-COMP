@@ -1,6 +1,8 @@
 #include <stdint.h>
 
-void main() {
+int32_t tonfrere;
+
+void main(int32_t a) {
    int32_t a;
    a = 1 + 2;
 }
