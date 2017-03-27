@@ -5,11 +5,21 @@ MultipleStatement::MultipleStatement() : Printer()
 
 }
 
+string MultipleStatement::print() {
+	return "MultipleStatement";
+}
+
 void MultipleStatement::addStatement(SimpleStatement* statement)
 {
     statements.push_back(statement);
 }
 
-string MultipleStatement::print() {
-	return "MultipleStatement";
+int MultipleStatement::countStatements()
+{
+    return statements.size();
+}
+
+SimpleStatement*& MultipleStatement::operator[] (int i)
+{
+    return statements[i];
 }

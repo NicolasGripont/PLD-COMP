@@ -4,8 +4,10 @@
 #include "Printer.h"
 
 class DeclarationFunctionStatement : public Printer
+
 {
 public:
+
 	DeclarationFunctionStatement(bool _declaration);
     bool isDeclaration();
     virtual string print();

@@ -9,3 +9,13 @@ InitFunctionStatement::InitFunctionStatement(MultipleStatement* _multipleStateme
 string InitFunctionStatement::print() {
 	return "InitFunctionStatement";
 }
+
+int InitFunctionStatement::countStatements()
+{
+    return multipleStatement->countStatements();
+}
+
+SimpleStatement*& InitFunctionStatement::operator[] (int i)
+{
+    return (*multipleStatement)[i];
+}

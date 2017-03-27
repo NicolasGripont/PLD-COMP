@@ -13,3 +13,13 @@ void ArgumentList::addArgument(Argument* arg)
 string ArgumentList::print() {
 	return "ArgumentList";
 }
+
+int ArgumentList::countArguments()
+{
+    return arguments.size();
+}
+
+Argument*& ArgumentList::operator[] (int i)
+{
+    return arguments[i];
+}

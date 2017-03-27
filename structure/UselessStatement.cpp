@@ -1,7 +1,7 @@
 #include "UselessStatement.h"
 
 UselessStatement::UselessStatement()
-    : SimpleStatement()
+    : SimpleStatement(USELESS_STATEMENT)
 {
 
 }
@@ -9,3 +9,4 @@ UselessStatement::UselessStatement()
 string UselessStatement::print() {
 	return "UselessStatement";
 }
+

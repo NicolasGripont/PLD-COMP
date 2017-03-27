@@ -11,7 +11,11 @@ class MultipleStatement : public Printer
 public:
     MultipleStatement();
 	virtual string print();
+
     void addStatement(SimpleStatement* statement);
+    int countStatements();
+
+    SimpleStatement*& operator[] (int i);
 
 private:
     std::vector<SimpleStatement*> statements;

@@ -5,6 +5,10 @@ MultipleDeclarationVariable::MultipleDeclarationVariable() : Printer()
 
 };
 
+string MultipleDeclarationVariable::print() {
+    return "MultipleDeclarationVariable";
+}
+
 void MultipleDeclarationVariable::addDeclarationVariable(DeclarationVariable* dec)
 {
     declarationsVariables.push_back(dec);
@@ -15,6 +19,11 @@ void MultipleDeclarationVariable::setType(Type* t)
     type = t;
 }
 
+Type* MultipleDeclarationVariable::getType()
+{
+    return type;
+}
+
 int MultipleDeclarationVariable::countDeclaration()
 {
     return declarationsVariables.size();
@@ -23,8 +32,4 @@ int MultipleDeclarationVariable::countDeclaration()
 DeclarationVariable*& MultipleDeclarationVariable::operator[] (int i)
 {
     return declarationsVariables[i];
-}
-
-string MultipleDeclarationVariable::print() {
-	return "MultipleDeclarationVariable";
 }

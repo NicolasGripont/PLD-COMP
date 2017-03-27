@@ -22,6 +22,7 @@
     #include "structure/ExpressionInteger.h"
     #include "structure/CrementVariable.h"
     #include "structure/ExpressionVariable.h"
+
     #include "structure/DeclarationFunctionStatement.h"
     #include "structure/DeclarationFunction.h"
     #include "structure/ExpressionSimpleVariable.h"
@@ -43,6 +44,7 @@
     #include "structure/PureDeclarationFunctionStatement.h"
     #include "structure/LoopExpression.h"
     #include "structure/WhileLoop.h"
+
     #include "structure/ForLoop.h"
 
     #include "structure/Erreur.h"
@@ -62,7 +64,10 @@
     bool variableIsVoid(Genesis** g, Type* type);
     bool tryCallFunction(Genesis** g, char* functionName);
     bool tryDeclareGlobalVariable(Genesis** g,Type* type, MultipleDeclarationVariable* multDecl);
+
     bool tryDefineFunction(Genesis** g, Type* type, char* name, DeclarationFunctionStatement* declFunc);
+    bool checkVariableDuplicationInFunction(Genesis** g, char* functionName, ArgumentList* args, DeclarationFunctionStatement* declFunc);
+    bool checkVariableDuplicationInBlock(Genesis** g, MultipleStatement* multStat);
 
     std::vector<VariableContainer*> globalVariables;
     std::vector<FunctionContainer*> functions;
@@ -78,12 +83,14 @@
     Genesis* g;
     Declaration* d;
     MultipleDeclarationVariable* mdv;
+
     DeclarationFunction* df;
     DeclarationVariable* dv;
     Type* type;
     Expression* expr;
     ExpressionVariable* exprVar;
     AssignmentVariable* assignVar;
+
     DeclarationFunctionStatement* dfs;
     ArgumentList* al;
     MultipleStatement* ms;
@@ -228,19 +235,22 @@ assignment_variable // utilisé pour affecter une valeur à une variable en deho
 declaration_function
     : type ID '(' ')' declaration_function_statement
     {
-        $$ = new DeclarationFunction($1, $2, new ArgumentList(), $5);
+        ArgumentList* args = new ArgumentList();
+        $$ = new DeclarationFunction($1, $2, args, $5);
         if(!tryDefineFunction(g,$1,$2,$5)) YYABORT;
+        if(checkVariableDuplicationInFunction(g,$2,args,$5)) YYABORT;
     }
     | type ID '(' arguments_list ')' declaration_function_statement
     {
         $$ = new DeclarationFunction($1, $2, $4, $6);
         if(!tryDefineFunction(g,$1,$2,$6)) YYABORT;
+        if(checkVariableDuplicationInFunction(g,$2,$4,$6)) YYABORT;
     }
     ;
 
 declaration_function_statement
     : ';'  {  $$ = new PureDeclarationFunctionStatement(); }
-    | '{' multiple_statement '}' {$$ = new InitFunctionStatement($2);}
+    | '{' multiple_statement '}'   { $$ = new InitFunctionStatement($2); }
     | '{' '}' {$$ = new InitFunctionStatement(new MultipleStatement());}
     ;
 
@@ -267,7 +277,9 @@ arguments_list
 simple_statement
     : iteration_statement {$$ = $1;}
     | selection_statement {$$ = $1;}
-    | type multiple_declaration_variable ';' {
+
+    | type multiple_declaration_variable ';'
+    {
         $$ = new BlockDeclarationVariable($2); $2->setType($1);
         if(variableIsVoid(g, $1)) YYABORT;
     }
@@ -292,7 +304,11 @@ iteration_statement
     ;
 
 statement
-    : '{' multiple_statement '}' {$$ = new Statement($2);}
+    : '{' multiple_statement '}'
+    {
+        $$ = new Statement($2);
+        if(checkVariableDuplicationInBlock(g,$2)) YYABORT;
+    }
     | simple_statement {MultipleStatement* mult = new MultipleStatement(); mult->addStatement($1); $$ = new Statement(mult);}
     ;
 
@@ -426,6 +442,7 @@ bool tryDeclareGlobalVariable(Genesis** g, Type* type, MultipleDeclarationVariab
     return true;
 }
 
+
 bool tryDefineFunction(Genesis** g, Type* type, char* name, DeclarationFunctionStatement* declFunc)
 {
     FunctionContainer* func;
@@ -445,6 +462,104 @@ bool tryDefineFunction(Genesis** g, Type* type, char* name, DeclarationFunctionS
     return true;
 }
 
+bool checkVariableDuplicationInFunction(Genesis** g, char* functionName, ArgumentList* args, DeclarationFunctionStatement* declFunc)
+{
+    std::vector<VariableContainer*> variables;
+
+    // Test doublons au sein des paramètres de la fonction
+    for(int i=0;i<args->countArguments();++i)
+    {
+        Argument* arg = (*args)[i];
+
+        if(arg->getName() == nullptr)
+        {
+            continue;
+        }
+
+        VariableContainer* var = new VariableContainer(arg->getName(), arg->getType()->getType());
+
+        for(int j=0;j<variables.size();++j)
+        {
+            VariableContainer* currVar = variables[j];
+            if(strcmp(var->name, currVar->name) == 0)
+            {
+                yyerror(g, ("La fonction "+std::string(functionName)+" contient plusieurs paramètres nommés "+std::string(var->name)).c_str());
+                return true;
+            }
+        }
+        variables.push_back(var);
+    }
+
+    // Si on dispose du corps de la fonction
+    if(!declFunc->isDeclaration())
+    {
+        InitFunctionStatement* funcBody = (InitFunctionStatement*)declFunc;
+        for(int i=0;i<funcBody->countStatements();++i)
+        {
+            SimpleStatement* stat = (*funcBody)[i];
+            if(stat->getType() == BLOCK_DECLARATION_VARIABLE)
+            {
+                BlockDeclarationVariable* blockDeclVar = (BlockDeclarationVariable*) stat;
+                MultipleDeclarationVariable* multDecl = blockDeclVar->getMultipleDeclarationVariable();
+                for(int j=0;j<multDecl->countDeclaration();++j)
+                {
+                    DeclarationVariable* decVar = (*multDecl)[j];
+                    VariableContainer* var = new VariableContainer(decVar->getId(), multDecl->getType()->getType());
+                    // Regarder si la variable existe déjà
+                    for(int k=0;k<variables.size();++k)
+                    {
+                        VariableContainer* currVar = variables[k];
+                        if(strcmp(var->name, currVar->name) == 0)
+                        {
+                            yyerror(g, ("La fonction "+std::string(functionName)+" contient plusieurs variables nommé "+std::string(var->name)+" dans la même portée.").c_str());
+                            return true;
+                        }
+                    }
+
+                    variables.push_back(var);
+                }
+            }
+        }
+    }
+
+    return false;
+}
+
+bool checkVariableDuplicationInBlock(Genesis** g, MultipleStatement* multStat)
+{
+    std::vector<VariableContainer*> variables;
+
+    for(int i=0;i<multStat->countStatements();++i)
+    {
+        SimpleStatement* stat = (*multStat)[i];
+        if(stat->getType() == BLOCK_DECLARATION_VARIABLE)
+        {
+            BlockDeclarationVariable* blockDeclVar = (BlockDeclarationVariable*) stat;
+            MultipleDeclarationVariable* multDecl = blockDeclVar->getMultipleDeclarationVariable();
+            for(int j=0;j<multDecl->countDeclaration();++j)
+            {
+                DeclarationVariable* decVar = (*multDecl)[j];
+                VariableContainer* var = new VariableContainer(decVar->getId(), multDecl->getType()->getType());
+                
+                // Regarder si la variable existe déjà
+                for(int k=0;k<variables.size();++k)
+                {
+
+                    VariableContainer* currVar = variables[k];
+                    if(strcmp(var->name, currVar->name) == 0)
+                    {
+                        yyerror(g, ("Plusieurs variables nommé "+std::string(var->name)+" dans la même portée.").c_str());
+                        return true;
+                    }
+                }
+                variables.push_back(var);
+            }
+        }
+    }
+
+    return false;
+}
+
 void resoudrePortee(Genesis* g)
 {
     int countDeclaration = g->countDeclaration();
@@ -459,12 +574,12 @@ void yyerror(Genesis** g, const char* msg)
 {
     if(hasSyntaxError)
     {
-        std::cout << filename << ":" << yylineno << "." << column <<" - erreur de syntaxe : " << syntaxError << std::endl;
+        std::cout << filename << ":" << yylineno << ":" << column <<" - erreur de syntaxe : " << syntaxError << std::endl;
         hasSyntaxError = false;
     }
     else
     {
-        std::cout << filename << ":" << yylineno << "." << column <<" - erreur : " << msg << std::endl;
+        std::cout << filename << ":" << yylineno << ":" << column <<" - erreur : " << msg << std::endl;
     }
 }
 

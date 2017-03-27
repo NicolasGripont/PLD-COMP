@@ -12,6 +12,10 @@ public:
     InitFunctionStatement(MultipleStatement* _multipleStatement);
     virtual string print();
 
+    int countStatements();
+
+    SimpleStatement*& operator[] (int i);
+
 private:
     MultipleStatement* multipleStatement;
 };

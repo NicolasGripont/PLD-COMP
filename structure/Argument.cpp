@@ -9,3 +9,19 @@ Argument::Argument(Type* _type, char* _id, bool _isArray)
 string Argument::print() {
 	return "Argument";
 }
+
+Type* Argument::getType()
+{
+    return type;
+}
+
+char* Argument::getName()
+{
+    return id;
+}
+
+bool Argument::isArray()
+{
+    return array;
+}
+>>>>>>> origin/dev

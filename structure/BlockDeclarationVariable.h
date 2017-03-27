@@ -10,6 +10,7 @@ class BlockDeclarationVariable : public SimpleStatement
 public:
     BlockDeclarationVariable(MultipleDeclarationVariable* _multipleDeclarationVariable);
     virtual string print();
+    MultipleDeclarationVariable* getMultipleDeclarationVariable();
 
 private:
     MultipleDeclarationVariable* multipleDeclarationVariable;

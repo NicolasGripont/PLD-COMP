@@ -11,8 +11,10 @@ class ArgumentList : public Printer
 {
 public:
     ArgumentList();
-    void addArgument(Argument* arg);
     virtual string print();
+    void addArgument(Argument* arg);
+    int countArguments();
+    Argument*& operator[] (int i);
     
 private:
     std::vector<Argument*> arguments;

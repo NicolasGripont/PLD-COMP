@@ -1,10 +1,11 @@
 #include "DeclarationVariableStatement.h"
 
 DeclarationVariableStatement::DeclarationVariableStatement()
-    : SimpleStatement()
+    : SimpleStatement(DECLARATION_VARIABLE_STATEMENT)
 {
 
 }
+
 
 string DeclarationVariableStatement::print() {
 	return "DeclarationVariableStatement";
