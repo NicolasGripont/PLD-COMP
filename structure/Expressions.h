@@ -15,6 +15,7 @@
 #include "GlobalDeclarationVariable.h"
 #include "FunctionCallExpression.h"
 #include "BinaryOperatorExpression.h"
+#include "UnaryOperatorExpression.h"
 
 class DeclarationFonction;
 class DeclarationFonctionStatement;
@@ -29,6 +30,7 @@ class DeclarationArrayVariable;
 class GlobalDeclarationVariable;
 class FunctionCallExpression;
 class BinaryOperatorExpression;
+class UnaryOperatorExpression;
 
 class DeclarationFonction : public Declaration {
 private:
@@ -41,17 +43,6 @@ public:
 	:Declaration(),type(_type),id(_id),argumentList(_argumentList),decFunctionStatement(_decFunctionStatement){};
 };
 
-
-
-
-class UnaryOperatorExpression : public Expression {
-private:
-	Expression* expr;
-	int op;
-public:
-	UnaryOperatorExpression(Expression* _expr, int _op)
-	:expr(_expr),op(_op),Expression(){};
-};
 
 class ExpressionInteger : public Expression {
 private:

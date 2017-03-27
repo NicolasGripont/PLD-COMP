@@ -18,6 +18,7 @@
     #include "structure/GlobalDeclarationVariable.h"
     #include "structure/FunctionCallExpression.h"
     #include "structure/BinaryOperatorExpression.h"
+    #include "structure/UnaryOperatorExpression.h"
     
     #include "structure/Expressions.h"
 
