@@ -3,7 +3,7 @@
 ####################
 
 # --- Add header files here:
-INT = Declaration.h Genesis.h DeclarationVariable.h Type.h MultipleDeclarationVariable.h ArgumentList.h Argument.h Expression.h DeclarationInitVariable.h DeclarationArrayVariable.h GlobalDeclarationVariable.h FunctionCallExpression.h BinaryOperatorExpression.h UnaryOperatorExpression.h ExpressionInteger.h ExpressionVariable.h CrementVariable.h LoopExpression.h WhileLoop.h DeclarationFonctionStatement.h
+INT = Declaration.h Genesis.h DeclarationVariable.h Type.h MultipleDeclarationVariable.h ArgumentList.h Argument.h Expression.h DeclarationInitVariable.h DeclarationArrayVariable.h GlobalDeclarationVariable.h FunctionCallExpression.h BinaryOperatorExpression.h UnaryOperatorExpression.h ExpressionInteger.h ExpressionVariable.h CrementVariable.h DeclarationFonctionStatement.h SimpleStatement.h MultipleStatement.h Statement.h IterationStatement.h LoopExpression.h WhileLoop.h
 
 BUILDIR = structure/
 OBJ = $(addprefix $(BUILDIR), $(INT:.h=.o))
@@ -36,13 +36,14 @@ UnaryOperatorExpression.o: UnaryOperatorExpression.cpp Expression.h
 ExpressionInteger.o: ExpressionInteger.cpp Expression.h
 ExpressionVariable.o: ExpressionVariable.cpp Expression.h
 CrementVariable.o: CrementVariable.cpp ExpressionVariable.h Expression.h
+DeclarationFonctionStatement.o: DeclarationFonctionStatement.cpp
+
 SimpleStatement.o: SimpleStatement.cpp
 MultipleStatement.o: MultipleStatement.cpp SimpleStatement.h
 Statement.o: Statement.cpp MultipleStatement.h
 IterationStatement.o: IterationStatement.cpp SimpleStatement.h Statement.h
 LoopExpression.o: LoopExpression.cpp Expression.h
 WhileLoop.o: WhileLoop.cpp IterationStatement.h Expression.h
-DeclarationFonctionStatement.o: DeclarationFonctionStatement.cpp
 
 clean:
 	rm comp comp.tab.c comp.tab.h comp.output lex.yy.c $(BUILDIR)*.o
