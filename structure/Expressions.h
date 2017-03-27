@@ -35,17 +35,11 @@
 #include "ForLoop.h"
 #include "DeclarationFunction.h"
 #include "ExpressionSimpleVariable.h"
+#include "ExpressionArrayVariable.h"
 
 class ExpressionVariable;
 class ExpressionSimpleVariable;
-
-class ExpressionArrayVariable : public ExpressionVariable {
-	char* id;
-	Expression* expr;
-public:
-	ExpressionArrayVariable(char* _id, Expression* _expr)
-	:ExpressionVariable(),id(_id),expr(_expr){};
-};
+class ExpressionArrayVariable;
 
 class AssignmentVariable : public Expression {
 protected:
