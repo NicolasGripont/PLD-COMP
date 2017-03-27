@@ -17,6 +17,7 @@
 #include "BinaryOperatorExpression.h"
 #include "UnaryOperatorExpression.h"
 #include "ExpressionInteger.h"
+#include "CrementVariable.h"
 
 #include "LoopExpression.h"
 
@@ -35,6 +36,8 @@ class FunctionCallExpression;
 class BinaryOperatorExpression;
 class UnaryOperatorExpression;
 class ExpressionInteger;
+class ExpressionVariable;
+class CrementVariable;
 
 class DeclarationFonction : public Declaration {
 private:
@@ -47,23 +50,6 @@ public:
 	:Declaration(),type(_type),id(_id),argumentList(_argumentList),decFunctionStatement(_decFunctionStatement){};
 };
 
-
-class CrementVariable : public Expression {
-private:
-	ExpressionVariable* exprVar;
-	// Si faux, decrement
-	bool increment;
-	// Si faux, post-crement
-	bool preCrement;
-public:
-	CrementVariable(ExpressionVariable* _exprVar, bool _increment, bool _preCrement)
-	:Expression(),exprVar(_exprVar),increment(_increment),preCrement(_preCrement){};
-};
-
-class ExpressionVariable : public Expression {
-public:
-	ExpressionVariable():Expression(){};
-};
 
 class ExpressionSimpleVariable : public ExpressionVariable {
 private:

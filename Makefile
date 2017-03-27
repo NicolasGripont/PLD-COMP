@@ -3,7 +3,7 @@
 ####################
 
 # --- Add header files here:
-INT = Declaration.h Genesis.h DeclarationVariable.h Type.h MultipleDeclarationVariable.h ArgumentList.h Argument.h Expression.h DeclarationInitVariable.h DeclarationArrayVariable.h GlobalDeclarationVariable.h FunctionCallExpression.h BinaryOperatorExpression.h UnaryOperatorExpression.h ExpressionInteger.h LoopExpression.h
+INT = Declaration.h Genesis.h DeclarationVariable.h Type.h MultipleDeclarationVariable.h ArgumentList.h Argument.h Expression.h DeclarationInitVariable.h DeclarationArrayVariable.h GlobalDeclarationVariable.h FunctionCallExpression.h BinaryOperatorExpression.h UnaryOperatorExpression.h ExpressionInteger.h ExpressionVariable.h CrementVariable.h LoopExpression.h
 
 BUILDIR = structure/
 OBJ = $(addprefix $(BUILDIR), $(INT:.h=.o))
@@ -34,7 +34,8 @@ FunctionCallExpression.o: FunctionCallExpression.cpp  Expression.h
 BinaryOperatorExpression.o: BinaryOperatorExpression.cpp Expression.h
 UnaryOperatorExpression.o: UnaryOperatorExpression.cpp Expression.h
 ExpressionInteger.o: ExpressionInteger.cpp Expression.h
-
+ExpressionVariable.o: ExpressionVariable.cpp Expression.h
+CrementVariable.o: CrementVariable.cpp ExpressionVariable.h Expression.h
 LoopExpression.o: LoopExpression.cpp Expression.h
 
 clean:

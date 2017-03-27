@@ -20,6 +20,8 @@
     #include "structure/BinaryOperatorExpression.h"
     #include "structure/UnaryOperatorExpression.h"
     #include "structure/ExpressionInteger.h"
+    #include "structure/CrementVariable.h"
+    #include "structure/ExpressionVariable.h"
     
     #include "structure/LoopExpression.h"
     #include "structure/Expressions.h"
