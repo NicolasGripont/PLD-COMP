@@ -15,9 +15,9 @@ CFLAGS = -std=c++11 -DYYDEBUG
 all: comp
 
 comp: $(DEPS) comp.l comp.y
-	make -C $(FRONTEND)
 	flex comp.l
 	bison -v --defines=comp.tab.h comp.y
+	make -C $(FRONTEND)
 	g++ $(CFLAGS) -o comp *.c $(FRONTEND)/*.o
 
 clean:

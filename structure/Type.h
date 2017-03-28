@@ -7,13 +7,13 @@
 class Type : public Printer
 {
 public:
-    Type(TOKEN _type);
+    Type(int _type);
     virtual ~Type();
     virtual string print() const;
-    TOKEN getType();
+    int getType();
 
 private:
-    TOKEN type;
+    int type;
 };
 
 #endif
