@@ -8,7 +8,7 @@ GlobalDeclarationVariable::GlobalDeclarationVariable(MultipleDeclarationVariable
 
 GlobalDeclarationVariable::~GlobalDeclarationVariable()
 {
-
+    delete multipleDeclarationVariable;
 }
 
 string GlobalDeclarationVariable::toString() const

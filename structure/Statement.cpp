@@ -8,7 +8,7 @@
 
 Statement::~Statement()
 {
-
+    delete multipleStatement;
 }
 
 string Statement::toString() const

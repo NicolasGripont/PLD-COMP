@@ -10,7 +10,7 @@ FunctionCallExpression::FunctionCallExpression(char* _id, Expression* _expr, int
 
 FunctionCallExpression::~FunctionCallExpression()
 {
-
+    delete expr;
 }
 
 string FunctionCallExpression::toString() const

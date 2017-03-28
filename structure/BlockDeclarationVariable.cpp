@@ -8,7 +8,7 @@ BlockDeclarationVariable::BlockDeclarationVariable(MultipleDeclarationVariable* 
 
 BlockDeclarationVariable::~BlockDeclarationVariable()
 {
-
+    delete multipleDeclarationVariable;
 }
 
 string BlockDeclarationVariable::toString() const

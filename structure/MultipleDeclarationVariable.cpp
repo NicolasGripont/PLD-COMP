@@ -7,7 +7,11 @@ MultipleDeclarationVariable::MultipleDeclarationVariable() : Printable()
 
 MultipleDeclarationVariable::~MultipleDeclarationVariable()
 {
-
+    delete type;
+    for (unsigned int i = 0; i < declarationsVariables.size(); ++i)
+    {
+        delete declarationsVariables[i];
+    }
 }
 
 string MultipleDeclarationVariable::toString() const

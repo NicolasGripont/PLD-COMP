@@ -8,7 +8,9 @@ SelectionStatement::SelectionStatement(Expression* _expr, Statement* _stat, Stat
 
 SelectionStatement::~SelectionStatement()
 {
-
+    delete expr;
+    delete stat;
+    delete elseStat;
 }
 
 string SelectionStatement::toString() const

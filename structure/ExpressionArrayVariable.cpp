@@ -9,7 +9,7 @@ ExpressionArrayVariable::ExpressionArrayVariable(char* _id, Expression* _expr, i
 
 ExpressionArrayVariable::~ExpressionArrayVariable()
 {
-
+    delete expr;
 }
 
 string ExpressionArrayVariable::toString() const

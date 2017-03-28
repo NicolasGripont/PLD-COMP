@@ -9,7 +9,6 @@ Argument::Argument(Type* _type, char* _id, bool _array)
 Argument::~Argument() 
 {
     delete type;
-    delete id;
 }
 
 string Argument::toString() const

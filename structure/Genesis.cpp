@@ -7,7 +7,10 @@ Genesis::Genesis() : Printable()
 
 Genesis::~Genesis()
 {
-
+    for (unsigned int i = 0; i < declarations.size(); ++i)
+    {
+        delete declarations[i];
+    }
 }
 
 string Genesis::toString() const

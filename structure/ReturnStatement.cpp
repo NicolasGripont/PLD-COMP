@@ -8,7 +8,7 @@ ReturnStatement::ReturnStatement(Return* _ret)
 
 ReturnStatement::~ReturnStatement()
 {
-
+    delete ret;
 }
 
 string ReturnStatement::toString() const

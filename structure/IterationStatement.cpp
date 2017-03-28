@@ -8,7 +8,7 @@ IterationStatement::IterationStatement(Statement* _statement)
 
 IterationStatement::~IterationStatement()
 {
-
+    delete statement;
 }
 
 string IterationStatement::toString() const
