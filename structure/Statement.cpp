@@ -13,5 +13,6 @@ Statement::~Statement()
 
 string Statement::toString() const
 {
-	return "Statement";
+	#warning check where should '{}' be put
+	return string("{") + multipleStatement->toString() + string("}");
 }

@@ -14,5 +14,9 @@ DeclarationInitVariable::~DeclarationInitVariable()
 
 string DeclarationInitVariable::toString() const
 {
-	return "DeclarationInitVariable";
+	if(!array) 
+	{
+		return string(id) + string(" = ") + expr->toString();
+	} 
+	return "ERROR_DeclarationInitVariable";
 }

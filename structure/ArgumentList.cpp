@@ -20,7 +20,7 @@ void ArgumentList::addArgument(Argument* arg)
 
 string ArgumentList::toString() const
 {
-    string txt;
+    string txt = "";
 
     if (!arguments.empty())
     {

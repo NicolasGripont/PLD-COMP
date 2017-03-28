@@ -15,7 +15,14 @@ MultipleStatement::~MultipleStatement()
 
 string MultipleStatement::toString() const
 {
-	return "MultipleStatement";
+	string txt = "";
+
+	for (unsigned int i = 0; i < statements.size(); ++i)
+    {
+        txt += statements.at(i)->toString();
+    }
+
+	return txt;
 }
 
 void MultipleStatement::addStatement(SimpleStatement* statement)

@@ -13,5 +13,10 @@ LoopExpression::~LoopExpression()
 
 string LoopExpression::toString() const
 {
-	return "LoopExpression";
+	string txt = "";
+	if(expr != nullptr) 
+	{
+		txt = expr->toString();
+	}
+	return txt;
 }

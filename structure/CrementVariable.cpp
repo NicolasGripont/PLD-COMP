@@ -13,5 +13,25 @@ CrementVariable::~CrementVariable()
 
 string CrementVariable::toString() const
 {
-	return "CrementVariable";
+	string crement = "";
+	string txt = "";
+	if(increment) 
+	{
+		crement = "++";
+	}
+	else 
+	{
+		crement = "--";
+	}
+
+	if(preCrement) 
+	{
+		txt = crement + exprVar->toString();
+	}
+	else 
+	{
+		txt = exprVar->toString() + crement;
+	}
+
+	return txt;
 }

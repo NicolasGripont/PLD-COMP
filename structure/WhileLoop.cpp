@@ -16,17 +16,5 @@ WhileLoop::~WhileLoop()
 
 string WhileLoop::toString() const
 {
-	string exprStr = "";
-	string statementStr = "";
-	
-	if(expr != nullptr) 
-	{
-		exprStr = expr->toString();
-	}
-	if(expr != nullptr) 
-	{
-		statementStr = statement->toString();
-	}
-
-	return string("While(") + exprStr + string(")") + statementStr;
+	return string("while(") + expr->toString() + string(")") + statement->toString();
 }

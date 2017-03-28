@@ -9,7 +9,8 @@ public:
  
     DeclarationVariable(char* _id, bool _array);
     virtual ~DeclarationVariable(); 
-    char* getId();	bool isArray();
+    char* getId();	
+    bool isArray();
 	virtual string toString() const;
 protected:
     char* id;

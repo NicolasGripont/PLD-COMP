@@ -18,5 +18,9 @@ bool DeclarationVariable::isArray()
 
 string DeclarationVariable::toString() const
 {
-	return "DeclarationVariable";
+	if(!array) 
+	{
+		return string(id);
+	} 
+	return "ERROR_DeclarationVariable";
 }

@@ -14,5 +14,5 @@ ExpressionArrayVariable::~ExpressionArrayVariable()
 
 string ExpressionArrayVariable::toString() const
 {
-	return "ExpressionArrayVariable";
+	return string(id) + string("[") + expr->toString() + string("]");
 }

@@ -13,7 +13,7 @@ InitFunctionStatement::~InitFunctionStatement()
 
 string InitFunctionStatement::toString() const
 {
-	return "InitFunctionStatement";
+	return string("{") + multipleStatement->toString() + string("}");
 }
 
 int InitFunctionStatement::countStatements()

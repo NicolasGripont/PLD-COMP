@@ -42,7 +42,6 @@
     #include "structure/IterationStatement.h"
     #include "structure/SelectionStatement.h"
     #include "structure/ExpressionStatement.h"
-    #include "structure/DeclarationVariableStatement.h"
     #include "structure/PureDeclarationFunctionStatement.h"
     #include "structure/LoopExpression.h"
     #include "structure/WhileLoop.h"
@@ -957,6 +956,7 @@ int main(int argc, char* argv[])
     if (status == 0) // Success
     {
         std::cout << "Le fichier correspond à la grammaire." << std::endl << "Compilation terminée avec succès." << std::endl;
+        std::cout << g << std::endl;
     }
     else if (status == 1) // Syntax error
     {

@@ -15,5 +15,5 @@ ForLoop::~ForLoop()
 
 string ForLoop::toString() const
 {
-	return "ForLoop";
+	return string("for(") + expr1->toString() + string(";") + expr2->toString() + string(";") + expr3->toString() + string(")") + statement->toString();
 }

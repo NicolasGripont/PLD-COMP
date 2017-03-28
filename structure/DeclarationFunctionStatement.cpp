@@ -15,8 +15,3 @@ bool DeclarationFunctionStatement::isDeclaration()
 {
     return declaration;
 }
-
-string DeclarationFunctionStatement::toString() const
-{
-	return "DeclarationFunctionStatement";
-}

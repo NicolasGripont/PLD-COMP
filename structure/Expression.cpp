@@ -11,11 +11,6 @@ Expression::~Expression()
 
 }
 
-string Expression::toString() const
-{
-	return "Expression";
-}
-
 int Expression::getType()
 {
     return type;

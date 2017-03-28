@@ -15,7 +15,15 @@ Genesis::~Genesis()
 
 string Genesis::toString() const
 {
-	return "Genesis";
+	string txt = "";
+
+
+    for (unsigned int i = 0; i < declarations.size(); ++i)
+    {
+        txt += declarations.at(i)->toString();
+    }
+
+    return txt;
 }
 
 void Genesis::addDeclaration(Declaration* declaration) 

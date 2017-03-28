@@ -10,7 +10,7 @@ public:
 
 	DeclarationFunctionStatement(bool _declaration);
 	virtual ~DeclarationFunctionStatement();
-	virtual string toString() const;
+	virtual string toString() const = 0;
     bool isDeclaration();
 
 private:

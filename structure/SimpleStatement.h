@@ -9,7 +9,7 @@ class SimpleStatement : public Printable
 public:
 	SimpleStatement(SimpleStatementType _type);
 	virtual ~SimpleStatement();
-	virtual string toString() const;
+	virtual string toString() const = 0;
     SimpleStatementType getType();
 
 private:

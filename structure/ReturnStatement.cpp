@@ -13,5 +13,5 @@ ReturnStatement::~ReturnStatement()
 
 string ReturnStatement::toString() const
 {
-	return "ReturnStatement";
+	return ret->toString() + string(";");
 }

@@ -2,7 +2,7 @@
 
 if [ "$#" -ne 2 ]; then
 	echo "Erreur : Le nombre d'arguments est invalide"
-	echo "Exemple : ./scriptTestAuto ./../comp ./ValidPrograms/"
+	echo "Exemple : ./scriptTestAuto.sh ./../comp ./ValidPrograms/"
 	echo "          scriptName       program   directory_containing_test_files"
 else
 	comp=$1

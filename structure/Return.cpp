@@ -13,5 +13,11 @@ Return::~Return()
 
 string Return::toString() const
 {
-	return "Return";
+	string txt = "return";
+
+	if(expr != nullptr)
+	{
+		txt += string(" ") + expr->toString();
+	}
+	return txt;
 }

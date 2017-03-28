@@ -15,5 +15,11 @@ FunctionCallExpression::~FunctionCallExpression()
 
 string FunctionCallExpression::toString() const
 {
-	return "FunctionCallExpression";
+	
+	string exprStr = "";
+	if(expr != nullptr) 
+	{
+		exprStr = expr->toString();
+	}
+	return string(id) + string("(") + exprStr + string(")");
 }

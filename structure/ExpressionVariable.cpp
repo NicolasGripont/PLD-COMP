@@ -12,8 +12,3 @@ ExpressionVariable::~ExpressionVariable()
 {
 
 }
-
-string ExpressionVariable::toString() const
-{
-	return "ExpressionVariable";
-}

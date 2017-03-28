@@ -9,8 +9,3 @@ Declaration::~Declaration()
 {
 
 }
-
-string Declaration::toString() const
-{
-	return "Declaration";
-}

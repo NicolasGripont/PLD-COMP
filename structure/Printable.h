@@ -13,7 +13,8 @@ public:
 	Printable();
 	virtual ~Printable();
 	virtual string toString() const = 0;
-	friend ostream& operator<<(ostream& os, const Printable& dt);  
+	friend ostream& operator<<(ostream& os, const Printable& dt);
+	friend ostream& operator<<(ostream& os, const Printable* dt);  
 };
 
 #endif

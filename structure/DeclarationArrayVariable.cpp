@@ -14,5 +14,9 @@ DeclarationArrayVariable::~DeclarationArrayVariable()
 
 string DeclarationArrayVariable::toString() const
 {
-	return "DeclarationArrayVariable";
+	if(array) 
+	{
+		return string(id) + string("[") + string(id) + string("]");
+	} 
+	return "ERROR_DeclarationArrayVariable";
 }

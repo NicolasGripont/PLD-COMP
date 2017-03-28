@@ -10,8 +10,3 @@ IterationStatement::~IterationStatement()
 {
     delete statement;
 }
-
-string IterationStatement::toString() const
-{
-	return "IterationStatement";
-}

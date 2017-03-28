@@ -15,5 +15,5 @@ ExpressionInteger::~ExpressionInteger()
 
 string ExpressionInteger::toString() const
 {
-	return "ExpressionInteger";
+	return to_string(value);
 }

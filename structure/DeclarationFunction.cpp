@@ -15,5 +15,5 @@ DeclarationFunction::~DeclarationFunction()
 
 string DeclarationFunction::toString() const
 {
-	return "DeclarationFunction";
+	return type->toString() + string(" ") + string(id) + string("(") +  argumentList->toString() + string(")") + decFunctionStatement->toString();
 }

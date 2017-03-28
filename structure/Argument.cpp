@@ -13,7 +13,7 @@ Argument::~Argument()
 
 string Argument::toString() const
 {
-    string txt;
+    string txt = "";
     if (type != nullptr)
     {
         txt = type->toString();

@@ -14,5 +14,5 @@ ExpressionSimpleVariable::~ExpressionSimpleVariable()
 
 string ExpressionSimpleVariable::toString() const
 {
-	return "ExpressionSimpleVariable";
+	return string(id);
 }

@@ -13,5 +13,5 @@ ExpressionStatement::~ExpressionStatement()
 
 string ExpressionStatement::toString() const
 {
-	return "ExpressionStatement";
+	return expr->toString() + string(";");
 }

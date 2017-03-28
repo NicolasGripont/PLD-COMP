@@ -16,7 +16,18 @@ MultipleDeclarationVariable::~MultipleDeclarationVariable()
 
 string MultipleDeclarationVariable::toString() const
 {
-    return "MultipleDeclarationVariable";
+    string txt = type->toString();
+
+    if (!declarationsVariables.empty())
+    {
+        txt += string(" ") + declarationsVariables.at(0)->toString();
+    }
+    for (unsigned int i = 1; i < declarationsVariables.size(); ++i)
+    {
+        txt += string(", ") + declarationsVariables.at(i)->toString();
+    }
+
+    return txt + string(";");
 }
 
 void MultipleDeclarationVariable::addDeclarationVariable(DeclarationVariable* dec)

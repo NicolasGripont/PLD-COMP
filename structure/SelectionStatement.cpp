@@ -15,5 +15,22 @@ SelectionStatement::~SelectionStatement()
 
 string SelectionStatement::toString() const
 {
-	return "SelectionStatement";
+	string txt = "";
+	if(expr != nullptr && stat != nullptr && elseStat != nullptr) 
+	{
+		txt += string("if(") + expr->toString() + string(")") + stat->toString() + string(" else ") + elseStat->toString();
+	} 
+	else if (expr != nullptr && stat != nullptr && elseStat == nullptr)
+	{
+		txt += string("if(") + expr->toString() + string(")") + stat->toString();
+	}
+	else if (expr != nullptr && stat == nullptr && elseStat == nullptr)
+	{
+		txt += string("if(") + expr->toString() + string("){}");
+	} 
+	else
+	{
+		txt = "ERROR_SelectionStatement";
+	}
+	return txt;
 }

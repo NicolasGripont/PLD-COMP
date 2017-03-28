@@ -8,7 +8,7 @@ class Declaration : public Printable
 public:
     Declaration();
     virtual ~Declaration();
-    virtual string toString() const;
+    virtual string toString() const = 0;
 };
 
 #endif

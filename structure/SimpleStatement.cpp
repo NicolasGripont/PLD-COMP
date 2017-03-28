@@ -10,11 +10,6 @@ SimpleStatement::~SimpleStatement()
 
 }
 
-string SimpleStatement::toString() const
-{
-	return "SimpleStatement";
-}
-
 SimpleStatementType SimpleStatement::getType()
 {
     return type;
