@@ -5,18 +5,17 @@
 
 default: all
 
-INT = $(shell ls *.h)
 SRC = $(shell ls *.cpp)
 OBJ = $(SRC:.cpp=.o)
-FLAGS = -std=c++11 -DYYDEBUG
+CFLAGS = -std=c++11 -DYYDEBUG
 
 all: $(OBJ)
 
 -include $(SRC:.cpp=.d)
 
 %.o: %.cpp
-	g++ -o $@ $(FLAGS) -c $< 
-	g++ -MM -MT $@ $(FLAGS) $< > $*.d
+	g++ -o $@ $(CFLAGS) -c $< 
+	g++ -MM -MT $@ $(CFLAGS) $< > $*.d
 
 clean:
 	rm -f *.o *.d

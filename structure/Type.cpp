@@ -1,7 +1,6 @@
 #include "Type.h"
 
-//Type::Type(TypeEnum _type) : Printer(), type(_type)
-Type::Type(int _type) : Printer(), type(_type)
+Type::Type(TOKEN _type) : Printer(), type(_type)
 {
 
 }
@@ -11,14 +10,30 @@ Type::~Type()
 
 }
 
-//TypeEnum Type::getType()
-int Type::getType()
+TOKEN Type::getType()
 {
     return type;
 }
 
 string Type::print() const
 {
-	// char typeStr = (char) type;
+	string typeStr = "";
+	switch(type)  
+      {  
+        case TOKEN_VOID:  
+            typeStr = "void";  
+            break;  
+        case TOKEN_CHAR:  
+            typeStr = "char";  
+            break; 
+        case TOKEN_INT32:  
+            typeStr = "int32_t";  
+            break;  
+        case TOKEN_INT64:  
+            typeStr = "int64_t";  
+            break;  
+        default:  
+            typeStr = "ERROR_Type";  
+      }  
 	return "Type";
 }

@@ -7,7 +7,6 @@
     #include <libgen.h>
 	#include <string.h>
 
-    #include "structure/DataType.h"
     #include "structure/Enumeration.h"
     #include "structure/Genesis.h"
     #include "structure/DeclarationVariable.h"
@@ -226,20 +225,11 @@ declaration
     ;
 
 type
-    : VOID {$$ = new Type(VOID); currVariableType = VOID;}
-    | CHAR {$$ = new Type(CHAR); currVariableType = CHAR;}
-    | INT32 {$$ = new Type(INT32); currVariableType = INT32;}
-    | INT64 {$$ = new Type(INT64); currVariableType = INT64;}
+    : VOID {$$ = new Type(TOKEN_VOID); currVariableType = TOKEN_VOID;}
+    | CHAR {$$ = new Type(TOKEN_CHAR); currVariableType = TOKEN_CHAR;}
+    | INT32 {$$ = new Type(TOKEN_INT32); currVariableType = TOKEN_INT32;}
+    | INT64 {$$ = new Type(TOKEN_INT64); currVariableType = TOKEN_INT64;}
     ;
-
-/*
-type
-    : VOID {$$ = new Type(TYPE_VOID); currVariableType = VOID;}
-    | CHAR {$$ = new Type(TYPE_CHAR); currVariableType = CHAR;}
-    | INT32 {$$ = new Type(TYPE_INT32); currVariableType = INT32;}
-    | INT64 {$$ = new Type(TYPE_INT64); currVariableType = INT64;}
-    ;
-*/
 
 multiple_declaration_variable
     : declaration_variable {$$ = new MultipleDeclarationVariable(); $$->addDeclarationVariable($1);}
@@ -258,12 +248,19 @@ declaration_variable
         // Si on a pas une constante à droite
         if($3->getExpressionType() != EXPRESSION_INTEGER)
         {
+            // Et que les type de variable et le type de l'expression de droite
+            // sont differents, warning (cast)
             if(type1 != type2)
             {
                 yywarning(("Expression de type "+getNameOfType(type1)+
                 " associée à une expression de type "+getNameOfType(type2)+". Conversion.").c_str());
                 YYABORT;
             }
+        }
+        else
+        {
+            // Le type de la constante de droite prend le type de la variable
+            $3->setType(type1);
         }
     }
     ;
@@ -453,8 +450,7 @@ selection_statement
 /***********************/
 bool variableIsVoid(Genesis** g, Type* type)
 {
-    //if (type->getType() == TYPE_VOID)
-    if (type->getType() == VOID)
+    if (type->getType() == TOKEN_VOID)
     {
         yyerror(g, "Une variable ne peut pas être de type void.");
         return true;
@@ -774,13 +770,13 @@ int primitiveToArrayType(int type)
 {
     switch(type)
     {
-        case INT64:
-            return INT64_ARRAY;
-        case CHAR:
-            return CHAR_ARRAY;
-        case INT32:
+        case TOKEN_INT64:
+            return TOKEN_INT64_ARRAY;
+        case TOKEN_CHAR:
+            return TOKEN_CHAR_ARRAY;
+        case TOKEN_INT32:
         default:
-            return INT32_ARRAY;
+            return TOKEN_INT32_ARRAY;
     }
 }
 
@@ -788,13 +784,13 @@ int arrayToPrimitiveType(int type)
 {
     switch(type)
     {
-        case INT64_ARRAY:
-            return INT64;
-        case CHAR_ARRAY:
-            return CHAR;
-        case INT32_ARRAY:
+        case TOKEN_INT64_ARRAY:
+            return TOKEN_INT64;
+        case TOKEN_CHAR_ARRAY:
+            return TOKEN_CHAR;
+        case TOKEN_INT32_ARRAY:
         default:
-            return INT32;
+            return TOKEN_INT32;
     }
 }
 
@@ -860,17 +856,17 @@ std::string getNameOfType(int type)
 {
     switch(type)
     {
-    case INT64_ARRAY:
+    case TOKEN_INT64_ARRAY:
         return "int64_t[]";
-    case CHAR_ARRAY:
+    case TOKEN_CHAR_ARRAY:
         return "char[]";
-    case INT32_ARRAY:
+    case TOKEN_INT32_ARRAY:
         return "int32_t[]";
-    case INT64:
+    case TOKEN_INT64:
         return "int64_t";
-    case CHAR:
+    case TOKEN_CHAR:
         return "char";
-    case INT32:
+    case TOKEN_INT32:
     default:
         return "int32_t";
     }
@@ -878,8 +874,7 @@ std::string getNameOfType(int type)
 
 int main(int argc, char* argv[])
 {
-    defineTypes(INT32, INT64, CHAR);
-    currVariableType = INT32;
+    currVariableType = TOKEN_INT32;
 
     // Test parameters
     if (argc <= 1)

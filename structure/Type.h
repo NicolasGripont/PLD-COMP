@@ -7,16 +7,13 @@
 class Type : public Printer
 {
 public:
-    //Type(TypeEnum _type);
-    Type(int _type);
+    Type(TOKEN _type);
     virtual ~Type();
     virtual string print() const;
-    //TypeEnum getType();
-    int getType();
+    TOKEN getType();
 
 private:
-    //TypeEnum type;
-    int type;
+    TOKEN type;
 };
 
 #endif
