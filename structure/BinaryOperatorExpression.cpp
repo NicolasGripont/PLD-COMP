@@ -42,6 +42,30 @@ string BinaryOperatorExpression::toString() const
     string typeStr = "";
     switch(op)  
     {  
+        case EQUAL_EQUAL:  
+            txt += " == ";  
+            break;  
+        case DIFF:  
+            txt += " != ";  
+            break; 
+        case LESS_THAN:  
+            txt += " < ";  
+            break;  
+        case LESS_THAN_OR_EQUAL:  
+            txt += " <= ";  
+            break;  
+        case MORE_THAN:  
+            txt += " > ";  
+            break;  
+        case MORE_THAN_OR_EQUAL:  
+            txt += " >= ";  
+            break; 
+        case AND_AND:  
+            txt += " && ";  
+            break;  
+        case OR_OR:  
+            txt += " || ";  
+            break;  
         case MUL:  
             txt += " * ";  
             break;  
@@ -73,7 +97,7 @@ string BinaryOperatorExpression::toString() const
             txt += " >> ";  
             break;  
         default:  
-            return "ERROR_AssignmentOperationVariable";  
+            return "ERROR_BinaryOperatorExpression";  
     }  
     return txt + expr2->toString();
 }
