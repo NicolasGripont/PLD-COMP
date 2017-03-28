@@ -4,13 +4,20 @@ BinaryOperatorExpression::BinaryOperatorExpression(Expression* _expr1, Expressio
 
 	:Expression(),expr1(_expr1),expr2(_expr1),op(_op)
 {
-    if(_expr1->getType() == _expr2->getType())
-    {
-        setType(_expr1->getType());
-    }
-    else if (op != ',')
+    int type1 = _expr1->getType();
+    int type2 = _expr2->getType();
+
+    if (isArrayType(type1) != isArrayType(type2))
     {
         setType(EXPRESSION_TYPE_CONFLICT);
+    }
+    else if(sizeOfType(type1) > sizeOfType(type2))
+    {
+        setType(type1);
+    }
+    else
+    {
+        setType(type2);
     }
 }
 

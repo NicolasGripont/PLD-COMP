@@ -7,6 +7,8 @@
     #include <libgen.h>
 	#include <string.h>
 
+    #include "structure/DataType.h"
+
     #include "structure/Genesis.h"
     #include "structure/DeclarationVariable.h"
     #include "structure/Type.h"
@@ -60,6 +62,8 @@
     extern FILE* yyin;
     extern int yylineno;
     extern int column;
+    // Utilisé pour les déclarations de variables
+    int currVariableType;
     extern bool hasSyntaxError;
     extern std::string syntaxError;
 
@@ -87,9 +91,9 @@
     int primitiveToArrayType(int type);
     // Donne le type tableau correspondant à un type primitif (ex: INT32 -> INT32[])
     int arrayToPrimitiveType(int type);
-    bool isArrayType(int type);
 
     bool checkConflictError(Genesis** g, Expression* expr1, Expression* expr2);
+    bool checkArrayTypeConflitError(Genesis** g, int type1, int type2);
     std::string getNameOfType(int type);
     bool checkVariableExist(Genesis** g, char* name);
 %}
@@ -222,10 +226,10 @@ declaration
     ;
 
 type
-    : VOID {$$ = new Type(VOID);}
-    | CHAR {$$ = new Type(CHAR);}
-    | INT32 {$$ = new Type(INT32);}
-    | INT64 {$$ = new Type(INT64);}
+    : VOID {$$ = new Type(VOID); currVariableType = VOID;}
+    | CHAR {$$ = new Type(CHAR); currVariableType = CHAR;}
+    | INT32 {$$ = new Type(INT32); currVariableType = INT32;}
+    | INT64 {$$ = new Type(INT64); currVariableType = INT64;}
     ;
 
 multiple_declaration_variable
@@ -236,11 +240,11 @@ multiple_declaration_variable
 declaration_variable
     : ID {$$ = new DeclarationVariable($1,false);}
     | ID '[' INT ']' {$$ = new DeclarationArrayVariable($1, $3);}
-    | ID '=' expression {$$ = new DeclarationInitVariable($1, $3);}
+    | ID '=' expression {$$ = new DeclarationInitVariable($1, $3); if(checkArrayTypeConflitError(g,currVariableType,$3->getType())) YYABORT;}
     ;
 
 assignment_variable // utilisé pour affecter une valeur à une variable en dehors de son initialisation (int a; a = 3;)
-    : expr_var '=' expression {$$ = new AssignmentVariable($1,$3); if(checkConflictError(g,$1,$3)) YYABORT;}
+    : expr_var '=' expression {$$ = new AssignmentVariable($1,$3);if(checkConflictError(g,$1,$3)) YYABORT;}
     | expr_var MUL_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,MUL_ASSIGN); if(checkConflictError(g,$1,$3)) YYABORT;}
     | expr_var DIV_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,DIV_ASSIGN); if(checkConflictError(g,$1,$3)) YYABORT;}
     | expr_var MOD_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,MOD_ASSIGN); if(checkConflictError(g,$1,$3)) YYABORT;}
@@ -351,7 +355,7 @@ loop_expression
 
 expression
     : '(' expression ')' {$$ = $2;}
-    | expression ',' expression  {$$ = new BinaryOperatorExpression($1,$3,',');}
+    | expression ',' expression  {$$ = new BinaryOperatorExpression($1,$3,','); }
     | expression EQUAL expression {$$ = new BinaryOperatorExpression($1,$3,EQUAL,INT32); if(checkConflictError(g,$1,$3)) YYABORT;}
     | expression DIFF expression {$$ = new BinaryOperatorExpression($1,$3,DIFF,INT32); if(checkConflictError(g,$1,$3)) YYABORT;}
     | expression '<' expression {$$ = new BinaryOperatorExpression($1,$3,'<',INT32); if(checkConflictError(g,$1,$3)) YYABORT;}
@@ -436,12 +440,17 @@ bool tryCallFunction(Genesis** g, char* functionName)
 {
     int state=0;
 
+    if(strcmp(functionName, "putchar")==0
+    || strcmp(functionName, "getchar")==0)
+    {
+        return true;
+    }
+
     for(int i=0;i<functions.size();++i)
     {
         FunctionContainer* currFunc = functions[i];
 
         // 0 = fonction n'existe pas. 1 = seulement le prototype. 2 = correct
-
         if(strcmp(functionName, currFunc->name)==0)
         {
             if(currFunc->declaration)
@@ -459,12 +468,15 @@ bool tryCallFunction(Genesis** g, char* functionName)
     if(state == 0)
     {
         yyerror(g, ("La fonction "+std::string(functionName)+" n'est pas définie.").c_str());
+        false;
     }
 
     if(state == 1)
     {
         yyerror(g, ("La fonction "+std::string(functionName)+" est déclarée mais jamais définie.").c_str());
+        false;
     }
+    true;
 }
 
 bool tryDeclareGlobalVariable(Genesis** g, Type* type, MultipleDeclarationVariable* multDecl)
@@ -608,6 +620,15 @@ bool checkVariableDuplicationInBlock(Genesis** g, MultipleStatement* multStat)
 
 int getFunctionType(char* name)
 {
+    if(strcmp(name,"putchar")==0)
+    {
+        return INT32;
+    }
+    if(strcmp(name,"getchar")==0)
+    {
+        return INT32;
+    }
+
     for(int i=0;i<functions.size();++i)
     {
         FunctionContainer* func = functions[i];
@@ -751,11 +772,6 @@ int arrayToPrimitiveType(int type)
     }
 }
 
-bool isArrayType(int type)
-{
-    return (type == INT64_ARRAY || type == INT32_ARRAY || type == CHAR_ARRAY);
-}
-
 void yyerror(Genesis** g, const char* msg)
 {
     if(hasSyntaxError)
@@ -776,23 +792,41 @@ void yywarning(const char* msg)
 
 bool checkConflictError(Genesis** g, Expression* expr1, Expression* expr2)
 {
+    int type1 = expr1->getType();
+    int type2 = expr2->getType();
+
     // Si un est un tableau et l'autre non -> erreur
     // Si elles sont tableau mais de type different
-    if((isArrayType(expr1->getType()) != isArrayType(expr2->getType()))
-    || (isArrayType(expr1->getType()) && isArrayType(expr2->getType()) && (expr1->getType() != expr2->getType())))
+    if((isArrayType(type1) != isArrayType(type2))
+    || (isArrayType(type1) && isArrayType(type2) && (type1 != type2)))
     {
-        yyerror(g, ("Expression de type "+getNameOfType(expr1->getType())+
-        " incompatible avec une expression de type "+getNameOfType(expr2->getType())).c_str());
+        yyerror(g, ("Expression de type "+getNameOfType(type1)+
+        " incompatible avec une expression de type "+getNameOfType(type2)).c_str());
         return true;
     }
 
     // Si elle sont simple variable de type different -> warning
-    if(expr1->getType() != expr2->getType())
+    if(type1 != type2)
     {
-        yywarning(("Expression de type "+getNameOfType(expr1->getType())+
-        " associée à une expression de type "+getNameOfType(expr2->getType())+". Conversion forcée.").c_str());
+        yywarning(("Expression de type "+getNameOfType(type1)+
+        " associée à une expression de type "+getNameOfType(type2)+". Conversion.").c_str());
         return false;
     }
+    return false;
+}
+
+bool checkArrayTypeConflitError(Genesis** g, int type1, int type2)
+{
+    // Si un est un tableau et l'autre non -> erreur
+    // Si elles sont tableau mais de type different
+    if((isArrayType(type1) != isArrayType(type2))
+    || (isArrayType(type1) && isArrayType(type2) && (type1 != type2)))
+    {
+        yyerror(g, ("Expression de type "+getNameOfType(type1)+
+        " incompatible avec une expression de type "+getNameOfType(type2)).c_str());
+        return true;
+    }
+
     return false;
 }
 
@@ -818,6 +852,9 @@ std::string getNameOfType(int type)
 
 int main(int argc, char* argv[])
 {
+    defineTypes(INT32, INT64, CHAR);
+    currVariableType = INT32;
+
     // Test parameters
     if (argc <= 1)
     {

@@ -1,14 +1,8 @@
 #include <stdint.h>
 
 void main() {
-    int32_t a;
-
-    for(a=0;a<5;++a)
-    {
-        a + b;
-    }
-    if(b == 1)
-    {
-
-    }
+    int32_t u;
+    int64_t b ;
+    u=b;
+    char c = 12;
 }
