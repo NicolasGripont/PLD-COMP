@@ -42,6 +42,9 @@ string BinaryOperatorExpression::toString() const
     string typeStr = "";
     switch(op)  
     {  
+        case COMMA:  
+            txt += " , ";  
+            break;
         case EQUAL_EQUAL:  
             txt += " == ";  
             break;  
@@ -101,3 +104,5 @@ string BinaryOperatorExpression::toString() const
     }  
     return txt + expr2->toString();
 }
+
+    
