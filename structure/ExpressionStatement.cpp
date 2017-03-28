@@ -8,7 +8,7 @@ ExpressionStatement::ExpressionStatement(Expression* _expr)
 
 ExpressionStatement::~ExpressionStatement()
 {
-
+    delete expr;
 }
 
 string ExpressionStatement::toString() const

@@ -8,7 +8,7 @@ InitFunctionStatement::InitFunctionStatement(MultipleStatement* _multipleStateme
 
 InitFunctionStatement::~InitFunctionStatement()
 {
-
+    delete multipleStatement;
 }
 
 string InitFunctionStatement::toString() const

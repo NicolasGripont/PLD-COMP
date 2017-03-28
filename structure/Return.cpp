@@ -8,7 +8,7 @@ Return::Return(Expression* _expr)
 
 Return::~Return()
 {
-
+    delete expr;
 }
 
 string Return::toString() const

@@ -8,7 +8,7 @@ LoopExpression::LoopExpression(Expression* _expr)
 
 LoopExpression::~LoopExpression()
 {
-
+    delete expr;
 }
 
 string LoopExpression::toString() const

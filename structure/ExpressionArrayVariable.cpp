@@ -9,7 +9,6 @@ ExpressionArrayVariable::ExpressionArrayVariable(char* _id, Expression* _expr, i
 
 ExpressionArrayVariable::~ExpressionArrayVariable()
 {
-    delete id;
     delete expr;
 }
 

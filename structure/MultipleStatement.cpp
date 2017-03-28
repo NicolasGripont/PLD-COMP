@@ -7,7 +7,10 @@ MultipleStatement::MultipleStatement() : Printable()
 
 MultipleStatement::~MultipleStatement()
 {
-
+    for (unsigned int i = 0; i < statements.size(); ++i)
+    {
+        delete statements[i];
+    }
 }
 
 string MultipleStatement::toString() const
