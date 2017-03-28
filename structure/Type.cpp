@@ -1,6 +1,6 @@
 #include "Type.h"
 
-Type::Type(int _type) : Printer(), type(_type)
+Type::Type(TOKEN _type) : Printer(), type(_type)
 {
 
 }
@@ -10,7 +10,7 @@ Type::~Type()
 
 }
 
-int Type::getType()
+TOKEN Type::getType()
 {
     return type;
 }
