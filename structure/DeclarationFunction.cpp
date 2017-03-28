@@ -8,7 +8,10 @@ DeclarationFunction::DeclarationFunction(Type* _type, char* _id, ArgumentList* _
 
 DeclarationFunction::~DeclarationFunction()
 {
-
+    delete type;
+    delete id;
+    delete decFunctionStatement;
+    delete argumentList;
 }
 
 string DeclarationFunction::print() const

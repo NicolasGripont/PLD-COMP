@@ -6,7 +6,7 @@ DeclarationVariable::DeclarationVariable(char* _id, bool _array) : id(_id), arra
 
 DeclarationVariable::~DeclarationVariable()
 {
-
+    delete id;
 }
 
 char* DeclarationVariable::getId()

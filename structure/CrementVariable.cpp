@@ -8,7 +8,7 @@ CrementVariable::CrementVariable(ExpressionVariable* _exprVar, bool _increment, 
 
 CrementVariable::~CrementVariable()
 {
-
+    delete exprVar;
 }
 
 string CrementVariable::print() const

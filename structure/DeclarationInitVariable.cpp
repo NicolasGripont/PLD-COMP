@@ -9,7 +9,7 @@ DeclarationInitVariable::DeclarationInitVariable(char* _id, Expression* _expr)
 
 DeclarationInitVariable::~DeclarationInitVariable()
 {
-
+    delete expr;
 }
 
 string DeclarationInitVariable::print() const

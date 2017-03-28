@@ -6,7 +6,7 @@ struct VariableContainer
 	int type;
 
 	VariableContainer(char* _name, int _type):
-	name(_name),type(_type){};
+    name(_name),type(_type){}
 };
 
 struct FunctionContainer
@@ -17,5 +17,5 @@ struct FunctionContainer
     bool declaration;
 
 	FunctionContainer(char* _name, int _type, bool _declaration):
-	name(_name),type(_type),declaration(_declaration){};
+    name(_name),type(_type),declaration(_declaration){}
 };
