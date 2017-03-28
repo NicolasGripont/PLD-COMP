@@ -1,6 +1,6 @@
 %{
     #include <string>
-   
+
 	#include "comp.tab.h"
 
 	void compterColonne();
@@ -87,6 +87,19 @@ quote '
 "else"		{ yylval.i = ELSE; compterColonne(); return ELSE; }
 
 {quote}{lettre}{quote} { compterColonne(); yylval.i = yytext[1]; return INT; }
+
+{quote}\\b{quote} { compterColonne(); yylval.i = '\b'; return INT; }
+{quote}\\f{quote} { compterColonne(); yylval.i = '\f'; return INT; }
+{quote}\\n{quote} { compterColonne(); yylval.i = '\n'; return INT; }
+{quote}\\r{quote} { compterColonne(); yylval.i = '\r'; return INT; }
+{quote}\\t{quote} { compterColonne(); yylval.i = '\t'; return INT; }
+{quote}\\v{quote} { compterColonne(); yylval.i = '\v'; return INT; }
+{quote}\\\\{quote} { compterColonne(); yylval.i = '\\'; return INT; }
+{quote}\\'{quote} { compterColonne(); yylval.i = '\''; return INT; }
+{quote}\\\"{quote} { compterColonne(); yylval.i = '\"'; return INT; }
+{quote}\\\?{quote} { compterColonne(); yylval.i = '\?'; return INT; }
+{quote}\\e{quote} { compterColonne(); yylval.i = '\e'; return INT; }
+
 ({lettre}|{underscore})({lettre}|{chiffre}|{underscore})* { compterColonne(); yylval.s = strdup(yytext); return ID; }
 {chiffre}+ { compterColonne(); yylval.i = atoi(yytext); return INT; }
 
