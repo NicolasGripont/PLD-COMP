@@ -15,7 +15,7 @@ protected:
     int type;
 public:
     Expression();
-
+    virtual ~Expression();
 	virtual string print() const;
     int getType();
     void setType(int _type);

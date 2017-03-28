@@ -6,6 +6,11 @@ Argument::Argument(Type* _type, char* _id, bool _array)
 
 }
 
+Argument::~Argument() 
+{
+	
+}
+
 string Argument::print() const
 {
 	return "Argument";

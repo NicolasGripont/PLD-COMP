@@ -6,6 +6,12 @@ DeclarationArrayVariable::DeclarationArrayVariable(char* _id, int _size)
 {
 
 }
+
+DeclarationArrayVariable::~DeclarationArrayVariable()
+{
+
+}
+
 string DeclarationArrayVariable::print() const
 {
 	return "DeclarationArrayVariable";

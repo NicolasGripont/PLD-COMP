@@ -9,8 +9,9 @@ class DeclarationFunctionStatement : public Printer
 public:
 
 	DeclarationFunctionStatement(bool _declaration);
+	virtual ~DeclarationFunctionStatement();
+	virtual string print() const;
     bool isDeclaration();
-    virtual string print() const;
 
 private:
     // Si vrai : Declaration, si faux : initialisation

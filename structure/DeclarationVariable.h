@@ -8,6 +8,7 @@ class DeclarationVariable : public Printer
 public:
  
     DeclarationVariable(char* _id, bool _array);
+    virtual ~DeclarationVariable(); 
     char* getId();	bool isArray();
 	virtual string print() const;
 protected:

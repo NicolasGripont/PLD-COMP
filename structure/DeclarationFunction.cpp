@@ -6,6 +6,11 @@ DeclarationFunction::DeclarationFunction(Type* _type, char* _id, ArgumentList* _
 
 }
 
+DeclarationFunction::~DeclarationFunction()
+{
+
+}
+
 string DeclarationFunction::print() const
 {
 	return "DeclarationFunction";

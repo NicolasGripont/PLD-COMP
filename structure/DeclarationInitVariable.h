@@ -8,6 +8,7 @@ class DeclarationInitVariable : public DeclarationVariable
 {
 public:
 	DeclarationInitVariable(char* _id, Expression* _expr);
+	virtual ~DeclarationInitVariable();
 	virtual string print() const;
 
 private:

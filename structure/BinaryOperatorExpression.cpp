@@ -14,6 +14,11 @@ BinaryOperatorExpression::BinaryOperatorExpression(Expression* _expr1, Expressio
     }
 }
 
+BinaryOperatorExpression::~BinaryOperatorExpression()
+{
+
+}
+
 BinaryOperatorExpression::BinaryOperatorExpression(Expression* _expr1, Expression* _expr2, int _op, int _type)
     :Expression(),expr1(_expr1),expr2(_expr1),op(_op)
 {

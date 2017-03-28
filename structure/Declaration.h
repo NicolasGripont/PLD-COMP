@@ -7,6 +7,7 @@ class Declaration : public Printer
 {
 public:
     Declaration();
+    virtual ~Declaration();
     virtual string print() const;
 };
 

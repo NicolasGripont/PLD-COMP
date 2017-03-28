@@ -9,6 +9,7 @@ class BlockDeclarationVariable : public SimpleStatement
 {
 public:
     BlockDeclarationVariable(MultipleDeclarationVariable* _multipleDeclarationVariable);
+    virtual ~BlockDeclarationVariable();
     virtual string print() const;
     MultipleDeclarationVariable* getMultipleDeclarationVariable();
 

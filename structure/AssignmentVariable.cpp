@@ -14,7 +14,13 @@ AssignmentVariable::AssignmentVariable(ExpressionVariable* _exprVar, Expression*
     }
 }
 
+AssignmentVariable::~AssignmentVariable()
+{
+
+}
+
 string AssignmentVariable::print() const
 {
 	return "AssignmentVariable";
 }
+

@@ -5,6 +5,11 @@ ArgumentList::ArgumentList() : Printer()
 
 }
 
+ArgumentList::~ArgumentList()
+{
+
+}
+
 void ArgumentList::addArgument(Argument* arg)
 {
     arguments.push_back(arg);

@@ -11,6 +11,7 @@ class ArgumentList : public Printer
 {
 public:
     ArgumentList();
+    virtual ~ArgumentList();
     virtual string print() const;
     void addArgument(Argument* arg);
     int countArguments();

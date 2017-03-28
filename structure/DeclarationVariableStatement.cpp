@@ -6,6 +6,10 @@ DeclarationVariableStatement::DeclarationVariableStatement()
 
 }
 
+DeclarationVariableStatement::~DeclarationVariableStatement()
+{
+
+}
 
 string DeclarationVariableStatement::print() const
 {

@@ -7,6 +7,7 @@ class DeclarationArrayVariable : public DeclarationVariable
 {
 public:
 	DeclarationArrayVariable(char* _id, int _size);
+	virtual ~DeclarationArrayVariable();
 	virtual string print() const;
 	
 private:

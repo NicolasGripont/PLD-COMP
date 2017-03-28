@@ -6,6 +6,11 @@ DeclarationFunctionStatement::DeclarationFunctionStatement(bool _declaration)
 
 }
 
+DeclarationFunctionStatement::~DeclarationFunctionStatement()
+{
+
+}
+
 bool DeclarationFunctionStatement::isDeclaration()
 {
     return declaration;

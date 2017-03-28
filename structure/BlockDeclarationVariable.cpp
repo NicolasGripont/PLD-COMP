@@ -6,6 +6,11 @@ BlockDeclarationVariable::BlockDeclarationVariable(MultipleDeclarationVariable* 
 
 }
 
+BlockDeclarationVariable::~BlockDeclarationVariable()
+{
+
+}
+
 string BlockDeclarationVariable::print() const
 {
 	return "BlockDeclarationVariable";

@@ -7,6 +7,7 @@ class DeclarationVariableStatement : public SimpleStatement
 {
 public:
 	DeclarationVariableStatement();
+	virtual ~DeclarationVariableStatement();
 	virtual string print() const;
 };
 

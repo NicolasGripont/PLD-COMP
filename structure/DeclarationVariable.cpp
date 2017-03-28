@@ -4,6 +4,11 @@ DeclarationVariable::DeclarationVariable(char* _id, bool _array) : id(_id), arra
 
 }
 
+DeclarationVariable::~DeclarationVariable()
+{
+
+}
+
 char* DeclarationVariable::getId()
 {
     return id;
