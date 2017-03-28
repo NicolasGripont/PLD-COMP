@@ -248,12 +248,19 @@ declaration_variable
         // Si on a pas une constante à droite
         if($3->getExpressionType() != EXPRESSION_INTEGER)
         {
+            // Et que les type de variable et le type de l'expression de droite
+            // sont differents, warning (cast)
             if(type1 != type2)
             {
                 yywarning(("Expression de type "+getNameOfType(type1)+
                 " associée à une expression de type "+getNameOfType(type2)+". Conversion.").c_str());
                 YYABORT;
             }
+        }
+        else
+        {
+            // Le type de la constante de droite prend le type de la variable
+            $3->setType(type1); 
         }
     }
     ;
