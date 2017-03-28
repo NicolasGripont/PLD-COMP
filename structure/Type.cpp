@@ -22,19 +22,19 @@ string Type::toString() const
 	switch(type)  
     {  
         case VOID:  
-            typeStr = "void";  
+            typeStr += "void";  
             break;  
         case CHAR:  
-            typeStr = "char";  
+            typeStr += "char";  
             break; 
         case INT32:  
-            typeStr = "int32_t";  
+            typeStr += "int32_t";  
             break;  
         case INT64:  
-            typeStr = "int64_t";  
+            typeStr += "int64_t";  
             break;  
         default:  
-            typeStr = "ERROR_Type";  
+            typeStr += "ERROR_Type";  
     }  
 	return typeStr;
 }

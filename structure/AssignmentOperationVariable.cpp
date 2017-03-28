@@ -15,7 +15,7 @@ string AssignmentOperationVariable::toString() const
     string txt = exprVar->toString();
 
     string typeStr = "";
-	switch(type)  
+	switch(op)  
     {  
         case MUL_ASSIGN:  
             txt += " *= ";  
