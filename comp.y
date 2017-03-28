@@ -226,11 +226,20 @@ declaration
     ;
 
 type
+    : VOID {$$ = new Type(VOID); currVariableType = VOID;}
+    | CHAR {$$ = new Type(CHAR); currVariableType = CHAR;}
+    | INT32 {$$ = new Type(INT32); currVariableType = INT32;}
+    | INT64 {$$ = new Type(INT64); currVariableType = INT64;}
+    ;
+
+/*
+type
     : VOID {$$ = new Type(TYPE_VOID); currVariableType = VOID;}
     | CHAR {$$ = new Type(TYPE_CHAR); currVariableType = CHAR;}
     | INT32 {$$ = new Type(TYPE_INT32); currVariableType = INT32;}
     | INT64 {$$ = new Type(TYPE_INT64); currVariableType = INT64;}
     ;
+*/
 
 multiple_declaration_variable
     : declaration_variable {$$ = new MultipleDeclarationVariable(); $$->addDeclarationVariable($1);}
@@ -240,7 +249,23 @@ multiple_declaration_variable
 declaration_variable
     : ID {$$ = new DeclarationVariable($1,false);}
     | ID '[' INT ']' {$$ = new DeclarationArrayVariable($1, $3);}
-    | ID '=' expression {$$ = new DeclarationInitVariable($1, $3); if(checkArrayTypeConflitError(g,currVariableType,$3->getType())) YYABORT;}
+    | ID '=' expression
+    {
+        $$ = new DeclarationInitVariable($1, $3);
+        int type1 = currVariableType;
+        int type2 = $3->getType();
+        if(checkArrayTypeConflitError(g,type1,type2)) YYABORT;
+        // Si on a pas une constante à droite
+        if($3->getExpressionType() != EXPRESSION_INTEGER)
+        {
+            if(type1 != type2)
+            {
+                yywarning(("Expression de type "+getNameOfType(type1)+
+                " associée à une expression de type "+getNameOfType(type2)+". Conversion.").c_str());
+                YYABORT;
+            }
+        }
+    }
     ;
 
 assignment_variable // utilisé pour affecter une valeur à une variable en dehors de son initialisation (int a; a = 3;)
@@ -428,7 +453,8 @@ selection_statement
 /***********************/
 bool variableIsVoid(Genesis** g, Type* type)
 {
-    if (type->getType() == TYPE_VOID)
+    //if (type->getType() == TYPE_VOID)
+    if (type->getType() == VOID)
     {
         yyerror(g, "Une variable ne peut pas être de type void.");
         return true;
@@ -468,15 +494,15 @@ bool tryCallFunction(Genesis** g, char* functionName)
     if(state == 0)
     {
         yyerror(g, ("La fonction "+std::string(functionName)+" n'est pas définie.").c_str());
-        false;
+        return false;
     }
 
     if(state == 1)
     {
         yyerror(g, ("La fonction "+std::string(functionName)+" est déclarée mais jamais définie.").c_str());
-        false;
+        return false;
     }
-    true;
+    return true;
 }
 
 bool tryDeclareGlobalVariable(Genesis** g, Type* type, MultipleDeclarationVariable* multDecl)

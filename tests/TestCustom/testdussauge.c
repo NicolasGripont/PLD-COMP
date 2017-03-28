@@ -1,7 +1,7 @@
 #include <stdint.h>
 
 void main() {
-    int32_t u;
+    char u = 'a';
     int64_t b ;
     u=b;
     char c = 12;
