@@ -5,19 +5,12 @@
 #include "BasicBlock.h"
 
 enum class IR_Operation {
-	LOAD_CST,
-	ADD,
-	SUB,
-	MUL,
-	DIV,
-	READ_MEMORY,
-	WRITE_MEMORY,
-	CALL, 
-	CMP_EQ,
-	CMP_NOT_EQ,
-	CMP_LT,
-	CMP_LE,
-	CMP_GT,
+
+    BINARY_OP,
+    RWMEMORY,
+    CALL,
+    JUMP,
+    SELECTION
 };
 
 //! The class for one 3-address instruction
@@ -25,9 +18,9 @@ enum class IR_Operation {
 class IRInstruction {
 
 public:
-	IRInstruction(BasicBlock* block, Operation operation, Type type);
-	virtual ~IRInstruction();
-	virtual std::string toString() const = 0;
+    IRInstruction(BasicBlock* block, IR_Operation operation);
+    ~IRInstruction();
+    std::string toString() const;
 	Type getType() const;
 	Operation getOperation() const;
     BasicBlock * getBasicBlock() const;

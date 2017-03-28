@@ -1,10 +1,15 @@
 #include "IRInstruction.h"
 
-IRInstruction::IRInstruction(BasicBlock* _bb, Operation _op, Type _t) : block(_bb), operation(_op), type(_t) {
+IRInstruction::IRInstruction(BasicBlock* _bb, IR_Operation _op) : block(_bb), operation(_op), type(_t) {
 
 }
 
 IRInstruction::~IRInstruction() {
+
+}
+
+string IRInstruction::toString() const
+{
 
 }
 
