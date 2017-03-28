@@ -8,12 +8,26 @@ Argument::Argument(Type* _type, char* _id, bool _array)
 
 Argument::~Argument() 
 {
-	
+    delete type;
+    delete id;
 }
 
 string Argument::print() const
 {
-	return "Argument";
+    string txt;
+    if (type != nullptr)
+    {
+        txt = type->print();
+        if (id != nullptr)
+        {
+            txt += string(" ") + id;
+        }
+        if (array)
+        {
+            txt += "[]";
+        }
+    }
+    return txt;
 }
 
 Type* Argument::getType()

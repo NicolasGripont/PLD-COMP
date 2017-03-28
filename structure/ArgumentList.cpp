@@ -7,7 +7,10 @@ ArgumentList::ArgumentList() : Printer()
 
 ArgumentList::~ArgumentList()
 {
-
+    for (unsigned int i = 0; i < arguments.size(); ++i)
+    {
+        delete arguments[i];
+    }
 }
 
 void ArgumentList::addArgument(Argument* arg)
@@ -17,7 +20,18 @@ void ArgumentList::addArgument(Argument* arg)
 
 string ArgumentList::print() const
 {
-	return "ArgumentList";
+    string txt;
+
+    if (!arguments.empty())
+    {
+        txt = arguments.at(0)->print();
+    }
+    for (unsigned int i = 1; i < arguments.size(); ++i)
+    {
+        txt += string(", ") + arguments.at(i)->print();
+    }
+
+    return txt;
 }
 
 int ArgumentList::countArguments()
