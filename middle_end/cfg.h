@@ -1,8 +1,14 @@
 #ifndef _CFG_H
 #define _CFG_H
-#include <iostream>
-#include "symbol.h"
+
+#include "Symbol.h"
+#include "BasicBlock.h"
 #include "../structure/genesis.h"
+
+#include <iostream>
+#include <map>
+#include <string>
+#include <vector>
 
 /** The class for the control flow graph, also includes the symbol table */
 
@@ -15,24 +21,27 @@
  */
 
 class CFG {
+
  public:
 	CFG(Genesis* genesis);
 	virtual ~CFG();
-	virtual std::string toString() const;
-	void addBasicBlock(BasicBlock* bb); 
+
+    std::string toString() const;
+
+    void addBasicBlock(BasicBlock* bb);
 	void addSymbol(Symbol* symbol);
-	// symbol table methods
-	Symbol* getSymbol(string name);
+
+    // symbol table methods
+    Symbol* getSymbol(std::string name);
 	std::string getUsableBasicBlockName() const;
 	
 
  protected:
-	map <string, Symbol*> symbolsTable;
-	BasicBlock* current_bb;
-	int nextFreeSymbolIndex; /**< to allocate new symbols in the symbol table */
+    std::map <string, Symbol*> globalSymbolsTable;
+	BasicBlock * currentBasicBlock;
 	int nextBBnumber; /**< just for naming */
-	Genesis* genesis;
-	vector <BasicBlock*> blocks; /**< all the basic blocks of this CFG*/
+	Genesis * genesis;
+	std::vector <BasicBlock*> blocks; /**< all the basic blocks of this CFG*/
 };
 
 #endif

@@ -1,4 +1,4 @@
-#include "irinsctruction.h"
+#include "IRInstruction.h"
 
 IRInstruction::IRInstruction(BasicBlock* _bb, Operation _op, Type _t) : block(_bb), operation(_op), type(_t) {
 
