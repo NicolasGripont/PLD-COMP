@@ -35,5 +35,5 @@ string Type::print() const
         default:  
             typeStr = "ERROR_Type";  
       }  
-	return "Type";
+	return typeStr;
 }

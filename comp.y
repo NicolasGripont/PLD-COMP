@@ -267,16 +267,16 @@ declaration_variable
 
 assignment_variable // utilisé pour affecter une valeur à une variable en dehors de son initialisation (int a; a = 3;)
     : expr_var '=' expression {$$ = new AssignmentVariable($1,$3);if(checkConflictError(g,$1,$3)) YYABORT;}
-    | expr_var MUL_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,MUL_ASSIGN); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | expr_var DIV_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,DIV_ASSIGN); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | expr_var MOD_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,MOD_ASSIGN); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | expr_var PLUS_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,PLUS_ASSIGN); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | expr_var MINUS_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,MINUS_ASSIGN); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | expr_var LEFT_DEC_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,LEFT_DEC_ASSIGN); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | expr_var RIGHT_DEC_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,RIGHT_DEC_ASSIGN); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | expr_var AND_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,AND_ASSIGN); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | expr_var OR_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,OR_ASSIGN); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | expr_var OR_EXCL_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,OR_EXCL_ASSIGN); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expr_var MUL_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,TOKEN_MUL_ASSIGN); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expr_var DIV_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,TOKEN_DIV_ASSIGN); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expr_var MOD_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,TOKEN_MOD_ASSIGN); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expr_var PLUS_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,TOKEN_PLUS_ASSIGN); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expr_var MINUS_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,TOKEN_MINUS_ASSIGN); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expr_var LEFT_DEC_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,TOKEN_LEFT_DEC_ASSIGN); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expr_var RIGHT_DEC_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,TOKEN_RIGHT_DEC_ASSIGN); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expr_var AND_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,TOKEN_AND_ASSIGN); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expr_var OR_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,TOKEN_OR_ASSIGN); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expr_var OR_EXCL_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,TOKEN_OR_EXCL_ASSIGN); if(checkConflictError(g,$1,$3)) YYABORT;}
     ;
 
 declaration_function
@@ -378,14 +378,14 @@ loop_expression
 expression
     : '(' expression ')' {$$ = $2;}
     | expression ',' expression  {$$ = new BinaryOperatorExpression($1,$3,','); }
-    | expression EQUAL expression {$$ = new BinaryOperatorExpression($1,$3,EQUAL,INT32); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | expression DIFF expression {$$ = new BinaryOperatorExpression($1,$3,DIFF,INT32); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expression EQUAL expression {$$ = new BinaryOperatorExpression($1,$3,TOKEN_EQUAL,INT32); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expression DIFF expression {$$ = new BinaryOperatorExpression($1,$3,TOKEN_DIFF,INT32); if(checkConflictError(g,$1,$3)) YYABORT;}
     | expression '<' expression {$$ = new BinaryOperatorExpression($1,$3,'<',INT32); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | expression LESS_THAN expression {$$ = new BinaryOperatorExpression($1,$3,LESS_THAN,INT32); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expression LESS_THAN expression {$$ = new BinaryOperatorExpression($1,$3,TOKEN_LESS_THAN,INT32); if(checkConflictError(g,$1,$3)) YYABORT;}
     | expression '>' expression {$$ = new BinaryOperatorExpression($1,$3,'>',INT32); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | expression MORE_THAN expression {$$ = new BinaryOperatorExpression($1,$3,MORE_THAN,INT32); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | expression AND expression {$$ = new BinaryOperatorExpression($1,$3,AND,INT32); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | expression OR expression {$$ = new BinaryOperatorExpression($1,$3,OR,INT32); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expression MORE_THAN expression {$$ = new BinaryOperatorExpression($1,$3,TOKEN_MORE_THAN,INT32); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expression AND expression {$$ = new BinaryOperatorExpression($1,$3,TOKEN_AND,INT32); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expression OR expression {$$ = new BinaryOperatorExpression($1,$3,TOKEN_OR,INT32); if(checkConflictError(g,$1,$3)) YYABORT;}
     | assignment_variable {$$ = $1;}
     | '+' expression {$$ = new UnaryOperatorExpression($2,'+');}
     | '-' expression %prec NEG {$$ = new UnaryOperatorExpression($2,'-');}
