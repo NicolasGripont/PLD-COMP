@@ -152,8 +152,8 @@
 %token <ival> DECREMENT
 %token <ival> RIGHT_DEC
 %token <ival> LEFT_DEC
-%token <ival> MORE_OR_EQUAL_THAN
-%token <ival> LESS_OR_EQUAL_THAN
+%token <ival> MORE_THAN_OR_EQUAL
+%token <ival> LESS_THAN_OR_EQUAL
 %token <ival> DIFF
 %token <ival> EQUAL_EQUAL
 %token <ival> AND_AND

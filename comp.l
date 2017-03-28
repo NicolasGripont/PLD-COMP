@@ -41,8 +41,8 @@ quote '
 ">>"		{ yylval.i = RIGHT_DEC; compterColonne(); return RIGHT_DEC; }
 "<<"		{ yylval.i = LEFT_DEC; compterColonne(); return LEFT_DEC; }
 
-">="        { yylval.i = MORE_OR_EQUAL_THAN; compterColonne(); return MORE_OR_EQUAL_THAN; }/*ATTENTION RENAME MORE_THAN to MORE_OR_EQUAL_THAN*/
-"<="        { yylval.i = LESS_OR_EQUAL_THAN; compterColonne(); return LESS_OR_EQUAL_THAN; }/*ATTENTION RENAME LESS_THAN to LESS_OR_EQUAL_THAN*/
+">="        { yylval.i = MORE_THAN_OR_EQUAL; compterColonne(); return MORE_THAN_OR_EQUAL; }/*ATTENTION RENAME MORE_THAN to LESS_THAN_OR_EQUAL*/
+"<="        { yylval.i = LESS_THAN_OR_EQUAL; compterColonne(); return LESS_THAN_OR_EQUAL; }/*ATTENTION RENAME LESS_THAN to LESS_THAN_OR_EQUAL*/
 "!="        { yylval.i = DIFF; compterColonne(); return DIFF; }
 "=="        { yylval.i = EQUAL_EQUAL; compterColonne(); return EQUAL_EQUAL; }/*ATTENTION RENAME EQUAL to EQUAL_EQUAL*/
 "&&"        { yylval.i = AND_AND; compterColonne(); return AND_AND; }/*ATTENTION RENAME EQUAL to AND_AND*/
