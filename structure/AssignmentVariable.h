@@ -10,7 +10,6 @@ public:
 	AssignmentVariable(ExpressionVariable* _exprVar, Expression* _expr);
 	virtual ~AssignmentVariable();
 	virtual string print() const;
-
 protected:
 	ExpressionVariable* exprVar;
 	Expression* expr;

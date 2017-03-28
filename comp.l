@@ -1,6 +1,7 @@
 %{
     #include <string>
 
+    #include "structure/Enumeration.h"
     #include "structure/Declaration.h"
     #include "structure/Genesis.h"
     #include "structure/DeclarationVariable.h"

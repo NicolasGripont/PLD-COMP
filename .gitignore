@@ -41,3 +41,6 @@ lex.yy.c
 *.files
 *.includes
 *.config
+
+# Makefile dependance files
+*.d
