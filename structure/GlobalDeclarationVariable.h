@@ -9,7 +9,7 @@ class GlobalDeclarationVariable : public Declaration
 public:
 	GlobalDeclarationVariable(MultipleDeclarationVariable* _multipleDeclarationVariable);
 	virtual ~GlobalDeclarationVariable();
-	virtual string print() const;
+	virtual string toString() const;
 
 private:
 	MultipleDeclarationVariable* multipleDeclarationVariable;

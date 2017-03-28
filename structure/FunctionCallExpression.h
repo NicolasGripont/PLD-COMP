@@ -9,7 +9,7 @@ public:
 
 	FunctionCallExpression(char* _id, Expression* _expr, int _type);
 	virtual ~FunctionCallExpression();
-	virtual string print() const;
+	virtual string toString() const;
 	
 private:
 	char* id;

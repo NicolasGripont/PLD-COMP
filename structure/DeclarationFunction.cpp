@@ -14,7 +14,7 @@ DeclarationFunction::~DeclarationFunction()
     delete argumentList;
 }
 
-string DeclarationFunction::print() const
+string DeclarationFunction::toString() const
 {
 	return "DeclarationFunction";
 }

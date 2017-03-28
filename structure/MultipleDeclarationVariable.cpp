@@ -1,6 +1,6 @@
 #include "MultipleDeclarationVariable.h"
 
-MultipleDeclarationVariable::MultipleDeclarationVariable() : Printer()
+MultipleDeclarationVariable::MultipleDeclarationVariable() : Printable()
 {
 
 };
@@ -10,7 +10,7 @@ MultipleDeclarationVariable::~MultipleDeclarationVariable()
 
 }
 
-string MultipleDeclarationVariable::print() const
+string MultipleDeclarationVariable::toString() const
 {
     return "MultipleDeclarationVariable";
 }

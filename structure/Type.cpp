@@ -1,6 +1,7 @@
 #include "Type.h"
+#include "../comp.tab.h"
 
-Type::Type(TOKEN _type) : Printer(), type(_type)
+Type::Type(int _type) : Printable(), type(_type)
 {
 
 }
@@ -10,30 +11,30 @@ Type::~Type()
 
 }
 
-TOKEN Type::getType()
+int Type::getType()
 {
     return type;
 }
 
-string Type::print() const
+string Type::toString() const
 {
 	string typeStr = "";
 	switch(type)  
-      {  
-        case TOKEN_VOID:  
+    {  
+        case VOID:  
             typeStr = "void";  
             break;  
-        case TOKEN_CHAR:  
+        case CHAR:  
             typeStr = "char";  
             break; 
-        case TOKEN_INT32:  
+        case INT32:  
             typeStr = "int32_t";  
             break;  
-        case TOKEN_INT64:  
+        case INT64:  
             typeStr = "int64_t";  
             break;  
         default:  
             typeStr = "ERROR_Type";  
-      }  
-	return "Type";
+    }  
+	return typeStr;
 }

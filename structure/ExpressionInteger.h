@@ -9,7 +9,7 @@ public:
 
 	ExpressionInteger(int _value, int _type);
 	virtual ~ExpressionInteger();
-	virtual string print() const;
+	virtual string toString() const;
 
 private:
 	int value;

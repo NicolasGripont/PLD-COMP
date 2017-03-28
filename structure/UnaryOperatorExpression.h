@@ -8,7 +8,7 @@ class UnaryOperatorExpression : public Expression
 public:
 	UnaryOperatorExpression(Expression* _expr, int _op);
 	virtual ~UnaryOperatorExpression();
-	virtual string print() const;
+	virtual string toString() const;
 	
 private:
 	Expression* expr;

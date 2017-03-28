@@ -2,14 +2,14 @@
 #define _LOOPEXPRESSION_H
 
 #include "Expression.h"
-#include "Printer.h"
+#include "Printable.h"
 
-class LoopExpression : public Printer
+class LoopExpression : public Printable
 {
 public:
     LoopExpression(Expression* _expr);
     virtual ~LoopExpression();
-    virtual string print() const;
+    virtual string toString() const;
 
 private:
     Expression* expr;

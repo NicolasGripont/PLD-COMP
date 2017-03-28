@@ -12,7 +12,7 @@ DeclarationArrayVariable::~DeclarationArrayVariable()
 
 }
 
-string DeclarationArrayVariable::print() const
+string DeclarationArrayVariable::toString() const
 {
 	return "DeclarationArrayVariable";
 }

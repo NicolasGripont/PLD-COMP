@@ -1,7 +1,7 @@
 #include "Statement.h"
 
  Statement::Statement(MultipleStatement* _multipleStatement)
-    : Printer(), multipleStatement(_multipleStatement)
+    : Printable(), multipleStatement(_multipleStatement)
 {
 
 }
@@ -11,7 +11,7 @@ Statement::~Statement()
 
 }
 
-string Statement::print() const
+string Statement::toString() const
 {
 	return "Statement";
 }

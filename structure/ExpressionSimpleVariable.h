@@ -9,7 +9,7 @@ public:
 
 	ExpressionSimpleVariable(char* _id, int _type);
 	virtual ~ExpressionSimpleVariable();
-	virtual string print() const;
+	virtual string toString() const;
 
 private:
 	char* id;

@@ -11,7 +11,7 @@ GlobalDeclarationVariable::~GlobalDeclarationVariable()
 
 }
 
-string GlobalDeclarationVariable::print() const
+string GlobalDeclarationVariable::toString() const
 {
 	return "GlobalDeclarationVariable";
 }

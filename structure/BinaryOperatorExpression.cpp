@@ -33,9 +33,9 @@ BinaryOperatorExpression::~BinaryOperatorExpression()
     delete expr2;
 }
 
-string BinaryOperatorExpression::print() const
+string BinaryOperatorExpression::toString() const
 {
     return "";
 #warning Ligne a completer !
-    //return expr1->print() +  + expr2->print();
+    //return expr1->toString() +  + expr2->toString();
 }

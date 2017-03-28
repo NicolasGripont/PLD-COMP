@@ -11,7 +11,7 @@ CrementVariable::~CrementVariable()
     delete exprVar;
 }
 
-string CrementVariable::print() const
+string CrementVariable::toString() const
 {
 	return "CrementVariable";
 }

@@ -11,7 +11,7 @@ InitFunctionStatement::~InitFunctionStatement()
 
 }
 
-string InitFunctionStatement::print() const
+string InitFunctionStatement::toString() const
 {
 	return "InitFunctionStatement";
 }

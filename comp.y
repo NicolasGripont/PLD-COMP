@@ -1,11 +1,11 @@
 /**********/
 /* HEADER */
 /**********/
-%{
+%code requires{
     #include <iostream>
     #include <stack>
     #include <libgen.h>
-	#include <string.h>
+    #include <string.h>
 
     #include "structure/Enumeration.h"
     #include "structure/Genesis.h"
@@ -50,6 +50,11 @@
     #include "structure/ForLoop.h"
 
     #include "structure/Erreur.h"
+}
+%{
+   
+
+    #include "comp.tab.h"
 
     char* filename;
 
@@ -131,17 +136,64 @@
 /* TOKENS */
 /**********/
 // Liste des tokens issus de Flex (comp.l)
-%token ELLIPSE VOID
-%token LEFT_DEC_ASSIGN RIGHT_DEC_ASSIGN
-%token PLUS_ASSIGN MINUS_ASSIGN DIV_ASSIGN MUL_ASSIGN
-%token MOD_ASSIGN AND_ASSIGN OR_ASSIGN OR_EXCL_ASSIGN
-%token RIGHT_DEC LEFT_DEC
-%token MORE_THAN LESS_THAN DIFF EQUAL
-%token AND OR INCREMENT DECREMENT
-%token CHAR INT32 INT64
-%token BREAK RETURN CONTINUE WHILE FOR IF ELSE
 %token <s> ID
 %token <i> INT
+%token <ival> ELLIPSE
+%token <ival> RIGHT_DEC_ASSIGN
+%token <ival> LEFT_DEC_ASSIGN
+%token <ival> PLUS_ASSIGN
+%token <ival> MINUS_ASSIGN
+%token <ival> DIV_ASSIGN
+%token <ival> MUL_ASSIGN
+%token <ival> MOD_ASSIGN
+%token <ival> AND_ASSIGN
+%token <ival> OR_ASSIGN
+%token <ival> OR_EXCL_ASSIGN
+%token <ival> INCREMENT
+%token <ival> DECREMENT
+%token <ival> RIGHT_DEC
+%token <ival> LEFT_DEC
+%token <ival> MORE_OR_EQUAL_THAN
+%token <ival> LESS_OR_EQUAL_THAN
+%token <ival> DIFF
+%token <ival> EQUAL_EQUAL
+%token <ival> AND_AND
+%token <ival> OR_OR
+%token <ival> EQUAL
+%token <ival> PLUS
+%token <ival> MINUS
+%token <ival> DIV
+%token <ival> MUL
+%token <ival> MOD
+%token <ival> AND
+%token <ival> OR
+%token <ival> NOT 
+%token <ival> NOT_BIT
+%token <ival> POW
+%token <ival> MORE_THAN
+%token <ival> LESS_THAN
+%token <ival> SEMICOLON
+%token <ival> COMMA
+%token <ival> OPEN_BRACE
+%token <ival> CLOSE_BRACE
+%token <ival> OPEN_PARENTHESIS 
+%token <ival> CLOSE_PARENTHESIS
+%token <ival> OPEN_HOOK
+%token <ival> CLOSE_HOOK
+%token <ival> VOID
+%token <ival> CHAR
+%token <ival> INT32
+%token <ival> INT64
+%token <ival> BREAK
+%token <ival> RETURN
+%token <ival> CONTINUE
+%token <ival> WHILE
+%token <ival> FOR
+%token <ival> IF
+%token <ival> ELSE
+%token <ival> CHAR_ARRAY
+%token <ival> INT32_ARRAY
+%token <ival> INT64_ARRAY
 
 // Type permettant la création de la structure de données
 %type <g> genesis
@@ -175,21 +227,20 @@
 // Pour la priorité des opérateurs qui a été définie
 // Voir https://c.developpez.com/cours/bernard-cassagne/node101.php#footmp10620
 
-%left ','
+%left COMMA
 %right RIGHT_DEC_ASSIGN LEFT_DEC_ASSIGN AND_ASSIGN OR_EXCL_ASSIGN OR_ASSIGN
-%right '=' PLUS_ASSIGN MINUS_ASSIGN MUL_ASSIGN DIV_ASSIGN MOD_ASSIGN
-%right '?' ':'
+%right EQUAL PLUS_ASSIGN MINUS_ASSIGN MUL_ASSIGN DIV_ASSIGN MOD_ASSIGN
+%left OR_OR
+%left AND_AND
 %left OR
-%left AND
-%left '|'
-%left '^'
-%left EQUAL DIFF
-%left '<' LESS_THAN '>' MORE_THAN
+%left POW
+%left EQUAL_EQUAL DIFF
+%left MORE_THAN LESS_THAN_OR_EQUAL LESS_THAN MORE_THAN_OR_EQUAL
 %left RIGHT_DEC LEFT_DEC
-%left '+' '-'
+%left PLUS MINUS
 %nonassoc NEG
-%right '*' '/' '%'
-%right '!' '~' '&'
+%right MUL DIV MOD
+%right NOT NOT_BIT AND
 %left INCREMENT DECREMENT
 
 /**************/
@@ -213,7 +264,7 @@ genesis
     ;
 
 declaration
-    : type multiple_declaration_variable ';'
+    : type multiple_declaration_variable SEMICOLON
     {
         GlobalDeclarationVariable* dec = new GlobalDeclarationVariable($2);
         $$ = dec;
@@ -225,21 +276,21 @@ declaration
     ;
 
 type
-    : VOID {$$ = new Type(TOKEN_VOID); currVariableType = TOKEN_VOID;}
-    | CHAR {$$ = new Type(TOKEN_CHAR); currVariableType = TOKEN_CHAR;}
-    | INT32 {$$ = new Type(TOKEN_INT32); currVariableType = TOKEN_INT32;}
-    | INT64 {$$ = new Type(TOKEN_INT64); currVariableType = TOKEN_INT64;}
+    : VOID {$$ = new Type(VOID); currVariableType = VOID;}
+    | CHAR {$$ = new Type(CHAR); currVariableType = CHAR;}
+    | INT32 {$$ = new Type(INT32); currVariableType = INT32;}
+    | INT64 {$$ = new Type(INT64); currVariableType = INT64;}
     ;
 
 multiple_declaration_variable
     : declaration_variable {$$ = new MultipleDeclarationVariable(); $$->addDeclarationVariable($1);}
-    | multiple_declaration_variable ',' declaration_variable {$$ = $1; $1->addDeclarationVariable($3);}
+    | multiple_declaration_variable COMMA declaration_variable {$$ = $1; $1->addDeclarationVariable($3);}
     ;
 
 declaration_variable
     : ID {$$ = new DeclarationVariable($1,false);}
-    | ID '[' INT ']' {$$ = new DeclarationArrayVariable($1, $3);}
-    | ID '=' expression
+    | ID OPEN_HOOK INT CLOSE_HOOK {$$ = new DeclarationArrayVariable($1, $3);}
+    | ID EQUAL expression
     {
         $$ = new DeclarationInitVariable($1, $3);
         int type1 = currVariableType;
@@ -266,7 +317,7 @@ declaration_variable
     ;
 
 assignment_variable // utilisé pour affecter une valeur à une variable en dehors de son initialisation (int a; a = 3;)
-    : expr_var '=' expression {$$ = new AssignmentVariable($1,$3);if(checkConflictError(g,$1,$3)) YYABORT;}
+    : expr_var EQUAL expression {$$ = new AssignmentVariable($1,$3);if(checkConflictError(g,$1,$3)) YYABORT;}
     | expr_var MUL_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,MUL_ASSIGN); if(checkConflictError(g,$1,$3)) YYABORT;}
     | expr_var DIV_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,DIV_ASSIGN); if(checkConflictError(g,$1,$3)) YYABORT;}
     | expr_var MOD_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,MOD_ASSIGN); if(checkConflictError(g,$1,$3)) YYABORT;}
@@ -280,7 +331,7 @@ assignment_variable // utilisé pour affecter une valeur à une variable en deho
     ;
 
 declaration_function
-    : type ID '(' ')' declaration_function_statement
+    : type ID OPEN_PARENTHESIS CLOSE_PARENTHESIS declaration_function_statement
     {
         ArgumentList* args = new ArgumentList();
         $$ = new DeclarationFunction($1, $2, args, $5);
@@ -288,7 +339,7 @@ declaration_function
         if(checkVariableDuplicationInFunction(g,$2,args,$5)) YYABORT;
         popVariablesFromStack(nullptr,$5);
     }
-    | type ID '(' arguments_list ')' declaration_function_statement
+    | type ID OPEN_PARENTHESIS arguments_list CLOSE_PARENTHESIS declaration_function_statement
     {
         $$ = new DeclarationFunction($1, $2, $4, $6);
         if(!tryDefineFunction(g,$1,$2,$6)) YYABORT;
@@ -298,9 +349,9 @@ declaration_function
     ;
 
 declaration_function_statement
-    : ';'  {  $$ = new PureDeclarationFunctionStatement(); }
-    | '{' multiple_statement '}'   { $$ = new InitFunctionStatement($2); }
-    | '{' '}' {$$ = new InitFunctionStatement(new MultipleStatement());}
+    : SEMICOLON {  $$ = new PureDeclarationFunctionStatement(); }
+    | OPEN_BRACE multiple_statement CLOSE_BRACE { $$ = new InitFunctionStatement($2); }
+    | OPEN_BRACE CLOSE_BRACE {$$ = new InitFunctionStatement(new MultipleStatement());}
     ;
 
 argument
@@ -312,7 +363,7 @@ argument
         $$=new Argument($1,$2);
         if(variableIsVoid(g, $1)) YYABORT;
     }
-    | type ID '[' ']' {
+    | type ID OPEN_HOOK CLOSE_HOOK {
         $$=new Argument($1,$2,true);
         if(variableIsVoid(g, $1)) YYABORT;
     }
@@ -324,7 +375,7 @@ arguments_list
         $$ = new ArgumentList(); $$->addArgument($1);
         pushVariablesInStack($1);
     }
-    | arguments_list ',' argument
+    | arguments_list COMMA argument
     {
         $$ = $1; $1->addArgument($3);
         pushVariablesInStack($3);
@@ -335,15 +386,15 @@ simple_statement
     : iteration_statement {$$ = $1;}
     | selection_statement {$$ = $1;}
 
-    | type multiple_declaration_variable ';'
+    | type multiple_declaration_variable SEMICOLON
     {
         $$ = new BlockDeclarationVariable($2); $2->setType($1);
         if(variableIsVoid(g, $1)) YYABORT;
         pushVariablesInStack($1,$2);
     }
-    | expression ';' {$$ = new ExpressionStatement($1);}
-    | return ';' {$$ = new ReturnStatement($1);}
-    | ';'  {$$ = new UselessStatement();}
+    | expression SEMICOLON {$$ = new ExpressionStatement($1);}
+    | return SEMICOLON {$$ = new ReturnStatement($1);}
+    | SEMICOLON  {$$ = new UselessStatement();}
     ;
 
 multiple_statement
@@ -357,12 +408,12 @@ return
     ;
 
 iteration_statement
-    : WHILE '(' expression ')' statement {$$ = new WhileLoop($3,$5);}
-    | FOR '(' loop_expression ';' loop_expression ';' loop_expression ')' statement {$$ = new ForLoop($3,$5,$7,$9);}
+    : WHILE OPEN_PARENTHESIS expression CLOSE_PARENTHESIS statement {$$ = new WhileLoop($3,$5);}
+    | FOR OPEN_PARENTHESIS loop_expression SEMICOLON loop_expression SEMICOLON loop_expression CLOSE_PARENTHESIS statement {$$ = new ForLoop($3,$5,$7,$9);}
     ;
 
 statement
-    : '{' multiple_statement '}'
+    : OPEN_BRACE multiple_statement CLOSE_BRACE
     {
         $$ = new Statement($2);
         if(checkVariableDuplicationInBlock(g,$2)) YYABORT;
@@ -376,51 +427,51 @@ loop_expression
     ;
 
 expression
-    : '(' expression ')' {$$ = $2;}
-    | expression ',' expression  {$$ = new BinaryOperatorExpression($1,$3,','); }
-    | expression EQUAL expression {$$ = new BinaryOperatorExpression($1,$3,EQUAL,INT32); if(checkConflictError(g,$1,$3)) YYABORT;}
+    : OPEN_PARENTHESIS expression CLOSE_PARENTHESIS {$$ = $2;}
+    | expression COMMA expression  {$$ = new BinaryOperatorExpression($1,$3,COMMA); }
+    | expression EQUAL_EQUAL expression {$$ = new BinaryOperatorExpression($1,$3,EQUAL_EQUAL,INT32); if(checkConflictError(g,$1,$3)) YYABORT;}
     | expression DIFF expression {$$ = new BinaryOperatorExpression($1,$3,DIFF,INT32); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | expression '<' expression {$$ = new BinaryOperatorExpression($1,$3,'<',INT32); if(checkConflictError(g,$1,$3)) YYABORT;}
     | expression LESS_THAN expression {$$ = new BinaryOperatorExpression($1,$3,LESS_THAN,INT32); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | expression '>' expression {$$ = new BinaryOperatorExpression($1,$3,'>',INT32); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expression LESS_THAN_OR_EQUAL expression {$$ = new BinaryOperatorExpression($1,$3,LESS_THAN_OR_EQUAL,INT32); if(checkConflictError(g,$1,$3)) YYABORT;}
     | expression MORE_THAN expression {$$ = new BinaryOperatorExpression($1,$3,MORE_THAN,INT32); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | expression AND expression {$$ = new BinaryOperatorExpression($1,$3,AND,INT32); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | expression OR expression {$$ = new BinaryOperatorExpression($1,$3,OR,INT32); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expression MORE_THAN_OR_EQUAL expression {$$ = new BinaryOperatorExpression($1,$3,MORE_THAN_OR_EQUAL,INT32); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expression AND_AND expression {$$ = new BinaryOperatorExpression($1,$3,AND_AND,INT32); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expression OR_OR expression {$$ = new BinaryOperatorExpression($1,$3,OR_OR,INT32); if(checkConflictError(g,$1,$3)) YYABORT;}
     | assignment_variable {$$ = $1;}
-    | '+' expression {$$ = new UnaryOperatorExpression($2,'+');}
-    | '-' expression %prec NEG {$$ = new UnaryOperatorExpression($2,'-');}
-    | '~' expression {$$ = new UnaryOperatorExpression($2,'~');}
-    | '!' expression {$$ = new UnaryOperatorExpression($2,'!');}
+    | PLUS expression {$$ = new UnaryOperatorExpression($2,PLUS);}
+    | MINUS expression %prec NEG {$$ = new UnaryOperatorExpression($2,MINUS);}
+    | NOT_BIT expression {$$ = new UnaryOperatorExpression($2,NOT_BIT);}
+    | NOT expression {$$ = new UnaryOperatorExpression($2,NOT);}
     | INT {$$ = new ExpressionInteger($1,INT32);}
     | INCREMENT expr_var {$$ = new CrementVariable($2, true, true);}
     | DECREMENT expr_var {$$ = new CrementVariable($2, false, true);}
     | expr_var INCREMENT {$$ = new CrementVariable($1, true, false);}
     | expr_var DECREMENT {$$ = new CrementVariable($1, false, false);}
     | expr_var {$$ = $1;}
-    | ID '(' expression ')'
+    | ID OPEN_PARENTHESIS expression CLOSE_PARENTHESIS
     {
         if(!tryCallFunction(g, $1)) YYABORT;
         $$ = new FunctionCallExpression($1, $3, getFunctionType($1));
     }
-    | ID '(' ')'
+    | ID OPEN_PARENTHESIS CLOSE_PARENTHESIS
     {
         if(!tryCallFunction(g, $1)) YYABORT;
         $$ = new FunctionCallExpression($1, nullptr, getFunctionType($1));
     }
-    | expression '+' expression {$$ = new BinaryOperatorExpression($1,$3,'+'); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | expression '-' expression {$$ = new BinaryOperatorExpression($1,$3,'-'); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | expression '*' expression {$$ = new BinaryOperatorExpression($1,$3,'*'); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | expression '/' expression {$$ = new BinaryOperatorExpression($1,$3,'/'); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | expression '%' expression {$$ = new BinaryOperatorExpression($1,$3,'%'); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | expression '&' expression {$$ = new BinaryOperatorExpression($1,$3,'&'); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | expression '|' expression {$$ = new BinaryOperatorExpression($1,$3,'|'); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | expression '^' expression {$$ = new BinaryOperatorExpression($1,$3,'^'); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expression PLUS expression {$$ = new BinaryOperatorExpression($1,$3,PLUS); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expression MINUS expression {$$ = new BinaryOperatorExpression($1,$3,MINUS); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expression MUL expression {$$ = new BinaryOperatorExpression($1,$3,MUL); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expression DIV expression {$$ = new BinaryOperatorExpression($1,$3,DIV); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expression MOD expression {$$ = new BinaryOperatorExpression($1,$3,MOD); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expression AND expression {$$ = new BinaryOperatorExpression($1,$3,AND); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expression OR expression {$$ = new BinaryOperatorExpression($1,$3,OR); if(checkConflictError(g,$1,$3)) YYABORT;}
+    | expression POW expression {$$ = new BinaryOperatorExpression($1,$3,POW); if(checkConflictError(g,$1,$3)) YYABORT;}
     | expression LEFT_DEC expression {$$ = new BinaryOperatorExpression($1,$3,LEFT_DEC); if(checkConflictError(g,$1,$3)) YYABORT;}
     | expression RIGHT_DEC expression {$$ = new BinaryOperatorExpression($1,$3,RIGHT_DEC); if(checkConflictError(g,$1,$3)) YYABORT;}
     ;
 
 expr_var
-    : ID '[' expression ']'
+    : ID OPEN_HOOK expression CLOSE_HOOK
     {
         if(!checkVariableExist(g,$1)) YYABORT;
         if(!isArrayType(getVariableType($1)))
@@ -438,9 +489,9 @@ expr_var
     ;
 
 selection_statement
-    : IF '(' expression ')' statement ELSE statement {$$ = new SelectionStatement($3,$5,$7);}
-    | IF '(' expression ')' statement {$$ = new SelectionStatement($3,$5,nullptr);}
-    | IF '(' expression ')' '{' '}' {$$ = new SelectionStatement($3,nullptr,nullptr);}
+    : IF OPEN_PARENTHESIS expression CLOSE_PARENTHESIS statement ELSE statement {$$ = new SelectionStatement($3,$5,$7);}
+    | IF OPEN_PARENTHESIS expression CLOSE_PARENTHESIS statement {$$ = new SelectionStatement($3,$5,nullptr);}
+    | IF OPEN_PARENTHESIS expression CLOSE_PARENTHESIS OPEN_BRACE CLOSE_BRACE {$$ = new SelectionStatement($3,nullptr,nullptr);}
     ;
 
 %%
@@ -450,7 +501,7 @@ selection_statement
 /***********************/
 bool variableIsVoid(Genesis** g, Type* type)
 {
-    if (type->getType() == TOKEN_VOID)
+    if (type->getType() == VOID)
     {
         yyerror(g, "Une variable ne peut pas être de type void.");
         return true;
@@ -770,13 +821,13 @@ int primitiveToArrayType(int type)
 {
     switch(type)
     {
-        case TOKEN_INT64:
-            return TOKEN_INT64_ARRAY;
-        case TOKEN_CHAR:
-            return TOKEN_CHAR_ARRAY;
-        case TOKEN_INT32:
+        case INT64:
+            return INT64_ARRAY;
+        case CHAR:
+            return CHAR_ARRAY;
+        case INT32:
         default:
-            return TOKEN_INT32_ARRAY;
+            return INT32_ARRAY;
     }
 }
 
@@ -784,13 +835,13 @@ int arrayToPrimitiveType(int type)
 {
     switch(type)
     {
-        case TOKEN_INT64_ARRAY:
-            return TOKEN_INT64;
-        case TOKEN_CHAR_ARRAY:
-            return TOKEN_CHAR;
-        case TOKEN_INT32_ARRAY:
+        case INT64_ARRAY:
+            return INT64;
+        case CHAR_ARRAY:
+            return CHAR;
+        case INT32_ARRAY:
         default:
-            return TOKEN_INT32;
+            return INT32;
     }
 }
 
@@ -856,17 +907,17 @@ std::string getNameOfType(int type)
 {
     switch(type)
     {
-    case TOKEN_INT64_ARRAY:
+    case INT64_ARRAY:
         return "int64_t[]";
-    case TOKEN_CHAR_ARRAY:
+    case CHAR_ARRAY:
         return "char[]";
-    case TOKEN_INT32_ARRAY:
+    case INT32_ARRAY:
         return "int32_t[]";
-    case TOKEN_INT64:
+    case INT64:
         return "int64_t";
-    case TOKEN_CHAR:
+    case CHAR:
         return "char";
-    case TOKEN_INT32:
+    case INT32:
     default:
         return "int32_t";
     }
@@ -874,7 +925,7 @@ std::string getNameOfType(int type)
 
 int main(int argc, char* argv[])
 {
-    currVariableType = TOKEN_INT32;
+    currVariableType = INT32;
 
     // Test parameters
     if (argc <= 1)

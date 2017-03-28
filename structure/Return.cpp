@@ -1,7 +1,7 @@
 #include "Return.h"
 
 Return::Return(Expression* _expr)
-    : Printer(), expr(_expr)
+    : Printable(), expr(_expr)
 {
 
 }
@@ -11,7 +11,7 @@ Return::~Return()
 
 }
 
-string Return::print() const
+string Return::toString() const
 {
 	return "Return";
 }

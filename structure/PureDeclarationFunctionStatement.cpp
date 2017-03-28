@@ -11,7 +11,7 @@ PureDeclarationFunctionStatement::~PureDeclarationFunctionStatement()
 
 }
 
-string PureDeclarationFunctionStatement::print() const
+string PureDeclarationFunctionStatement::toString() const
 {
 	return "PureDeclarationFunctionStatement";
 }

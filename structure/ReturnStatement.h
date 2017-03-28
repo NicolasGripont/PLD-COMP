@@ -9,7 +9,7 @@ class ReturnStatement : public SimpleStatement
 public:
     ReturnStatement(Return* _ret);
     virtual ~ReturnStatement();
-    virtual string print() const;
+    virtual string toString() const;
 
 private:
     Return* ret;

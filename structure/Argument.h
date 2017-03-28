@@ -2,14 +2,14 @@
 #define _ARGUMENT_H
 
 #include "Type.h"
-#include "Printer.h"
+#include "Printable.h"
 
-class Argument : public Printer
+class Argument : public Printable
 {
 public:
     Argument(Type* _type, char* _id = nullptr, bool _array = false);
     virtual ~Argument();
-    virtual string print() const;
+    virtual string toString() const;
     Type* getType();
     char* getName();
     bool isArray();

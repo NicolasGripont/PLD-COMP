@@ -9,7 +9,7 @@ public:
 	BinaryOperatorExpression(Expression* _expr1, Expression* _expr2, int _op);
     BinaryOperatorExpression(Expression* _expr1, Expression* _expr2, int _op, int _type);
     virtual ~BinaryOperatorExpression();
-	virtual string print() const;
+	virtual string toString() const;
 
 private:
 	Expression* expr1;

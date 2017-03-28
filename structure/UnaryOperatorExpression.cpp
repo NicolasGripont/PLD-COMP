@@ -1,4 +1,5 @@
 #include "UnaryOperatorExpression.h"
+#include "../comp.tab.h"
 
 UnaryOperatorExpression::UnaryOperatorExpression(Expression* _expr, int _op)
 	:Expression(),expr(_expr),op(_op)
@@ -15,15 +16,28 @@ UnaryOperatorExpression::~UnaryOperatorExpression()
 	}
 }
 
-string UnaryOperatorExpression::print() const
+string UnaryOperatorExpression::toString() const
 {
 	string exprStr = "";
-	char opStr = (char) op;
+	switch(op){
+		case PLUS:
+			exprStr += '+';
+			break;
+		case MINUS:
+			exprStr += '-';
+			break;
+		case NOT_BIT:
+			exprStr += '~';
+			break;
+		case NOT:
+			exprStr += '!';
+			break;
+		default :
+			return "ERROR_UnaryOperatorExpression";
 
-	if(expr != nullptr) 
-	{
-		exprStr = expr->print();
 	}
-
-	return opStr + exprStr;
+	
+	exprStr += expr->toString();
+	
+	return exprStr;
 }

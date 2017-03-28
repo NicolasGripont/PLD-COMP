@@ -1,6 +1,6 @@
 #include "MultipleStatement.h"
 
-MultipleStatement::MultipleStatement() : Printer()
+MultipleStatement::MultipleStatement() : Printable()
 {
 
 }
@@ -10,7 +10,7 @@ MultipleStatement::~MultipleStatement()
 
 }
 
-string MultipleStatement::print() const
+string MultipleStatement::toString() const
 {
 	return "MultipleStatement";
 }

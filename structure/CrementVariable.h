@@ -9,7 +9,7 @@ class CrementVariable : public Expression
 public:
 	CrementVariable(ExpressionVariable* _exprVar, bool _increment, bool _preCrement);
 	virtual ~CrementVariable();
-	virtual string print() const;
+	virtual string toString() const;
 
 private:
 	ExpressionVariable* exprVar;

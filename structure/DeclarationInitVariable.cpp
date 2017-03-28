@@ -12,7 +12,7 @@ DeclarationInitVariable::~DeclarationInitVariable()
     delete expr;
 }
 
-string DeclarationInitVariable::print() const
+string DeclarationInitVariable::toString() const
 {
 	return "DeclarationInitVariable";
 }

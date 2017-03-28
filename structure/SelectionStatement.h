@@ -10,7 +10,7 @@ class SelectionStatement : public SimpleStatement
 public:
     SelectionStatement(Expression* _expr, Statement* _stat, Statement* _elseStat);
     virtual ~SelectionStatement();
-    virtual string print() const;
+    virtual string toString() const;
 
 private:
     // Expression dans le if

@@ -9,7 +9,7 @@ class PureDeclarationFunctionStatement : public DeclarationFunctionStatement
 public:
 	PureDeclarationFunctionStatement();
 	virtual ~PureDeclarationFunctionStatement();
-	virtual string print() const;
+	virtual string toString() const;
 };
 
 #endif

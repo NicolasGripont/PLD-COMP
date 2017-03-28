@@ -2,14 +2,14 @@
 #define _RETURN_H
 
 #include "Expression.h"
-#include "Printer.h"
+#include "Printable.h"
 
-class Return : public Printer
+class Return : public Printable
 {
 public:
 	Return(Expression* _expr);
 	virtual ~Return();
-	virtual string print() const;
+	virtual string toString() const;
 
 private:
 	Expression* expr;

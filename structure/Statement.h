@@ -2,14 +2,14 @@
 #define _STATEMENT_H
 
 #include "MultipleStatement.h"
-#include "Printer.h"
+#include "Printable.h"
 
-class Statement : public Printer
+class Statement : public Printable
 {
 public:
     Statement(MultipleStatement* _multipleStatement);
     virtual ~Statement();
-    virtual string print() const;
+    virtual string toString() const;
 
 private:
     MultipleStatement* multipleStatement;

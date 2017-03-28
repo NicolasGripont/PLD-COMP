@@ -8,7 +8,7 @@ public:
 
 	ExpressionVariable(int _type);
 	virtual ~ExpressionVariable();
-	virtual string print() const;
+	virtual string toString() const;
 };
 
 #endif

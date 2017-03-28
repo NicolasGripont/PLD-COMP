@@ -2,14 +2,14 @@
 #define _SIMPLESTATEMENT_H
 
 #include "SimpleStatementType.h"
-#include "Printer.h"
+#include "Printable.h"
 
-class SimpleStatement : public Printer
+class SimpleStatement : public Printable
 {
 public:
 	SimpleStatement(SimpleStatementType _type);
 	virtual ~SimpleStatement();
-	virtual string print() const;
+	virtual string toString() const;
     SimpleStatementType getType();
 
 private:

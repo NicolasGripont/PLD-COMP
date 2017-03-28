@@ -4,14 +4,14 @@
 #include <vector>
 
 #include "Declaration.h"
-#include "Printer.h"
+#include "Printable.h"
 
-class Genesis : public Printer
+class Genesis : public Printable
 {
 public:
     Genesis();
     virtual ~Genesis();
-	virtual string print() const;
+	virtual string toString() const;
     void addDeclaration(Declaration* declaration);
     int countDeclaration();
 

@@ -4,15 +4,15 @@
 #include <vector>
 
 #include "Argument.h"
-#include "Printer.h"
+#include "Printable.h"
 
 
-class ArgumentList : public Printer
+class ArgumentList : public Printable
 {
 public:
     ArgumentList();
     virtual ~ArgumentList();
-    virtual string print() const;
+    virtual string toString() const;
     void addArgument(Argument* arg);
     int countArguments();
     Argument*& operator[] (int i);
