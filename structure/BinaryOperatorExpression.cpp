@@ -37,9 +37,8 @@ BinaryOperatorExpression::~BinaryOperatorExpression()
 
 string BinaryOperatorExpression::toString() const
 {
-    string txt = expr1->toString();
+    string txt = "(" + expr1->toString();
 
-    string typeStr = "";
     switch(op)  
     {  
         case COMMA:  
@@ -102,7 +101,7 @@ string BinaryOperatorExpression::toString() const
         default:  
             return "ERROR_BinaryOperatorExpression";  
     }  
-    return txt + expr2->toString();
+    return txt + expr2->toString() + ")";
 }
 
     

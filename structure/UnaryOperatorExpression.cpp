@@ -18,7 +18,7 @@ UnaryOperatorExpression::~UnaryOperatorExpression()
 
 string UnaryOperatorExpression::toString() const
 {
-	string exprStr = "";
+	string exprStr = "(";
 	switch(op){
 		case PLUS:
 			exprStr += '+';
@@ -37,7 +37,7 @@ string UnaryOperatorExpression::toString() const
 
 	}
 	
-	exprStr += expr->toString();
+	exprStr += expr->toString() + ")";
 	
 	return exprStr;
 }

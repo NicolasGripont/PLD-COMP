@@ -13,5 +13,5 @@ PureDeclarationFunctionStatement::~PureDeclarationFunctionStatement()
 
 string PureDeclarationFunctionStatement::toString() const
 {
-	return ";";
+	return "; ";
 }

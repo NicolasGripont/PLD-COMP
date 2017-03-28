@@ -13,6 +13,5 @@ Statement::~Statement()
 
 string Statement::toString() const
 {
-	#warning check where should '{}' be put
 	return string("{") + multipleStatement->toString() + string("}");
 }

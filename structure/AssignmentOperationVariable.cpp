@@ -14,7 +14,7 @@ string AssignmentOperationVariable::toString() const
 {
     string txt = exprVar->toString();
 
-    string typeStr = "";
+    string typeStr = "(";
 	switch(op)  
     {  
         case MUL_ASSIGN:  
@@ -50,7 +50,7 @@ string AssignmentOperationVariable::toString() const
         default:  
             return "ERROR_AssignmentOperationVariable";  
     }  
-    return txt + expr->toString();
+    return txt + expr->toString() + ")";
 }
 
 

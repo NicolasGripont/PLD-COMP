@@ -13,5 +13,5 @@ GlobalDeclarationVariable::~GlobalDeclarationVariable()
 
 string GlobalDeclarationVariable::toString() const
 {
-	return multipleDeclarationVariable->toString() + string(";");
+	return multipleDeclarationVariable->toString() + string("; ");
 }

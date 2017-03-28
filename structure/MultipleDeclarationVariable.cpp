@@ -27,7 +27,7 @@ string MultipleDeclarationVariable::toString() const
         txt += string(", ") + declarationsVariables.at(i)->toString();
     }
 
-    return txt + string(";");
+    return txt + string("; ");
 }
 
 void MultipleDeclarationVariable::addDeclarationVariable(DeclarationVariable* dec)
