@@ -27,6 +27,9 @@ enum TOKEN {
      TOKEN_CHAR ,
      TOKEN_INT32 ,
      TOKEN_INT64 ,
+     TOKEN_INT64_ARRAY,
+     TOKEN_INT32_ARRAY,
+     TOKEN_CHAR_ARRAY,
      TOKEN_BREAK ,
      TOKEN_RETURN ,
      TOKEN_CONTINUE ,
@@ -38,5 +41,9 @@ enum TOKEN {
      TOKEN_INT ,
      TOKEN_NEG
 };
+
+int sizeOfType(int type);
+
+bool isArrayType(int type);
 
 #endif

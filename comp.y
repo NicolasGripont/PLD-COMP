@@ -8,7 +8,6 @@
 	#include <string.h>
 
     #include "structure/Enumeration.h"
-    #include "structure/DataType.h"
     #include "structure/Genesis.h"
     #include "structure/DeclarationVariable.h"
     #include "structure/Type.h"
@@ -261,7 +260,7 @@ declaration_variable
         else
         {
             // Le type de la constante de droite prend le type de la variable
-            $3->setType(type1); 
+            $3->setType(type1);
         }
     }
     ;
@@ -772,12 +771,12 @@ int primitiveToArrayType(int type)
     switch(type)
     {
         case TOKEN_INT64:
-            return INT64_ARRAY;
+            return TOKEN_INT64_ARRAY;
         case TOKEN_CHAR:
-            return CHAR_ARRAY;
+            return TOKEN_CHAR_ARRAY;
         case TOKEN_INT32:
         default:
-            return INT32_ARRAY;
+            return TOKEN_INT32_ARRAY;
     }
 }
 
@@ -785,11 +784,11 @@ int arrayToPrimitiveType(int type)
 {
     switch(type)
     {
-        case INT64_ARRAY:
+        case TOKEN_INT64_ARRAY:
             return TOKEN_INT64;
-        case CHAR_ARRAY:
+        case TOKEN_CHAR_ARRAY:
             return TOKEN_CHAR;
-        case INT32_ARRAY:
+        case TOKEN_INT32_ARRAY:
         default:
             return TOKEN_INT32;
     }
@@ -857,11 +856,11 @@ std::string getNameOfType(int type)
 {
     switch(type)
     {
-    case INT64_ARRAY:
+    case TOKEN_INT64_ARRAY:
         return "int64_t[]";
-    case CHAR_ARRAY:
+    case TOKEN_CHAR_ARRAY:
         return "char[]";
-    case INT32_ARRAY:
+    case TOKEN_INT32_ARRAY:
         return "int32_t[]";
     case TOKEN_INT64:
         return "int64_t";
@@ -875,7 +874,6 @@ std::string getNameOfType(int type)
 
 int main(int argc, char* argv[])
 {
-    defineTypes(TOKEN_INT32, TOKEN_INT64, TOKEN_CHAR);
     currVariableType = TOKEN_INT32;
 
     // Test parameters

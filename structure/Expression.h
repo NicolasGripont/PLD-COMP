@@ -2,8 +2,11 @@
 #define _EXPRESSION_H
 
 #include "Printer.h"
-#include "DataType.h"
+#include "Enumeration.h"
 #include "ExpressionType.h"
+
+const int EXPRESSION_TYPE_UNDEFINED = -1;
+const int EXPRESSION_TYPE_CONFLICT = -2;
 
 class Expression : public Printer
 {
