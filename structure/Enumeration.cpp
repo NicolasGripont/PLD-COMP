@@ -11,5 +11,5 @@ int sizeOfType(int type)
 
 bool isArrayType(int type)
 {
-    return (type == TOKEN_INT64 || type == TOKEN_INT32 || type == TOKEN_CHAR_ARRAY);
+    return (type == TOKEN_INT64_ARRAY || type == TOKEN_INT32_ARRAY || type == TOKEN_CHAR_ARRAY);
 }
