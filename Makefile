@@ -26,6 +26,7 @@ default: $(OBJ)
 	$(COMP) -o $@ -c $< $(FLAGS)
 
 # --- Add requirement files here:
+
 DataType.o: DataType.cpp
 Printer.o: Printer.cpp
 Declaration.o: Declaration.cpp Printer.h

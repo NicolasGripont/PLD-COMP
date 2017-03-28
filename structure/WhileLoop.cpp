@@ -8,7 +8,8 @@ WhileLoop::WhileLoop(Expression* _expr, Statement* _statement)
 
 WhileLoop::~WhileLoop()
 {
-	if(this->expr != nullptr) {
+	if(this->expr != nullptr) 
+	{
 		delete this->expr;
 	}
 }
@@ -18,10 +19,12 @@ string WhileLoop::print() const
 	string exprStr = "";
 	string statementStr = "";
 	
-	if(expr != nullptr) {
+	if(expr != nullptr) 
+	{
 		exprStr = expr->print();
 	}
-	if(expr != nullptr) {
+	if(expr != nullptr) 
+	{
 		statementStr = statement->print();
 	}
 

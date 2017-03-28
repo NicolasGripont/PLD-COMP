@@ -8,7 +8,7 @@
 	#include <string.h>
 
     #include "structure/DataType.h"
-
+    #include "structure/Enumeration.h"
     #include "structure/Genesis.h"
     #include "structure/DeclarationVariable.h"
     #include "structure/Type.h"
@@ -226,10 +226,10 @@ declaration
     ;
 
 type
-    : VOID {$$ = new Type(VOID); currVariableType = VOID;}
-    | CHAR {$$ = new Type(CHAR); currVariableType = CHAR;}
-    | INT32 {$$ = new Type(INT32); currVariableType = INT32;}
-    | INT64 {$$ = new Type(INT64); currVariableType = INT64;}
+    : VOID {$$ = new Type(TYPE_VOID); currVariableType = VOID;}
+    | CHAR {$$ = new Type(TYPE_CHAR); currVariableType = CHAR;}
+    | INT32 {$$ = new Type(TYPE_INT32); currVariableType = INT32;}
+    | INT64 {$$ = new Type(TYPE_INT64); currVariableType = INT64;}
     ;
 
 multiple_declaration_variable
@@ -428,7 +428,7 @@ selection_statement
 /***********************/
 bool variableIsVoid(Genesis** g, Type* type)
 {
-    if (type->getType() == VOID)
+    if (type->getType() == TYPE_VOID)
     {
         yyerror(g, "Une variable ne peut pas être de type void.");
         return true;

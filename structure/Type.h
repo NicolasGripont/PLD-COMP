@@ -2,17 +2,18 @@
 #define _TYPE_H
 
 #include "Printer.h"
+#include "Enumeration.h"
 
 class Type : public Printer
 {
 public:
-    Type(int _type);
+    Type(TypeEnum _type);
     virtual ~Type();
     virtual string print() const;
-    int getType();
+    TypeEnum getType();
 
 private:
-    int type;
+    TypeEnum type;
 };
 
 #endif
