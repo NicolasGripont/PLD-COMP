@@ -2,7 +2,9 @@
 #define _IRINSTRUCTION_H
 #include <iostream>
 
-enum class IR {
+#include "BasicBlock.h"
+
+enum class IR_Operation {
 	LOAD_CST,
 	ADD,
 	SUB,
@@ -21,18 +23,22 @@ enum class IR {
 //! The class for one 3-address instruction
 
 class IRInstruction {
+
 public:
 	IRInstruction(BasicBlock* block, Operation operation, Type type);
 	virtual ~IRInstruction();
 	virtual std::string toString() const = 0;
 	Type getType() const;
 	Operation getOperation() const;
-	BasicBlock* getBasicBlock() const;
+    BasicBlock * getBasicBlock() const;
 
 protected:
-	BasicBlock* block; /**< The BB this instruction belongs to, which provides a pointer to the CFG this instruction belong to */
-	Operation operation; 
-	Type type;
+    BasicBlock * block = nullptr; /**< The BB this instruction belongs to, which provides a pointer to the CFG this instruction belong to */
+    IR_Operation operation;
+
+    Symbol * operand_1 = nullptr;
+    Symbol * operand_2 = nullptr;
+    Symbol * operand_3 = nullptr;
 };
 
 #endif

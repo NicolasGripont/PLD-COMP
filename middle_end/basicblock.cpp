@@ -1,4 +1,4 @@
-#include "basicblock.h"
+#include "BasicBlock.h"
 
 BasicBlock::BasicBlock(CFG* _cfg, string _entry_label) : cfg(_cfg), label(_entry_label) {
 

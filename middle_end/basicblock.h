@@ -1,8 +1,8 @@
 #ifndef _BASICBLOCK_H
 #define _BASICBLOCK_H
 #include <iostream>
-#include "irinstruction.h"
-#include "cfg.h"
+#include "IRInstruction.h"
+#include "CFG.h"
 
 /**  The class for a basic block */
 
