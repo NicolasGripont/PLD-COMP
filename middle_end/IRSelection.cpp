@@ -1,6 +1,6 @@
 #include "IRSelection.h"
  
-IRSelection::IRSelection(BasicBlock* _block, Symbol* _condition, string _ifLabel, string _elseLabel) : IRInstruction(block, IR_Operation.SELECTION), 
+IRSelection::IRSelection(BasicBlock* _block, Symbol* _condition, std::string _ifLabel, std::string _elseLabel) : IRInstruction(block, IR_Operation.SELECTION), 
 																										condition(_condition), ifLabel(_ifLabel), elseLabel(_elseLabel) 
 {
 
