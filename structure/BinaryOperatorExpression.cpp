@@ -36,5 +36,6 @@ BinaryOperatorExpression::~BinaryOperatorExpression()
 string BinaryOperatorExpression::print() const
 {
     return "";
+#warning Ligne a completer !
     //return expr1->print() +  + expr2->print();
 }
