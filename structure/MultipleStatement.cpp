@@ -5,6 +5,11 @@ MultipleStatement::MultipleStatement() : Printer()
 
 }
 
+MultipleStatement::~MultipleStatement()
+{
+
+}
+
 string MultipleStatement::print() const
 {
 	return "MultipleStatement";

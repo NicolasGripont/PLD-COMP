@@ -6,6 +6,11 @@ InitFunctionStatement::InitFunctionStatement(MultipleStatement* _multipleStateme
 
 }
 
+InitFunctionStatement::~InitFunctionStatement()
+{
+
+}
+
 string InitFunctionStatement::print() const
 {
 	return "InitFunctionStatement";

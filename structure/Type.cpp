@@ -5,6 +5,11 @@ Type::Type(int _type) : Printer(), type(_type)
 
 }
 
+Type::~Type()
+{
+
+}
+
 int Type::getType() 
 {
     return type;

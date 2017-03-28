@@ -6,6 +6,11 @@ WhileLoop::WhileLoop(Expression* _expr, Statement* _statement)
 
 }
 
+WhileLoop::~WhileLoop()
+{
+
+}
+
 string WhileLoop::print() const
 {
 	return "WhileLoop";

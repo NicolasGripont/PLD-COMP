@@ -8,6 +8,7 @@ class Statement : public Printer
 {
 public:
     Statement(MultipleStatement* _multipleStatement);
+    virtual ~Statement();
     virtual string print() const;
 
 private:

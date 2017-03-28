@@ -6,6 +6,11 @@ UselessStatement::UselessStatement()
 
 }
 
+UselessStatement::~UselessStatement()
+{
+
+}
+
 string UselessStatement::print() const
 {
 	return "UselessStatement";

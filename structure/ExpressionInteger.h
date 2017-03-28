@@ -8,6 +8,7 @@ class ExpressionInteger : public Expression
 public:
 
 	ExpressionInteger(int _value, int _type);
+	virtual ~ExpressionInteger();
 	virtual string print() const;
 
 private:

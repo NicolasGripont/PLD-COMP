@@ -6,6 +6,11 @@ ReturnStatement::ReturnStatement(Return* _ret)
 
 }
 
+ReturnStatement::~ReturnStatement()
+{
+
+}
+
 string ReturnStatement::print() const
 {
 	return "ReturnStatement";

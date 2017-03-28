@@ -8,6 +8,7 @@ class LoopExpression : public Printer
 {
 public:
     LoopExpression(Expression* _expr);
+    virtual ~LoopExpression();
     virtual string print() const;
 
 private:

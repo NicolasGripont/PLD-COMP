@@ -11,6 +11,7 @@ class MultipleDeclarationVariable : public Printer
 {
 public:
     MultipleDeclarationVariable();
+    virtual ~MultipleDeclarationVariable();
     virtual string print() const;
     void addDeclarationVariable(DeclarationVariable* dec);
     void setType(Type* t);

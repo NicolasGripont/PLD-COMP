@@ -5,6 +5,11 @@ Printer::Printer()
 
 }
 
+Printer::~Printer()
+{
+
+}
+
 ostream& operator<<(ostream& os, const Printer& dt)  
 {  
     os << dt.print();  

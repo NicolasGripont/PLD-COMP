@@ -6,6 +6,12 @@ UnaryOperatorExpression::UnaryOperatorExpression(Expression* _expr, int _op)
 
     type = _expr->getType();
 }
+
+UnaryOperatorExpression::~UnaryOperatorExpression()
+{
+
+}
+
 string UnaryOperatorExpression::print() const
 {
 	return "UnaryOperatorExpression";

@@ -7,6 +7,11 @@ ExpressionArrayVariable::ExpressionArrayVariable(char* _id, Expression* _expr, i
 
 }
 
+ExpressionArrayVariable::~ExpressionArrayVariable()
+{
+
+}
+
 string ExpressionArrayVariable::print() const
 {
 	return "ExpressionArrayVariable";

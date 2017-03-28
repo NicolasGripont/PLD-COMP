@@ -8,6 +8,7 @@ class SimpleStatement : public Printer
 {
 public:
 	SimpleStatement(SimpleStatementType _type);
+	virtual ~SimpleStatement();
 	virtual string print() const;
     SimpleStatementType getType();
 

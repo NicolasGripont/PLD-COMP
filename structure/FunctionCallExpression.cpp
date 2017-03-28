@@ -7,6 +7,12 @@ FunctionCallExpression::FunctionCallExpression(char* _id, Expression* _expr, int
 
     type = _type;
 }
+
+FunctionCallExpression::~FunctionCallExpression()
+{
+
+}
+
 string FunctionCallExpression::print() const
 {
 	return "FunctionCallExpression";

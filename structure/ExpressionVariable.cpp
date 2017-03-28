@@ -6,6 +6,12 @@ ExpressionVariable::ExpressionVariable(int _type)
 {
     setType(_type);
 }
+
+ExpressionVariable::~ExpressionVariable()
+{
+
+}
+
 string ExpressionVariable::print() const
 {
 	return "ExpressionVariable";

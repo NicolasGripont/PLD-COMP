@@ -11,6 +11,7 @@ class Printer
 {
 public:
 	Printer();
+	virtual ~Printer();
 	virtual string print() const = 0;
 	friend ostream& operator<<(ostream& os, const Printer& dt);  
 };

@@ -8,6 +8,7 @@ class IterationStatement : public SimpleStatement
 {
 public:
     IterationStatement(Statement* _statement);
+    virtual ~IterationStatement();
     virtual string print() const;
 
 protected:

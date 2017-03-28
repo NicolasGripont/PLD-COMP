@@ -8,6 +8,7 @@ class ExpressionSimpleVariable : public ExpressionVariable
 public:
 
 	ExpressionSimpleVariable(char* _id, int _type);
+	virtual ~ExpressionSimpleVariable();
 	virtual string print() const;
 
 private:

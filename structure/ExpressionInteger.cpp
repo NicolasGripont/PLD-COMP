@@ -7,6 +7,12 @@ ExpressionInteger::ExpressionInteger(int _value, int _type)
 
     setType(_type);
 }
+
+ExpressionInteger::~ExpressionInteger()
+{
+
+}
+
 string ExpressionInteger::print() const
 {
 	return "ExpressionInteger";

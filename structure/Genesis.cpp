@@ -5,6 +5,11 @@ Genesis::Genesis() : Printer()
 
 }
 
+Genesis::~Genesis()
+{
+
+}
+
 string Genesis::print() const
 {
 	return "Genesis";

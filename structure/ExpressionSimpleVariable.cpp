@@ -8,6 +8,11 @@ ExpressionSimpleVariable::ExpressionSimpleVariable(char* _id, int _type)
 
 }
 
+ExpressionSimpleVariable::~ExpressionSimpleVariable()
+{
+
+}
+
 string ExpressionSimpleVariable::print() const
 {
 	return "ExpressionSimpleVariable";

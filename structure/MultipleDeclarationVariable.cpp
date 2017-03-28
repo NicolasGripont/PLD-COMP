@@ -5,6 +5,11 @@ MultipleDeclarationVariable::MultipleDeclarationVariable() : Printer()
 
 };
 
+MultipleDeclarationVariable::~MultipleDeclarationVariable()
+{
+
+}
+
 string MultipleDeclarationVariable::print() const
 {
     return "MultipleDeclarationVariable";

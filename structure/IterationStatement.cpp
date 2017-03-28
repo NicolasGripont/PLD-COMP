@@ -6,6 +6,11 @@ IterationStatement::IterationStatement(Statement* _statement)
 
 }
 
+IterationStatement::~IterationStatement()
+{
+
+}
+
 string IterationStatement::print() const
 {
 	return "IterationStatement";

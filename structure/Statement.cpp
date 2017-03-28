@@ -6,6 +6,11 @@
 
 }
 
+Statement::~Statement()
+{
+
+}
+
 string Statement::print() const
 {
 	return "Statement";

@@ -10,6 +10,7 @@ class Genesis : public Printer
 {
 public:
     Genesis();
+    virtual ~Genesis();
 	virtual string print() const;
     void addDeclaration(Declaration* declaration);
     int countDeclaration();
