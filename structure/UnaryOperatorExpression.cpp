@@ -15,14 +15,14 @@ UnaryOperatorExpression::~UnaryOperatorExpression()
 	}
 }
 
-string UnaryOperatorExpression::print() const
+string UnaryOperatorExpression::toString() const
 {
 	string exprStr = "";
 	char opStr = (char) op;
 
 	if(expr != nullptr) 
 	{
-		exprStr = expr->print();
+		exprStr = expr->toString();
 	}
 
 	return opStr + exprStr;

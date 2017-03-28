@@ -9,9 +9,9 @@ AssignmentOperationVariable::AssignmentOperationVariable(ExpressionVariable* _ex
 AssignmentOperationVariable::~AssignmentOperationVariable()
 {}
 
-string AssignmentOperationVariable::print() const
+string AssignmentOperationVariable::toString() const
 {
-    string txt = exprVar->print();
+    string txt = exprVar->toString();
 
     string typeStr = "";
 	// switch(type)  
@@ -49,7 +49,7 @@ string AssignmentOperationVariable::print() const
  //        default:  
  //            return "ERROR_AssignmentOperationVariable";  
  //      }  
-    return txt + expr->print();
+    return txt + expr->toString();
 }
 
 

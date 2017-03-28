@@ -11,7 +11,7 @@ ForLoop::~ForLoop()
 
 }
 
-string ForLoop::print() const
+string ForLoop::toString() const
 {
 	return "ForLoop";
 }

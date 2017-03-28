@@ -11,7 +11,7 @@ BlockDeclarationVariable::~BlockDeclarationVariable()
 
 }
 
-string BlockDeclarationVariable::print() const
+string BlockDeclarationVariable::toString() const
 {
 	return "BlockDeclarationVariable";
 }

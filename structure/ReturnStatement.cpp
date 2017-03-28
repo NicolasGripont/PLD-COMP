@@ -11,7 +11,7 @@ ReturnStatement::~ReturnStatement()
 
 }
 
-string ReturnStatement::print() const
+string ReturnStatement::toString() const
 {
 	return "ReturnStatement";
 }

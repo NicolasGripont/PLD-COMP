@@ -1,6 +1,6 @@
 #include "ArgumentList.h"
 
-ArgumentList::ArgumentList() : Printer()
+ArgumentList::ArgumentList() : Printable()
 {
 
 }
@@ -18,17 +18,17 @@ void ArgumentList::addArgument(Argument* arg)
     arguments.push_back(arg);
 }
 
-string ArgumentList::print() const
+string ArgumentList::toString() const
 {
     string txt;
 
     if (!arguments.empty())
     {
-        txt = arguments.at(0)->print();
+        txt = arguments.at(0)->toString();
     }
     for (unsigned int i = 1; i < arguments.size(); ++i)
     {
-        txt += string(", ") + arguments.at(i)->print();
+        txt += string(", ") + arguments.at(i)->toString();
     }
 
     return txt;

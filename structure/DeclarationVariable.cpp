@@ -1,6 +1,6 @@
 #include "DeclarationVariable.h"
 
-DeclarationVariable::DeclarationVariable(char* _id, bool _array) : id(_id), array(_array), Printer(){
+DeclarationVariable::DeclarationVariable(char* _id, bool _array) : id(_id), array(_array), Printable(){
 
 }
 
@@ -18,7 +18,7 @@ bool DeclarationVariable::isArray()
     return array;
 }
 
-string DeclarationVariable::print() const
+string DeclarationVariable::toString() const
 {
 	return "DeclarationVariable";
 }

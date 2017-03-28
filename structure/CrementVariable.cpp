@@ -11,7 +11,7 @@ CrementVariable::~CrementVariable()
 
 }
 
-string CrementVariable::print() const
+string CrementVariable::toString() const
 {
 	return "CrementVariable";
 }

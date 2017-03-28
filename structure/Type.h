@@ -1,15 +1,15 @@
 #ifndef _TYPE_H
 #define _TYPE_H
 
-#include "Printer.h"
+#include "Printable.h"
 #include "Enumeration.h"
 
-class Type : public Printer
+class Type : public Printable
 {
 public:
     Type(int _type);
     virtual ~Type();
-    virtual string print() const;
+    virtual string toString() const;
     int getType();
 
 private:

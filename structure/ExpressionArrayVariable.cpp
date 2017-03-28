@@ -12,7 +12,7 @@ ExpressionArrayVariable::~ExpressionArrayVariable()
 
 }
 
-string ExpressionArrayVariable::print() const
+string ExpressionArrayVariable::toString() const
 {
 	return "ExpressionArrayVariable";
 }

@@ -1,7 +1,7 @@
 #include "Expression.h"
 
 
-Expression::Expression():Printer(),type(EXPRESSION_TYPE_UNDEFINED),expressionType(EXPRESSION)
+Expression::Expression():Printable(),type(EXPRESSION_TYPE_UNDEFINED),expressionType(EXPRESSION)
 {
 
 }
@@ -11,7 +11,7 @@ Expression::~Expression()
 
 }
 
-string Expression::print() const
+string Expression::toString() const
 {
 	return "Expression";
 }

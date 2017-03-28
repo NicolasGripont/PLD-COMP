@@ -11,7 +11,7 @@ DeclarationVariableStatement::~DeclarationVariableStatement()
 
 }
 
-string DeclarationVariableStatement::print() const
+string DeclarationVariableStatement::toString() const
 {
 	return "DeclarationVariableStatement";
 }

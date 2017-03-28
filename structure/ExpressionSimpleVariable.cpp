@@ -12,7 +12,7 @@ ExpressionSimpleVariable::~ExpressionSimpleVariable()
 
 }
 
-string ExpressionSimpleVariable::print() const
+string ExpressionSimpleVariable::toString() const
 {
 	return "ExpressionSimpleVariable";
 }

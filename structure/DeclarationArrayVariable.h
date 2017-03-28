@@ -8,7 +8,7 @@ class DeclarationArrayVariable : public DeclarationVariable
 public:
 	DeclarationArrayVariable(char* _id, int _size);
 	virtual ~DeclarationArrayVariable();
-	virtual string print() const;
+	virtual string toString() const;
 	
 private:
 	int size;

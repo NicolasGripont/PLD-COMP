@@ -11,7 +11,7 @@ SelectionStatement::~SelectionStatement()
 
 }
 
-string SelectionStatement::print() const
+string SelectionStatement::toString() const
 {
 	return "SelectionStatement";
 }

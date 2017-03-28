@@ -11,7 +11,7 @@ IterationStatement::~IterationStatement()
 
 }
 
-string IterationStatement::print() const
+string IterationStatement::toString() const
 {
 	return "IterationStatement";
 }

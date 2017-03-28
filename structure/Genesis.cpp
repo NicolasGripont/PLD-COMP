@@ -1,6 +1,6 @@
 #include "Genesis.h"
 
-Genesis::Genesis() : Printer()
+Genesis::Genesis() : Printable()
 {
 
 }
@@ -10,7 +10,7 @@ Genesis::~Genesis()
 
 }
 
-string Genesis::print() const
+string Genesis::toString() const
 {
 	return "Genesis";
 }

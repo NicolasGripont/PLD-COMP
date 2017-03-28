@@ -1,6 +1,6 @@
 #include "Declaration.h"
 
-Declaration::Declaration() : Printer()
+Declaration::Declaration() : Printable()
 {
 
 }
@@ -10,7 +10,7 @@ Declaration::~Declaration()
 
 }
 
-string Declaration::print() const
+string Declaration::toString() const
 {
 	return "Declaration";
 }

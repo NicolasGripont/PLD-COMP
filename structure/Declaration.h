@@ -1,14 +1,14 @@
 #ifndef _DECLARATION_H
 #define _DECLARATION_H
 
-#include "Printer.h"
+#include "Printable.h"
 
-class Declaration : public Printer
+class Declaration : public Printable
 {
 public:
     Declaration();
     virtual ~Declaration();
-    virtual string print() const;
+    virtual string toString() const;
 };
 
 #endif

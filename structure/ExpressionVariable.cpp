@@ -13,7 +13,7 @@ ExpressionVariable::~ExpressionVariable()
 
 }
 
-string ExpressionVariable::print() const
+string ExpressionVariable::toString() const
 {
 	return "ExpressionVariable";
 }

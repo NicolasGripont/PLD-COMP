@@ -13,7 +13,7 @@ ExpressionInteger::~ExpressionInteger()
 
 }
 
-string ExpressionInteger::print() const
+string ExpressionInteger::toString() const
 {
 	return "ExpressionInteger";
 }

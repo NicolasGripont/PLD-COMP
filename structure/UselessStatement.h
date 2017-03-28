@@ -8,7 +8,7 @@ class UselessStatement : public SimpleStatement
 public:
 	UselessStatement();
 	virtual ~UselessStatement();
-	virtual string print() const;
+	virtual string toString() const;
 };
 
 #endif

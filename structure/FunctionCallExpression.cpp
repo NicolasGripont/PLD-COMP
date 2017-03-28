@@ -13,7 +13,7 @@ FunctionCallExpression::~FunctionCallExpression()
 
 }
 
-string FunctionCallExpression::print() const
+string FunctionCallExpression::toString() const
 {
 	return "FunctionCallExpression";
 }

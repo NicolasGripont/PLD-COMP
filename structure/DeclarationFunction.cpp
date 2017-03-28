@@ -11,7 +11,7 @@ DeclarationFunction::~DeclarationFunction()
 
 }
 
-string DeclarationFunction::print() const
+string DeclarationFunction::toString() const
 {
 	return "DeclarationFunction";
 }

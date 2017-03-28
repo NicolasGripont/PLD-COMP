@@ -26,8 +26,8 @@ AssignmentVariable::~AssignmentVariable()
     delete expr;
 }
 
-string AssignmentVariable::print() const
+string AssignmentVariable::toString() const
 {
-    return exprVar->print() + string(" = ") + expr->print();
+    return exprVar->toString() + string(" = ") + expr->toString();
 }
 

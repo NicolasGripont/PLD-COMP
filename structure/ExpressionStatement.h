@@ -9,7 +9,7 @@ class ExpressionStatement : public SimpleStatement
 public:
     ExpressionStatement(Expression* _expr);
     virtual ~ExpressionStatement();
-	virtual string print() const;
+	virtual string toString() const;
 	
 private:
     Expression* expr;

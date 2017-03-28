@@ -4,14 +4,14 @@
 #include <vector>
 
 #include "SimpleStatement.h"
-#include "Printer.h"
+#include "Printable.h"
 
-class MultipleStatement : public Printer
+class MultipleStatement : public Printable
 {
 public:
     MultipleStatement();
     virtual ~MultipleStatement();
-	virtual string print() const;
+	virtual string toString() const;
 
     void addStatement(SimpleStatement* statement);
     int countStatements();
