@@ -1,12 +1,20 @@
 #ifndef IRJUMP_H
 #define IRJUMP_H
 
+#include "IRInstruction.h"
+#include <string>
 
-class IRJump
+class IRJump : public IRInstruction
 {
 public:
-    IRJump();
 
+    IRJump(std::string lab);
+    ~IRJump() = default;
+
+    std::string getLabel() const;
+
+private:
+    std::string label;
 
 };
 

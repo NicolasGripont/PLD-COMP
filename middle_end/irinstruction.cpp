@@ -6,18 +6,10 @@ IRInstruction::IRInstruction(BasicBlock* _bb, IR_Operation _op) : block(_bb), op
 
 IRInstruction::~IRInstruction() {
 
+    delete bloc;
 }
 
-string IRInstruction::toString() const
-{
-
-}
-
-Type IRInstruction::getType() const {
-	return type;
-}
-
-Operation IRInstruction::getOperation() const {
+IRInstruction::IR_Operation IRInstruction::getOperation() const {
 	return operation;
 }
 
