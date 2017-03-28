@@ -14,18 +14,20 @@ BinaryOperatorExpression::BinaryOperatorExpression(Expression* _expr1, Expressio
     }
 }
 
-BinaryOperatorExpression::~BinaryOperatorExpression()
-{
-
-}
-
 BinaryOperatorExpression::BinaryOperatorExpression(Expression* _expr1, Expression* _expr2, int _op, int _type)
-    :Expression(),expr1(_expr1),expr2(_expr1),op(_op)
+    :Expression(),expr1(_expr1),expr2(_expr2),op(_op)
 {
     setType(_type);
 }
 
+BinaryOperatorExpression::~BinaryOperatorExpression()
+{
+    delete expr1;
+    delete expr2;
+}
+
 string BinaryOperatorExpression::print() const
 {
-	return "BinaryOperatorExpression";
+    return "";
+    //return expr1->print() +  + expr2->print();
 }

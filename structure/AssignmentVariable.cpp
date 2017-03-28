@@ -16,11 +16,12 @@ AssignmentVariable::AssignmentVariable(ExpressionVariable* _exprVar, Expression*
 
 AssignmentVariable::~AssignmentVariable()
 {
-
+    delete exprVar;
+    delete expr;
 }
 
 string AssignmentVariable::print() const
 {
-	return "AssignmentVariable";
+    return exprVar->print() + string(" = ") + expr->print();
 }
 
