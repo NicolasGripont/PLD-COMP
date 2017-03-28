@@ -51,7 +51,7 @@
     #include "structure/Erreur.h"
 }
 %{
-   
+
 
     #include "comp.tab.h"
 
@@ -96,6 +96,7 @@
     int arrayToPrimitiveType(int type);
 
     bool checkConflictError(Genesis** g, Expression* expr1, Expression* expr2);
+    void checkAssignmentConstant(int leftExpressionType, Expression* rightExpression);
     bool checkArrayTypeConflitError(Genesis** g, int type1, int type2);
     std::string getNameOfType(int type);
     bool checkVariableExist(Genesis** g, char* name);
@@ -166,7 +167,7 @@
 %token <ival> MOD
 %token <ival> AND
 %token <ival> OR
-%token <ival> NOT 
+%token <ival> NOT
 %token <ival> NOT_BIT
 %token <ival> POW
 %token <ival> MORE_THAN
@@ -175,7 +176,7 @@
 %token <ival> COMMA
 %token <ival> OPEN_BRACE
 %token <ival> CLOSE_BRACE
-%token <ival> OPEN_PARENTHESIS 
+%token <ival> OPEN_PARENTHESIS
 %token <ival> CLOSE_PARENTHESIS
 %token <ival> OPEN_HOOK
 %token <ival> CLOSE_HOOK
@@ -296,37 +297,22 @@ declaration_variable
         int type2 = $3->getType();
         if(checkArrayTypeConflitError(g,type1,type2)) YYABORT;
         // Si on a pas une constante à droite
-        if($3->getExpressionType() != EXPRESSION_INTEGER)
-        {
-            // Et que les type de variable et le type de l'expression de droite
-            // sont differents, warning (cast)
-            if(type1 != type2)
-            {
-                yywarning(("Expression de type "+getNameOfType(type1)+
-                " associée à une expression de type "+getNameOfType(type2)+". Conversion.").c_str());
-                YYABORT;
-            }
-        }
-        else
-        {
-            // Le type de la constante de droite prend le type de la variable
-            $3->setType(type1);
-        }
+        checkAssignmentConstant(type1, $3);
     }
     ;
 
 assignment_variable // utilisé pour affecter une valeur à une variable en dehors de son initialisation (int a; a = 3;)
-    : expr_var EQUAL expression {$$ = new AssignmentVariable($1,$3);if(checkConflictError(g,$1,$3)) YYABORT;}
-    | expr_var MUL_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,MUL_ASSIGN); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | expr_var DIV_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,DIV_ASSIGN); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | expr_var MOD_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,MOD_ASSIGN); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | expr_var PLUS_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,PLUS_ASSIGN); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | expr_var MINUS_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,MINUS_ASSIGN); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | expr_var LEFT_DEC_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,LEFT_DEC_ASSIGN); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | expr_var RIGHT_DEC_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,RIGHT_DEC_ASSIGN); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | expr_var AND_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,AND_ASSIGN); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | expr_var OR_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,OR_ASSIGN); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | expr_var OR_EXCL_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,OR_EXCL_ASSIGN); if(checkConflictError(g,$1,$3)) YYABORT;}
+    : expr_var EQUAL expression {$$ = new AssignmentVariable($1,$3);if(checkArrayTypeConflitError(g,$1->getType(),$3->getType())) YYABORT; checkAssignmentConstant($1->getType(), $3);}
+    | expr_var MUL_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,MUL_ASSIGN); if(checkArrayTypeConflitError(g,$1->getType(),$3->getType())) YYABORT; checkAssignmentConstant($1->getType(), $3);}
+    | expr_var DIV_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,DIV_ASSIGN); if(checkArrayTypeConflitError(g,$1->getType(),$3->getType())) YYABORT; checkAssignmentConstant($1->getType(), $3);}
+    | expr_var MOD_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,MOD_ASSIGN); if(checkArrayTypeConflitError(g,$1->getType(),$3->getType())) YYABORT; checkAssignmentConstant($1->getType(), $3);}
+    | expr_var PLUS_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,PLUS_ASSIGN); if(checkArrayTypeConflitError(g,$1->getType(),$3->getType())) YYABORT; checkAssignmentConstant($1->getType(), $3);}
+    | expr_var MINUS_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,MINUS_ASSIGN); if(checkArrayTypeConflitError(g,$1->getType(),$3->getType())) YYABORT; checkAssignmentConstant($1->getType(), $3);}
+    | expr_var LEFT_DEC_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,LEFT_DEC_ASSIGN); if(checkArrayTypeConflitError(g,$1->getType(),$3->getType())) YYABORT; checkAssignmentConstant($1->getType(), $3);}
+    | expr_var RIGHT_DEC_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,RIGHT_DEC_ASSIGN); if(checkArrayTypeConflitError(g,$1->getType(),$3->getType())) YYABORT; checkAssignmentConstant($1->getType(), $3);}
+    | expr_var AND_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,AND_ASSIGN); if(checkArrayTypeConflitError(g,$1->getType(),$3->getType())) YYABORT; checkAssignmentConstant($1->getType(), $3);}
+    | expr_var OR_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,OR_ASSIGN); if(checkArrayTypeConflitError(g,$1->getType(),$3->getType())) YYABORT; checkAssignmentConstant($1->getType(), $3);}
+    | expr_var OR_EXCL_ASSIGN expression {$$ = new AssignmentOperationVariable($1,$3,OR_EXCL_ASSIGN); if(checkArrayTypeConflitError(g,$1->getType(),$3->getType())) YYABORT; checkAssignmentConstant($1->getType(), $3);}
     ;
 
 declaration_function
@@ -885,6 +871,27 @@ bool checkConflictError(Genesis** g, Expression* expr1, Expression* expr2)
         return false;
     }
     return false;
+}
+
+void checkAssignmentConstant(int leftExpressionType, Expression* rightExpression)
+{
+    int type1 = leftExpressionType;
+    int type2 = rightExpression->getType();
+    if(rightExpression->getExpressionType() != EXPRESSION_INTEGER)
+    {
+        // Et que les type de variable et le type de l'expression de droite
+        // sont differents, warning (cast)
+        if(type1 != type2)
+        {
+            yywarning(("Expression de type "+getNameOfType(type1)+
+            " associée à une expression de type "+getNameOfType(type2)+". Conversion.").c_str());
+        }
+    }
+    else
+    {
+        // Le type de la constante de droite prend le type de la variable
+        rightExpression->setType(type1);
+    }
 }
 
 bool checkArrayTypeConflitError(Genesis** g, int type1, int type2)
