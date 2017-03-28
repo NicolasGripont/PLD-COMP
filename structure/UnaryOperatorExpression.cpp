@@ -9,7 +9,8 @@ UnaryOperatorExpression::UnaryOperatorExpression(Expression* _expr, int _op)
 
 UnaryOperatorExpression::~UnaryOperatorExpression()
 {
-	if(expr != nullptr) {
+	if(expr != nullptr) 
+	{
 		delete expr;
 	}
 }
@@ -19,7 +20,8 @@ string UnaryOperatorExpression::print() const
 	string exprStr = "";
 	char opStr = (char) op;
 
-	if(expr != nullptr) {
+	if(expr != nullptr) 
+	{
 		exprStr = expr->print();
 	}
 

@@ -8,7 +8,6 @@
 	#include <string.h>
 
     #include "structure/DataType.h"
-    #include "structure/Enumeration.h"
     #include "structure/Genesis.h"
     #include "structure/DeclarationVariable.h"
     #include "structure/Type.h"
@@ -231,15 +230,6 @@ type
     | INT32 {$$ = new Type(INT32); currVariableType = INT32;}
     | INT64 {$$ = new Type(INT64); currVariableType = INT64;}
     ;
-
-/*
-type
-    : VOID {$$ = new Type(TYPE_VOID); currVariableType = VOID;}
-    | CHAR {$$ = new Type(TYPE_CHAR); currVariableType = CHAR;}
-    | INT32 {$$ = new Type(TYPE_INT32); currVariableType = INT32;}
-    | INT64 {$$ = new Type(TYPE_INT64); currVariableType = INT64;}
-    ;
-*/
 
 multiple_declaration_variable
     : declaration_variable {$$ = new MultipleDeclarationVariable(); $$->addDeclarationVariable($1);}
