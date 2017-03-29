@@ -9,18 +9,22 @@ MAKEFLAGS += --no-builtin-rules
 default: all
 
 FRONTEND = front_end
-DEPS = $(shell ls $(FRONTEND)/*)
+MIDDLEEND = middle_end
+DEPS_FRONTEND = $(shell ls $(FRONTEND)/*)
+DEPS_MIDDLEEND = $(shell ls $(MIDDLEEND)/*)
 CFLAGS = -std=c++11 -DYYDEBUG
 
 all: comp
 
-comp: $(DEPS) comp.l comp.y main.cpp
+comp: $(DEPS_FRONTEND) comp.l comp.y main.cpp $(DEPS_MIDDLEEND)
 	flex comp.l
 	bison -v --defines=comp.tab.h comp.y
 	make -C $(FRONTEND)
+	make -C $(MIDDLEEND)
 	g++ $(CFLAGS) -o main.o -c main.cpp
-	g++ $(CFLAGS) -o comp *.c *.cpp $(FRONTEND)/*.o
+	g++ $(CFLAGS) -o comp *.c *.cpp $(FRONTEND)/*.o $(MIDDLEEND)/*.o
 
 clean:
 	make -C $(FRONTEND) clean
+	make -C $(MIDDLEEND) clean
 	rm -f comp comp.tab.c comp.tab.h comp.output lex.yy.c
