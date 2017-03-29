@@ -16,5 +16,14 @@ WhileLoop::~WhileLoop()
 
 string WhileLoop::toString() const
 {
-	return string("while(") + expr->toString() + string(")") + statement->toString();
+	string txt = "while(" + expr->toString() + ")";
+	if(statement != nullptr) 
+	{
+		txt += statement->toString();
+	}
+	else 
+	{
+		txt += "{}";
+	}
+	return txt;
 }

@@ -15,5 +15,14 @@ ForLoop::~ForLoop()
 
 string ForLoop::toString() const
 {
-	return string("for(") + expr1->toString() + string("; ") + expr2->toString() + string("; ") + expr3->toString() + string(")") + statement->toString();
+	string txt = "for(" + expr1->toString() + "; " + expr2->toString() + "; " + expr3->toString() + ")";
+	if(statement != nullptr) 
+	{
+		txt += statement->toString();
+	}
+	else 
+	{
+		txt += "{}";
+	}
+	return txt;
 }
