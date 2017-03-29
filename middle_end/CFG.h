@@ -29,7 +29,7 @@ class CFG
 	CFG();
 	virtual ~CFG();
 
-    std::string toString() const;
+    virtual std::string toString() const;
 
     void addBasicBlock(BasicBlock* bb);
 	void addSymbol(Symbol* symbol);
@@ -37,11 +37,12 @@ class CFG
     // symbol table methods
     Symbol* getSymbol(std::string name);
 	std::string getUsableBasicBlockName() const;
-
+    std::map <std::string, Symbol*> getGlobalSymbolsTable() const;
+    std::vector <BasicBlock*> getBasicBlocks() const;
     void parseGenesis(Genesis* genesis);
 
  protected:
-    std::map <string, Symbol*> globalSymbolsTable;
+    std::map <std::string, Symbol*> globalSymbolsTable;
 	BasicBlock* currentBasicBlock;
 	int nextBBnumber; /**< just for naming */
 	std::vector <BasicBlock*> blocks; /**< all the basic blocks of this CFG*/
