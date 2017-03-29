@@ -9,7 +9,7 @@ IRCall::IRCall(BasicBlock* _block, std::string _name, Symbol *_returnSymbol)
 IRCall::~IRCall()
 {
 	delete returnSymbol;
-	for( auto s : params)
+	for(Symbol* s : params)
 	{
 		delete s;
 	}

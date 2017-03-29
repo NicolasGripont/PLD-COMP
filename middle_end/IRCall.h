@@ -13,13 +13,13 @@ class IRCall : public IRInstruction
 public:
     IRCall(BasicBlock* block, std::string name, Symbol *returnSymbol);
     ~IRCall();
-    void addParameter(Symbol * symbol);
+    void addParameter(Symbol* symbol);
     std::string toString() const;
 
 protected:
 	std::string name;
-	Symbol *returnSymbol;
-	std::vector<Symbol *> params;
+	Symbol* returnSymbol;
+	std::vector<Symbol*> params;
 };
 
 #endif // IRCALL_H

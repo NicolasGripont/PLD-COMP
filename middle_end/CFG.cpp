@@ -15,12 +15,7 @@ string CFG::toString() const
 
 }
 
-void
-CFG::addBasicBlock
-(
-    BasicBlock
-     *bb
-)
+void CFG::addBasicBlock(BasicBlock *bb)
 {
 
 }
@@ -60,6 +55,11 @@ void CFG::parseGlobalDeclarationVariable(GlobalDeclarationVariable* globalDeclar
 {
     MultipleDeclarationVariable* multipleDeclarationVariable;
     multipleDeclarationVariable = globalDeclarationVariable->getMultipleDeclarationVariable();
+
+    for(int declarationId = 0; declarationId < multipleDeclarationVariable->countDeclaration() ; ++declarationId)
+    {
+        DeclarationVariable* declarationVariable = (*multipleDeclarationVariable)[declarationId];
+    }
 }
 
 void CFG::parseGlobalDeclarationFunction(DeclarationFunction* DeclarationFunction)
