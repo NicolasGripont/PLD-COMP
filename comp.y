@@ -7,52 +7,52 @@
     #include <libgen.h>
     #include <string.h>
 
-    #include "structure/Enumeration.h"
-    #include "structure/Genesis.h"
-    #include "structure/DeclarationVariable.h"
-    #include "structure/Type.h"
-    #include "structure/MultipleDeclarationVariable.h"
-    #include "structure/Argument.h"
-    #include "structure/ArgumentList.h"
-    #include "structure/Expression.h"
-    #include "structure/DeclarationInitVariable.h"
-    #include "structure/DeclarationArrayVariable.h"
-    #include "structure/GlobalDeclarationVariable.h"
-    #include "structure/FunctionCallExpression.h"
-    #include "structure/BinaryOperatorExpression.h"
-    #include "structure/UnaryOperatorExpression.h"
-    #include "structure/ExpressionInteger.h"
-    #include "structure/CrementVariable.h"
-    #include "structure/ExpressionVariable.h"
+    #include "front_end/Enumeration.h"
+    #include "front_end/Genesis.h"
+    #include "front_end/DeclarationVariable.h"
+    #include "front_end/Type.h"
+    #include "front_end/MultipleDeclarationVariable.h"
+    #include "front_end/Argument.h"
+    #include "front_end/ArgumentList.h"
+    #include "front_end/Expression.h"
+    #include "front_end/DeclarationInitVariable.h"
+    #include "front_end/DeclarationArrayVariable.h"
+    #include "front_end/GlobalDeclarationVariable.h"
+    #include "front_end/FunctionCallExpression.h"
+    #include "front_end/BinaryOperatorExpression.h"
+    #include "front_end/UnaryOperatorExpression.h"
+    #include "front_end/ExpressionInteger.h"
+    #include "front_end/CrementVariable.h"
+    #include "front_end/ExpressionVariable.h"
 
-    #include "structure/DeclarationFunctionStatement.h"
-    #include "structure/DeclarationFunction.h"
-    #include "structure/ExpressionSimpleVariable.h"
-    #include "structure/ExpressionArrayVariable.h"
-    #include "structure/AssignmentVariable.h"
-    #include "structure/AssignmentOperationVariable.h"
-    #include "structure/Return.h"
-    #include "structure/SimpleStatement.h"
-    #include "structure/ReturnStatement.h"
-    #include "structure/UselessStatement.h"
-    #include "structure/MultipleStatement.h"
-    #include "structure/Statement.h"
-    #include "structure/InitFunctionStatement.h"
-    #include "structure/BlockDeclarationVariable.h"
-    #include "structure/IterationStatement.h"
-    #include "structure/SelectionStatement.h"
-    #include "structure/ExpressionStatement.h"
-    #include "structure/PureDeclarationFunctionStatement.h"
-    #include "structure/LoopExpression.h"
-    #include "structure/WhileLoop.h"
+    #include "front_end/DeclarationFunctionStatement.h"
+    #include "front_end/DeclarationFunction.h"
+    #include "front_end/ExpressionSimpleVariable.h"
+    #include "front_end/ExpressionArrayVariable.h"
+    #include "front_end/AssignmentVariable.h"
+    #include "front_end/AssignmentOperationVariable.h"
+    #include "front_end/Return.h"
+    #include "front_end/SimpleStatement.h"
+    #include "front_end/ReturnStatement.h"
+    #include "front_end/UselessStatement.h"
+    #include "front_end/MultipleStatement.h"
+    #include "front_end/Statement.h"
+    #include "front_end/InitFunctionStatement.h"
+    #include "front_end/BlockDeclarationVariable.h"
+    #include "front_end/IterationStatement.h"
+    #include "front_end/SelectionStatement.h"
+    #include "front_end/ExpressionStatement.h"
+    #include "front_end/PureDeclarationFunctionStatement.h"
+    #include "front_end/LoopExpression.h"
+    #include "front_end/WhileLoop.h"
 
-    #include "structure/ForLoop.h"
+    #include "front_end/ForLoop.h"
 
-    #include "structure/Erreur.h"
+    #include "front_end/Erreur.h"
+
+    int bison(int argc, char* argv[]);
 }
 %{
-
-
     #include "comp.tab.h"
 
     char* filename;
@@ -931,7 +931,7 @@ std::string getNameOfType(int type)
     }
 }
 
-int main(int argc, char* argv[])
+int bison(int argc, char* argv[])
 {
     currVariableType = INT32;
 
@@ -970,14 +970,17 @@ int main(int argc, char* argv[])
     else if (status == 1) // Syntax error
     {
         std::cout << "Compilation abandonnée (erreur de syntaxe)." << std::endl;
+        return 1;
     }
     else if (status == 2) // Out of memory
     {
         std::cout << "Compilation abandonnée (mémoire insuffisante)." << std::endl;
+        return 1;
     }
     else
     {
         std::cout << "Compilation abandonnée." << std::endl;
+        return 1;
     }
 
     return 0;

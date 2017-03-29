@@ -3,7 +3,7 @@
 
 #include "Symbol.h"
 #include "BasicBlock.h"
-#include "../structure/genesis.h"
+#include "../front_end/genesis.h"
 
 #include <iostream>
 #include <map>
