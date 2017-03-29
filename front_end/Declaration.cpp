@@ -9,3 +9,9 @@ Declaration::~Declaration()
 {
 
 }
+
+
+DeclarationType Declaration::getType()
+{
+	return type;
+}
