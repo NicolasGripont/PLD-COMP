@@ -1,7 +1,7 @@
 #include "DeclarationFunction.h"
 
 DeclarationFunction::DeclarationFunction(Type* _type, char* _id, ArgumentList* _argumentList, DeclarationFunctionStatement* _decFunctionStatement)
-    : Declaration(DECLARATION_FUNCTION) ,type(_type), id(_id), decFunctionStatement(_decFunctionStatement), argumentList(_argumentList)
+    : Declaration(DECLARATION_FUNCTION), type(_type), id(_id), decFunctionStatement(_decFunctionStatement), argumentList(_argumentList)
 {
 
 }

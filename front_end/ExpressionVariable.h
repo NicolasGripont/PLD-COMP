@@ -3,9 +3,9 @@
 
 #include "Expression.h"
 
-class ExpressionVariable : public Expression {
+class ExpressionVariable : public Expression
+{
 public:
-
 	ExpressionVariable(int _type);
 	virtual ~ExpressionVariable();
 	virtual string toString() const = 0;

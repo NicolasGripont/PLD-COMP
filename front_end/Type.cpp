@@ -1,7 +1,8 @@
 #include "Type.h"
 #include "../comp.tab.h"
 
-Type::Type(int _type) : Printable(), type(_type)
+Type::Type(int _type)
+    : Printable(), type(_type)
 {
 
 }

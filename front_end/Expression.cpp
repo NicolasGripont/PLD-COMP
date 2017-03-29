@@ -1,6 +1,7 @@
 #include "Expression.h"
 
-Expression::Expression():Printable(),type(EXPRESSION_TYPE_UNDEFINED),expressionType(EXPRESSION)
+Expression::Expression()
+	: Printable(), type(EXPRESSION_TYPE_UNDEFINED), expressionType(EXPRESSION)
 {
 
 }
