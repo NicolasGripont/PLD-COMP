@@ -15,7 +15,7 @@ string DeclarationArrayVariable::toString() const
 {
 	if(array) 
 	{
-		return string(id) + string("[") + string(id) + string("]");
+		return string(id) + "[" + string(id) + "]";
 	} 
 	return "ERROR_DeclarationArrayVariable";
 }

@@ -30,8 +30,14 @@ BinaryOperatorExpression::BinaryOperatorExpression(Expression* _expr1, Expressio
 
 BinaryOperatorExpression::~BinaryOperatorExpression()
 {
-    delete expr1;
-    delete expr2;
+    if(expr1 != nullptr) 
+    {
+        delete expr1;
+    }
+    if(expr2 != nullptr) 
+    {
+        delete expr2;
+    }
 }
 
 string BinaryOperatorExpression::toString() const

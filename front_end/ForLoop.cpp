@@ -8,9 +8,18 @@ ForLoop::ForLoop(LoopExpression* _expr1, LoopExpression* _expr2, LoopExpression*
 
 ForLoop::~ForLoop()
 {
-    delete expr1;
-    delete expr2;
-    delete expr3;
+	if(expr1 != nullptr)
+	{
+		delete expr1;
+	}
+	if(expr2 != nullptr)
+	{
+		delete expr2;
+	}
+	if(expr3 != nullptr)
+	{
+		delete expr3;
+	}
 }
 
 string ForLoop::toString() const

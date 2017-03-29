@@ -8,9 +8,18 @@ SelectionStatement::SelectionStatement(Expression* _expr, Statement* _stat, Stat
 
 SelectionStatement::~SelectionStatement()
 {
-    delete expr;
-    delete stat;
-    delete elseStat;
+	if(expr != nullptr) 
+	{
+		delete expr;
+	} 
+	if(stat != nullptr) 
+	{
+		delete stat;
+	} 
+	if(elseStat != nullptr) 
+	{
+		delete elseStat;
+	} 
 }
 
 string SelectionStatement::toString() const
@@ -18,15 +27,15 @@ string SelectionStatement::toString() const
 	string txt = "";
 	if(expr != nullptr && stat != nullptr && elseStat != nullptr) 
 	{
-		txt += string("if(") + expr->toString() + string(")") + stat->toString() + string(" else ") + elseStat->toString();
+		txt += "if(" + expr->toString() + ")" + stat->toString() + " else " + elseStat->toString();
 	} 
 	else if (expr != nullptr && stat != nullptr && elseStat == nullptr)
 	{
-		txt += string("if(") + expr->toString() + string(")") + stat->toString();
+		txt += "if(" + expr->toString() + ")" + stat->toString();
 	}
 	else if (expr != nullptr && stat == nullptr && elseStat == nullptr)
 	{
-		txt += string("if(") + expr->toString() + string("){}");
+		txt += "if(" + expr->toString() + "){}";
 	} 
 	else
 	{

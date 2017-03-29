@@ -7,7 +7,10 @@ DeclarationVariable::DeclarationVariable(char* _id, bool _array) : Printable(), 
 
 DeclarationVariable::~DeclarationVariable()
 {
-
+	if(id != nullptr)
+	{
+		delete id;
+	}
 }
 
 char* DeclarationVariable::getId()

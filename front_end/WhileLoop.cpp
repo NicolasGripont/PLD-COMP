@@ -8,9 +8,9 @@ WhileLoop::WhileLoop(Expression* _expr, Statement* _statement)
 
 WhileLoop::~WhileLoop()
 {
-	if(this->expr != nullptr) 
+	if(expr != nullptr) 
 	{
-		delete this->expr;
+		delete expr;
 	}
 }
 

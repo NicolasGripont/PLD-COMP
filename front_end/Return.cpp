@@ -8,7 +8,10 @@ Return::Return(Expression* _expr)
 
 Return::~Return()
 {
-    delete expr;
+	if(expr != nullptr) 
+	{
+		delete expr;
+	}  
 }
 
 string Return::toString() const
@@ -17,7 +20,7 @@ string Return::toString() const
 
 	if(expr != nullptr)
 	{
-		txt += string(" ") + expr->toString();
+		txt += " " + expr->toString();
 	}
 	return txt;
 }

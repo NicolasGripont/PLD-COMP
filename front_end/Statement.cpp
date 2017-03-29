@@ -8,10 +8,13 @@ Statement::Statement(MultipleStatement* _multipleStatement)
 
 Statement::~Statement()
 {
-    delete multipleStatement;
+	if(multipleStatement != nullptr) 
+	{
+		delete multipleStatement;
+	}
 }
 
 string Statement::toString() const
 {
-	return string("{") + multipleStatement->toString() + string("}");
+	return "{" + multipleStatement->toString() + "}";
 }

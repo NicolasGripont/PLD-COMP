@@ -9,7 +9,10 @@ Genesis::~Genesis()
 {
     for (unsigned int i = 0; i < declarations.size(); ++i)
     {
-        delete declarations[i];
+        if(declarations[i] != nullptr)
+        {
+            delete declarations[i];
+        }
     }
 }
 

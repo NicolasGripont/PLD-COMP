@@ -8,14 +8,17 @@ DeclarationInitVariable::DeclarationInitVariable(char* _id, Expression* _expr)
 
 DeclarationInitVariable::~DeclarationInitVariable()
 {
-    delete expr;
+	if(expr != nullptr)
+	{
+		delete expr;
+	}
 }
 
 string DeclarationInitVariable::toString() const
 {
 	if(!array) 
 	{
-		return string(id) + string(" = ") + expr->toString();
+		return string(id) + " = " + expr->toString();
 	} 
 	return "ERROR_DeclarationInitVariable";
 }

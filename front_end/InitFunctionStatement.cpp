@@ -8,12 +8,15 @@ InitFunctionStatement::InitFunctionStatement(MultipleStatement* _multipleStateme
 
 InitFunctionStatement::~InitFunctionStatement()
 {
-    delete multipleStatement;
+	if(multipleStatement != nullptr)
+	{
+		delete multipleStatement;
+	}
 }
 
 string InitFunctionStatement::toString() const
 {
-	return string("{") + multipleStatement->toString() + string("}");
+	return "{" + multipleStatement->toString() + "}";
 }
 
 int InitFunctionStatement::countStatements()

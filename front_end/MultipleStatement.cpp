@@ -9,7 +9,10 @@ MultipleStatement::~MultipleStatement()
 {
     for (unsigned int i = 0; i < statements.size(); ++i)
     {
-        delete statements[i];
+        if(statements[i] != nullptr) 
+        {
+            delete statements[i];
+        }
     }
 }
 
