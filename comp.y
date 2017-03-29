@@ -394,7 +394,9 @@ return
 
 iteration_statement
     : WHILE OPEN_PARENTHESIS expression CLOSE_PARENTHESIS statement {$$ = new WhileLoop($3,$5);}
+    | WHILE OPEN_PARENTHESIS expression CLOSE_PARENTHESIS OPEN_BRACE CLOSE_BRACE {$$ = new WhileLoop($3,nullptr);}
     | FOR OPEN_PARENTHESIS loop_expression SEMICOLON loop_expression SEMICOLON loop_expression CLOSE_PARENTHESIS statement {$$ = new ForLoop($3,$5,$7,$9);}
+    | FOR OPEN_PARENTHESIS loop_expression SEMICOLON loop_expression SEMICOLON loop_expression CLOSE_PARENTHESIS OPEN_BRACE CLOSE_BRACE {$$ = new ForLoop($3,$5,$7,nullptr);}
     ;
 
 statement
