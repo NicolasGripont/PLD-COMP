@@ -1,7 +1,7 @@
 #include "GlobalDeclarationVariable.h"
 
 GlobalDeclarationVariable::GlobalDeclarationVariable(MultipleDeclarationVariable* _multipleDeclarationVariable)
-	: Declaration(), multipleDeclarationVariable(_multipleDeclarationVariable)
+	: Declaration(GLOBAL_DECLARATION_VARIABLE), multipleDeclarationVariable(_multipleDeclarationVariable)
 {
 
 }
@@ -14,4 +14,9 @@ GlobalDeclarationVariable::~GlobalDeclarationVariable()
 string GlobalDeclarationVariable::toString() const
 {
 	return multipleDeclarationVariable->toString() + string("; ");
+}
+
+MultipleDeclarationVariable* GlobalDeclarationVariable::getMultipleDeclarationVariable()
+{
+    return multipleDeclarationVariable;
 }

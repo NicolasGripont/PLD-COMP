@@ -3,15 +3,18 @@
 /* ------------------ */
 
 #include "comp.tab.h"
+#include "middle_end/CFG.h"
 
 int main(int argc, char* argv[])
 {
-	int retourBison = -1;
-
-	/* Bison */
-	retourBison = bison(argc, argv);
-	if (retourBison != 0)
+    /* Bison */
+    Genesis* genesis = bison(argc, argv);
+	if (genesis == nullptr)
 	{
-		return retourBison;
+		return 1;
 	}
+
+    /* Conversion AST -> IR */
+    CFG* cfg = new CFG();
+    cfg->parseGenesis(genesis);
 }

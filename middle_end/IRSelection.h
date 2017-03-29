@@ -2,6 +2,7 @@
 #define IRSELECTION_H
 
 #include <iostream>
+#include <string>
 
 #include "IRInstruction.h"
 #include "Symbol.h"
@@ -10,11 +11,11 @@
 class IRSelection : IRInstruction
 {
 public:
-    static const std::string LABEL_NULL_NAME = "null";
+    static const std::string LABEL_NULL_NAME;
     IRSelection(BasicBlock* block, Symbol* condition, std::string ifLabel, std::string elseLabel = LABEL_NULL_NAME);
     ~IRSelection();
 
-    std::string toString() const; 
+    std::string toString() const;
 
     Symbol *getCondition() const;
     std::string getIfLabel() const;

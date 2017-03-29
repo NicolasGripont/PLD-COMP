@@ -1,19 +1,25 @@
 #include "IRInstruction.h"
+#include "BasicBlock.h"
 
-IRInstruction::IRInstruction(BasicBlock* _bb, IR_Operation _op)
-	: block(_bb), operation(_op), type(_t)
+IRInstruction::IRInstruction()
+{
+    
+}
+
+IRInstruction::IRInstruction(BasicBlock* _bb, IRInstructionType _type)
+	: block(_bb), type(_type)
 {
 
 }
 
 IRInstruction::~IRInstruction()
 {
-    delete bloc;
+    delete block;
 }
 
-IRInstruction::IR_Operation IRInstruction::getOperation() const
+IRInstructionType IRInstruction::IRInstruction::getOperation() const
 {
-	return operation;
+	return type;
 }
 
 BasicBlock* IRInstruction::getBasicBlock() const

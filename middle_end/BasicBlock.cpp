@@ -1,6 +1,8 @@
 #include "BasicBlock.h"
+#include "CFG.h"
+#include "IRInstruction.h"
 
-BasicBlock::BasicBlock(CFG* _cfg, string _entry_label)
+BasicBlock::BasicBlock(CFG* _cfg, std::string _entry_label)
 	: cfg(_cfg), label(_entry_label)
 {
 
@@ -33,18 +35,18 @@ BasicBlock* BasicBlock::getExitFalse() const
 {
 	return exit_false;
 }
-	
+
 std::string BasicBlock::getLabel() const
 {
 	return label;
 }
 
-CGF* BasicBlock::getCFG() const
+CFG* BasicBlock::getCFG() const
 {
 	return cfg;
 }
 
-vector<IRInscruction*> BasicBlock::getInstructions() const
+std::vector<IRInscruction*> BasicBlock::getInstructions() const
 {
 	return instructions;
 }

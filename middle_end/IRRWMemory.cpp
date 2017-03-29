@@ -12,7 +12,7 @@ IRRWMemory::~IRRWMemory()
     delete destination;
 }
 
-string IRRWMemory::toString() const
+std::string IRRWMemory::toString() const
 {
     std::string ret;
 

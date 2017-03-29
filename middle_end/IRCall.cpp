@@ -1,7 +1,7 @@
 #include "IRCall.h"
 
 IRCall::IRCall(BasicBlock* _block, std::string _name, Symbol *_returnSymbol)
-	: IRInstruction(_block, IR_Operation.CALL), name(_name), returnSymbol(_returnSymbol)
+	: IRInstruction(_block, IRInstructionType::CALL), name(_name), returnSymbol(_returnSymbol)
 {
 
 }
@@ -14,7 +14,7 @@ IRCall::~IRCall()
 		delete s;
 	}
 }
-    
+
 void IRCall::addParameter(Symbol * symbol)
 {
 	if(symbol != nullptr)

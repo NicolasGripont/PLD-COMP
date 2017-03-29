@@ -1,7 +1,7 @@
 #include "IRBinaryOp.h"
 
 IRBinaryOp::IRBinaryOp(IRBinaryOp::Type _type, Symbol *op_1, Symbol *op_2, Symbol *op_3)
-    : type(_type), operand_1(op_1), operand_2(op_2), operand_3(op_3)
+    : IRInstruction(), type(_type), operand_1(op_1), operand_2(op_2), operand_3(op_3)
 {
 
 }
@@ -13,7 +13,7 @@ IRBinaryOp::~IRBinaryOp()
     delete operand_3;
 }
 
-string IRBinaryOp::toString() const
+std::string IRBinaryOp::toString() const
 {
     std::string ret;
 

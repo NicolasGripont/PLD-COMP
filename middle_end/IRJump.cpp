@@ -1,7 +1,6 @@
 #include "IRJump.h"
 
-IRJump::IRJump(string lab)
-	: label(lab)
+IRJump::IRJump(std::string lab) : label(lab)
 {
 
 }

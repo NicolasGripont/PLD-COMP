@@ -4,10 +4,11 @@
 #include <iostream>
 #include <vector>
 
+#include "IRInstruction.h"
 #include "BasicBlock.h"
-#include "Symbol"
+#include "Symbol.h"
 
-class IRCall
+class IRCall : public IRInstruction
 {
 public:
     IRCall(BasicBlock* block, std::string name, Symbol *returnSymbol);
@@ -18,7 +19,7 @@ public:
 protected:
 	std::string name;
 	Symbol *returnSymbol;
-	vector<Symbol *> params;
+	std::vector<Symbol *> params;
 };
 
 #endif // IRCALL_H

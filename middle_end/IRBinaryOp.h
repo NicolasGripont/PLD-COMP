@@ -1,7 +1,10 @@
 #ifndef _IRBINARYOP_H
 #define _IRBINARYOP_H
 
+#include <string>
+
 #include "IRInstruction.h"
+#include "Symbol.h"
 
 class IRBinaryOp : public IRInstruction
 {
@@ -13,9 +16,7 @@ public:
         DIV
     };
 
-    IRBinaryOp(Type _type, Symbol * op_1,
-                           Symbol * op_2,
-                           Symbol * op_3);
+    IRBinaryOp(IRBinaryOp::Type _type, Symbol *op_1, Symbol *op_2, Symbol *op_3);
     ~IRBinaryOp();
 
     std::string toString() const;

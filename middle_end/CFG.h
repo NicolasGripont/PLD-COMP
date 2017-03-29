@@ -8,7 +8,9 @@
 
 #include "Symbol.h"
 #include "BasicBlock.h"
-#include "../front_end/genesis.h"
+#include "../front_end/Genesis.h"
+#include "../front_end/GlobalDeclarationVariable.h"
+#include "../front_end/DeclarationFunction.h"
 
 /** The class for the control flow graph, also includes the symbol table */
 
@@ -23,7 +25,7 @@
 class CFG
 {
  public:
-	CFG(Genesis* genesis);
+	CFG();
 	virtual ~CFG();
 
     std::string toString() const;
@@ -35,12 +37,16 @@ class CFG
     Symbol* getSymbol(std::string name);
 	std::string getUsableBasicBlockName() const;
 
+    void parseGenesis(Genesis* genesis);
+
  protected:
     std::map <string, Symbol*> globalSymbolsTable;
-	BasicBlock * currentBasicBlock;
+	BasicBlock* currentBasicBlock;
 	int nextBBnumber; /**< just for naming */
-	Genesis * genesis;
 	std::vector <BasicBlock*> blocks; /**< all the basic blocks of this CFG*/
+private:
+    void parseGlobalDeclarationVariable(GlobalDeclarationVariable* globalDeclarationVariable);
+    void parseGlobalDeclarationFunction(DeclarationFunction* DeclarationFunction);
 };
 
 #endif

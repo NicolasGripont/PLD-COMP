@@ -1,7 +1,9 @@
 #include "IRSelection.h"
- 
+
+const std::string IRSelection::LABEL_NULL_NAME = "null";
+
 IRSelection::IRSelection(BasicBlock* _block, Symbol* _condition, std::string _ifLabel, std::string _elseLabel)
-	: IRInstruction(block, IR_Operation.SELECTION), condition(_condition), ifLabel(_ifLabel), elseLabel(_elseLabel)
+	: IRInstruction(block, IRInstructionType::SELECTION), condition(_condition), ifLabel(_ifLabel), elseLabel(_elseLabel)
 {
 
 }
@@ -10,7 +12,7 @@ IRSelection::~IRSelection()
 {
 	delete condition;
 }
-    
+
 std::string IRSelection::toString() const
 {
     std::string cond = "";
@@ -18,10 +20,10 @@ std::string IRSelection::toString() const
 	{
 		cond = condition->getName();
 	}
-	std::string res = "if " + cond + " then " + label1;
-	if(labelElse != LABEL_NULL_NAME)
+	std::string res = "if " + cond + " then " + ifLabel;
+	if(elseLabel != LABEL_NULL_NAME)
 	{
-		res += " else " + label2;
+		res += " else " + elseLabel;
 	}
 
     return cond;

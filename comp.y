@@ -50,7 +50,7 @@
 
     #include "front_end/Erreur.h"
 
-    int bison(int argc, char* argv[]);
+    Genesis* bison(int argc, char* argv[]);
 }
 %{
     #include "comp.tab.h"
@@ -931,7 +931,7 @@ std::string getNameOfType(int type)
     }
 }
 
-int bison(int argc, char* argv[])
+Genesis* bison(int argc, char* argv[])
 {
     int result = 0;
     currVariableType = INT32;
@@ -941,7 +941,7 @@ int bison(int argc, char* argv[])
     {
         std::cout << "Erreur : pas de nom de fichier donné en entrée." << std::endl;
         std::cout << "Exemple d'utilisation : ~$ ./comp monFichier" << std::endl;
-        return 1;
+        return nullptr;
     }
 
     //yydebug = 1;
@@ -950,7 +950,7 @@ int bison(int argc, char* argv[])
     if (!yyin)
     {
         std::cout << "Erreur : impossible d'ouvrir le fichier '" << argv[1] << "'." << std::endl;
-        return 1;
+        return nullptr;
     }
 
     // Compilation
@@ -962,7 +962,6 @@ int bison(int argc, char* argv[])
     Genesis* g = 0;
     int status = yyparse(&g);
 
-
     // Error status
     if (status == 0) // Success
     {
@@ -972,23 +971,18 @@ int bison(int argc, char* argv[])
     else if (status == 1) // Syntax error
     {
         std::cout << "Compilation abandonnée (erreur de syntaxe)." << std::endl;
-        result = 1;
+        return nullptr;
     }
     else if (status == 2) // Out of memory
     {
         std::cout << "Compilation abandonnée (mémoire insuffisante)." << std::endl;
-        result = 1;
+        return nullptr;
     }
     else
     {
         std::cout << "Compilation abandonnée." << std::endl;
-        result = 1;
+        return nullptr;
     }
 
-    if(g != nullptr)
-    {
-        delete g;
-    }
-
-    return result;
+    return g;
 }

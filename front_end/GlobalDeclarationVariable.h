@@ -11,6 +11,7 @@ public:
 	virtual ~GlobalDeclarationVariable();
 	virtual string toString() const;
 
+    MultipleDeclarationVariable* getMultipleDeclarationVariable();
 private:
 	MultipleDeclarationVariable* multipleDeclarationVariable;
 };

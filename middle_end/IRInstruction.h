@@ -3,32 +3,32 @@
 
 #include <iostream>
 
-#include "BasicBlock.h"
+class BasicBlock;
 
 //! The class for one 3-address instruction
+enum IRInstructionType
+{
+    BINARY_OP,
+    RWMEMORY,
+    CALL,
+    JUMP,
+    SELECTION
+};
 
 class IRInstruction
 {
 public:
-    enum class IR_Operation
-    {
-        BINARY_OP,
-        RWMEMORY,
-        CALL,
-        JUMP,
-        SELECTION
-    };
-
-    IRInstruction(BasicBlock* block, IR_Operation operation);
+    IRInstruction();
+    IRInstruction(BasicBlock* block, IRInstructionType _type);
     virtual ~IRInstruction();
     virtual std::string toString() const = 0;
 
-    IR_Operation getOperation() const;
+    IRInstructionType getOperation() const;
     BasicBlock * getBasicBlock() const;
 
 protected:
     BasicBlock * block = nullptr; /**< The BB this instruction belongs to, which provides a pointer to the CFG this instruction belong to */
-    IR_Operation operation;
+    IRInstructionType type;
 };
 
 #endif
