@@ -9,6 +9,7 @@ int main(int argc, char* argv[])
 {
     /* Bison */
     Genesis* genesis = bison(argc, argv);
+
 	if (genesis == nullptr)
 	{
 		return 1;
@@ -17,4 +18,12 @@ int main(int argc, char* argv[])
     /* Conversion AST -> IR */
     CFG* cfg = new CFG();
     cfg->parseGenesis(genesis);
+
+	if (genesis != nullptr)
+	{
+		delete genesis;
+	}
+	
+    
+    return 0;
 }
