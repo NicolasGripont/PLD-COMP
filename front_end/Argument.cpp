@@ -10,7 +10,7 @@ Argument::~Argument()
 {
     if(id != nullptr) 
     {
-        delete id;
+        free(id);
     }
     if(type != nullptr) 
     {

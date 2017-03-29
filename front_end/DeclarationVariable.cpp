@@ -10,7 +10,7 @@ DeclarationVariable::~DeclarationVariable()
 {
 	if(id != nullptr)
 	{
-		delete id;
+		free(id);
 	}
 }
 

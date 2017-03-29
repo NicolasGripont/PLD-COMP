@@ -800,7 +800,9 @@ void popVariablesFromStack(ArgumentList* args, DeclarationFunctionStatement* sta
 
     for(int i=0;i<countVars;++i)
     {
+        VariableContainer* var = currentVars.back();
         currentVars.pop_back();
+        delete var;
     }
 }
 
@@ -982,6 +984,20 @@ Genesis* bison(int argc, char* argv[])
     {
         std::cout << "Compilation abandonnée." << std::endl;
         return nullptr;
+    }
+
+#warning Aurelien verifie si tu en a besoin après, mets ce code dans main.c
+    for(int i=0; i < globalVariables.size(); i++)
+    {
+        delete globalVariables.at(i);
+    }
+    for(int i=0; i < functions.size(); i++)
+    {
+        delete functions.at(i);
+    }
+    for(int i=0; i < currentVars.size(); i++)
+    {
+        delete currentVars.at(i);
     }
 
     return g;

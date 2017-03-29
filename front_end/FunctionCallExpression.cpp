@@ -11,7 +11,7 @@ FunctionCallExpression::~FunctionCallExpression()
 {
 	if(id != nullptr)
 	{
-		delete id;
+		free(id);
 	}
 	if(expr != nullptr)
 	{

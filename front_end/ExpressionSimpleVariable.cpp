@@ -10,7 +10,7 @@ ExpressionSimpleVariable::~ExpressionSimpleVariable()
 {
 	if(id != nullptr)
 	{
-		delete id;
+		free(id);
 	}
 }
 

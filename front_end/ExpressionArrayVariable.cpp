@@ -10,7 +10,7 @@ ExpressionArrayVariable::~ExpressionArrayVariable()
 {
 	if(id != nullptr)
 	{
-		delete id;
+		free(id);
 	}
 	if(expr != nullptr)
 	{
