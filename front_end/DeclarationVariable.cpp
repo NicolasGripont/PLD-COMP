@@ -1,11 +1,14 @@
 #include "DeclarationVariable.h"
 
-DeclarationVariable::DeclarationVariable(char* _id, bool _array) : Printable(), id(_id), array(_array){
+DeclarationVariable::DeclarationVariable(char* _id, bool _array) : Printable(), id(_id), array(_array)
+{
 
 }
 
 DeclarationVariable::~DeclarationVariable()
-{}
+{
+
+}
 
 char* DeclarationVariable::getId()
 {

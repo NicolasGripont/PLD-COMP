@@ -7,7 +7,6 @@
 // Initialisation du corps de la fonction
 class InitFunctionStatement : public DeclarationFunctionStatement
 {
-
 public:
     InitFunctionStatement(MultipleStatement* _multipleStatement);
     virtual ~InitFunctionStatement();

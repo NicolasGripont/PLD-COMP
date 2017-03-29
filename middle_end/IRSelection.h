@@ -1,11 +1,11 @@
 #ifndef IRSELECTION_H
 #define IRSELECTION_H
 
+#include <iostream>
+
 #include "IRInstruction.h"
 #include "Symbol.h"
 #include "BasicBlock.h"
-
-#include <iostream>
 
 class IRSelection : IRInstruction
 {

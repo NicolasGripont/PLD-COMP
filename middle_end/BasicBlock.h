@@ -1,6 +1,8 @@
 #ifndef _BASICBLOCK_H
 #define _BASICBLOCK_H
+
 #include <iostream>
+
 #include "IRInstruction.h"
 #include "CFG.h"
 
@@ -18,7 +20,8 @@
         otherwise it generates an unconditional jmp to the exit_true branch 
 */
 
-class BasicBlock {
+class BasicBlock
+{
 public:
 	BasicBlock(CFG* cfg, string entry_label);
 	virtual ~BasicBlock();

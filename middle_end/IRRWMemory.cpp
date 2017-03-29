@@ -1,7 +1,7 @@
 #include "IRRWMemory.h"
 
-IRRWMemory::IRRWMemory(IRRWMemory::Type _type, Symbol *sour, Symbol *dest) :
-    type(_type), source(sour), destination(dest)
+IRRWMemory::IRRWMemory(IRRWMemory::Type _type, Symbol *sour, Symbol *dest)
+    : type(_type), source(sour), destination(dest)
 {
 
 }

@@ -1,5 +1,5 @@
-#ifndef IRRWMEMORY_H
-#define IRRWMEMORY_H
+#ifndef _IRRWMEMORY_H
+#define _IRRWMEMORY_H
 
 #include "Symbol.h"
 #include "IRInstruction.h"
@@ -7,7 +7,6 @@
 class IRRWMemory : public IRInstruction
 {
 public:
-
     enum class Type {
         READ_MEMORY,
         WRITE_MEMORY,

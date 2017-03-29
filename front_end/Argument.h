@@ -14,7 +14,6 @@ public:
     char* getName();
     bool isArray();
 
-
 private:
     Type* type;
     char* id;

@@ -1,6 +1,6 @@
 #include "Statement.h"
 
- Statement::Statement(MultipleStatement* _multipleStatement)
+Statement::Statement(MultipleStatement* _multipleStatement)
     : Printable(), multipleStatement(_multipleStatement)
 {
 

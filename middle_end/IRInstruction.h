@@ -1,18 +1,17 @@
 #ifndef _IRINSTRUCTION_H
 #define _IRINSTRUCTION_H
+
 #include <iostream>
 
 #include "BasicBlock.h"
 
-
 //! The class for one 3-address instruction
 
-class IRInstruction {
-
+class IRInstruction
+{
 public:
-
-    enum class IR_Operation {
-
+    enum class IR_Operation
+    {
         BINARY_OP,
         RWMEMORY,
         CALL,

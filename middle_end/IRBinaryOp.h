@@ -1,12 +1,11 @@
-#ifndef IRBINARYOP_H
-#define IRBINARYOP_H
+#ifndef _IRBINARYOP_H
+#define _IRBINARYOP_H
 
 #include "IRInstruction.h"
 
 class IRBinaryOp : public IRInstruction
 {
 public:
-
     enum class Type {
         ADD,
         SUB,
@@ -33,7 +32,6 @@ private:
     Symbol * operand_1 = nullptr;
     Symbol * operand_2 = nullptr;
     Symbol * operand_3 = nullptr;
-
 };
 
 #endif // IRBINARYOP_H

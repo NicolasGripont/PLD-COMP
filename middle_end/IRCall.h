@@ -1,7 +1,9 @@
-#ifndef IRCALL_H
-#define IRCALL_H
+#ifndef _IRCALL_H
+#define _IRCALL_H
+
 #include <iostream>
 #include <vector>
+
 #include "BasicBlock.h"
 #include "Symbol"
 

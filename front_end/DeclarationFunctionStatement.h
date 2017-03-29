@@ -4,10 +4,8 @@
 #include "Printable.h"
 
 class DeclarationFunctionStatement : public Printable
-
 {
 public:
-
 	DeclarationFunctionStatement(bool _declaration);
 	virtual ~DeclarationFunctionStatement();
 	virtual string toString() const = 0;

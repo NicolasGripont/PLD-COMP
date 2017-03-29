@@ -10,9 +10,6 @@ const int EXPRESSION_TYPE_CONFLICT = -2;
 
 class Expression : public Printable
 {
-protected:
-    int type;
-    int expressionType;
 public:
     Expression();
     virtual ~Expression();
@@ -23,6 +20,10 @@ public:
 
     int getExpressionType();
     void setExpressionType(int _type);
+
+protected:
+    int type;
+    int expressionType;
 };
 
 #endif

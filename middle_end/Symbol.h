@@ -22,11 +22,9 @@ public:
     int getOffset() const;
 
 private:
-
     std::string name;
     Type type;
     int offset;
-
 };
 
 #endif // SYMBOL_H

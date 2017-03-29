@@ -1,7 +1,7 @@
 #include "IRBinaryOp.h"
 
-IRBinaryOp::IRBinaryOp(IRBinaryOp::Type _type, Symbol *op_1, Symbol *op_2, Symbol *op_3) :
-    type(_type), operand_1(op_1), operand_2(op_2), operand_3(op_3)
+IRBinaryOp::IRBinaryOp(IRBinaryOp::Type _type, Symbol *op_1, Symbol *op_2, Symbol *op_3)
+    : type(_type), operand_1(op_1), operand_2(op_2), operand_3(op_3)
 {
 
 }
@@ -30,6 +30,7 @@ string IRBinaryOp::toString() const
     case Type::DIV :
         ret = operand_1->getName() + " <- " + operand_2->getName() + " / " + operand_3->getName();
         break;
+
     case Type::MUL :
         ret = operand_1->getName() + " <- " + operand_2->getName() + " * " + operand_3->getName();
         break;

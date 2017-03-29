@@ -1,13 +1,13 @@
-#ifndef IRJUMP_H
-#define IRJUMP_H
+#ifndef _IRJUMP_H
+#define _IRJUMP_H
+
+#include <string>
 
 #include "IRInstruction.h"
-#include <string>
 
 class IRJump : public IRInstruction
 {
 public:
-
     IRJump(std::string lab);
     ~IRJump() = default;
 
@@ -15,7 +15,6 @@ public:
 
 private:
     std::string label;
-
 };
 
 #endif // IRJUMP_H

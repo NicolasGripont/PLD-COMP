@@ -8,7 +8,9 @@ AssignmentOperationVariable::AssignmentOperationVariable(ExpressionVariable* _ex
 }
 
 AssignmentOperationVariable::~AssignmentOperationVariable()
-{}
+{
+
+}
 
 string AssignmentOperationVariable::toString() const
 {

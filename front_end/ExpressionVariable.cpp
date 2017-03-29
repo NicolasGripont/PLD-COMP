@@ -1,6 +1,5 @@
 #include "ExpressionVariable.h"
 
-
 ExpressionVariable::ExpressionVariable(int _type)
 :Expression()
 {
