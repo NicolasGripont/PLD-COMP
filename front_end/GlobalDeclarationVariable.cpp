@@ -8,10 +8,13 @@ GlobalDeclarationVariable::GlobalDeclarationVariable(MultipleDeclarationVariable
 
 GlobalDeclarationVariable::~GlobalDeclarationVariable()
 {
-    delete multipleDeclarationVariable;
+	if(multipleDeclarationVariable != nullptr)
+	{
+		delete multipleDeclarationVariable;
+	}
 }
 
 string GlobalDeclarationVariable::toString() const
 {
-	return multipleDeclarationVariable->toString() + string("; ");
+	return multipleDeclarationVariable->toString() + "; ";
 }

@@ -22,12 +22,18 @@ AssignmentVariable::AssignmentVariable(ExpressionVariable* _exprVar, Expression*
 
 AssignmentVariable::~AssignmentVariable()
 {
-    delete exprVar;
-    delete expr;
+    if(exprVar != nullptr) 
+    {
+        delete exprVar;
+    }
+    if(expr != nullptr) 
+    {
+        delete expr;
+    }
 }
 
 string AssignmentVariable::toString() const
 {
-    return exprVar->toString() + string(" = ") + expr->toString();
+    return exprVar->toString() + " = " + expr->toString();
 }
 

@@ -8,10 +8,13 @@ ExpressionStatement::ExpressionStatement(Expression* _expr)
 
 ExpressionStatement::~ExpressionStatement()
 {
-    delete expr;
+	if(expr != nullptr)
+	{
+		delete expr;
+	}
 }
 
 string ExpressionStatement::toString() const
 {
-	return expr->toString() + string("; ");
+	return expr->toString() + "; ";
 }

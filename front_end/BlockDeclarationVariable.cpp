@@ -8,7 +8,10 @@ BlockDeclarationVariable::BlockDeclarationVariable(MultipleDeclarationVariable* 
 
 BlockDeclarationVariable::~BlockDeclarationVariable()
 {
-    delete multipleDeclarationVariable;
+	if(multipleDeclarationVariable != nullptr) 
+    {
+        delete multipleDeclarationVariable;
+    }
 }
 
 string BlockDeclarationVariable::toString() const

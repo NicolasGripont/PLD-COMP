@@ -8,10 +8,17 @@ ExpressionArrayVariable::ExpressionArrayVariable(char* _id, Expression* _expr, i
 
 ExpressionArrayVariable::~ExpressionArrayVariable()
 {
-    delete expr;
+	if(id != nullptr)
+	{
+		delete id;
+	}
+	if(expr != nullptr)
+	{
+		delete expr;
+	}
 }
 
 string ExpressionArrayVariable::toString() const
 {
-	return string(id) + string("[") + expr->toString() + string("]");
+	return string(id) + "[" + expr->toString() + "]";
 }

@@ -8,12 +8,25 @@ DeclarationFunction::DeclarationFunction(Type* _type, char* _id, ArgumentList* _
 
 DeclarationFunction::~DeclarationFunction()
 {
-    delete type;
-    delete decFunctionStatement;
-    delete argumentList;
+	if(id != nullptr) 
+    {
+        delete id;
+    }
+    if(type != nullptr) 
+    {
+        delete type;
+    }
+    if(decFunctionStatement != nullptr) 
+    {
+        delete decFunctionStatement;
+    }
+    if(argumentList != nullptr) 
+    {
+        delete argumentList;
+    }
 }
 
 string DeclarationFunction::toString() const
 {
-	return type->toString() + string(" ") + string(id) + string("(") +  argumentList->toString() + string(")") + decFunctionStatement->toString();
+	return type->toString() + " " + string(id) + "(" +  argumentList->toString() + ")" + decFunctionStatement->toString();
 }

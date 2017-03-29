@@ -8,7 +8,14 @@ Argument::Argument(Type* _type, char* _id, bool _array)
 
 Argument::~Argument() 
 {
-    delete type;
+    if(id != nullptr) 
+    {
+        delete id;
+    }
+    if(type != nullptr) 
+    {
+        delete type;
+    }
 }
 
 string Argument::toString() const
@@ -19,7 +26,7 @@ string Argument::toString() const
         txt = type->toString();
         if (id != nullptr)
         {
-            txt += string(" ") + id;
+            txt += " " + string(id);
         }
         if (array)
         {

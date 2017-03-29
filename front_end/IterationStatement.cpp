@@ -8,5 +8,8 @@ IterationStatement::IterationStatement(Statement* _statement)
 
 IterationStatement::~IterationStatement()
 {
-    delete statement;
+	if(statement != nullptr)
+	{
+		delete statement;
+	}
 }

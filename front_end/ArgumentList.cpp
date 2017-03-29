@@ -9,7 +9,10 @@ ArgumentList::~ArgumentList()
 {
     for (unsigned int i = 0; i < arguments.size(); ++i)
     {
-        delete arguments[i];
+        if(arguments[i] != nullptr)
+        {
+            delete arguments[i];
+        }
     }
 }
 
@@ -28,7 +31,7 @@ string ArgumentList::toString() const
     }
     for (unsigned int i = 1; i < arguments.size(); ++i)
     {
-        txt += string(", ") + arguments.at(i)->toString();
+        txt += ", " + arguments.at(i)->toString();
     }
 
     return txt;

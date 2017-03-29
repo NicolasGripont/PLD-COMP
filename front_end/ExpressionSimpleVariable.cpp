@@ -8,7 +8,10 @@ ExpressionSimpleVariable::ExpressionSimpleVariable(char* _id, int _type)
 
 ExpressionSimpleVariable::~ExpressionSimpleVariable()
 {
-
+	if(id != nullptr)
+	{
+		delete id;
+	}
 }
 
 string ExpressionSimpleVariable::toString() const

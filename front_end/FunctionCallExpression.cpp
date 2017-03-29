@@ -9,7 +9,14 @@ FunctionCallExpression::FunctionCallExpression(char* _id, Expression* _expr, int
 
 FunctionCallExpression::~FunctionCallExpression()
 {
-    delete expr;
+	if(id != nullptr)
+	{
+		delete id;
+	}
+	if(expr != nullptr)
+	{
+		delete expr;
+	}
 }
 
 string FunctionCallExpression::toString() const
@@ -20,5 +27,5 @@ string FunctionCallExpression::toString() const
 	{
 		exprStr = expr->toString();
 	}
-	return string(id) + string("(") + exprStr + string(")");
+	return string(id) + "(" + exprStr + ")";
 }

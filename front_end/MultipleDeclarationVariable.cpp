@@ -7,10 +7,16 @@ MultipleDeclarationVariable::MultipleDeclarationVariable() : Printable()
 
 MultipleDeclarationVariable::~MultipleDeclarationVariable()
 {
-    delete type;
+    if(type != nullptr)
+    {
+        delete type;
+    }
     for (unsigned int i = 0; i < declarationsVariables.size(); ++i)
     {
-        delete declarationsVariables[i];
+        if(declarationsVariables[i] != nullptr)
+        {
+            delete declarationsVariables[i];
+        }
     }
 }
 
@@ -20,14 +26,14 @@ string MultipleDeclarationVariable::toString() const
 
     if (!declarationsVariables.empty())
     {
-        txt += string(" ") + declarationsVariables.at(0)->toString();
+        txt += " " + declarationsVariables.at(0)->toString();
     }
     for (unsigned int i = 1; i < declarationsVariables.size(); ++i)
     {
-        txt += string(", ") + declarationsVariables.at(i)->toString();
+        txt += ", " + declarationsVariables.at(i)->toString();
     }
 
-    return txt + string("; ");
+    return txt + "; ";
 }
 
 void MultipleDeclarationVariable::addDeclarationVariable(DeclarationVariable* dec)

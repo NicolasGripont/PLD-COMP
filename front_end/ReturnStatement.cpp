@@ -8,10 +8,13 @@ ReturnStatement::ReturnStatement(Return* _ret)
 
 ReturnStatement::~ReturnStatement()
 {
-    delete ret;
+	if(ret != nullptr) 
+	{
+		delete ret;
+	} 
 }
 
 string ReturnStatement::toString() const
 {
-	return ret->toString() + string("; ");
+	return ret->toString() + "; ";
 }
