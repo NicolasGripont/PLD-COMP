@@ -933,6 +933,7 @@ std::string getNameOfType(int type)
 
 int bison(int argc, char* argv[])
 {
+    int result = 0;
     currVariableType = INT32;
 
     // Test parameters
@@ -961,6 +962,7 @@ int bison(int argc, char* argv[])
     Genesis* g = 0;
     int status = yyparse(&g);
 
+
     // Error status
     if (status == 0) // Success
     {
@@ -970,18 +972,23 @@ int bison(int argc, char* argv[])
     else if (status == 1) // Syntax error
     {
         std::cout << "Compilation abandonnée (erreur de syntaxe)." << std::endl;
-        return 1;
+        result = 1;
     }
     else if (status == 2) // Out of memory
     {
         std::cout << "Compilation abandonnée (mémoire insuffisante)." << std::endl;
-        return 1;
+        result = 1;
     }
     else
     {
         std::cout << "Compilation abandonnée." << std::endl;
-        return 1;
+        result = 1;
     }
 
-    return 0;
+    if(g != nullptr)
+    {
+        delete g;
+    }
+
+    return result;
 }
