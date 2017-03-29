@@ -13,20 +13,20 @@ public:
         LOAD_CST
     };
 
-    IRRWMemory(Type _type, Symbol * sour, Symbol * dest);
+    IRRWMemory(Type _type, Symbol* sour, Symbol* dest);
     ~IRRWMemory();
 
     std::string toString() const;
 
     Type getType() const;
-    Symbol *getSource() const;
-    Symbol *getDestination() const;
+    Symbol* getSource() const;
+    Symbol* getDestination() const;
 
 private:
     Type type;
 
-    Symbol * source;
-    Symbol * destination;
+    Symbol* source;
+    Symbol* destination;
 };
 
 #endif // IRRWMEMORY_H

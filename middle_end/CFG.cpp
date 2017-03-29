@@ -15,7 +15,12 @@ string CFG::toString() const
 
 }
 
-void CFG::addBasicBlock(BasicBlock *bb)
+void
+CFG::addBasicBlock
+(
+    BasicBlock
+     *bb
+)
 {
 
 }

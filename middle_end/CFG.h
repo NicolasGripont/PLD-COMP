@@ -9,6 +9,7 @@
 #include "Symbol.h"
 #include "BasicBlock.h"
 #include "../front_end/Genesis.h"
+#include "../front_end/Declaration.h"
 #include "../front_end/GlobalDeclarationVariable.h"
 #include "../front_end/DeclarationFunction.h"
 
@@ -44,6 +45,9 @@ class CFG
 	BasicBlock* currentBasicBlock;
 	int nextBBnumber; /**< just for naming */
 	std::vector <BasicBlock*> blocks; /**< all the basic blocks of this CFG*/
+
+    std::vector<Symbol*> variablesGlobales;
+    std::vector<Symbol*> variablesLocales;
 private:
     void parseGlobalDeclarationVariable(GlobalDeclarationVariable* globalDeclarationVariable);
     void parseGlobalDeclarationFunction(DeclarationFunction* DeclarationFunction);
