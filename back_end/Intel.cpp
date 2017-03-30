@@ -41,9 +41,20 @@ int Intel::compile()
 
 void Intel::putchar(const char character)
 {
-    std::string line = std::string("movl $'") + character + std::string("', %edi");
-
-    write(("\t" + line).c_str());
+    std::string finalCharacter;
+    switch (character)
+    {
+        case '\n':
+            finalCharacter = "\\n";
+            break;
+        case '\t':
+            finalCharacter = "\\t";
+            break;
+        default:
+            finalCharacter = character;
+            break;
+    }
+    write(("\tmovl $'" + finalCharacter + "', %edi").c_str());
     write("\tcall putchar");
 }
 
