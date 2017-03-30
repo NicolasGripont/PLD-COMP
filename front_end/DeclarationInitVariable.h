@@ -11,6 +11,7 @@ public:
 	virtual ~DeclarationInitVariable();
 	virtual string toString() const;
 
+	Expression* getExpr();
 private:
 	Expression* expr;
 };

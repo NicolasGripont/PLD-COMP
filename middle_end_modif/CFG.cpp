@@ -1,12 +1,14 @@
 #include <cassert>
 
 #include "../comp.tab.h"
+#include "../front_end/DeclarationInitVariable.h"
 
 #include "CFG.h"
 #include "BasicBlock.h"
 #include "SymbolGlobalVariable.h"
 #include "SymbolLocalVariable.h"
 #include "SymbolFunction.h"
+#include "IRInstrLDConst.h"
 
 CFG::CFG()
 {
@@ -47,12 +49,35 @@ void CFG::parseGlobalDeclarationVariable(GlobalDeclarationVariable *globalDeclar
 
         variables[varName] = globalVariable;
 
-        // Si c'est un tableau
-        if (declarationVariable->isArray())
+        // Si la partie droite est une expression
+        if (!(declarationVariable->isDeclaration()))
         {
-            
+            DeclarationInitVariable *declarationInitVariable = (DeclarationInitVariable *)declarationVariable;
+            Expression *expr = declarationInitVariable->getExpr();
+            parseExpression(expr, globalVariable);
         }
     }
+}
+
+void CFG::parseExpression(Expression *expr, SymbolVariable *symbol)
+{
+    IRInstruction *instr;
+    // Si l'expression de droite est une constante, on peut l'assigner directement
+    if (expr->getType() == EXPRESSION_INTEGER)
+    {
+        ExpressionInteger *exprInt = (ExpressionInteger *)expr;
+        int value = exprInt->getValue();
+        std::string varName = symbol->getName();
+        DataType dataType = symbol->getDataType();
+
+        // Instruction LD Const
+        instr = new IRInstrLDConst(currentBB, dataType, varName, value);
+    }
+    else
+    {
+        /// TODO : Calculer l'expression et l'assigner à la variable
+    }
+    currentBB->addIRInstr(instr);
 }
 
 void CFG::parseGlobalDeclarationFunction(DeclarationFunction *DeclarationFunction)
@@ -80,8 +105,8 @@ std::string CFG::createNewTempvar(DataType dataType)
 {
     std::string varName = "!tmp" + nextTmpVarNumber;
     ++nextTmpVarNumber;
-#warning Remplacer le memory_location du SymbolLocalVariable
-    SymbolLocalVariable *var = new SymbolLocalVariable(varName, -1, dataType);
+    /// TODO : Remplacer le memory_location du SymbolLocalVariable
+    SymbolLocalVariable *var = new SymbolLocalVariable(varName, dataType, -1);
     variables[varName] = var;
 }
 

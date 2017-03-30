@@ -1,15 +1,14 @@
 #ifndef SYMBOL_LOCAL_VARIABLE_H
 #define SYMBOL_LOCAL_VARIABLE_H
 
-#include "Symbol.h"
+#include "SymbolVariable.h"
 #include "DataType.h"
 
-class SymbolLocalVariable : public Symbol
+class SymbolLocalVariable : public SymbolVariable
 {
 public:
-    SymbolLocalVariable(std::string _name, int _memoryLocation, DataType _variableType);
+    SymbolLocalVariable(std::string _name, DataType _variableType, int _memoryLocation);
 private:
-    DataType variableType;
     int memoryLocation;
 };
 

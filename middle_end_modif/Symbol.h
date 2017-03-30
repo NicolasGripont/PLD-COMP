@@ -11,6 +11,7 @@ public:
     Symbol(SymbolType _type, std::string _name);
 
     SymbolType getSymbolType();
+    std::string getName();
 private:
     SymbolType type;
     std::string name;

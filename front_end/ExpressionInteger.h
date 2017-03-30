@@ -10,6 +10,7 @@ public:
 	virtual ~ExpressionInteger();
 	virtual string toString() const;
 
+	int getValue();
 private:
 	int value;
 };

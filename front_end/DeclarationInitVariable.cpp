@@ -1,24 +1,28 @@
 #include "DeclarationInitVariable.h"
 
-DeclarationInitVariable::DeclarationInitVariable(char* _id, Expression* _expr)
-	: DeclarationVariable(_id, false, false), expr(_expr)
+DeclarationInitVariable::DeclarationInitVariable(char *_id, Expression *_expr)
+    : DeclarationVariable(_id, false, false), expr(_expr)
 {
-
 }
 
 DeclarationInitVariable::~DeclarationInitVariable()
 {
-	if(expr != nullptr)
-	{
+    if (expr != nullptr)
+    {
 		delete expr;
-	}
+    }
 }
 
 string DeclarationInitVariable::toString() const
 {
-	if(!array) 
-	{
+    if (!array)
+    {
 		return string(id) + " = " + expr->toString();
-	} 
-	return "ERROR_DeclarationInitVariable";
+    }
+    return "ERROR_DeclarationInitVariable";
+}
+
+Expression *DeclarationInitVariable::getExpr()
+{
+    return expr;
 }

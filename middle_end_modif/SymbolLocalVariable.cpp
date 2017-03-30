@@ -1,7 +1,7 @@
 #include "SymbolLocalVariable.h"
 
-SymbolLocalVariable::SymbolLocalVariable(std::string _name, int _memoryLocation, DataType _variableType)
-    :Symbol(SymbolType::LOCAL_VARIABLE, _name), memoryLocation(_memoryLocation), variableType(_variableType)
+SymbolLocalVariable::SymbolLocalVariable(std::string _name, DataType _variableType, int _memoryLocation)
+    :SymbolVariable(SymbolType::LOCAL_VARIABLE, _name, _variableType), memoryLocation(_memoryLocation)
 {
 
 }

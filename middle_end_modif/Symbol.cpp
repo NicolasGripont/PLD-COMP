@@ -10,3 +10,8 @@ SymbolType Symbol::getSymbolType()
 {
     return type;
 }
+
+std::string Symbol::getName()
+{
+    return name;
+}
