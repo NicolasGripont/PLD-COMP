@@ -986,18 +986,17 @@ Genesis* bison(int argc, char* argv[])
         return nullptr;
     }
 
-#warning Aurelien verifie si tu en a besoin après, mets ce code dans main.c
     for(int i=0; i < globalVariables.size(); i++)
     {
-        delete globalVariables.at(i);
+        delete globalVariables[i];
     }
     for(int i=0; i < functions.size(); i++)
     {
-        delete functions.at(i);
+        delete functions[i];
     }
     for(int i=0; i < currentVars.size(); i++)
     {
-        delete currentVars.at(i);
+        delete currentVars[i];
     }
 
     return g;
