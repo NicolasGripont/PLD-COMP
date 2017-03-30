@@ -58,6 +58,7 @@
     char* filename;
 
     extern int yylex(void);
+    extern int yylex_destroy(void);
     void yyerror(Genesis** g, const char* msg);
     void yyerror(const char* msg);
     void yywarning(const char* msg);
@@ -963,6 +964,8 @@ Genesis* bison(int argc, char* argv[])
 
     Genesis* g = 0;
     int status = yyparse(&g);
+    fclose(yyin);
+    yylex_destroy();
 
     // Error status
     if (status == 0) // Success

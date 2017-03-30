@@ -33,7 +33,7 @@ string MultipleDeclarationVariable::toString() const
         txt += ", " + declarationsVariables.at(i)->toString();
     }
 
-    return txt + "; ";
+    return txt ;
 }
 
 void MultipleDeclarationVariable::addDeclarationVariable(DeclarationVariable* dec)
