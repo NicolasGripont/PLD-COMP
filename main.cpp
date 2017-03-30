@@ -3,7 +3,7 @@
 /* ------------------ */
 
 #include "comp.tab.h"
-#include "middle_end/CFG.h"
+#include "middle_end_modif/CFG.h"
 
 int main(int argc, char* argv[])
 {
@@ -17,13 +17,13 @@ int main(int argc, char* argv[])
 
     /* Conversion AST -> IR */
     CFG* cfg = new CFG();
-    cfg->parseGenesis(genesis);
+    cfg->parseAst(genesis);
 
 	if (genesis != nullptr)
 	{
 		delete genesis;
 	}
-	
-    
+
+
     return 0;
 }

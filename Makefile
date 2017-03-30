@@ -9,7 +9,7 @@ MAKEFLAGS += --no-builtin-rules
 default: all
 
 FRONTEND = front_end
-MIDDLEEND = middle_end
+MIDDLEEND = middle_end_modif
 DEPS_FRONTEND = $(shell ls $(FRONTEND)/*)
 DEPS_MIDDLEEND = $(shell ls $(MIDDLEEND)/*)
 CFLAGS = -std=c++11 -DYYDEBUG
