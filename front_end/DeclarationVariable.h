@@ -10,11 +10,15 @@ public:
     virtual ~DeclarationVariable(); 
     char* getId();	
     bool isArray();
+    bool isDeclaration();
 	virtual string toString() const;
 
 protected:
     char* id;
     bool array;
+    bool declaration;
+
+    DeclarationVariable(char* _id, bool _array, bool _declaration);
 };
 
 #endif

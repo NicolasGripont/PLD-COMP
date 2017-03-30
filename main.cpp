@@ -24,6 +24,5 @@ int main(int argc, char* argv[])
 		delete genesis;
 	}
 
-
     return 0;
 }

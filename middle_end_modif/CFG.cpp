@@ -5,6 +5,8 @@
 #include "CFG.h"
 #include "BasicBlock.h"
 #include "SymbolGlobalVariable.h"
+#include "SymbolLocalVariable.h"
+#include "SymbolFunction.h"
 
 CFG::CFG()
 {
@@ -36,6 +38,7 @@ void CFG::parseGlobalDeclarationVariable(GlobalDeclarationVariable *globalDeclar
     multipleDeclarationVariable = globalDeclarationVariable->getMultipleDeclarationVariable();
     DataType dataType = dataTypeFromInt(multipleDeclarationVariable->getType()->getType());
 
+    // Pour chaque variable globale déclarée
     for (int declarationId = 0; declarationId < multipleDeclarationVariable->countDeclaration(); ++declarationId)
     {
         DeclarationVariable *declarationVariable = (*multipleDeclarationVariable)[declarationId];
@@ -43,6 +46,12 @@ void CFG::parseGlobalDeclarationVariable(GlobalDeclarationVariable *globalDeclar
         SymbolGlobalVariable *globalVariable = new SymbolGlobalVariable(varName, dataType);
 
         variables[varName] = globalVariable;
+
+        // Si c'est un tableau
+        if (declarationVariable->isArray())
+        {
+            
+        }
     }
 }
 
@@ -69,9 +78,11 @@ void CFG::genAsmEpilogue(std::ostream &o)
 
 std::string CFG::createNewTempvar(DataType dataType)
 {
-    //std::string varName = "!tmp"+nextTmpVarNumber;
-    //++nextTmpVarNumber;
-    //addToSymbolTable(varName, dataType);
+    std::string varName = "!tmp" + nextTmpVarNumber;
+    ++nextTmpVarNumber;
+#warning Remplacer le memory_location du SymbolLocalVariable
+    SymbolLocalVariable *var = new SymbolLocalVariable(varName, -1, dataType);
+    variables[varName] = var;
 }
 
 std::string CFG::newBBName()
