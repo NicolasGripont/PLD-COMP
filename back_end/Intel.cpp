@@ -1,11 +1,8 @@
 #include "Intel.h"
 
-const std::string Intel::filename = "intel";
-
-Intel::Intel()
+Intel::Intel(const std::string _filename)
+    : Writer(_filename)
 {
-    file = new std::ofstream();
-
     open();
 
     // Begin of the assembler part
@@ -13,28 +10,6 @@ Intel::Intel()
     write(".global main");
     write();
     write("main:");
-}
-
-void Intel::open(std::_Ios_Openmode mode)
-{
-    file->open(filename + ".s", mode);
-    if (!file->is_open())
-    {
-        std::cout << "Erreur : impossible d'ouvrir le fichier " << filename << " [back_end:Intel:Intel()]." << std::endl;
-    }
-}
-
-void Intel::close()
-{
-    if (file->is_open())
-    {
-        file->close();
-    }
-}
-
-void Intel::write(const char* line)
-{
-    (*file) << line << "\n";
 }
 
 int Intel::compile()
@@ -50,7 +25,7 @@ int Intel::compile()
     result = system(("as -o " + filename + ".o " + filename + ".s").c_str());
     result = system(("gcc -o " + filename + ".out " + filename + ".o ").c_str());
 
-    if (!file->is_open())
+    if (isOpen())
     {
         open(std::ios::app);
     }
@@ -64,20 +39,32 @@ int Intel::compile()
     return 0;
 }
 
+void Intel::putchar(const char character)
+{
+    std::string line = std::string("movl $'") + character + std::string("', %edi");
+
+    write(("\t" + line).c_str());
+    write("\tcall putchar");
+}
+
+void Intel::call()
+{
+
+}
+
+void Intel::ifThenElse()
+{
+
+}
+
 void Intel::test()
 {
-    write("\tmovl $'I', %edi");
-    write("\tcall putchar");
-    write("\tmovl $'N', %edi");
-    write("\tcall putchar");
-    write("\tmovl $'T', %edi");
-    write("\tcall putchar");
-    write("\tmovl $'E', %edi");
-    write("\tcall putchar");
-    write("\tmovl $'L', %edi");
-    write("\tcall putchar");
-    write("\tmovl $'\\n', %edi");
-    write("\tcall putchar");
+    putchar('I');
+    putchar('N');
+    putchar('T');
+    putchar('E');
+    putchar('L');
+    putchar('\n');
 
     write();
     write("\tretq");
@@ -86,5 +73,4 @@ void Intel::test()
 Intel::~Intel()
 {
     close();
-    delete file;
 }

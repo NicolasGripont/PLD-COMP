@@ -2,26 +2,24 @@
 #define _INTEL_H
 
 #include <iostream>
-#include <fstream>
+#include <string>
 #include <stdlib.h>
 
-class Intel
+#include "Writer.h"
+
+class Intel : public Writer
 {
 public:
-    Intel();
+    Intel(const std::string _filename);
     ~Intel();
 
     int compile();
 
+    void putchar(const char character);
+    void call();
+    void ifThenElse();
+
     void test();
-
-private:
-    void open(std::_Ios_Openmode mode = std::ios::trunc);
-    void close();
-    void write(const char* line = "");
-
-    static const std::string filename;
-    std::ofstream* file;
 };
 
 #endif

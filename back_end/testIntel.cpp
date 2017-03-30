@@ -3,13 +3,13 @@
 /*
  * - How to use -
  * cd back_end/
- * make clean && make && g++ -o testIntel.out Intel.o testIntel.o && ./testIntel.out
+ * make clean && make && g++ -o testIntel.out Writer.o Intel.o testIntel.o && ./testIntel.out
  * ./intel.out
  */
 
 int main(int argc, char* argv[])
 {
-    Intel* intel = new Intel();
+    Intel* intel = new Intel("intel");
     intel->test();
     intel->compile();
     delete intel;
