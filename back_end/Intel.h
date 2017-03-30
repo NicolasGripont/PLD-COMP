@@ -16,7 +16,9 @@ public:
     void test();
 
 private:
-    void openFile();
+    void open(std::_Ios_Openmode mode = std::ios::trunc);
+    void close();
+    void write(const char* line = "");
 
     static const std::string filename;
     std::ofstream* file;

@@ -6,22 +6,35 @@ Intel::Intel()
 {
     file = new std::ofstream();
 
-    openFile();
+    open();
 
     // Begin of the assembler part
-    (*file) << ".text\n";
-    (*file) << ".global main\n\n";
-    (*file) << "main:\n";
+    write(".text");
+    write(".global main");
+    write();
+    write("main:");
 }
 
-void Intel::openFile()
+void Intel::open(std::_Ios_Openmode mode)
 {
-    file->open(filename + ".s", std::ios::trunc);
-
+    file->open(filename + ".s", mode);
     if (!file->is_open())
     {
         std::cout << "Erreur : impossible d'ouvrir le fichier " << filename << " [back_end:Intel:Intel()]." << std::endl;
     }
+}
+
+void Intel::close()
+{
+    if (file->is_open())
+    {
+        file->close();
+    }
+}
+
+void Intel::write(const char* line)
+{
+    (*file) << line << "\n";
 }
 
 int Intel::compile()
@@ -31,18 +44,15 @@ int Intel::compile()
         std::cout << "Erreur : impossible de lancer une commande système [back_end:Intel:compile()]." << std::endl;
         return -1;
     }
-    if (file->is_open())
-    {
-        file->close();
-    }
+    close();
 
     int result = 0;
     result = system(("as -o " + filename + ".o " + filename + ".s").c_str());
-    result = system(("gcc -o " + filename + " " + filename + ".o ").c_str());
+    result = system(("gcc -o " + filename + ".out " + filename + ".o ").c_str());
 
     if (!file->is_open())
     {
-        openFile();
+        open(std::ios::app);
     }
 
     if (result != 0)
@@ -56,27 +66,25 @@ int Intel::compile()
 
 void Intel::test()
 {
-    (*file) << "\tmovl $'I', %edi\n";
-    (*file) << "\tcall putchar\n";
-    (*file) << "\tmovl $'N', %edi\n";
-    (*file) << "\tcall putchar\n";
-    (*file) << "\tmovl $'T', %edi\n";
-    (*file) << "\tcall putchar\n";
-    (*file) << "\tmovl $'E', %edi\n";
-    (*file) << "\tcall putchar\n";
-    (*file) << "\tmovl $'L', %edi\n";
-    (*file) << "\tcall putchar\n";
-    (*file) << "\tmovl $'\n', %edi\n";
-    (*file) << "\tcall putchar\n";
+    write("\tmovl $'I', %edi");
+    write("\tcall putchar");
+    write("\tmovl $'N', %edi");
+    write("\tcall putchar");
+    write("\tmovl $'T', %edi");
+    write("\tcall putchar");
+    write("\tmovl $'E', %edi");
+    write("\tcall putchar");
+    write("\tmovl $'L', %edi");
+    write("\tcall putchar");
+    write("\tmovl $'\\n', %edi");
+    write("\tcall putchar");
 
-    (*file) << "\n\tretq\n\n";
+    write();
+    write("\tretq");
 }
 
 Intel::~Intel()
 {
-    if (file->is_open())
-    {
-        file->close();
-    }
+    close();
     delete file;
 }

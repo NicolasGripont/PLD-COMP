@@ -3,8 +3,8 @@
 /*
  * - How to use -
  * cd back_end/
- * make && g++ -o testIntel Intel.o testIntel.o && ./testIntel && ./intel
- *
+ * make clean && make && g++ -o testIntel.out Intel.o testIntel.o && ./testIntel.out
+ * ./intel.out
  */
 
 int main(int argc, char* argv[])
