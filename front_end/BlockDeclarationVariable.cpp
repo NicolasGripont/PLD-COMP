@@ -16,7 +16,7 @@ BlockDeclarationVariable::~BlockDeclarationVariable()
 
 string BlockDeclarationVariable::toString() const
 {
-	return multipleDeclarationVariable->toString();
+	return multipleDeclarationVariable->toString() + "; ";
 }
 
 MultipleDeclarationVariable* BlockDeclarationVariable::getMultipleDeclarationVariable()
