@@ -552,6 +552,7 @@ bool tryDeclareGlobalVariable(Genesis** g, Type* type, MultipleDeclarationVariab
             if(strcmp(globalVariables[i]->name,var->name)==0)
             {
                 yyerror(g, ("la variable globale "+ std::string(var->name)+" a deja ete declaree.").c_str());
+                delete var;
                 return false;
             }
         }
@@ -574,6 +575,7 @@ bool tryDefineFunction(Genesis** g, Type* type, char* name, DeclarationFunctionS
         if(strcmp(func->name, currFunc->name)==0 && !(func->declaration) && !(currFunc->declaration))
         {
             yyerror(g, ("La fonction "+std::string(func->name)+" a déjà été définie.").c_str());
+            delete func;
             return false;
         }
     }
@@ -603,6 +605,7 @@ bool checkVariableDuplicationInFunction(Genesis** g, char* functionName, Argumen
             if(strcmp(var->name, currVar->name) == 0)
             {
                 yyerror(g, ("La fonction "+std::string(functionName)+" contient plusieurs paramètres nommés "+std::string(var->name)).c_str());
+                delete var;
                 return true;
             }
         }
@@ -631,6 +634,7 @@ bool checkVariableDuplicationInFunction(Genesis** g, char* functionName, Argumen
                         if(strcmp(var->name, currVar->name) == 0)
                         {
                             yyerror(g, ("La fonction "+std::string(functionName)+" contient plusieurs variables nommé "+std::string(var->name)+" dans la même portée.").c_str());
+                            delete var;
                             return true;
                         }
                     }
@@ -668,6 +672,7 @@ bool checkVariableDuplicationInBlock(Genesis** g, MultipleStatement* multStat)
                     if(strcmp(var->name, currVar->name) == 0)
                     {
                         yyerror(g, ("Plusieurs variables nommé "+std::string(var->name)+" dans la même portée.").c_str());
+                        delete var;
                         return true;
                     }
                 }
