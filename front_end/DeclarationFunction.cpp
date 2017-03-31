@@ -30,3 +30,11 @@ std::string DeclarationFunction::toString() const
 {
 	return type->toString() + " " + std::string(id) + "(" +  argumentList->toString() + ")" + decFunctionStatement->toString();
 }
+
+ArgumentList* DeclarationFunction::getArgumentList() const {
+    return argumentList;
+}
+
+DeclarationFunctionStatement* DeclarationFunction::getFunctionStatement() const {
+    return decFunctionStatement;
+}

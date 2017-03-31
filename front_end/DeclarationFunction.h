@@ -12,6 +12,8 @@ public:
 	DeclarationFunction(Type* _type, char* _id, ArgumentList* _argumentList, DeclarationFunctionStatement* _decFunctionStatement);
 	virtual ~DeclarationFunction();
 	virtual std::string toString() const;
+	ArgumentList* getArgumentList() const;
+	DeclarationFunctionStatement* getFunctionStatement() const;
 
 private:
 	Type* type;
