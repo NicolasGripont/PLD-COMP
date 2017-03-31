@@ -15,7 +15,7 @@ protected:
 
     Writer(const std::string _filename);
 
-    void open(std::_Ios_Openmode mode = std::ios::trunc);
+    void open(std::ios_base::openmode mode = std::ios::trunc);
     void close();
     void write(const char* line = "");
 

@@ -12,7 +12,7 @@ Writer::~Writer()
     delete file;
 }
 
-void Writer::open(std::_Ios_Openmode mode)
+void Writer::open(std::ios_base::openmode mode)
 {
     file->open(filename + ".s", mode);
     if (!file->is_open())

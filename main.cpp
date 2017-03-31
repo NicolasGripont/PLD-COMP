@@ -18,7 +18,7 @@ int main(int argc, char* argv[])
 
     /* Conversion AST -> IR */
     CFG* cfg = new CFG();
-    cfg->parseGenesis(genesis);
+    cfg->parseAST(genesis);
 
 	if (genesis != nullptr)
 	{
