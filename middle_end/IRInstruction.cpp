@@ -17,7 +17,7 @@ IRInstruction::~IRInstruction()
     delete block;
 }
 
-IRInstructionType IRInstruction::IRInstruction::getOperation() const
+IRInstruction::IRInstructionType IRInstruction::IRInstruction::getOperation() const
 {
 	return type;
 }

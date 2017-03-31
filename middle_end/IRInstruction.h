@@ -6,18 +6,18 @@
 class BasicBlock;
 
 //! The class for one 3-address instruction
-enum IRInstructionType
-{
-    BINARY_OP,
-    RWMEMORY,
-    CALL,
-    JUMP,
-    SELECTION
-};
 
 class IRInstruction
 {
 public:
+    enum IRInstructionType
+    {
+        BINARY_OP,
+        RWMEMORY,
+        CALL,
+        JUMP,
+        SELECTION
+    };
     IRInstruction();
     IRInstruction(BasicBlock* block, IRInstructionType _type);
     virtual ~IRInstruction();

@@ -57,7 +57,7 @@ std::vector <BasicBlock*> CFG::getBasicBlocks() const {
     return blocks;
 }
 
-void CFG::parseGenesis(Genesis* genesis)
+void CFG::parseAST(Genesis* genesis)
 {
     for(int declarationId = 0; declarationId < genesis->countDeclaration() ; ++declarationId)
     {

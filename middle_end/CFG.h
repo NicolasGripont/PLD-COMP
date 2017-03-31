@@ -39,16 +39,13 @@ class CFG
 	std::string getUsableBasicBlockName() const;
     std::map <std::string, Symbol*> getGlobalSymbolsTable() const;
     std::vector <BasicBlock*> getBasicBlocks() const;
-    void parseGenesis(Genesis* genesis);
+    void parseAST(Genesis* genesis);
 
  protected:
     std::map <std::string, Symbol*> globalSymbolsTable;
 	BasicBlock* currentBasicBlock;
 	int nextBBnumber; /**< just for naming */
 	std::vector <BasicBlock*> blocks; /**< all the basic blocks of this CFG*/
-
-    std::vector<Symbol*> variablesGlobales;
-    std::vector<Symbol*> variablesLocales;
 private:
     void parseGlobalDeclarationVariable(GlobalDeclarationVariable* globalDeclarationVariable);
     void parseGlobalDeclarationFunction(DeclarationFunction* DeclarationFunction);
