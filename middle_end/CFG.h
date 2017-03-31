@@ -27,7 +27,7 @@ class CFG
 {
  public:
 	CFG();
-	virtual ~CFG();
+    ~CFG();
 
     virtual std::string toString() const;
 
