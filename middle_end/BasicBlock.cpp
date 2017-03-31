@@ -60,3 +60,9 @@ void BasicBlock::setExitFalse(BasicBlock *_bbExitFalse)
 {
     exit_false = _bbExitFalse;
 }
+
+int BasicBlock::getPrologMaximalOffset()
+{
+    // Pour nos tests, 3 variables de 8 octets
+    return 3*8;
+}

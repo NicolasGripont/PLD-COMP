@@ -6,7 +6,7 @@ CFG *testIR1()
 
 	BasicBlock* mainPrologBB = new BasicBlock(cfg, "main_prologue"); 
 	BasicBlock* mainBB = new BasicBlock(cfg, "main"); 
-	BasicBlock* mainEpilogBB = new BasicBlock(cfg, "main_epilog"); 
+    BasicBlock *mainEpilogBB = new BasicBlock(cfg, "main_epilog");
 
 	cfg->firstBB = mainPrologBB;
 
@@ -28,7 +28,28 @@ CFG *testIR1()
 
 CFG *testIR2()
 {
-	return nullptr;
+	CFG* cfg = new CFG();
+
+	BasicBlock* mainPrologBB = new BasicBlock(cfg, "main_prologue"); 
+	BasicBlock* mainBB = new BasicBlock(cfg, "main"); 
+    BasicBlock *mainEpilogBB = new BasicBlock(cfg, "main_epilog");
+
+	cfg->firstBB = mainPrologBB;
+
+	cfg->getBasicBlocks().push_back(mainPrologBB);
+	cfg->getBasicBlocks().push_back(mainBB);
+	cfg->getBasicBlocks().push_back(mainEpilogBB);
+
+	mainPrologBB->setExitTrue(mainBB);
+	mainPrologBB->setExitFalse(nullptr);
+
+	mainBB->setExitTrue(mainEpilogBB);
+	mainBB->setExitFalse(nullptr);
+
+	mainEpilogBB->setExitTrue(nullptr);
+	mainEpilogBB->setExitFalse(nullptr);
+
+	return cfg;
 }
 
 CFG *testIR3()
