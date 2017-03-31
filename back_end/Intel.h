@@ -11,9 +11,10 @@
 class Intel : public Writer
 {
 public:
-    Intel(const std::string _filename, CFG* _cfg);
+    Intel(const std::string _filename);
     ~Intel();
 
+    void parse(CFG* _cfg);
     int compile();
 
     void putchar(const char character);

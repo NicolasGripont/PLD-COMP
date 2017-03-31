@@ -4,6 +4,7 @@
 
 #include "comp.tab.h"
 #include "middle_end/CFG.h"
+#include "back_end/Intel.h"
 
 int main(int argc, char* argv[])
 {
@@ -17,12 +18,20 @@ int main(int argc, char* argv[])
 
     /* Conversion AST -> IR */
     CFG* cfg = new CFG();
-    cfg->parseAST(genesis);
+    cfg->parseGenesis(genesis);
 
 	if (genesis != nullptr)
 	{
 		delete genesis;
 	}
+
+	/* Backend Intel */
+	Intel* intel = new Intel("intel");
+	intel->parse(cfg);
+	intel->test();
+	intel->compile();
+
+	delete intel;
 
     return 0;
 }

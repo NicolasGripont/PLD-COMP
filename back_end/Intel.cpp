@@ -1,7 +1,7 @@
 #include "Intel.h"
 
-Intel::Intel(const std::string _filename, CFG* _cfg)
-    : Writer(_filename), cfg(_cfg)
+Intel::Intel(const std::string _filename)
+    : Writer(_filename)
 {
     open();
 
@@ -10,6 +10,13 @@ Intel::Intel(const std::string _filename, CFG* _cfg)
     write(".global main");
     write();
     write("main:");
+}
+
+void Intel::parse(CFG* _cfg)
+{
+    cfg = _cfg;
+
+    // ...
 }
 
 int Intel::compile()
