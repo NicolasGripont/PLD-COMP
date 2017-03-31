@@ -6,7 +6,7 @@ DeclarationVariable::DeclarationVariable(char *_id, bool _array)
 }
 
 DeclarationVariable::DeclarationVariable(char *_id, bool _array, bool _declaration)
-    : Printable(), id(_id), array(_array), declaration(declaration)
+    : Printable(), id(_id), array(_array), declaration(_declaration)
 {
 }
 
