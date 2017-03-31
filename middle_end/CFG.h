@@ -41,6 +41,8 @@ class CFG
     std::vector <BasicBlock*> getBasicBlocks() const;
     void parseAST(Genesis* genesis);
 
+    BasicBlock* firstBB;
+
  protected:
     std::map <std::string, Symbol*> globalSymbolsTable;
 	BasicBlock* currentBasicBlock;

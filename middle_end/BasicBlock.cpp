@@ -51,12 +51,12 @@ std::vector<IRInstruction *> BasicBlock::getInstructions() const
     return instructions;
 }
 
-void BasicBlock::setExitTrue(BasicBlock *_bbExitTrue);
+void BasicBlock::setExitTrue(BasicBlock *_bbExitTrue)
 {
-    bbExitTrue = _bbExitTrue;
+    exit_true = _bbExitTrue;
 }
 
 void BasicBlock::setExitFalse(BasicBlock *_bbExitFalse)
 {
-    bbExitFalse = _bbExitFalse;
+    exit_false = _bbExitFalse;
 }

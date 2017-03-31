@@ -8,6 +8,8 @@ CFG *testIR1()
 	BasicBlock* mainBB = new BasicBlock(cfg, "main"); 
 	BasicBlock* mainEpilogBB = new BasicBlock(cfg, "main_entry"); 
 
+	cfg->firstBB = mainPrologBB;
+
 	cfg->getBasicBlocks().push_back(mainPrologBB);
 	cfg->getBasicBlocks().push_back(mainBB);
 	cfg->getBasicBlocks().push_back(mainEpilogBB);

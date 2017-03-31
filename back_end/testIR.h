@@ -1,6 +1,8 @@
 #ifndef TEST_IR_H
 #define TEST_IR_H
 
+#include "../middle_end/CFG.h"
+
 CFG* testIR1();
 CFG* testIR2();
 CFG* testIR3();
