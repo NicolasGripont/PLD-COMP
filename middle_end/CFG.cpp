@@ -1,8 +1,10 @@
 #include "CFG.h"
 
-CFG::CFG()
+CFG::CFG(DeclarationFunction *_function) : function(_function)
 {
-
+    BasicBlock* prologue = new BasicBlock(this,"prologue_"+function->getId());
+    //Parser le function statement
+    BasicBlock* epilogue = new BasicBlock(this, "epilogue_"+function->getId());
 }
 
 CFG::~CFG()
@@ -42,6 +44,12 @@ Symbol* CFG::getSymbol(std::string name)
         return it->second;
     else 
         return nullptr;
+}
+
+std::string CFG::getName() const {
+    if(function != nullptr)
+        return function->getId();
+    return "undefined";
 }
 
 std::string CFG::getUsableBasicBlockName() const

@@ -1,7 +1,7 @@
 #include "Symbol.h"
 
-Symbol::Symbol(std::string _name, SymbolType _type, int _offset, bool _function, bool _array)
-	: name(_name), type(_type), offset(_offset), function(_function), array(_array)
+Symbol::Symbol(std::string _name, Type _type, int _offset)
+	: name(_name), type(_type), offset(_offset)
 {
 
 }
@@ -11,7 +11,7 @@ std::string Symbol::getName() const
 	return name;
 }
 
-SymbolType Symbol::getType() const
+Symbol::Type Symbol::getType() const
 {
 	return type;
 }
@@ -19,4 +19,9 @@ SymbolType Symbol::getType() const
 int Symbol::getOffset() const
 {
 	return offset;
+}
+
+void Symbol::setOffset(int _offset)
+{
+	offset = _offset;
 }

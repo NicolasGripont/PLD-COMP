@@ -20,7 +20,7 @@ void Parser::generateIR(Genesis *genesis)
         Declaration* declaration = (*genesis)[declarationId];
         if(declaration->getType() == GLOBAL_DECLARATION_VARIABLE)
         {
-            addNewSymbolsInTable((GlobalDeclarationVariable*)declaration);
+            addNewSymbolInTable((GlobalDeclarationVariable*)declaration);
         }
         else if (declaration->getType() == DECLARATION_FUNCTION)
         {
@@ -30,16 +30,57 @@ void Parser::generateIR(Genesis *genesis)
 }
 
 // crée les symboles liés aux nouvelles déclarations/définition et les ajoute à la table
-void Parser::addNewSymbolsInTable(GlobalDeclarationVariable* declaration)
+void Parser::addNewSymbolInTable(GlobalDeclarationVariable* declaration)
 {
+    MultipleDeclarationVariable* multipleDeclarationVariable;
+    multipleDeclarationVariable = declaration->getMultipleDeclarationVariable();
+    Symbol::Type type = Symbol::Type::INT_32; 
+    switch(multipleDeclarationVariable->getType()->getType()) {
+        case 1:
+        type = Symbol::Type::CHAR;
+        break;
+        case 8:
+        type = Symbol::Type::INT_64;
+        break;
+    }
+    for(int declarationId = 0; declarationId < multipleDeclarationVariable->countDeclaration() ; ++declarationId)
+    {
+        DeclarationVariable* declarationVariable = (*multipleDeclarationVariable)[declarationId];
+        Symbol *s = nullptr;
+        if(declarationVariable->isArray()) {
+            s = new Symbol(declarationVariable->getId(), Symbol::Type::PTR, offset);
+        } else {    
+            if(declarationVariable->isDeclaration()) {
+                s = new Symbol(declarationVariable->getId(), type, offset);
+            } else {
+                std::cout << "Not implement yet" << std::endl;
+            }
+        }
+        this->addSymbolToTable(s);
+        offset++;
+    }
+}
 
+void Parser::addNewFunctionInTable(CFG* controllFlowGraph)
+{
+    if(controllFlowGraph != nullptr) {
+        functionCFG.insert(std::pair<std::string, CFG*>(controllFlowGraph->getName(), controllFlowGraph));
+    }
 }
 
 // Génère le CFG d'une fonction et le stock dans la map des CFG
-CFG Parser::generateCFG(DeclarationFunction * declaration)
+void Parser::generateCFG(DeclarationFunction * declaration)
 {
-    CFG controllFlowGraph = new CFG();
-
+    CFG *controllFlowGraph = new CFG(declaration);
 
 }
 
+void Parser::parseFunctionStatement(BasicBlock* prologue, BasicBlock* epilogue, InitFunctionStatement *statement) {
+
+}
+
+void Parser::addSymbolToTable(Symbol * symbol) {
+    if(symbol != nullptr) {
+        symbolTable.insert(std::pair<std::string, Symbol*>(symbol->getName(), symbol));
+    }
+}

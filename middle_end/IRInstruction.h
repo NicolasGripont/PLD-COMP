@@ -3,14 +3,13 @@
 
 #include <iostream>
 
-class BasicBlock;
-
+#include "BasicBlock.h"
 //! The class for one 3-address instruction
 
 class IRInstruction
 {
 public:
-    enum IRInstructionType
+    enum class Type
     {
         BINARY_OP,
         RWMEMORY,
@@ -19,16 +18,16 @@ public:
         SELECTION
     };
     IRInstruction();
-    IRInstruction(BasicBlock* block, IRInstructionType _type);
+    IRInstruction(BasicBlock* block, Type _type);
     virtual ~IRInstruction();
     virtual std::string toString() const = 0;
 
-    IRInstructionType getOperation() const;
+    Type getOperation() const;
     BasicBlock * getBasicBlock() const;
 
 protected:
     BasicBlock * block = nullptr; /**< The BB this instruction belongs to, which provides a pointer to the CFG this instruction belong to */
-    IRInstructionType type;
+    Type type;
 };
 
 #endif

@@ -26,7 +26,7 @@
 class CFG
 {
  public:
-	CFG();
+	CFG(DeclarationFunction* );
     ~CFG();
 
     virtual std::string toString() const;
@@ -40,10 +40,11 @@ class CFG
     std::map <std::string, Symbol*> getGlobalSymbolsTable() const;
     std::vector <BasicBlock*> getBasicBlocks() const;
     void parseAST(Genesis* genesis);
-
+    std::string getName() const;
     BasicBlock* firstBB;
 
  protected:
+    DeclarationFunction *function;
     std::map <std::string, Symbol*> globalSymbolsTable;
 	BasicBlock* currentBasicBlock;
 	int nextBBnumber; /**< just for naming */

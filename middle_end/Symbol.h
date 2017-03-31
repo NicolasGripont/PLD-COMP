@@ -3,26 +3,26 @@
 
 #include <string>
 
-enum class SymbolType
-{
-    INT_32,
-    INT_64,
-    CHAR,
-};
 
 class Symbol
 {
 public:
-    Symbol(std::string _name, SymbolType _type, int _offset, bool _function, bool _array);
+    enum class Type
+    {
+        INT_32,
+        INT_64,
+        CHAR,
+        FUNCTION,
+        PTR
+    };
+    Symbol(std::string _name, Type _type, int offset);
     std::string getName() const;
-    SymbolType getType() const;
+    Symbol::Type getType() const;
     int getOffset() const;
-
-    bool function;
-    bool array;
+    void setOffset(int);
 private:
     std::string name;
-    SymbolType type;
+    Type type;
     int offset;
 };
 

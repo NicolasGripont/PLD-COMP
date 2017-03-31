@@ -1,7 +1,7 @@
 #include "IRCall.h"
 
 IRCall::IRCall(BasicBlock* _block, std::string _name, Symbol *_returnSymbol)
-	: IRInstruction(_block, IRInstructionType::CALL), name(_name), returnSymbol(_returnSymbol)
+	: IRInstruction(_block, IRInstruction::Type::CALL), name(_name), returnSymbol(_returnSymbol)
 {
 
 }
