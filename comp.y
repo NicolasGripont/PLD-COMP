@@ -981,17 +981,23 @@ Genesis* bison(int argc, char* argv[])
     else if (status == 1) // Syntax error
     {
         std::cout << "Compilation abandonnée (erreur de syntaxe)." << std::endl;
-        return nullptr;
     }
     else if (status == 2) // Out of memory
     {
         std::cout << "Compilation abandonnée (mémoire insuffisante)." << std::endl;
-        return nullptr;
     }
     else
     {
         std::cout << "Compilation abandonnée." << std::endl;
-        return nullptr;
+    }
+
+    if(status != 0) 
+    {
+        if(g != nullptr) 
+        {
+            delete g;
+            g = nullptr;
+        }
     }
 
     for(int i=0; i < globalVariables.size(); i++)
