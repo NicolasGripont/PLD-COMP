@@ -30,7 +30,8 @@ int main(int argc, char* argv[])
 
 	/* Backend Intel */
 	Intel* intel = new Intel("intel");
-	intel->parse(testIR1());
+	//intel->parse(testIR1()); // Valid
+	intel->parse(testIR2());
 	intel->compile();
 
 	delete intel;

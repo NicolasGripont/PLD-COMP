@@ -19,35 +19,54 @@ void Intel::parse(CFG* _cfg)
     std::vector<IRInstruction*> instructions;
 
     BasicBlock* block = cfg->firstBB;
+
+    bool prolog = true;
     while (block != nullptr)
     {
         label = block->getLabel();
         write(label + ":");
 
-        instructions = block->getInstructions();
-        for (std::vector<IRInstruction*>::iterator iri = instructions.begin() ; iri != instructions.end(); ++iri)
+        if (prolog) // Prolog
         {
-            IRInstruction::IRInstructionType instruction = (*iri)->getOperation();
+            write("\tpushq %rbp");
+            write("\tmovq %rsp, %rbp");
 
-            switch (instruction)
+            int offset = block->getPrologMaximalOffset();
+            if (offset%32 != 0) // Next multiple 32
             {
-                case IRInstruction::IRInstructionType::BINARY_OP :
-                    binaryOp();
-                    break;
-                case IRInstruction::IRInstructionType::RWMEMORY :
-                    rwmemory();
-                    break;
-                case IRInstruction::IRInstructionType::CALL :
-                    call();
-                    break;
-                case IRInstruction::IRInstructionType::JUMP :
-                    jump();
-                    break;
-                case IRInstruction::IRInstructionType::SELECTION :
-                    selection();
-                    break;
-                default:
-                    break;
+                offset += (32 - (offset%32));
+            }
+            write("\tsubq $" + std::to_string(offset) + ", %rsp");
+
+            prolog = false;
+        }
+        else // Other
+        {
+            instructions = block->getInstructions();
+            for (std::vector<IRInstruction*>::iterator iri = instructions.begin() ; iri != instructions.end(); ++iri)
+            {
+                IRInstruction::IRInstructionType instruction = (*iri)->getOperation();
+
+                switch (instruction)
+                {
+                    case IRInstruction::IRInstructionType::BINARY_OP :
+                        binaryOp();
+                        break;
+                    case IRInstruction::IRInstructionType::RWMEMORY :
+                        rwmemory();
+                        break;
+                    case IRInstruction::IRInstructionType::CALL :
+                        call();
+                        break;
+                    case IRInstruction::IRInstructionType::JUMP :
+                        jump();
+                        break;
+                    case IRInstruction::IRInstructionType::SELECTION :
+                        selection();
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 
@@ -64,7 +83,8 @@ void Intel::parse(CFG* _cfg)
             block = nullptr;
         }
     }
-    write("\tretq");
+    write("\tleave");
+    write("\tret");
 }
 
 int Intel::compile()
