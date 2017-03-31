@@ -16,7 +16,39 @@ void Intel::parse(CFG* _cfg)
 {
     cfg = _cfg;
 
-    // ...
+    std::string label;
+    std::vector<IRInstruction*> instructions;
+
+    std::vector<BasicBlock*> basicBlocks = cfg->getBasicBlocks();
+    for (std::vector<BasicBlock*>::iterator block = basicBlocks.begin() ; block != basicBlocks.end(); ++block)
+    {
+        label = (*block)->getLabel();
+        write(label);
+
+        instructions = (*block)->getInstructions();
+        for (std::vector<IRInstruction*>::iterator iri = instructions.begin() ; iri != instructions.end(); ++iri)
+        {
+            IRInstruction::IRInstructionType instruction = (*iri)->getOperation();
+
+            switch (instruction)
+            {
+                case IRInstruction::IRInstructionType::BINARY_OP:
+                    break;
+                case IRInstruction::IRInstructionType::RWMEMORY:
+                    break;
+                case IRInstruction::IRInstructionType::CALL:
+                    break;
+                case IRInstruction::IRInstructionType::JUMP:
+                    break;
+                case IRInstruction::IRInstructionType::SELECTION:
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        instructions.clear();
+    }
 }
 
 int Intel::compile()

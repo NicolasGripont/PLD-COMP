@@ -17,7 +17,7 @@ protected:
 
     void open(std::ios_base::openmode mode = std::ios::trunc);
     void close();
-    void write(const char* line = "");
+    void write(const std::string line = "");
 
     bool isOpen();
 

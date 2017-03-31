@@ -18,7 +18,7 @@ std::string BasicBlock::toString() const
     return "";
 }
 
-void BasicBlock::addIRInstruction(IRInstruction *instruction)
+void BasicBlock::addIRInstruction(IRInstruction* instruction)
 {
     if (instruction != nullptr)
     {
@@ -46,7 +46,7 @@ CFG *BasicBlock::getCFG() const
     return cfg;
 }
 
-std::vector<IRInstruction *> BasicBlock::getInstructions() const
+std::vector<IRInstruction*> BasicBlock::getInstructions() const
 {
     return instructions;
 }

@@ -29,7 +29,7 @@ void Writer::close()
     }
 }
 
-void Writer::write(const char* line)
+void Writer::write(const std::string line)
 {
     if (!file->is_open())
     {
@@ -47,7 +47,7 @@ void Writer::write(const char* line)
             return;
         }
     }
-    (*file) << line << "\n";
+    (*file) << line.c_str() << "\n";
 }
 
 bool Writer::isOpen()

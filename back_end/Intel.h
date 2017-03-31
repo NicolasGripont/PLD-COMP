@@ -3,10 +3,13 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 #include <stdlib.h>
 
 #include "Writer.h"
 #include "../middle_end/CFG.h"
+#include "../middle_end/BasicBlock.h"
+#include "../middle_end/IRInstruction.h"
 
 class Intel : public Writer
 {
