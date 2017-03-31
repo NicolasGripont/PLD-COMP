@@ -1,7 +1,7 @@
 #include "Intel.h"
 
-Intel::Intel(const std::string _filename)
-    : Writer(_filename)
+Intel::Intel(const std::string _filename, CFG* _cfg)
+    : Writer(_filename), cfg(_cfg)
 {
     open();
 

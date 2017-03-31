@@ -6,11 +6,12 @@
 #include <stdlib.h>
 
 #include "Writer.h"
+#include "../middle_end/CFG.h"
 
 class Intel : public Writer
 {
 public:
-    Intel(const std::string _filename);
+    Intel(const std::string _filename, CFG* _cfg);
     ~Intel();
 
     int compile();
@@ -20,6 +21,9 @@ public:
     void ifThenElse();
 
     void test();
+
+private:
+    CFG* cfg;
 };
 
 #endif

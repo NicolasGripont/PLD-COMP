@@ -9,7 +9,7 @@
 
 int main(int argc, char* argv[])
 {
-    Intel* intel = new Intel("intel");
+    Intel* intel = new Intel("intel", nullptr);
     intel->test();
     intel->compile();
     delete intel;
