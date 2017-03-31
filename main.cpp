@@ -6,6 +6,9 @@
 #include "middle_end/CFG.h"
 #include "back_end/Intel.h"
 
+/* Test */
+#include "back_end/testIR.h"
+
 int main(int argc, char* argv[])
 {
     /* Bison */
@@ -27,8 +30,7 @@ int main(int argc, char* argv[])
 
 	/* Backend Intel */
 	Intel* intel = new Intel("intel");
-	intel->parse(cfg);
-	intel->test();
+	intel->parse(testIR1());
 	intel->compile();
 
 	delete intel;

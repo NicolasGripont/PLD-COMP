@@ -20,9 +20,13 @@ public:
     void parse(CFG* _cfg);
     int compile();
 
-    void putchar(const char character);
+    void binaryOp();
+    void rwmemory();
     void call();
-    void ifThenElse();
+    void jump();
+    void selection();
+
+    void putchar(const char character);
 
     void test();
 

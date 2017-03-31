@@ -6,7 +6,7 @@ CFG *testIR1()
 
 	BasicBlock* mainPrologBB = new BasicBlock(cfg, "main_prologue"); 
 	BasicBlock* mainBB = new BasicBlock(cfg, "main"); 
-	BasicBlock* mainEpilogBB = new BasicBlock(cfg, "main_entry"); 
+	BasicBlock* mainEpilogBB = new BasicBlock(cfg, "main_epilog"); 
 
 	cfg->firstBB = mainPrologBB;
 
@@ -20,8 +20,10 @@ CFG *testIR1()
 	mainBB->setExitTrue(mainEpilogBB);
 	mainBB->setExitFalse(nullptr);
 
-	mainBB->setExitTrue(nullptr);
-	mainBB->setExitFalse(nullptr);
+	mainEpilogBB->setExitTrue(nullptr);
+	mainEpilogBB->setExitFalse(nullptr);
+
+	return cfg;
 }
 
 CFG *testIR2()
