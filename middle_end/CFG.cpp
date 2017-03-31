@@ -10,9 +10,9 @@ CFG::~CFG()
 
 }
 
-string CFG::toString() const
+std::string CFG::toString() const
 {
-    std:string s = "";
+    std::string s = "";
     for(BasicBlock * bb : blocks) {
         s += bb->toString();
         s += "\n";
