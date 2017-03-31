@@ -10,7 +10,7 @@ class InitFunctionStatement : public DeclarationFunctionStatement
 public:
     InitFunctionStatement(MultipleStatement* _multipleStatement);
     virtual ~InitFunctionStatement();
-    virtual string toString() const;
+    virtual std::string toString() const;
 
     int countStatements();
 

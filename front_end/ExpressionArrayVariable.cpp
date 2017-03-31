@@ -18,7 +18,7 @@ ExpressionArrayVariable::~ExpressionArrayVariable()
 	}
 }
 
-string ExpressionArrayVariable::toString() const
+std::string ExpressionArrayVariable::toString() const
 {
-	return string(id) + "[" + expr->toString() + "]";
+	return std::string(id) + "[" + expr->toString() + "]";
 }

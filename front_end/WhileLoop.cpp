@@ -14,9 +14,9 @@ WhileLoop::~WhileLoop()
 	}
 }
 
-string WhileLoop::toString() const
+std::string WhileLoop::toString() const
 {
-	string txt = "while(" + expr->toString() + ")";
+	std::string txt = "while(" + expr->toString() + ")";
 	if(statement != nullptr) 
 	{
 		txt += statement->toString();

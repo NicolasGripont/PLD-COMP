@@ -14,7 +14,7 @@ ExpressionStatement::~ExpressionStatement()
 	}
 }
 
-string ExpressionStatement::toString() const
+std::string ExpressionStatement::toString() const
 {
 	return expr->toString() + "; ";
 }

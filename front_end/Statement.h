@@ -9,7 +9,7 @@ class Statement : public Printable
 public:
     Statement(MultipleStatement* _multipleStatement);
     virtual ~Statement();
-    virtual string toString() const;
+    virtual std::string toString() const;
 
 private:
     MultipleStatement* multipleStatement;

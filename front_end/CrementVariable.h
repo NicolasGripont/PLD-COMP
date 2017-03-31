@@ -9,7 +9,7 @@ class CrementVariable : public Expression
 public:
 	CrementVariable(ExpressionVariable* _exprVar, bool _increment, bool _preCrement);
 	virtual ~CrementVariable();
-	virtual string toString() const;
+	virtual std::string toString() const;
 
 private:
 	ExpressionVariable* exprVar;

@@ -9,7 +9,7 @@ class PureDeclarationFunctionStatement : public DeclarationFunctionStatement
 public:
 	PureDeclarationFunctionStatement();
 	virtual ~PureDeclarationFunctionStatement();
-	virtual string toString() const;
+	virtual std::string toString() const;
 };
 
 #endif

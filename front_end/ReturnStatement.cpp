@@ -14,7 +14,7 @@ ReturnStatement::~ReturnStatement()
 	} 
 }
 
-string ReturnStatement::toString() const
+std::string ReturnStatement::toString() const
 {
 	return ret->toString() + "; ";
 }

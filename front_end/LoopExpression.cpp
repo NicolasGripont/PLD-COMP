@@ -14,9 +14,9 @@ LoopExpression::~LoopExpression()
 	}
 }
 
-string LoopExpression::toString() const
+std::string LoopExpression::toString() const
 {
-	string txt = "";
+	std::string txt = "";
 	if(expr != nullptr) 
 	{
 		txt = expr->toString();

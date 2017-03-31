@@ -32,7 +32,7 @@ AssignmentVariable::~AssignmentVariable()
     }
 }
 
-string AssignmentVariable::toString() const
+std::string AssignmentVariable::toString() const
 {
     return exprVar->toString() + " = " + expr->toString();
 }

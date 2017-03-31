@@ -26,7 +26,7 @@ DeclarationFunction::~DeclarationFunction()
     }
 }
 
-string DeclarationFunction::toString() const
+std::string DeclarationFunction::toString() const
 {
-	return type->toString() + " " + string(id) + "(" +  argumentList->toString() + ")" + decFunctionStatement->toString();
+	return type->toString() + " " + std::string(id) + "(" +  argumentList->toString() + ")" + decFunctionStatement->toString();
 }

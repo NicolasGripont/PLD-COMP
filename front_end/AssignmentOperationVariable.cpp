@@ -12,11 +12,11 @@ AssignmentOperationVariable::~AssignmentOperationVariable()
 
 }
 
-string AssignmentOperationVariable::toString() const
+std::string AssignmentOperationVariable::toString() const
 {
-    string txt = exprVar->toString();
+    std::string txt = exprVar->toString();
 
-    string typeStr = "(";
+    std::string typeStr = "(";
 	switch(op)  
     {  
         case MUL_ASSIGN:  

@@ -9,7 +9,7 @@ class Type : public Printable
 public:
     Type(int _type);
     virtual ~Type();
-    virtual string toString() const;
+    virtual std::string toString() const;
     int getType();
 
 private:

@@ -22,9 +22,9 @@ SelectionStatement::~SelectionStatement()
 	} 
 }
 
-string SelectionStatement::toString() const
+std::string SelectionStatement::toString() const
 {
-	string txt = "";
+	std::string txt = "";
 	if(expr != nullptr && stat != nullptr && elseStat != nullptr) 
 	{
 		txt += "if(" + expr->toString() + ")" + stat->toString() + " else " + elseStat->toString();

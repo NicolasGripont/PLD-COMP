@@ -12,7 +12,7 @@ class MultipleDeclarationVariable : public Printable
 public:
     MultipleDeclarationVariable();
     virtual ~MultipleDeclarationVariable();
-    virtual string toString() const;
+    virtual std::string toString() const;
     void addDeclarationVariable(DeclarationVariable* dec);
     void setType(Type* t);
     int countDeclaration();

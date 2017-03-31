@@ -9,7 +9,7 @@ class WhileLoop : public IterationStatement
 public:
     WhileLoop(Expression* _expr, Statement* _statement);
     virtual ~WhileLoop();
-    virtual string toString() const;
+    virtual std::string toString() const;
 
 private:
     Expression* expr;

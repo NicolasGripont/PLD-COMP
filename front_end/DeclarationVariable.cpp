@@ -33,11 +33,11 @@ bool DeclarationVariable::isDeclaration()
     return declaration;
 }
 
-string DeclarationVariable::toString() const
+std::string DeclarationVariable::toString() const
 {
     if (!array)
     {
-        return string(id);
+        return std::string(id);
     }
     return "ERROR_DeclarationVariable";
 }

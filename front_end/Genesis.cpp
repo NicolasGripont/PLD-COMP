@@ -16,9 +16,9 @@ Genesis::~Genesis()
     }
 }
 
-string Genesis::toString() const
+std::string Genesis::toString() const
 {
-	string txt = "";
+	std::string txt = "";
 
 
     for (unsigned int i = 0; i < declarations.size(); ++i)

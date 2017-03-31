@@ -16,9 +16,9 @@ MultipleStatement::~MultipleStatement()
     }
 }
 
-string MultipleStatement::toString() const
+std::string MultipleStatement::toString() const
 {
-	string txt = "";
+	std::string txt = "";
 
 	for (unsigned int i = 0; i < statements.size(); ++i)
     {

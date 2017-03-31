@@ -18,15 +18,15 @@ Argument::~Argument()
     }
 }
 
-string Argument::toString() const
+std::string Argument::toString() const
 {
-    string txt = "";
+    std::string txt = "";
     if (type != nullptr)
     {
         txt = type->toString();
         if (id != nullptr)
         {
-            txt += " " + string(id);
+            txt += " " + std::string(id);
         }
         if (array)
         {

@@ -20,9 +20,9 @@ MultipleDeclarationVariable::~MultipleDeclarationVariable()
     }
 }
 
-string MultipleDeclarationVariable::toString() const
+std::string MultipleDeclarationVariable::toString() const
 {
-    string txt = type->toString();
+    std::string txt = type->toString();
 
     if (!declarationsVariables.empty())
     {

@@ -14,9 +14,9 @@ Return::~Return()
 	}  
 }
 
-string Return::toString() const
+std::string Return::toString() const
 {
-	string txt = "return";
+	std::string txt = "return";
 
 	if(expr != nullptr)
 	{

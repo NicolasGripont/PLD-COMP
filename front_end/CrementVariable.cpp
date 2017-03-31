@@ -14,10 +14,10 @@ CrementVariable::~CrementVariable()
     }
 }
 
-string CrementVariable::toString() const
+std::string CrementVariable::toString() const
 {
-	string crement = "";
-	string txt = "";
+	std::string crement = "";
+	std::string txt = "";
 	if(increment) 
 	{
 		crement = "++";

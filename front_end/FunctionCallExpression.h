@@ -8,7 +8,7 @@ class FunctionCallExpression : public Expression
 public:
 	FunctionCallExpression(char* _id, Expression* _expr, int _type);
 	virtual ~FunctionCallExpression();
-	virtual string toString() const;
+	virtual std::string toString() const;
 	
 private:
 	char* id;

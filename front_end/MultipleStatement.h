@@ -11,7 +11,7 @@ class MultipleStatement : public Printable
 public:
     MultipleStatement();
     virtual ~MultipleStatement();
-	virtual string toString() const;
+	virtual std::string toString() const;
 
     void addStatement(SimpleStatement* statement);
     int countStatements();

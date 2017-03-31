@@ -22,9 +22,9 @@ ForLoop::~ForLoop()
 	}
 }
 
-string ForLoop::toString() const
+std::string ForLoop::toString() const
 {
-	string txt = "for(" + expr1->toString() + "; " + expr2->toString() + "; " + expr3->toString() + ")";
+	std::string txt = "for(" + expr1->toString() + "; " + expr2->toString() + "; " + expr3->toString() + ")";
 	if(statement != nullptr) 
 	{
 		txt += statement->toString();

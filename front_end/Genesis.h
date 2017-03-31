@@ -11,7 +11,7 @@ class Genesis : public Printable
 public:
     Genesis();
     virtual ~Genesis();
-	virtual string toString() const;
+	virtual std::string toString() const;
     void addDeclaration(Declaration* declaration);
     int countDeclaration();
 

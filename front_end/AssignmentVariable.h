@@ -9,7 +9,7 @@ class AssignmentVariable : public Expression
 public:
 	AssignmentVariable(ExpressionVariable* _exprVar, Expression* _expr);
 	virtual ~AssignmentVariable();
-	virtual string toString() const;
+	virtual std::string toString() const;
 
 protected:
 	ExpressionVariable* exprVar;

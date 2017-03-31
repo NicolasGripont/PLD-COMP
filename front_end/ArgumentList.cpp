@@ -21,9 +21,9 @@ void ArgumentList::addArgument(Argument* arg)
     arguments.push_back(arg);
 }
 
-string ArgumentList::toString() const
+std::string ArgumentList::toString() const
 {
-    string txt = "";
+    std::string txt = "";
 
     if (!arguments.empty())
     {

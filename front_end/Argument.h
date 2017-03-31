@@ -9,7 +9,7 @@ class Argument : public Printable
 public:
     Argument(Type* _type, char* _id = nullptr, bool _array = false);
     virtual ~Argument();
-    virtual string toString() const;
+    virtual std::string toString() const;
     Type* getType();
     char* getName();
     bool isArray();

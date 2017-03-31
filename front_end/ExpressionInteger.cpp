@@ -11,9 +11,9 @@ ExpressionInteger::~ExpressionInteger()
 {
 }
 
-string ExpressionInteger::toString() const
+std::string ExpressionInteger::toString() const
 {
-    return to_string(value);
+    return std::to_string(value);
 }
 
 int ExpressionInteger::getValue()

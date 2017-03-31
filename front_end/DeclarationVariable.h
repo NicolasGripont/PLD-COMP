@@ -11,7 +11,7 @@ public:
     char* getId();	
     bool isArray();
     bool isDeclaration();
-	virtual string toString() const;
+	virtual std::string toString() const;
 
 protected:
     char* id;

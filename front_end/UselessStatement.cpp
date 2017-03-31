@@ -11,7 +11,7 @@ UselessStatement::~UselessStatement()
 
 }
 
-string UselessStatement::toString() const
+std::string UselessStatement::toString() const
 {
 	return "; ";
 }

@@ -11,11 +11,11 @@ DeclarationArrayVariable::~DeclarationArrayVariable()
 
 }
 
-string DeclarationArrayVariable::toString() const
+std::string DeclarationArrayVariable::toString() const
 {
 	if(array) 
 	{
-		return string(id) + "[" + string(id) + "]";
+		return std::string(id) + "[" + std::string(id) + "]";
 	} 
 	return "ERROR_DeclarationArrayVariable";
 }

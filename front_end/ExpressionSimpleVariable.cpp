@@ -14,7 +14,7 @@ ExpressionSimpleVariable::~ExpressionSimpleVariable()
 	}
 }
 
-string ExpressionSimpleVariable::toString() const
+std::string ExpressionSimpleVariable::toString() const
 {
-	return string(id);
+	return std::string(id);
 }

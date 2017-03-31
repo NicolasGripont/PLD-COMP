@@ -9,7 +9,7 @@ class GlobalDeclarationVariable : public Declaration
 public:
 	GlobalDeclarationVariable(MultipleDeclarationVariable* _multipleDeclarationVariable);
 	virtual ~GlobalDeclarationVariable();
-	virtual string toString() const;
+	virtual std::string toString() const;
 
     MultipleDeclarationVariable* getMultipleDeclarationVariable();
 private:

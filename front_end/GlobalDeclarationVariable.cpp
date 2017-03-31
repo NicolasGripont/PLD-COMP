@@ -14,7 +14,7 @@ GlobalDeclarationVariable::~GlobalDeclarationVariable()
 	}
 }
 
-string GlobalDeclarationVariable::toString() const
+std::string GlobalDeclarationVariable::toString() const
 {
 	return multipleDeclarationVariable->toString() + "; ";
 }

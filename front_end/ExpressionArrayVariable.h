@@ -10,7 +10,7 @@ public:
 
 	ExpressionArrayVariable(char* _id, Expression* _expr, int _type);
 	virtual ~ExpressionArrayVariable();
-	virtual string toString() const;
+	virtual std::string toString() const;
 	
 private:
 	char* id;

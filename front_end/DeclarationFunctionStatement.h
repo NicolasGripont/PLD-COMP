@@ -8,7 +8,7 @@ class DeclarationFunctionStatement : public Printable
 public:
 	DeclarationFunctionStatement(bool _declaration);
 	virtual ~DeclarationFunctionStatement();
-	virtual string toString() const = 0;
+	virtual std::string toString() const = 0;
     bool isDeclaration();
 
 private:

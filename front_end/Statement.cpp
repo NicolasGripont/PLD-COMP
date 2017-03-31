@@ -14,7 +14,7 @@ Statement::~Statement()
 	}
 }
 
-string Statement::toString() const
+std::string Statement::toString() const
 {
 	return "{" + multipleStatement->toString() + "}";
 }

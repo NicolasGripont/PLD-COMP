@@ -40,9 +40,9 @@ BinaryOperatorExpression::~BinaryOperatorExpression()
     }
 }
 
-string BinaryOperatorExpression::toString() const
+std::string BinaryOperatorExpression::toString() const
 {
-    string txt = "(" + expr1->toString();
+    std::string txt = "(" + expr1->toString();
 
     switch(op)  
     {  

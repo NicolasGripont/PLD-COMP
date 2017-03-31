@@ -9,7 +9,7 @@ class Return : public Printable
 public:
 	Return(Expression* _expr);
 	virtual ~Return();
-	virtual string toString() const;
+	virtual std::string toString() const;
 
 private:
 	Expression* expr;

@@ -17,9 +17,9 @@ int Type::getType()
     return type;
 }
 
-string Type::toString() const
+std::string Type::toString() const
 {
-	string typeStr = "";
+	std::string typeStr = "";
 	switch(type)  
     {  
         case VOID:  

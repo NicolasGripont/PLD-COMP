@@ -11,7 +11,7 @@ class DeclarationFunction : public Declaration
 public:
 	DeclarationFunction(Type* _type, char* _id, ArgumentList* _argumentList, DeclarationFunctionStatement* _decFunctionStatement);
 	virtual ~DeclarationFunction();
-	virtual string toString() const;
+	virtual std::string toString() const;
 
 private:
 	Type* type;

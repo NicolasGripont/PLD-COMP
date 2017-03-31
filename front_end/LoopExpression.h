@@ -9,7 +9,7 @@ class LoopExpression : public Printable
 public:
     LoopExpression(Expression* _expr);
     virtual ~LoopExpression();
-    virtual string toString() const;
+    virtual std::string toString() const;
 
 private:
     Expression* expr;

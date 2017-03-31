@@ -13,7 +13,7 @@ class Expression : public Printable
 public:
     Expression();
     virtual ~Expression();
-	virtual string toString() const = 0;
+	virtual std::string toString() const = 0;
 
     int getType();
     void setType(int _type);

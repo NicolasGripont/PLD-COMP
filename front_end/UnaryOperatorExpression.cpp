@@ -16,9 +16,9 @@ UnaryOperatorExpression::~UnaryOperatorExpression()
 	}
 }
 
-string UnaryOperatorExpression::toString() const
+std::string UnaryOperatorExpression::toString() const
 {
-	string exprStr = "(";
+	std::string exprStr = "(";
 	switch(op){
 		case PLUS:
 			exprStr += '+';

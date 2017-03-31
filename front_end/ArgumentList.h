@@ -11,7 +11,7 @@ class ArgumentList : public Printable
 public:
     ArgumentList();
     virtual ~ArgumentList();
-    virtual string toString() const;
+    virtual std::string toString() const;
     void addArgument(Argument* arg);
     int countArguments();
     Argument*& operator[] (int i);

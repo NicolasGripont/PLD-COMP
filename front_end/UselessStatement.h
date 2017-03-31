@@ -8,7 +8,7 @@ class UselessStatement : public SimpleStatement
 public:
 	UselessStatement();
 	virtual ~UselessStatement();
-	virtual string toString() const;
+	virtual std::string toString() const;
 };
 
 #endif

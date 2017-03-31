@@ -14,7 +14,7 @@ BlockDeclarationVariable::~BlockDeclarationVariable()
     }
 }
 
-string BlockDeclarationVariable::toString() const
+std::string BlockDeclarationVariable::toString() const
 {
 	return multipleDeclarationVariable->toString() + "; ";
 }

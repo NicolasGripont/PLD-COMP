@@ -13,11 +13,11 @@ DeclarationInitVariable::~DeclarationInitVariable()
     }
 }
 
-string DeclarationInitVariable::toString() const
+std::string DeclarationInitVariable::toString() const
 {
     if (!array)
     {
-		return string(id) + " = " + expr->toString();
+		return std::string(id) + " = " + expr->toString();
     }
     return "ERROR_DeclarationInitVariable";
 }

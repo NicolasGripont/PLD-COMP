@@ -9,7 +9,7 @@ class ReturnStatement : public SimpleStatement
 public:
     ReturnStatement(Return* _ret);
     virtual ~ReturnStatement();
-    virtual string toString() const;
+    virtual std::string toString() const;
 
 private:
     Return* ret;

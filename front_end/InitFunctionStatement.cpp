@@ -14,7 +14,7 @@ InitFunctionStatement::~InitFunctionStatement()
 	}
 }
 
-string InitFunctionStatement::toString() const
+std::string InitFunctionStatement::toString() const
 {
 	return "{" + multipleStatement->toString() + "}";
 }

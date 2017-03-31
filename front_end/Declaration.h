@@ -14,7 +14,7 @@ class Declaration : public Printable
 public:
     Declaration(DeclarationType _type);
     virtual ~Declaration();
-    virtual string toString() const = 0;
+    virtual std::string toString() const = 0;
 
     DeclarationType getType();
 

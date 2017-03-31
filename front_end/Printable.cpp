@@ -10,13 +10,13 @@ Printable::~Printable()
 
 }
 
-ostream& operator<<(ostream& os, const Printable& dt)  
+std::ostream& operator<<(std::ostream& os, const Printable& dt)  
 {  
     os << dt.toString();  
     return os;  
 }  
 
-ostream& operator<<(ostream& os, const Printable* dt)  
+std::ostream& operator<<(std::ostream& os, const Printable* dt)  
 {  
     os << dt->toString();  
     return os;  
