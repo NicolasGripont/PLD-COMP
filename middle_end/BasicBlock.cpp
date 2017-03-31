@@ -2,51 +2,61 @@
 #include "CFG.h"
 #include "IRInstruction.h"
 
-BasicBlock::BasicBlock(CFG* _cfg, std::string _entry_label)
-	: cfg(_cfg), label(_entry_label)
+BasicBlock::BasicBlock(CFG *_cfg, std::string _entry_label)
+    : cfg(_cfg), label(_entry_label)
 {
-
+    exit_true = nullptr;
+    exit_false = nullptr;
 }
 
 BasicBlock::~BasicBlock()
 {
-
 }
 
 std::string BasicBlock::toString() const
 {
-	return "";
+    return "";
 }
 
-void BasicBlock::addIRInstruction(IRInscruction* instruction)
+void BasicBlock::addIRInstruction(IRInstruction *instruction)
 {
-	if(instruction != nullptr)
-	{
-		instructions.push_back(instruction);
-	}
+    if (instruction != nullptr)
+    {
+	instructions.push_back(instruction);
+    }
 }
 
-BasicBlock* BasicBlock::getExitTrue() const
+BasicBlock *BasicBlock::getExitTrue() const
 {
-	return exit_true;
+    return exit_true;
 }
 
-BasicBlock* BasicBlock::getExitFalse() const
+BasicBlock *BasicBlock::getExitFalse() const
 {
-	return exit_false;
+    return exit_false;
 }
 
 std::string BasicBlock::getLabel() const
 {
-	return label;
+    return label;
 }
 
-CFG* BasicBlock::getCFG() const
+CFG *BasicBlock::getCFG() const
 {
-	return cfg;
+    return cfg;
 }
 
-std::vector<IRInscruction*> BasicBlock::getInstructions() const
+std::vector<IRInstruction *> BasicBlock::getInstructions() const
 {
-	return instructions;
+    return instructions;
+}
+
+void BasicBlock::setExitTrue(BasicBlock *_bbExitTrue);
+{
+    bbExitTrue = _bbExitTrue;
+}
+
+void BasicBlock::setExitFalse(BasicBlock *_bbExitFalse)
+{
+    bbExitFalse = _bbExitFalse;
 }

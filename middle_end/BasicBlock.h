@@ -6,7 +6,7 @@
 #include <string>
 
 class CFG;
-class IRInscruction;
+class IRInstruction;
 
 /**  The class for a basic block */
 
@@ -28,19 +28,23 @@ public:
 	BasicBlock(CFG* cfg, std::string entry_label);
 	virtual ~BasicBlock();
 	virtual std::string toString() const;
-	void addIRInstruction(IRInscruction* instruction);
+	void addIRInstruction(IRInstruction* instruction);
 	BasicBlock* getExitTrue() const;
 	BasicBlock* getExitFalse() const;
 	std::string getLabel() const;
 	CFG* getCFG() const;
-	std::vector<IRInscruction*> getInstructions() const;
+	std::vector<IRInstruction*> getInstructions() const;
+
+	// Utilisé dans les tests
+	void setExitTrue(BasicBlock* _bbExitTrue);
+	void setExitFalse(BasicBlock* _bbExitFalse);
 
 protected:
 	BasicBlock* exit_true;  /**< pointer to the next basic block, true branch. If nullptr, return from procedure */
 	BasicBlock* exit_false; /**< pointer to the next basic block, false branch. If nullptr, the basic block ends with an unconditional jump */
 	std::string label; /**< label of the BB, also will be the label in the generated code */
 	CFG* cfg; /** < the CFG where this block belongs */
-	std::vector<IRInscruction*> instructions;
+	std::vector<IRInstruction*> instructions;
 };
 
 #endif
