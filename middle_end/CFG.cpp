@@ -13,33 +13,26 @@ CFG::CFG(const Parser * parser, DeclarationFunction * _function) :
 {
     symbolsTable = parser->getGlobalSymbolTable();
     _function->buildIR(this);
-
     nextBBnumber = 0;
 }
 
 CFG::CFG() : function(nullptr)
 {}
 
-CFG::~CFG()
-{
-    for(auto bb : blocks)
-        delete bb;
-}
-
 std::string CFG::toString() const
 {
-    std::string s = "";
-    for(BasicBlock * bb : blocks) {
-        s += bb->toString();
-        s += "\n";
-    }
-    return s;
+//    std::string s = "";
+//    for(BasicBlock * bb : blocks)
+//    {
+//        s += bb->toString();
+//        s += "\n";
+//    }
+    return "not implemented";
 }
 
 BasicBlock * CFG::createNewBasicBlock(const std::string &bbName)
 {
     BasicBlock * bb = new BasicBlock(this,bbName);
-    addBasicBlock(bb);
     return bb;
 }
 
@@ -47,15 +40,7 @@ BasicBlock * CFG::createNewBasicBlock(const std::string &bbName)
 BasicBlock * CFG::createNewBasicBlock()
 {
     BasicBlock * bb = new BasicBlock(this,getUsableBasicBlockName());
-    addBasicBlock(bb);
     return bb;
-}
-
-void CFG::addBasicBlock(BasicBlock *bb)
-{
-    if(bb != nullptr) {
-        blocks.push_back(bb);
-    }
 }
 
 void CFG::addSymbol(Symbol *symbol)
@@ -89,15 +74,35 @@ const std::map <std::string, const Symbol*> & CFG::getSymbolsTable() const
     return symbolsTable;
 }
 
-const std::vector<BasicBlock *> &CFG::getBasicBlocks() const
-{
-    return blocks;
-}
-
 std::string CFG::getName() const {
     if(function != nullptr)
         return function->getId();
     return "undefined";
+}
+
+void CFG::setCurrentBasicBlock(BasicBlock *bb)
+{
+    currentBasicBlock = bb;
+}
+
+void CFG::setCurrentBasicBlockExitTrue(BasicBlock *bb)
+{
+    currentBasicBlock->setExitTrue(bb);
+}
+
+void CFG::setCurrentBasicBlockExitFalse(BasicBlock *bb)
+{
+    currentBasicBlock->setExitFalse(bb);
+}
+
+void CFG::setRootBasicBlock(BasicBlock *block)
+{
+    rootBasicBlock = block;
+}
+
+const BasicBlock *CFG::getRootBasicBlock() const
+{
+    return rootBasicBlock;
 }
 
 std::string CFG::getUsableBasicBlockName()

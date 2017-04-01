@@ -30,13 +30,17 @@ class BasicBlock
   public:
     BasicBlock(CFG *cfg, std::string entry_label);
     virtual ~BasicBlock();
-    virtual std::string toString() const;
+
+    std::string toString() const;
+
     void addIRInstruction(IRInstruction *instruction);
-    BasicBlock *getExitTrue() const;
-    BasicBlock *getExitFalse() const;
-    std::string getLabel() const;
-    CFG *getCFG() const;
-    std::vector<IRInstruction *> getInstructions() const;
+    const BasicBlock *getExitTrue() const;
+    const BasicBlock *getExitFalse() const;
+    const std::string & getLabel() const;
+
+    const CFG *getCFG() const;
+
+    const std::vector<IRInstruction *> & getInstructions() const;
 
     // Utilisé dans les tests
     void setExitTrue(BasicBlock *_bbExitTrue);
@@ -44,9 +48,11 @@ class BasicBlock
 
     // Dans un BB prologue, on doit retourner la taille de l'AR de la fonction
 	// en octets
-	int getPrologMaximalOffset();
+    int getPrologMaximalOffset() const;
 
     const std::map<std::string, const Symbol *> & getLocalSymbolsTable() const;
+
+    void addLocalSymbol(const Symbol * sym);
 
 protected:
     BasicBlock *exit_true;  /**< pointer to the next basic block, true branch. If nullptr, return from procedure */

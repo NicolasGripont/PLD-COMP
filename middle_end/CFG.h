@@ -32,13 +32,12 @@ class CFG
 public:
     CFG(const Parser * parser, DeclarationFunction * _function);
     CFG();
-    ~CFG();
+    ~CFG() = default;
 
     virtual std::string toString() const;
 
     BasicBlock *createNewBasicBlock(const std::string & bbName);
     BasicBlock *createNewBasicBlock();
-    void addBasicBlock(BasicBlock* bb);
     void addSymbol(Symbol* symbol);
 
     // symbol table methods
@@ -47,9 +46,16 @@ public:
     const std::map <std::string,const Symbol*> * getSymbolTableFromLevel(int level) const;
 
     const std::map <std::string, const Symbol*> & getSymbolsTable() const;
-    const std::vector <BasicBlock*> & getBasicBlocks() const;
 
     std::string getName() const;
+
+    void setCurrentBasicBlock(BasicBlock * bb);
+    void setCurrentBasicBlockExitTrue(BasicBlock * bb);
+    void setCurrentBasicBlockExitFalse(BasicBlock * bb);
+
+
+    void setRootBasicBlock(BasicBlock * block);
+    const BasicBlock * getRootBasicBlock() const;
 
 private:
     std::string getUsableBasicBlockName();
@@ -59,10 +65,9 @@ private:
     std::map <std::string,const Symbol*> symbolsTable;
 
     BasicBlock * currentBasicBlock;
+    BasicBlock * rootBasicBlock;
 
-    std::vector <BasicBlock*> blocks;   /**< all the basic blocks of this CFG*/
     std::map <int, BasicBlock*> lastBasicBlockbyLevel;   /**< all the basic blocks of this CFG*/
-
 };
 
 #endif

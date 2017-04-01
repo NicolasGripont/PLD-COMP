@@ -28,27 +28,27 @@ void BasicBlock::addIRInstruction(IRInstruction* instruction)
     }
 }
 
-BasicBlock *BasicBlock::getExitTrue() const
+const BasicBlock *BasicBlock::getExitTrue() const
 {
     return exit_true;
 }
 
-BasicBlock *BasicBlock::getExitFalse() const
+const BasicBlock *BasicBlock::getExitFalse() const
 {
     return exit_false;
 }
 
-std::string BasicBlock::getLabel() const
+const std::string &BasicBlock::getLabel() const
 {
     return label;
 }
 
-CFG *BasicBlock::getCFG() const
+const CFG *BasicBlock::getCFG() const
 {
     return cfg;
 }
 
-std::vector<IRInstruction*> BasicBlock::getInstructions() const
+const std::vector<IRInstruction *> &BasicBlock::getInstructions() const
 {
     return instructions;
 }
@@ -63,7 +63,7 @@ void BasicBlock::setExitFalse(BasicBlock *_bbExitFalse)
     exit_false = _bbExitFalse;
 }
 
-int BasicBlock::getPrologMaximalOffset()
+int BasicBlock::getPrologMaximalOffset() const
 {
     // Pour nos tests, 3 variables de 8 octets
     return 3*8;
@@ -72,5 +72,10 @@ int BasicBlock::getPrologMaximalOffset()
 const std::map<std::string, const Symbol *> &BasicBlock::getLocalSymbolsTable() const
 {
     return localSymbolsTable;
+}
+
+void BasicBlock::addLocalSymbol(const Symbol * sym)
+{
+    localSymbolsTable.insert(std::pair<std::string,const Symbol *>(sym->getName(), sym));
 }
 

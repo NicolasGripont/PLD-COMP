@@ -47,7 +47,12 @@ int ArgumentList::countArguments()
     return arguments.size();
 }
 
-Argument*& ArgumentList::operator[] (int i)
+Argument * & ArgumentList::operator[] (int i)
 {
     return arguments[i];
+}
+
+const std::vector<Argument *> &ArgumentList::getArguments() const
+{
+    return arguments;
 }

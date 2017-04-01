@@ -18,7 +18,7 @@ void Intel::parse(CFG* _cfg)
     std::string label;
     std::vector<IRInstruction*> instructions;
 
-    BasicBlock* block = cfg->getBasicBlocks().at(0);
+    const BasicBlock* block = cfg->getRootBasicBlock();
 
     bool prolog = true;
     while (block != nullptr)

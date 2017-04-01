@@ -34,30 +34,14 @@ void Parser::handleNewSymbolInTable(GlobalDeclarationVariable* declaration)
 {
     MultipleDeclarationVariable* multipleDeclarationVariable;
     multipleDeclarationVariable = declaration->getMultipleDeclarationVariable();
-    Symbol::Type type = Symbol::Type::INT_32; 
-    switch(multipleDeclarationVariable->getType()->getType()) {
-        case 1:
-        type = Symbol::Type::CHAR;
-        break;
-        case 8:
-        type = Symbol::Type::INT_64;
-        break;
-    }
+
+    int type = multipleDeclarationVariable->getType()->getType();
+
     for(int declarationId = 0; declarationId < multipleDeclarationVariable->countDeclaration() ; ++declarationId)
     {
         DeclarationVariable* declarationVariable = (*multipleDeclarationVariable)[declarationId];
-        Symbol *s = nullptr;
-        if(declarationVariable->isArray()) {
-            s = new Symbol(declarationVariable->getId(), Symbol::Type::PTR, offset);
-        } else {    
-            if(declarationVariable->isDeclaration()) {
-                s = new Symbol(declarationVariable->getId(), type, offset);
-            } else {
-                std::cout << "Not implement yet" << std::endl;
-            }
-        }
+        Symbol *s = new Symbol(declarationVariable->getId(), type , globalSymbolTable.size());
         this->addSymbolToTable(s);
-        offset++;
     }
 }
 
@@ -71,6 +55,12 @@ void Parser::addNewFunctionInTable(CFG * controllFlowGraph)
 // Génère le CFG d'une fonction et le stock dans la map des CFG
 void Parser::generateCFG(DeclarationFunction * declaration)
 {
+    // if declaration
+    //  -> on ajoute un symbole a la table;
+    // if definition
+    //  -> on ajoute un symbole a la table;
+    //  -> code du dessous (pour build IR)
+
     CFG * controllFlowGraph = new CFG(this,declaration);
     addNewFunctionInTable(controllFlowGraph);
 }

@@ -32,7 +32,6 @@ private:
 
     std::map <std::string, const Symbol*> globalSymbolTable;
     std::map<std::string,CFG*> functionCFG;     //std::map<nom_de_fonction, CFG_de_la_fonction>
-    int offset = 0;
 };
 
 #endif // _PARSER_H

@@ -1,4 +1,5 @@
 #include "DeclarationFunction.h"
+#include "InitFunctionStatement.h"
 #include "../middle_end/BasicBlock.h"
 #include "../middle_end/CFG.h"
 
@@ -40,16 +41,30 @@ std::string DeclarationFunction::getId() const {
 void DeclarationFunction::buildIR(CFG * cfg) const
 {
     // Creation prolog
-    BasicBlock * bb = cfg->createNewBasicBlock("prolog_" + getId());
+    BasicBlock * basicProlog = cfg->createNewBasicBlock("prolog_" + getId());
+    cfg->setCurrentBasicBlock(basicProlog);
 
-    for(unsigned int i = 0; i < argumentList->countArguments(); ++i)
+    for(Argument *  arg : argumentList->getArguments())
     {
-        argumentList[i];
+        Symbol * symbol = new Symbol(arg->getName(),
+                                     arg->getType()->getType(),
+                                     basicProlog->getLocalSymbolsTable().size()
+                                     );
+
+        basicProlog->addLocalSymbol(symbol);
     }
 
     // Build IR de l'AST
+    InitFunctionStatement * state = dynamic_cast<InitFunctionStatement*>(decFunctionStatement);
+    if(state == nullptr)
+    {
+        state->buildIR(cfg);
+    }
 
     // CReation epilog
+    BasicBlock * basicEpilog = cfg->createNewBasicBlock("epilog_" + getId());
+    cfg->setCurrentBasicBlockExitTrue(basicEpilog);
+    cfg->setCurrentBasicBlock(basicEpilog);
 
 
 }

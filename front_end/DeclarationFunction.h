@@ -11,7 +11,8 @@ class DeclarationFunction : public Declaration
 public:
 	DeclarationFunction(Type* _type, char* _id, ArgumentList* _argumentList, DeclarationFunctionStatement* _decFunctionStatement);
 	virtual ~DeclarationFunction();
-	virtual std::string toString() const;
+
+    std::string toString() const;
 	std::string getId() const;
 
     void buildIR(CFG* cfg) const;
@@ -20,7 +21,7 @@ private:
 	Type* type;
 	char* id;
 	DeclarationFunctionStatement* decFunctionStatement;
-	ArgumentList* argumentList;
+    ArgumentList* argumentList;
 };
 
 #endif
