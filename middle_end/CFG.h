@@ -7,11 +7,15 @@
 #include <vector>
 
 #include "Symbol.h"
-#include "BasicBlock.h"
-#include "../front_end/Genesis.h"
-#include "../front_end/Declaration.h"
-#include "../front_end/GlobalDeclarationVariable.h"
-#include "../front_end/DeclarationFunction.h"
+
+
+class Genesis;
+class Declaration;
+class GlobalDeclarationVariable;
+class DeclarationFunction;
+
+class Parser;
+class BasicBlock;
 
 /** The class for the control flow graph, also includes the symbol table */
 
@@ -26,34 +30,38 @@
 class CFG
 {
 public:
-    CFG(DeclarationFunction * _function);
+    CFG(const Parser * parser, DeclarationFunction * _function);
     CFG();
     ~CFG();
 
     virtual std::string toString() const;
 
+    BasicBlock *createNewBasicBlock(const std::string & bbName);
+    BasicBlock *createNewBasicBlock();
     void addBasicBlock(BasicBlock* bb);
     void addSymbol(Symbol* symbol);
 
     // symbol table methods
     const Symbol * getSymbol(std::string name) const;
 
-    std::string getUsableBasicBlockName() const;
+    const std::map <std::string,const Symbol*> * getSymbolTableFromLevel(int level) const;
 
-    const std::map <std::string, Symbol*> & getLocalSymbolsTable() const;
+    const std::map <std::string, const Symbol*> & getSymbolsTable() const;
     const std::vector <BasicBlock*> & getBasicBlocks() const;
 
     std::string getName() const;
 
 private:
+    std::string getUsableBasicBlockName();
+    int nextBBnumber;    /**< just for naming */
 
     DeclarationFunction * function;
-    std::map <std::string, Symbol*> localSymbolsTable;
+    std::map <std::string,const Symbol*> symbolsTable;
 
     BasicBlock * currentBasicBlock;
 
-    int nextBBnumber; /**< just for naming */
-    std::vector <BasicBlock*> blocks; /**< all the basic blocks of this CFG*/
+    std::vector <BasicBlock*> blocks;   /**< all the basic blocks of this CFG*/
+    std::map <int, BasicBlock*> lastBasicBlockbyLevel;   /**< all the basic blocks of this CFG*/
 
 };
 

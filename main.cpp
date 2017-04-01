@@ -28,13 +28,13 @@ int main(int argc, char* argv[])
 		delete genesis;
 	}
 
-	/* Backend Intel */
-	Intel* intel = new Intel("intel");
-	//intel->parse(testIR1()); // Valid
-	intel->parse(testIR2());
-	intel->compile();
+//	/* Backend Intel */
+//	Intel* intel = new Intel("intel");
+//	//intel->parse(testIR1()); // Valid
+//	intel->parse(testIR2());
+//	intel->compile();
 
-	delete intel;
+//	delete intel;
 
     return 0;
 }

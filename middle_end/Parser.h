@@ -21,6 +21,8 @@ public:
 
     void generateIR(Genesis * genesis);
 
+    const std::map<std::string, const Symbol *> &getGlobalSymbolTable() const;
+
 private:
     void handleNewSymbolInTable(GlobalDeclarationVariable *declaration);
     void addSymbolToTable(Symbol* symbol);
@@ -28,7 +30,7 @@ private:
     void addNewFunctionInTable(CFG *controllFlowGraph);
     void generateCFG(DeclarationFunction * declaration);
 
-    std::map <std::string, Symbol*> symbolTable;
+    std::map <std::string, const Symbol*> globalSymbolTable;
     std::map<std::string,CFG*> functionCFG;     //std::map<nom_de_fonction, CFG_de_la_fonction>
     int offset = 0;
 };

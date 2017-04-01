@@ -5,6 +5,8 @@
 BasicBlock::BasicBlock(CFG *_cfg, std::string _entry_label)
     : cfg(_cfg), label(_entry_label)
 {
+    localSymbolsTable = cfg->getSymbolsTable();
+
     exit_true = nullptr;
     exit_false = nullptr;
 }
@@ -66,3 +68,9 @@ int BasicBlock::getPrologMaximalOffset()
     // Pour nos tests, 3 variables de 8 octets
     return 3*8;
 }
+
+const std::map<std::string, const Symbol *> &BasicBlock::getLocalSymbolsTable() const
+{
+    return localSymbolsTable;
+}
+

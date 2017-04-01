@@ -7,7 +7,7 @@ Parser::~Parser()
         delete item.second;
     }
 
-    for(auto item : symbolTable)
+    for(auto item : globalSymbolTable)
     {
         delete item.second;
     }
@@ -71,13 +71,18 @@ void Parser::addNewFunctionInTable(CFG * controllFlowGraph)
 // Génère le CFG d'une fonction et le stock dans la map des CFG
 void Parser::generateCFG(DeclarationFunction * declaration)
 {
-    CFG * controllFlowGraph = new CFG(declaration);
+    CFG * controllFlowGraph = new CFG(this,declaration);
     addNewFunctionInTable(controllFlowGraph);
+}
+
+const std::map<std::string, const Symbol *> & Parser::getGlobalSymbolTable() const
+{
+    return globalSymbolTable;
 }
 
 void Parser::addSymbolToTable(Symbol * symbol)
 {
     if(symbol != nullptr) {
-        symbolTable.insert(std::pair<std::string, Symbol*>(symbol->getName(), symbol));
+        globalSymbolTable.insert(std::pair<std::string, Symbol*>(symbol->getName(), symbol));
     }
 }

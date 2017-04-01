@@ -4,7 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <unordered_map>
+#include <map>
 
 #include "Symbol.h"
 
@@ -42,17 +42,19 @@ class BasicBlock
     void setExitTrue(BasicBlock *_bbExitTrue);
     void setExitFalse(BasicBlock *_bbExitFalse);
 
-    std::unordered_map<std::string, Symbol *> symbolsTable;
-	// Dans un BB prologue, doit retourner la taille de l'AR de la fonction
+    // Dans un BB prologue, on doit retourner la taille de l'AR de la fonction
 	// en octets
 	int getPrologMaximalOffset();
 
-  protected:
+    const std::map<std::string, const Symbol *> & getLocalSymbolsTable() const;
+
+protected:
     BasicBlock *exit_true;  /**< pointer to the next basic block, true branch. If nullptr, return from procedure */
     BasicBlock *exit_false; /**< pointer to the next basic block, false branch. If nullptr, the basic block ends with an unconditional jump */
     std::string label;      /**< label of the BB, also will be the label in the generated code */
     CFG * cfg;		    /** < the CFG where this block belongs */
     std::vector<IRInstruction *> instructions;
+    std::map<std::string, const Symbol*> localSymbolsTable;
 };
 
 #endif
