@@ -16,6 +16,11 @@ std::string ExpressionInteger::toString() const
     return std::to_string(value);
 }
 
+void ExpressionInteger::buildIR(CFG *cfg) const
+{
+
+}
+
 int ExpressionInteger::getValue()
 {
     return value;

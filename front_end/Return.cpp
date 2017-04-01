@@ -22,5 +22,10 @@ std::string Return::toString() const
 	{
 		txt += " " + expr->toString();
 	}
-	return txt;
+    return txt;
+}
+
+void Return::buildIR(CFG *cfg) const
+{
+
 }

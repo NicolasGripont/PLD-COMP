@@ -16,5 +16,10 @@ ReturnStatement::~ReturnStatement()
 
 std::string ReturnStatement::toString() const
 {
-	return ret->toString() + "; ";
+    return ret->toString() + "; ";
+}
+
+void ReturnStatement::buildIR(CFG *cfg) const
+{
+
 }

@@ -4,12 +4,14 @@
 #include "Expression.h"
 #include "Printable.h"
 
-class LoopExpression : public Printable
+class LoopExpression : public Printable, IRTranslatable
 {
 public:
     LoopExpression(Expression* _expr);
     virtual ~LoopExpression();
-    virtual std::string toString() const;
+
+    std::string toString() const;
+    void buildIR(CFG * cfg) const;
 
 private:
     Expression* expr;

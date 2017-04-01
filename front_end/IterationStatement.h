@@ -9,7 +9,6 @@ class IterationStatement : public SimpleStatement
 public:
     IterationStatement(Statement* _statement);
     virtual ~IterationStatement();
-    virtual std::string toString() const = 0;
 
 protected:
     Statement* statement;

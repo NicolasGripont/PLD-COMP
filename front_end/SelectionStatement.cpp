@@ -41,5 +41,10 @@ std::string SelectionStatement::toString() const
 	{
 		txt = "ERROR_SelectionStatement";
 	}
-	return txt;
+    return txt;
+}
+
+void SelectionStatement::buildIR(CFG *cfg) const
+{
+
 }

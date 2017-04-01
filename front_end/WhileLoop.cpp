@@ -25,5 +25,10 @@ std::string WhileLoop::toString() const
 	{
 		txt += "{}";
 	}
-	return txt;
+    return txt;
+}
+
+void WhileLoop::buildIR(CFG *cfg) const
+{
+
 }

@@ -25,7 +25,12 @@ std::string MultipleStatement::toString() const
         txt += statements.at(i)->toString();
     }
 
-	return txt;
+    return txt;
+}
+
+void MultipleStatement::buildIR(CFG *cfg) const
+{
+
 }
 
 void MultipleStatement::addStatement(SimpleStatement* statement)

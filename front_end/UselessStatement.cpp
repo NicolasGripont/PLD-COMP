@@ -13,6 +13,11 @@ UselessStatement::~UselessStatement()
 
 std::string UselessStatement::toString() const
 {
-	return "; ";
+    return "; ";
+}
+
+void UselessStatement::buildIR(CFG *cfg) const
+{
+
 }
 

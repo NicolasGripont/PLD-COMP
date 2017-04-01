@@ -10,7 +10,9 @@ class SelectionStatement : public SimpleStatement
 public:
     SelectionStatement(Expression* _expr, Statement* _stat, Statement* _elseStat);
     virtual ~SelectionStatement();
-    virtual std::string toString() const;
+
+    std::string toString() const;
+    void buildIR(CFG * cfg) const;
 
 private:
     // Expression dans le if

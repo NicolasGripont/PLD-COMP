@@ -4,12 +4,14 @@
 #include "MultipleStatement.h"
 #include "Printable.h"
 
-class Statement : public Printable
+class Statement : public Printable, IRTranslatable
 {
 public:
     Statement(MultipleStatement* _multipleStatement);
     virtual ~Statement();
-    virtual std::string toString() const;
+
+    std::string toString() const;
+    void buildIR(CFG * cfg) const;
 
 private:
     MultipleStatement* multipleStatement;

@@ -29,6 +29,11 @@ std::string Genesis::toString() const
     return txt;
 }
 
+void Genesis::buildIR(CFG *cfg) const
+{
+
+}
+
 void Genesis::addDeclaration(Declaration* declaration) 
 {
     declarations.push_back(declaration);

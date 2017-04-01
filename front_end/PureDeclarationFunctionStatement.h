@@ -9,7 +9,9 @@ class PureDeclarationFunctionStatement : public DeclarationFunctionStatement
 public:
 	PureDeclarationFunctionStatement();
 	virtual ~PureDeclarationFunctionStatement();
-	virtual std::string toString() const;
+
+    std::string toString() const;
+    void buildIR(CFG * cfg) const;
 };
 
 #endif

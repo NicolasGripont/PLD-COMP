@@ -8,7 +8,9 @@ class ExpressionInteger : public Expression
 public:
 	ExpressionInteger(int _value, int _type);
 	virtual ~ExpressionInteger();
-	virtual std::string toString() const;
+
+    std::string toString() const;
+    void buildIR(CFG * cfg) const;
 
 	int getValue();
 private:

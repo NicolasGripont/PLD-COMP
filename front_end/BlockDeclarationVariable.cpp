@@ -16,7 +16,12 @@ BlockDeclarationVariable::~BlockDeclarationVariable()
 
 std::string BlockDeclarationVariable::toString() const
 {
-	return multipleDeclarationVariable->toString() + "; ";
+    return multipleDeclarationVariable->toString() + "; ";
+}
+
+void BlockDeclarationVariable::buildIR(CFG *cfg) const
+{
+
 }
 
 MultipleDeclarationVariable* BlockDeclarationVariable::getMultipleDeclarationVariable()

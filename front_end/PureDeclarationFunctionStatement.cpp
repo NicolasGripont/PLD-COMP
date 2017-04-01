@@ -13,5 +13,10 @@ PureDeclarationFunctionStatement::~PureDeclarationFunctionStatement()
 
 std::string PureDeclarationFunctionStatement::toString() const
 {
-	return "; ";
+    return "; ";
+}
+
+void PureDeclarationFunctionStatement::buildIR(CFG *cfg) const
+{
+
 }

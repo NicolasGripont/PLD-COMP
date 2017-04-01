@@ -37,6 +37,11 @@ std::string ArgumentList::toString() const
     return txt;
 }
 
+void ArgumentList::buildIR(CFG *cfg) const
+{
+
+}
+
 int ArgumentList::countArguments()
 {
     return arguments.size();

@@ -13,6 +13,8 @@ public:
 	virtual ~DeclarationFunction();
 	virtual std::string toString() const;
 	std::string getId() const;
+
+    void buildIR(CFG* cfg) const;
 	
 private:
 	Type* type;

@@ -3,13 +3,13 @@
 
 #include "SimpleStatementType.h"
 #include "Printable.h"
+#include "IRTranslatable.h"
 
-class SimpleStatement : public Printable
+class SimpleStatement : public Printable, IRTranslatable
 {
 public:
 	SimpleStatement(SimpleStatementType _type);
 	virtual ~SimpleStatement();
-	virtual std::string toString() const = 0;
     SimpleStatementType getType();
 
 private:

@@ -8,7 +8,6 @@ class ExpressionVariable : public Expression
 public:
 	ExpressionVariable(int _type);
 	virtual ~ExpressionVariable();
-	virtual std::string toString() const = 0;
 };
 
 #endif

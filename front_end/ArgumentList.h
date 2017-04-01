@@ -3,15 +3,19 @@
 
 #include <vector>
 
-#include "Argument.h"
 #include "Printable.h"
+#include "IRTranslatable.h"
+#include "Argument.h"
 
-class ArgumentList : public Printable
+class ArgumentList : public Printable, IRTranslatable
 {
 public:
     ArgumentList();
     virtual ~ArgumentList();
-    virtual std::string toString() const;
+
+    std::string toString() const;
+    void buildIR(CFG * cfg) const;
+
     void addArgument(Argument* arg);
     int countArguments();
     Argument*& operator[] (int i);

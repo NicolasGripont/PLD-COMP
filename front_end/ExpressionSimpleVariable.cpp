@@ -16,5 +16,10 @@ ExpressionSimpleVariable::~ExpressionSimpleVariable()
 
 std::string ExpressionSimpleVariable::toString() const
 {
-	return std::string(id);
+    return std::string(id);
+}
+
+void ExpressionSimpleVariable::buildIR(CFG *cfg) const
+{
+
 }

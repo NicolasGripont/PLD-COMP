@@ -9,7 +9,9 @@ class ReturnStatement : public SimpleStatement
 public:
     ReturnStatement(Return* _ret);
     virtual ~ReturnStatement();
-    virtual std::string toString() const;
+
+    std::string toString() const;
+    void buildIR(CFG * cfg) const;
 
 private:
     Return* ret;

@@ -2,6 +2,7 @@
 #define _DECLARATION_H
 
 #include "Printable.h"
+#include "IRTranslatable.h"
 
 enum DeclarationType
 {
@@ -9,12 +10,13 @@ enum DeclarationType
     DECLARATION_FUNCTION
 };
 
-class Declaration : public Printable
+class Declaration : public Printable, IRTranslatable
 {
 public:
     Declaration(DeclarationType _type);
     virtual ~Declaration();
-    virtual std::string toString() const = 0;
+
+    void buildIR(CFG * cfg) const;
 
     DeclarationType getType();
 

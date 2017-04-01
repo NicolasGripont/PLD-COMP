@@ -21,5 +21,10 @@ std::string LoopExpression::toString() const
 	{
 		txt = expr->toString();
 	}
-	return txt;
+    return txt;
+}
+
+void LoopExpression::buildIR(CFG *cfg) const
+{
+
 }

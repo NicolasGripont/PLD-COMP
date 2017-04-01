@@ -8,7 +8,9 @@ class UselessStatement : public SimpleStatement
 public:
 	UselessStatement();
 	virtual ~UselessStatement();
-	virtual std::string toString() const;
+
+    std::string toString() const;
+    void buildIR(CFG * cfg) const;
 };
 
 #endif

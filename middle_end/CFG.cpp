@@ -1,15 +1,19 @@
 #include "CFG.h"
 
-CFG::CFG(DeclarationFunction *_function) : function(_function)
+CFG::CFG(DeclarationFunction * _function) : function(_function)
 {
-    BasicBlock* prologue = new BasicBlock(this,"prologue_"+function->getId());
-    //Parser le function statement
-    BasicBlock* epilogue = new BasicBlock(this, "epilogue_"+function->getId());
+    _function->buildIR(this);
+}
+
+CFG::CFG() : function(nullptr)
+{
+
 }
 
 CFG::~CFG()
 {
-
+    for(auto bb : blocks)
+        delete bb;
 }
 
 std::string CFG::toString() const
@@ -32,17 +36,16 @@ void CFG::addBasicBlock(BasicBlock *bb)
 void CFG::addSymbol(Symbol *symbol)
 {
     if(symbol != nullptr) {
-        globalSymbolsTable.insert(std::pair<std::string, Symbol*>(symbol->getName(), symbol));
+        localSymbolsTable.insert(std::pair<std::string, Symbol*>(symbol->getName(), symbol));
     }
 }
 
-Symbol* CFG::getSymbol(std::string name)
+const Symbol* CFG::getSymbol(std::string name) const
 {
-    std::map<std::string,Symbol *>::iterator it;
-    it = globalSymbolsTable.find(name);
-    if (it != globalSymbolsTable.end())
+    auto it = localSymbolsTable.find(name);
+    if (it != localSymbolsTable.end())
         return it->second;
-    else 
+    else
         return nullptr;
 }
 
@@ -54,45 +57,15 @@ std::string CFG::getName() const {
 
 std::string CFG::getUsableBasicBlockName() const
 {
-
+    return "not_implemented";
 }
 
-std::map <std::string, Symbol*> CFG::getGlobalSymbolsTable() const {
-    return globalSymbolsTable;
+const std::map <std::string, Symbol*> & CFG::getLocalSymbolsTable() const
+{
+    return localSymbolsTable;
 }
-    
-std::vector <BasicBlock*> CFG::getBasicBlocks() const {
+
+const std::vector<BasicBlock *> &CFG::getBasicBlocks() const
+{
     return blocks;
-}
-
-void CFG::parseAST(Genesis* genesis)
-{
-    for(int declarationId = 0; declarationId < genesis->countDeclaration() ; ++declarationId)
-    {
-        Declaration* declaration = (*genesis)[declarationId];
-        if(declaration->getType() == GLOBAL_DECLARATION_VARIABLE)
-        {
-            parseGlobalDeclarationVariable((GlobalDeclarationVariable*)declaration);
-        }
-        else if (declaration->getType() == DECLARATION_FUNCTION)
-        {
-            parseGlobalDeclarationFunction((DeclarationFunction*)declaration);
-        }
-    }
-}
-
-void CFG::parseGlobalDeclarationVariable(GlobalDeclarationVariable* globalDeclarationVariable)
-{
-    MultipleDeclarationVariable* multipleDeclarationVariable;
-    multipleDeclarationVariable = globalDeclarationVariable->getMultipleDeclarationVariable();
-
-    for(int declarationId = 0; declarationId < multipleDeclarationVariable->countDeclaration() ; ++declarationId)
-    {
-        DeclarationVariable* declarationVariable = (*multipleDeclarationVariable)[declarationId];
-    }
-}
-
-void CFG::parseGlobalDeclarationFunction(DeclarationFunction* DeclarationFunction)
-{
-
 }

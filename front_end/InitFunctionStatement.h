@@ -10,7 +10,9 @@ class InitFunctionStatement : public DeclarationFunctionStatement
 public:
     InitFunctionStatement(MultipleStatement* _multipleStatement);
     virtual ~InitFunctionStatement();
-    virtual std::string toString() const;
+
+    std::string toString() const;
+    void buildIR(CFG * cfg) const;
 
     int countStatements();
 

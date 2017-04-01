@@ -36,6 +36,11 @@ std::string MultipleDeclarationVariable::toString() const
     return txt ;
 }
 
+void MultipleDeclarationVariable::buildIR(CFG *cfg) const
+{
+
+}
+
 void MultipleDeclarationVariable::addDeclarationVariable(DeclarationVariable* dec)
 {
     declarationsVariables.push_back(dec);

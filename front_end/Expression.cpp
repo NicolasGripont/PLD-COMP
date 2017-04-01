@@ -11,6 +11,11 @@ Expression::~Expression()
 
 }
 
+void Expression::buildIR(CFG *cfg) const
+{
+
+}
+
 int Expression::getType()
 {
     return type;

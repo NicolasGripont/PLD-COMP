@@ -3,7 +3,7 @@
 /* ------------------ */
 
 #include "comp.tab.h"
-#include "middle_end/CFG.h"
+#include "middle_end/Parser.h"
 #include "back_end/Intel.h"
 
 /* Test */
@@ -20,8 +20,8 @@ int main(int argc, char* argv[])
 	}
 
     /* Conversion AST -> IR */
-    CFG* cfg = new CFG();
-    cfg->parseAST(genesis);
+    Parser astToIRParser;
+    astToIRParser.generateIR(genesis);
 
 	if (genesis != nullptr)
 	{

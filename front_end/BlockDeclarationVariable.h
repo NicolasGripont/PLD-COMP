@@ -10,7 +10,10 @@ class BlockDeclarationVariable : public SimpleStatement
 public:
     BlockDeclarationVariable(MultipleDeclarationVariable* _multipleDeclarationVariable);
     virtual ~BlockDeclarationVariable();
-    virtual std::string toString() const;
+
+    std::string toString() const;
+    void buildIR(CFG * cfg) const;
+
     MultipleDeclarationVariable* getMultipleDeclarationVariable();
 
 private:

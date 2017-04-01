@@ -33,5 +33,10 @@ std::string ForLoop::toString() const
 	{
 		txt += "{}";
 	}
-	return txt;
+    return txt;
+}
+
+void ForLoop::buildIR(CFG *cfg) const
+{
+
 }

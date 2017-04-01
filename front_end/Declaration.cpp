@@ -11,6 +11,10 @@ Declaration::~Declaration()
 
 }
 
+void Declaration::buildIR(CFG *cfg) const
+{
+
+}
 
 DeclarationType Declaration::getType()
 {

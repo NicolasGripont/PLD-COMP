@@ -2,13 +2,14 @@
 #define _DECLARATIONFUNCTIONSTATEMENT_H
 
 #include "Printable.h"
+#include "IRTranslatable.h"
 
-class DeclarationFunctionStatement : public Printable
+class DeclarationFunctionStatement : public Printable, IRTranslatable
 {
 public:
 	DeclarationFunctionStatement(bool _declaration);
 	virtual ~DeclarationFunctionStatement();
-	virtual std::string toString() const = 0;
+
     bool isDeclaration();
 
 private:

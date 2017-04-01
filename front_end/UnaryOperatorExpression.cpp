@@ -39,5 +39,10 @@ std::string UnaryOperatorExpression::toString() const
 	
 	exprStr += expr->toString() + ")";
 	
-	return exprStr;
+    return exprStr;
+}
+
+void UnaryOperatorExpression::buildIR(CFG *cfg) const
+{
+
 }

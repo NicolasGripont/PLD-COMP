@@ -16,7 +16,12 @@ GlobalDeclarationVariable::~GlobalDeclarationVariable()
 
 std::string GlobalDeclarationVariable::toString() const
 {
-	return multipleDeclarationVariable->toString() + "; ";
+    return multipleDeclarationVariable->toString() + "; ";
+}
+
+void GlobalDeclarationVariable::buildIR(CFG *cfg) const
+{
+
 }
 
 MultipleDeclarationVariable* GlobalDeclarationVariable::getMultipleDeclarationVariable()

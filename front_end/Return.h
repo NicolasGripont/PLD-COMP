@@ -4,12 +4,14 @@
 #include "Expression.h"
 #include "Printable.h"
 
-class Return : public Printable
+class Return : public Printable, IRTranslatable
 {
 public:
 	Return(Expression* _expr);
 	virtual ~Return();
-	virtual std::string toString() const;
+
+    std::string toString() const;
+    void buildIR(CFG * cfg) const;
 
 private:
 	Expression* expr;

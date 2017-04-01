@@ -2,117 +2,113 @@
 
 CFG *testIR1()
 {
-	CFG* cfg = new CFG();
+    CFG* cfg = new CFG();
 
-	BasicBlock* mainPrologBB = new BasicBlock(cfg, "main_prologue"); 
-	BasicBlock* mainBB = new BasicBlock(cfg, "main"); 
+    BasicBlock* mainPrologBB = new BasicBlock(cfg, "main_prologue");
+    BasicBlock* mainBB = new BasicBlock(cfg, "main");
     BasicBlock *mainEpilogBB = new BasicBlock(cfg, "main_epilog");
 
-	cfg->firstBB = mainPrologBB;
+    cfg->addBasicBlock(mainPrologBB);
+    cfg->addBasicBlock(mainBB);
+    cfg->addBasicBlock(mainEpilogBB);
 
-	cfg->getBasicBlocks().push_back(mainPrologBB);
-	cfg->getBasicBlocks().push_back(mainBB);
-	cfg->getBasicBlocks().push_back(mainEpilogBB);
+    mainPrologBB->setExitTrue(mainBB);
+    mainPrologBB->setExitFalse(nullptr);
 
-	mainPrologBB->setExitTrue(mainBB);
-	mainPrologBB->setExitFalse(nullptr);
+    mainBB->setExitTrue(mainEpilogBB);
+    mainBB->setExitFalse(nullptr);
 
-	mainBB->setExitTrue(mainEpilogBB);
-	mainBB->setExitFalse(nullptr);
+    mainEpilogBB->setExitTrue(nullptr);
+    mainEpilogBB->setExitFalse(nullptr);
 
-	mainEpilogBB->setExitTrue(nullptr);
-	mainEpilogBB->setExitFalse(nullptr);
-
-	return cfg;
+    return cfg;
 }
 
 CFG *testIR2()
 {
-	CFG* cfg = new CFG();
+    CFG* cfg = new CFG();
 
-	BasicBlock* mainPrologBB = new BasicBlock(cfg, "main_prologue"); 
-	BasicBlock* mainBB = new BasicBlock(cfg, "main"); 
+    BasicBlock* mainPrologBB = new BasicBlock(cfg, "main_prologue");
+    BasicBlock* mainBB = new BasicBlock(cfg, "main");
     BasicBlock *mainEpilogBB = new BasicBlock(cfg, "main_epilog");
 
-	cfg->firstBB = mainPrologBB;
+    cfg->addBasicBlock(mainPrologBB);
+    cfg->addBasicBlock(mainBB);
+    cfg->addBasicBlock(mainEpilogBB);
 
-	cfg->getBasicBlocks().push_back(mainPrologBB);
-	cfg->getBasicBlocks().push_back(mainBB);
-	cfg->getBasicBlocks().push_back(mainEpilogBB);
+    mainPrologBB->setExitTrue(mainBB);
+    mainPrologBB->setExitFalse(nullptr);
 
-	mainPrologBB->setExitTrue(mainBB);
-	mainPrologBB->setExitFalse(nullptr);
+    mainBB->setExitTrue(mainEpilogBB);
+    mainBB->setExitFalse(nullptr);
 
-	mainBB->setExitTrue(mainEpilogBB);
-	mainBB->setExitFalse(nullptr);
+    mainEpilogBB->setExitTrue(nullptr);
+    mainEpilogBB->setExitFalse(nullptr);
 
-	mainEpilogBB->setExitTrue(nullptr);
-	mainEpilogBB->setExitFalse(nullptr);
-
-	return cfg;
+    return cfg;
 }
 
 CFG *testIR3()
 {
-	return nullptr;
+    return nullptr;
 }
 
 CFG *testIR4()
 {
-	return nullptr;
+    return nullptr;
 }
 
 CFG *testIR5()
 {
-	return nullptr;
+    return nullptr;
 }
 
 CFG *testIR6()
 {
-	return nullptr;
+    return nullptr;
 }
 
 CFG *testIR7()
 {
-	return nullptr;
+    return nullptr;
 }
 
 CFG *testIR8()
 {
-	return nullptr;
+    return nullptr;
 }
 
 CFG *testIR9()
 {
-	return nullptr;
+    return nullptr;
 }
 
 CFG *testIR10()
 {
-	return nullptr;
+    return nullptr;
 }
 
 CFG *testIR11()
 {
-	return nullptr;
+    return nullptr;
 }
 
 CFG *testIR12()
 {
-	return nullptr;
+    return nullptr;
 }
 
 CFG *testIR13()
 {
-	return nullptr;
+    return nullptr;
 }
 
 CFG *testIR14()
 {
-	return nullptr;
+    return nullptr;
 }
 
 CFG *testIR15()
 {
-	return nullptr;
+    return nullptr;
 }

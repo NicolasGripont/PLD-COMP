@@ -8,7 +8,9 @@ class UnaryOperatorExpression : public Expression
 public:
 	UnaryOperatorExpression(Expression* _expr, int _op);
 	virtual ~UnaryOperatorExpression();
-	virtual std::string toString() const;
+
+    std::string toString() const;
+    void buildIR(CFG * cfg) const;
 	
 private:
 	Expression* expr;

@@ -34,3 +34,8 @@ std::string DeclarationFunction::toString() const
 std::string DeclarationFunction::getId() const {
     return id;
 }
+
+void DeclarationFunction::buildIR(CFG *cfg) const
+{
+
+}

@@ -36,6 +36,11 @@ std::string Argument::toString() const
     return txt;
 }
 
+void Argument::buildIR(CFG *cfg) const
+{
+
+}
+
 Type* Argument::getType()
 {
     return type;

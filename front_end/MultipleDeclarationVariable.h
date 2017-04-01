@@ -7,12 +7,15 @@
 #include "Type.h"
 #include "Printable.h"
 
-class MultipleDeclarationVariable : public Printable
+class MultipleDeclarationVariable : public Printable, IRTranslatable
 {
 public:
     MultipleDeclarationVariable();
     virtual ~MultipleDeclarationVariable();
-    virtual std::string toString() const;
+
+    std::string toString() const;
+    void buildIR(CFG * cfg) const;
+
     void addDeclarationVariable(DeclarationVariable* dec);
     void setType(Type* t);
     int countDeclaration();

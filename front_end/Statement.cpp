@@ -16,5 +16,10 @@ Statement::~Statement()
 
 std::string Statement::toString() const
 {
-	return "{" + multipleStatement->toString() + "}";
+    return "{" + multipleStatement->toString() + "}";
+}
+
+void Statement::buildIR(CFG *cfg) const
+{
+
 }

@@ -41,3 +41,8 @@ std::string DeclarationVariable::toString() const
     }
     return "ERROR_DeclarationVariable";
 }
+
+void DeclarationVariable::buildIR(CFG *cfg) const
+{
+
+}

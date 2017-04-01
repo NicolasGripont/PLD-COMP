@@ -3,13 +3,17 @@
 
 #include "Type.h"
 #include "Printable.h"
+#include "IRTranslatable.h"
 
-class Argument : public Printable
+class Argument : public Printable, IRTranslatable
 {
 public:
     Argument(Type* _type, char* _id = nullptr, bool _array = false);
     virtual ~Argument();
-    virtual std::string toString() const;
+
+    std::string toString() const;
+    void buildIR(CFG * cfg) const;
+
     Type* getType();
     char* getName();
     bool isArray();

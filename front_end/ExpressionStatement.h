@@ -9,7 +9,9 @@ class ExpressionStatement : public SimpleStatement
 public:
     ExpressionStatement(Expression* _expr);
     virtual ~ExpressionStatement();
-	virtual std::string toString() const;
+
+    std::string toString() const;
+    void buildIR(CFG * cfg) const;
 	
 private:
     Expression* expr;

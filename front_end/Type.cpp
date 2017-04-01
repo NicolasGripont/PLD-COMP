@@ -37,5 +37,10 @@ std::string Type::toString() const
         default:  
             typeStr += "ERROR_Type";  
     }  
-	return typeStr;
+    return typeStr;
+}
+
+void Type::buildIR(CFG *cfg) const
+{
+
 }

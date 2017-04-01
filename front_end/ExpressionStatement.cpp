@@ -16,5 +16,10 @@ ExpressionStatement::~ExpressionStatement()
 
 std::string ExpressionStatement::toString() const
 {
-	return expr->toString() + "; ";
+    return expr->toString() + "; ";
+}
+
+void ExpressionStatement::buildIR(CFG *cfg) const
+{
+
 }

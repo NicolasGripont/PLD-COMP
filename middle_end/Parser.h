@@ -20,12 +20,14 @@ public:
     ~Parser();
 
     void generateIR(Genesis * genesis);
-    void addNewSymbolInTable(GlobalDeclarationVariable *declaration);
+
+private:
+    void handleNewSymbolInTable(GlobalDeclarationVariable *declaration);
+    void addSymbolToTable(Symbol* symbol);
+
     void addNewFunctionInTable(CFG *controllFlowGraph);
     void generateCFG(DeclarationFunction * declaration);
-    void parseFunctionStatement(BasicBlock* prologue, BasicBlock* epilogue, InitFunctionStatement *statement);
-private:
-	void addSymbolToTable(Symbol* symbol);
+
     std::map <std::string, Symbol*> symbolTable;
     std::map<std::string,CFG*> functionCFG;     //std::map<nom_de_fonction, CFG_de_la_fonction>
     int offset = 0;

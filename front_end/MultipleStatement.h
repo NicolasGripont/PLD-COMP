@@ -6,12 +6,14 @@
 #include "SimpleStatement.h"
 #include "Printable.h"
 
-class MultipleStatement : public Printable
+class MultipleStatement : public Printable, IRTranslatable
 {
 public:
     MultipleStatement();
     virtual ~MultipleStatement();
-	virtual std::string toString() const;
+
+    std::string toString() const;
+    void buildIR(CFG * cfg) const;
 
     void addStatement(SimpleStatement* statement);
     int countStatements();

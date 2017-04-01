@@ -27,5 +27,10 @@ std::string FunctionCallExpression::toString() const
 	{
 		exprStr = expr->toString();
 	}
-	return std::string(id) + "(" + exprStr + ")";
+    return std::string(id) + "(" + exprStr + ")";
+}
+
+void FunctionCallExpression::buildIR(CFG *cfg) const
+{
+
 }

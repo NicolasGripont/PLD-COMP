@@ -16,7 +16,12 @@ InitFunctionStatement::~InitFunctionStatement()
 
 std::string InitFunctionStatement::toString() const
 {
-	return "{" + multipleStatement->toString() + "}";
+    return "{" + multipleStatement->toString() + "}";
+}
+
+void InitFunctionStatement::buildIR(CFG *cfg) const
+{
+
 }
 
 int InitFunctionStatement::countStatements()

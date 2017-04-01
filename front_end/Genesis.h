@@ -6,12 +6,15 @@
 #include "Declaration.h"
 #include "Printable.h"
 
-class Genesis : public Printable
+class Genesis : public Printable, IRTranslatable
 {
 public:
     Genesis();
     virtual ~Genesis();
-	virtual std::string toString() const;
+
+    std::string toString() const;
+    void buildIR(CFG * cfg) const;
+
     void addDeclaration(Declaration* declaration);
     int countDeclaration();
 
