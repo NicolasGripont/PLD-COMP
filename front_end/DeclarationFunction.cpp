@@ -57,9 +57,13 @@ void DeclarationFunction::buildIR(CFG * cfg) const
 
     // Build IR de l'AST
     InitFunctionStatement * state = dynamic_cast<InitFunctionStatement*>(decFunctionStatement);
-    if(state == nullptr)
+    if(state != nullptr)
     {
         state->buildIR(cfg);
+    }
+    else
+    {
+        std::cout << "Error initFunctionState == nullptr " << std::endl;
     }
 
     // CReation epilog

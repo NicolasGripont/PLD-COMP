@@ -11,6 +11,7 @@ public:
     int getType() const;
     int getOffset() const;
     void setOffset(int);
+
 private:
     std::string name;
     int type;

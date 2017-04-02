@@ -14,7 +14,7 @@ BACKEND = back_end
 DEPS_FRONTEND = $(shell ls $(FRONTEND)/*)
 DEPS_MIDDLEEND = $(shell ls $(MIDDLEEND)/*)
 DEPS_BACKEND = $(shell ls $(BACKEND)/*)
-CFLAGS = -std=c++11 -DYYDEBUG
+CFLAGS = -g3 -std=c++11 -DYYDEBUG
 
 all: comp
 

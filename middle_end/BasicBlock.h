@@ -34,8 +34,8 @@ class BasicBlock
     std::string toString() const;
 
     void addIRInstruction(const IRInstruction *instruction);
-    const BasicBlock *getExitTrue() const;
-    const BasicBlock *getExitFalse() const;
+    BasicBlock *getExitTrue() const;
+    BasicBlock *getExitFalse() const;
     const std::string & getLabel() const;
 
     const CFG *getCFG() const;

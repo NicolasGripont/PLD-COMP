@@ -3,7 +3,7 @@
 #include "IRInstruction.h"
 
 BasicBlock::BasicBlock(int lvl, CFG *_cfg, std::string _entry_label)
-    : cfg(_cfg), label(_entry_label), level(lvl)
+    : cfg(_cfg), label(_entry_label), level(lvl), indexTempVariable(0)
 {
     // Si on est au premier niveau on prend les globaux
     if(lvl == 0)
@@ -59,7 +59,14 @@ BasicBlock::~BasicBlock()
 
 std::string BasicBlock::toString() const
 {
-    return "";
+    std::string ret = " ________" + this->getLabel() + "\n/\n";
+
+    for(const IRInstruction * inst : instructions)
+    {
+        ret += inst->toString() + "\n";
+    }
+
+    return ret + "____________________\n\n";
 }
 
 void BasicBlock::addIRInstruction(const IRInstruction* instruction)
@@ -70,12 +77,12 @@ void BasicBlock::addIRInstruction(const IRInstruction* instruction)
     }
 }
 
-const BasicBlock *BasicBlock::getExitTrue() const
+BasicBlock *BasicBlock::getExitTrue() const
 {
     return exit_true;
 }
 
-const BasicBlock *BasicBlock::getExitFalse() const
+BasicBlock *BasicBlock::getExitFalse() const
 {
     return exit_false;
 }

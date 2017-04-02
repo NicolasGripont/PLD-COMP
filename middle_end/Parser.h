@@ -23,6 +23,8 @@ public:
 
     const std::map<std::string, const Symbol *> &getGlobalSymbolTable() const;
 
+    std::map<std::string, CFG *> getFunctionCFG() const;
+
 private:
     void handleNewSymbolInTable(GlobalDeclarationVariable *declaration);
     void addSymbolToTable(Symbol* symbol);

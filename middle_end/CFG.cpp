@@ -22,28 +22,19 @@ CFG::CFG() : function(nullptr)
 
 std::string CFG::toString() const
 {
-    std::string s = "";
+    std::string s = "___ " + this->getName() + " ___ \n";
 
     BasicBlock * current = rootBasicBlock;
-    BasicBlock * next;
-
 
     while(current != currentBasicBlock)
     {
-        next = current->getExitFalse();
-        if(next != nullptr)
-        {
-            s += next->toString();
-        }
-        else
-        {
-            next = current->getExitTrue();
-            s += next->toString();
-            current = next;
-        }
+        s += current->toString();
+        current = current->getExitTrue();
     }
 
-    return "not implemented";
+    s += current->toString();
+
+    return s;
 }
 
 BasicBlock * CFG::createNewBasicBlock(int level, const std::string &bbName)
@@ -125,7 +116,7 @@ int CFG::getOffsetFromCurrentBasicBlock() const
 
 std::string CFG::getTempVariableName()
 {
-    currentBasicBlock->getTempVariableName();
+    return currentBasicBlock->getTempVariableName();
 }
 
 void CFG::addSymbolToCurrentBasicBlock(const Symbol *symbole)

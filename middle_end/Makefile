@@ -7,7 +7,7 @@ default: all
 
 SRC = $(shell ls *.cpp)
 OBJ = $(SRC:.cpp=.o)
-CFLAGS = -std=c++11 -DYYDEBUG
+CFLAGS = -g3 -std=c++11 -DYYDEBUG
 
 all: $(OBJ)
 

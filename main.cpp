@@ -11,6 +11,7 @@
 
 int main(int argc, char* argv[])
 {
+    std::cout << "-> Print du programme \n" << std::endl;
     /* Bison */
     Genesis* genesis = bison(argc, argv);
 
@@ -23,10 +24,8 @@ int main(int argc, char* argv[])
     Parser astToIRParser;
     astToIRParser.generateIR(genesis);
 
-	if (genesis != nullptr)
-	{
-		delete genesis;
-	}
+    std::cout << "\n-> Print de l'IR \n" << std::endl;
+    std::cout << astToIRParser.getFunctionCFG().find("main")->second << std::endl;
 
 //	/* Backend Intel */
 //	Intel* intel = new Intel("intel");
@@ -35,6 +34,11 @@ int main(int argc, char* argv[])
 //	intel->compile();
 
 //	delete intel;
+
+    if (genesis != nullptr)
+    {
+        delete genesis;
+    }
 
     return 0;
 }

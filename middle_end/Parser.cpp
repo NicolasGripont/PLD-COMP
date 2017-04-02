@@ -65,6 +65,11 @@ void Parser::generateCFG(DeclarationFunction * declaration)
     addNewFunctionInTable(controllFlowGraph);
 }
 
+std::map<std::string, CFG *> Parser::getFunctionCFG() const
+{
+    return functionCFG;
+}
+
 const std::map<std::string, const Symbol *> & Parser::getGlobalSymbolTable() const
 {
     return globalSymbolTable;
