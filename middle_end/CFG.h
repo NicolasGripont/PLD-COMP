@@ -36,29 +36,31 @@ public:
 
     virtual std::string toString() const;
 
-    BasicBlock *createNewBasicBlock(const std::string & bbName);
-    BasicBlock *createNewBasicBlock();
+    BasicBlock *createNewBasicBlock(int level, const std::string & bbName);
+    BasicBlock *createNewBasicBlock(int level);
     void addSymbol(Symbol* symbol);
 
     // symbol table methods
     const Symbol * getSymbol(std::string name) const;
 
     const std::map <std::string,const Symbol*> * getSymbolTableFromLevel(int level) const;
+    void setlastBasicBlockFromLevel(int level,BasicBlock* block);
 
     const std::map <std::string, const Symbol*> & getSymbolsTable() const;
 
     std::string getName() const;
+    std::string getUsableBasicBlockName();
 
     void setCurrentBasicBlock(BasicBlock * bb);
     void setCurrentBasicBlockExitTrue(BasicBlock * bb);
     void setCurrentBasicBlockExitFalse(BasicBlock * bb);
 
+    void attachNewBasicBlock(BasicBlock * block);
 
     void setRootBasicBlock(BasicBlock * block);
     const BasicBlock * getRootBasicBlock() const;
 
 private:
-    std::string getUsableBasicBlockName();
     int nextBBnumber;    /**< just for naming */
 
     DeclarationFunction * function;

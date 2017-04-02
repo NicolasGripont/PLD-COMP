@@ -7,7 +7,7 @@
 #include "Type.h"
 #include "Printable.h"
 
-class MultipleDeclarationVariable : public Printable, IRTranslatable
+class MultipleDeclarationVariable : public Printable, public IRTranslatable
 {
 public:
     MultipleDeclarationVariable();

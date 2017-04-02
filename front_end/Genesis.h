@@ -6,7 +6,7 @@
 #include "Declaration.h"
 #include "Printable.h"
 
-class Genesis : public Printable, IRTranslatable
+class Genesis : public Printable, public IRTranslatable
 {
 public:
     Genesis();

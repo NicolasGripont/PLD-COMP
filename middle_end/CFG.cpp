@@ -30,16 +30,18 @@ std::string CFG::toString() const
     return "not implemented";
 }
 
-BasicBlock * CFG::createNewBasicBlock(const std::string &bbName)
+BasicBlock * CFG::createNewBasicBlock(int level, const std::string &bbName)
 {
-    BasicBlock * bb = new BasicBlock(this,bbName);
+    BasicBlock * bb = new BasicBlock(level,this,bbName);
+    setlastBasicBlockFromLevel(level,bb);
     return bb;
 }
 
 
-BasicBlock * CFG::createNewBasicBlock()
+BasicBlock * CFG::createNewBasicBlock(int level)
 {
-    BasicBlock * bb = new BasicBlock(this,getUsableBasicBlockName());
+    BasicBlock * bb = new BasicBlock(level,this,getUsableBasicBlockName());
+    setlastBasicBlockFromLevel(level,bb);
     return bb;
 }
 
@@ -69,6 +71,11 @@ const std::map<std::string, const Symbol *> * CFG::getSymbolTableFromLevel(int l
 
 }
 
+void CFG::setlastBasicBlockFromLevel(int level, BasicBlock *block)
+{
+    lastBasicBlockbyLevel.insert(std::pair<int, BasicBlock *>(level,block));
+}
+
 const std::map <std::string, const Symbol*> & CFG::getSymbolsTable() const
 {
     return symbolsTable;
@@ -78,6 +85,11 @@ std::string CFG::getName() const {
     if(function != nullptr)
         return function->getId();
     return "undefined";
+}
+
+std::string CFG::getUsableBasicBlockName()
+{
+    return "BB_" + std::to_string(nextBBnumber++);
 }
 
 void CFG::setCurrentBasicBlock(BasicBlock *bb)
@@ -95,6 +107,12 @@ void CFG::setCurrentBasicBlockExitFalse(BasicBlock *bb)
     currentBasicBlock->setExitFalse(bb);
 }
 
+void CFG::attachNewBasicBlock(BasicBlock *block)
+{
+    setCurrentBasicBlockExitTrue(block);
+    setCurrentBasicBlock(block);
+}
+
 void CFG::setRootBasicBlock(BasicBlock *block)
 {
     rootBasicBlock = block;
@@ -105,7 +123,3 @@ const BasicBlock *CFG::getRootBasicBlock() const
     return rootBasicBlock;
 }
 
-std::string CFG::getUsableBasicBlockName()
-{
-    return "BB_" + std::to_string(nextBBnumber++);
-}

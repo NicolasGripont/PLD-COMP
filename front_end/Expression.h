@@ -9,7 +9,7 @@
 const int EXPRESSION_TYPE_UNDEFINED = -1;
 const int EXPRESSION_TYPE_CONFLICT = -2;
 
-class Expression : public Printable, IRTranslatable
+class Expression : public Printable, public IRTranslatable
 {
 public:
     Expression();

@@ -15,7 +15,6 @@ public:
     void buildIR(CFG * cfg) const;
 
     int countStatements();
-
     SimpleStatement*& operator[] (int i);
 
 private:

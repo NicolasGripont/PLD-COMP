@@ -2,10 +2,41 @@
 #include "CFG.h"
 #include "IRInstruction.h"
 
-BasicBlock::BasicBlock(CFG *_cfg, std::string _entry_label)
-    : cfg(_cfg), label(_entry_label)
+BasicBlock::BasicBlock(int lvl, CFG *_cfg, std::string _entry_label)
+    : cfg(_cfg), label(_entry_label), level(lvl)
 {
-    localSymbolsTable = cfg->getSymbolsTable();
+    // Si on est au premier niveau on prend les globaux
+    if(lvl == 0)
+    {
+        localSymbolsTable = cfg->getSymbolsTable();
+    }
+    // sinon on va prendre le context d'avant (qui contiendra donc les globaux)
+    else
+    {
+        auto previousContextSymbolTable = cfg->getSymbolTableFromLevel(lvl);
+
+        // Si on est pas le premier bloc du niveau, on prend le context d'avant
+        if(previousContextSymbolTable != nullptr)
+        {
+            for(auto pair : *previousContextSymbolTable)
+            {
+                localSymbolsTable.insert(pair);
+            }
+        }
+        // Sinon on prend le context du niveau d'au dessus
+        else
+        {
+            auto previousContextSymbolTable = cfg->getSymbolTableFromLevel(lvl - 1);
+
+            if(previousContextSymbolTable != nullptr)
+            {
+                for(auto pair : *previousContextSymbolTable)
+                {
+                    localSymbolsTable.insert(pair);
+                }
+            }
+        }
+    }
 
     exit_true = nullptr;
     exit_false = nullptr;
@@ -13,6 +44,18 @@ BasicBlock::BasicBlock(CFG *_cfg, std::string _entry_label)
 
 BasicBlock::~BasicBlock()
 {
+    for(auto & instr : instructions)
+    {
+        delete instr;
+    }
+
+    for(auto & pair : localSymbolsTable)
+    {
+        delete pair.second;
+    }
+
+    delete exit_true;
+    delete exit_false;
 }
 
 std::string BasicBlock::toString() const
@@ -24,7 +67,7 @@ void BasicBlock::addIRInstruction(IRInstruction* instruction)
 {
     if (instruction != nullptr)
     {
-	instructions.push_back(instruction);
+        instructions.push_back(instruction);
     }
 }
 
@@ -79,3 +122,7 @@ void BasicBlock::addLocalSymbol(const Symbol * sym)
     localSymbolsTable.insert(std::pair<std::string,const Symbol *>(sym->getName(), sym));
 }
 
+int BasicBlock::getLevel() const
+{
+    return level;
+}

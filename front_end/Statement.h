@@ -4,7 +4,7 @@
 #include "MultipleStatement.h"
 #include "Printable.h"
 
-class Statement : public Printable, IRTranslatable
+class Statement : public Printable, public IRTranslatable
 {
 public:
     Statement(MultipleStatement* _multipleStatement);

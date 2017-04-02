@@ -5,7 +5,7 @@
 #include "IRTranslatable.h"
 #include "Enumeration.h"
 
-class Type : public Printable, IRTranslatable
+class Type : public Printable, public IRTranslatable
 {
 public:
     Type(int _type);

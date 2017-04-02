@@ -1,4 +1,5 @@
 #include "BlockDeclarationVariable.h"
+#include "../middle_end/CFG.h"
 
 BlockDeclarationVariable::BlockDeclarationVariable(MultipleDeclarationVariable* _multipleDeclarationVariable)
     : SimpleStatement(BLOCK_DECLARATION_VARIABLE), multipleDeclarationVariable(_multipleDeclarationVariable)

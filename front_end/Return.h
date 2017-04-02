@@ -4,7 +4,7 @@
 #include "Expression.h"
 #include "Printable.h"
 
-class Return : public Printable, IRTranslatable
+class Return : public Printable, public IRTranslatable
 {
 public:
 	Return(Expression* _expr);

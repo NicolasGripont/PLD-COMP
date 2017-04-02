@@ -41,8 +41,9 @@ std::string DeclarationFunction::getId() const {
 void DeclarationFunction::buildIR(CFG * cfg) const
 {
     // Creation prolog
-    BasicBlock * basicProlog = cfg->createNewBasicBlock("prolog_" + getId());
+    BasicBlock * basicProlog = cfg->createNewBasicBlock(0,"prolog_" + getId());
     cfg->setCurrentBasicBlock(basicProlog);
+    cfg->setRootBasicBlock(basicProlog);
 
     for(Argument *  arg : argumentList->getArguments())
     {
@@ -62,9 +63,6 @@ void DeclarationFunction::buildIR(CFG * cfg) const
     }
 
     // CReation epilog
-    BasicBlock * basicEpilog = cfg->createNewBasicBlock("epilog_" + getId());
-    cfg->setCurrentBasicBlockExitTrue(basicEpilog);
-    cfg->setCurrentBasicBlock(basicEpilog);
-
-
+    BasicBlock * basicEpilog = cfg->createNewBasicBlock(0,"epilog_" + getId());
+    cfg->attachNewBasicBlock(basicEpilog);
 }

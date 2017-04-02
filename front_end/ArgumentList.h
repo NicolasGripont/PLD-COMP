@@ -7,7 +7,7 @@
 #include "IRTranslatable.h"
 #include "Argument.h"
 
-class ArgumentList : public Printable, IRTranslatable
+class ArgumentList : public Printable, public IRTranslatable
 {
 public:
     ArgumentList();

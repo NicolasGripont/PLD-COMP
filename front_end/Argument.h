@@ -5,7 +5,7 @@
 #include "Printable.h"
 #include "IRTranslatable.h"
 
-class Argument : public Printable, IRTranslatable
+class Argument : public Printable, public IRTranslatable
 {
 public:
     Argument(Type* _type, char* _id = nullptr, bool _array = false);

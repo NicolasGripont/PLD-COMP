@@ -4,7 +4,7 @@
 #include "Expression.h"
 #include "Printable.h"
 
-class LoopExpression : public Printable, IRTranslatable
+class LoopExpression : public Printable, public IRTranslatable
 {
 public:
     LoopExpression(Expression* _expr);

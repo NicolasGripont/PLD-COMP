@@ -5,7 +5,7 @@
 #include "Printable.h"
 #include "IRTranslatable.h"
 
-class SimpleStatement : public Printable, IRTranslatable
+class SimpleStatement : public Printable, public IRTranslatable
 {
 public:
 	SimpleStatement(SimpleStatementType _type);

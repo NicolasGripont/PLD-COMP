@@ -28,7 +28,7 @@ class IRInstruction;
 class BasicBlock
 {
   public:
-    BasicBlock(CFG *cfg, std::string entry_label);
+    BasicBlock(int lvl, CFG *cfg, std::string entry_label);
     virtual ~BasicBlock();
 
     std::string toString() const;
@@ -54,10 +54,13 @@ class BasicBlock
 
     void addLocalSymbol(const Symbol * sym);
 
+    int getLevel() const;
+
 protected:
     BasicBlock *exit_true;  /**< pointer to the next basic block, true branch. If nullptr, return from procedure */
     BasicBlock *exit_false; /**< pointer to the next basic block, false branch. If nullptr, the basic block ends with an unconditional jump */
     std::string label;      /**< label of the BB, also will be the label in the generated code */
+    int level;
     CFG * cfg;		    /** < the CFG where this block belongs */
     std::vector<IRInstruction *> instructions;
     std::map<std::string, const Symbol*> localSymbolsTable;

@@ -1,9 +1,9 @@
 #include "MultipleStatement.h"
 
-MultipleStatement::MultipleStatement() : Printable()
-{
+#include "../middle_end/CFG.h"
 
-}
+MultipleStatement::MultipleStatement()
+{}
 
 MultipleStatement::~MultipleStatement()
 {
@@ -20,9 +20,9 @@ std::string MultipleStatement::toString() const
 {
 	std::string txt = "";
 
-	for (unsigned int i = 0; i < statements.size(); ++i)
+    for(SimpleStatement * state : statements)
     {
-        txt += statements.at(i)->toString();
+        txt += state->toString();
     }
 
     return txt;
@@ -30,7 +30,10 @@ std::string MultipleStatement::toString() const
 
 void MultipleStatement::buildIR(CFG *cfg) const
 {
-
+    for(SimpleStatement * state : statements)
+    {
+        state->buildIR(cfg);
+    }
 }
 
 void MultipleStatement::addStatement(SimpleStatement* statement)
@@ -46,4 +49,9 @@ int MultipleStatement::countStatements()
 SimpleStatement*& MultipleStatement::operator[] (int i)
 {
     return statements[i];
+}
+
+const std::vector<SimpleStatement *> &MultipleStatement::getStatements()
+{
+    return statements;
 }

@@ -4,9 +4,10 @@
 #include <vector>
 
 #include "SimpleStatement.h"
+#include "IRTranslatable.h"
 #include "Printable.h"
 
-class MultipleStatement : public Printable, IRTranslatable
+class MultipleStatement : public Printable, public IRTranslatable
 {
 public:
     MultipleStatement();
@@ -19,6 +20,8 @@ public:
     int countStatements();
 
     SimpleStatement*& operator[] (int i);
+
+    const std::vector<SimpleStatement*> & getStatements();
 
 private:
     std::vector<SimpleStatement*> statements;

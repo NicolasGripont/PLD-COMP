@@ -4,7 +4,7 @@
 #include "Printable.h"
 #include "IRTranslatable.h"
 
-class DeclarationVariable : public Printable, IRTranslatable
+class DeclarationVariable : public Printable, public IRTranslatable
 {
 public:
     DeclarationVariable(char* _id, bool _array);

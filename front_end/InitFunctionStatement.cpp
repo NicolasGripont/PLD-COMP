@@ -1,5 +1,8 @@
 #include "InitFunctionStatement.h"
 
+#include "../middle_end/BasicBlock.h"
+#include "../middle_end/CFG.h"
+
 InitFunctionStatement::InitFunctionStatement(MultipleStatement* _multipleStatement)
     : DeclarationFunctionStatement(false), multipleStatement(_multipleStatement)
 {
@@ -21,7 +24,10 @@ std::string InitFunctionStatement::toString() const
 
 void InitFunctionStatement::buildIR(CFG *cfg) const
 {
+    BasicBlock * block = cfg->createNewBasicBlock(0,cfg->getUsableBasicBlockName());
+    cfg->attachNewBasicBlock(block);
 
+    multipleStatement->buildIR(cfg);
 }
 
 int InitFunctionStatement::countStatements()

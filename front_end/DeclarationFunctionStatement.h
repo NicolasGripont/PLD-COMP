@@ -4,7 +4,7 @@
 #include "Printable.h"
 #include "IRTranslatable.h"
 
-class DeclarationFunctionStatement : public Printable, IRTranslatable
+class DeclarationFunctionStatement : public Printable, public IRTranslatable
 {
 public:
 	DeclarationFunctionStatement(bool _declaration);

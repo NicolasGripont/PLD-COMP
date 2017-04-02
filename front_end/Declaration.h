@@ -10,13 +10,11 @@ enum DeclarationType
     DECLARATION_FUNCTION
 };
 
-class Declaration : public Printable, IRTranslatable
+class Declaration : public Printable, public IRTranslatable
 {
 public:
     Declaration(DeclarationType _type);
     virtual ~Declaration();
-
-    void buildIR(CFG * cfg) const;
 
     DeclarationType getType();
 
