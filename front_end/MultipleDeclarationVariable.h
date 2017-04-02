@@ -19,7 +19,7 @@ public:
     void addDeclarationVariable(DeclarationVariable* dec);
     void setType(Type* t);
     int countDeclaration();
-    Type* getType();
+    Type* getType() const;
 
     DeclarationVariable*& operator[] (int i);
 

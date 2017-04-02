@@ -37,7 +37,6 @@ BasicBlock::BasicBlock(int lvl, CFG *_cfg, std::string _entry_label)
             }
         }
     }
-
     exit_true = nullptr;
     exit_false = nullptr;
 }
@@ -63,7 +62,7 @@ std::string BasicBlock::toString() const
     return "";
 }
 
-void BasicBlock::addIRInstruction(IRInstruction* instruction)
+void BasicBlock::addIRInstruction(const IRInstruction* instruction)
 {
     if (instruction != nullptr)
     {
@@ -91,7 +90,7 @@ const CFG *BasicBlock::getCFG() const
     return cfg;
 }
 
-const std::vector<IRInstruction *> &BasicBlock::getInstructions() const
+const std::vector<const IRInstruction *> & BasicBlock::getInstructions() const
 {
     return instructions;
 }
@@ -104,6 +103,11 @@ void BasicBlock::setExitTrue(BasicBlock *_bbExitTrue)
 void BasicBlock::setExitFalse(BasicBlock *_bbExitFalse)
 {
     exit_false = _bbExitFalse;
+}
+
+std::string BasicBlock::getTempVariableName()
+{
+    return label + "_tmp_" + std::to_string(indexTempVariable++);
 }
 
 int BasicBlock::getPrologMaximalOffset() const

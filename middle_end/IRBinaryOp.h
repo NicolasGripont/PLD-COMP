@@ -3,10 +3,10 @@
 
 #include <string>
 
-#include "IRInstruction.h"
+#include "IROperationWithDestination.h"
 #include "Symbol.h"
 
-class IRBinaryOp : public IRInstruction
+class IRBinaryOp : public IROperationWithDestination
 {
 public:
     enum class Type {
@@ -16,7 +16,7 @@ public:
         DIV
     };
 
-    IRBinaryOp(IRBinaryOp::Type _type, Symbol *op_1, Symbol *op_2, Symbol *op_3);
+    IRBinaryOp(IRBinaryOp::Type _type, Symbol *dest, Symbol *op_1, Symbol *op_2);
     ~IRBinaryOp();
 
     std::string toString() const;
@@ -25,14 +25,12 @@ public:
 
     Symbol *getOperand_1() const;
     Symbol *getOperand_2() const;
-    Symbol *getOperand_3() const;
 
 private:
     Type type;
 
     Symbol * operand_1 = nullptr;
     Symbol * operand_2 = nullptr;
-    Symbol * operand_3 = nullptr;
 };
 
 #endif // IRBINARYOP_H

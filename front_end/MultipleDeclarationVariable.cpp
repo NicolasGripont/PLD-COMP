@@ -1,4 +1,9 @@
 #include "MultipleDeclarationVariable.h"
+#include "DeclarationInitVariable.h"
+
+#include "../middle_end/IRRWMemory.h"
+#include "../middle_end/CFG.h"
+#include "../middle_end/IROperationWithDestination.h"
 
 MultipleDeclarationVariable::MultipleDeclarationVariable() : Printable()
 {
@@ -38,7 +43,33 @@ std::string MultipleDeclarationVariable::toString() const
 
 void MultipleDeclarationVariable::buildIR(CFG *cfg) const
 {
+    for (DeclarationVariable * decl : declarationsVariables)
+    {
+        Symbol * destination = new Symbol(decl->getId(),this->getType()->getType(),cfg->getOffsetFromCurrentBasicBlock());
 
+        cfg->addSymbolToCurrentBasicBlock(destination);
+
+        if(!decl->isDeclaration())
+        {
+            DeclarationInitVariable * definition = dynamic_cast<DeclarationInitVariable*>(decl);
+
+            if(definition != nullptr)
+            {
+                definition->getExpr()->buildIR(cfg); // On doit récupérer le résultat de l'expression
+                // et donc la derière instruction.
+
+                const IROperationWithDestination * irOp = dynamic_cast<const IROperationWithDestination*>
+                        (cfg->getCurrentBasicBlock()->getInstructions().back());
+
+                if(irOp != nullptr)
+                {
+                    Symbol * source = irOp->getDestination();
+                    IRRWMemory * instruction = new IRRWMemory(IRRWMemory::Type::WRITE_MEMORY,destination,source);
+                    cfg->addInstructionInCurrentBasicBlock(instruction);
+                }
+            }
+        }
+    }
 }
 
 void MultipleDeclarationVariable::addDeclarationVariable(DeclarationVariable* dec)
@@ -51,7 +82,7 @@ void MultipleDeclarationVariable::setType(Type* t)
     type = t;
 }
 
-Type* MultipleDeclarationVariable::getType()
+Type* MultipleDeclarationVariable::getType() const
 {
     return type;
 }

@@ -33,6 +33,6 @@ std::string IRCall::toString() const
 			paramsStr += s->getName() + ", ";
 		}
 	}
-	std::string res = "call " + name + "(" + + ")";
+    std::string res = "CALL " + name + "(" + + ")";
 	return res;
 }

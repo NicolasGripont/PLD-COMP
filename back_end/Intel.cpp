@@ -16,7 +16,7 @@ void Intel::parse(CFG* _cfg)
     cfg = _cfg;
 
     std::string label;
-    std::vector<IRInstruction*> instructions;
+    std::vector<const IRInstruction*> instructions;
 
     const BasicBlock* block = cfg->getRootBasicBlock();
 
@@ -43,9 +43,9 @@ void Intel::parse(CFG* _cfg)
         else // Other
         {
             instructions = block->getInstructions();
-            for (std::vector<IRInstruction*>::iterator iri = instructions.begin() ; iri != instructions.end(); ++iri)
+            for (const IRInstruction* iri : instructions)
             {
-                IRInstruction::Type instruction = (*iri)->getOperation();
+                IRInstruction::Type instruction = iri->getOperation();
 
                 switch (instruction)
                 {

@@ -1,4 +1,8 @@
 #include "DeclarationVariable.h"
+#include "../middle_end/BasicBlock.h"
+#include "../middle_end/CFG.h"
+#include "../middle_end/IRRWMemory.h"
+#include "../middle_end/Symbol.h"
 
 DeclarationVariable::DeclarationVariable(char *_id, bool _array)
     : Printable(), id(_id), array(_array), declaration(true)
@@ -42,7 +46,3 @@ std::string DeclarationVariable::toString() const
     return "ERROR_DeclarationVariable";
 }
 
-void DeclarationVariable::buildIR(CFG *cfg) const
-{
-
-}

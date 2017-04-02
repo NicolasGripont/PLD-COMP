@@ -1,16 +1,13 @@
 #include "IRBinaryOp.h"
 
-IRBinaryOp::IRBinaryOp(IRBinaryOp::Type _type, Symbol *op_1, Symbol *op_2, Symbol *op_3)
-    : IRInstruction(), type(_type), operand_1(op_1), operand_2(op_2), operand_3(op_3)
-{
-
-}
+IRBinaryOp::IRBinaryOp(IRBinaryOp::Type _type, Symbol *dest, Symbol *op_1, Symbol *op_2)
+    : IROperationWithDestination(dest), type(_type), operand_1(op_1), operand_2(op_2)
+{}
 
 IRBinaryOp::~IRBinaryOp()
 {
     delete operand_1;
     delete operand_2;
-    delete operand_3;
 }
 
 std::string IRBinaryOp::toString() const
@@ -20,19 +17,19 @@ std::string IRBinaryOp::toString() const
     switch(type)
     {
     case Type::ADD :
-        ret = operand_1->getName() + " <- " + operand_2->getName() + " + " + operand_3->getName();
+        ret = destination->getName() + " <- " + operand_1->getName() + " + " + operand_2->getName();
         break;
 
     case Type::SUB :
-        ret = operand_1->getName() + " <- " + operand_2->getName() + " - " + operand_3->getName();
+        ret = destination->getName() + " <- " + operand_1->getName() + " - " + operand_2->getName();
         break;
 
     case Type::DIV :
-        ret = operand_1->getName() + " <- " + operand_2->getName() + " / " + operand_3->getName();
+        ret = destination->getName() + " <- " + operand_1->getName() + " / " + operand_2->getName();
         break;
 
     case Type::MUL :
-        ret = operand_1->getName() + " <- " + operand_2->getName() + " * " + operand_3->getName();
+        ret = destination->getName() + " <- " + operand_1->getName() + " * " + operand_2->getName();
         break;
     }
 
@@ -54,7 +51,3 @@ Symbol *IRBinaryOp::getOperand_2() const
     return operand_2;
 }
 
-Symbol *IRBinaryOp::getOperand_3() const
-{
-    return operand_3;
-}

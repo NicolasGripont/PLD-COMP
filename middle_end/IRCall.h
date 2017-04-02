@@ -14,6 +14,7 @@ public:
     IRCall(BasicBlock* block, std::string name, Symbol *returnSymbol);
     ~IRCall();
     void addParameter(Symbol* symbol);
+
     std::string toString() const;
 
 protected:

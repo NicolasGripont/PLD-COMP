@@ -22,7 +22,7 @@ std::string BlockDeclarationVariable::toString() const
 
 void BlockDeclarationVariable::buildIR(CFG *cfg) const
 {
-
+    multipleDeclarationVariable->buildIR(cfg);
 }
 
 MultipleDeclarationVariable* BlockDeclarationVariable::getMultipleDeclarationVariable()

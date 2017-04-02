@@ -1,5 +1,7 @@
 #include "AssignmentVariable.h"
 
+#include "../middle_end/CFG.h"
+
 AssignmentVariable::AssignmentVariable(ExpressionVariable* _exprVar, Expression* _expr)
 	:Expression(),exprVar(_exprVar),expr(_expr)
 {
@@ -35,5 +37,10 @@ AssignmentVariable::~AssignmentVariable()
 std::string AssignmentVariable::toString() const
 {
     return exprVar->toString() + " = " + expr->toString();
+}
+
+void AssignmentVariable::buildIR(CFG *cfg) const
+{
+
 }
 

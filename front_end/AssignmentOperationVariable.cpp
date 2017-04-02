@@ -54,5 +54,10 @@ std::string AssignmentOperationVariable::toString() const
     return txt + expr->toString();
 }
 
+void AssignmentOperationVariable::buildIR(CFG *cfg) const
+{
+
+}
+
 
 

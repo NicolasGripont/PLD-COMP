@@ -7,12 +7,13 @@
 #include <vector>
 
 #include "Symbol.h"
-
+#include "../front_end/Printable.h"
 
 class Genesis;
 class Declaration;
 class GlobalDeclarationVariable;
 class DeclarationFunction;
+class IRInstruction;
 
 class Parser;
 class BasicBlock;
@@ -27,14 +28,14 @@ class BasicBlock;
 
  */
 
-class CFG
+class CFG : public Printable
 {
 public:
     CFG(const Parser * parser, DeclarationFunction * _function);
     CFG();
     ~CFG() = default;
 
-    virtual std::string toString() const;
+    std::string toString() const;
 
     BasicBlock *createNewBasicBlock(int level, const std::string & bbName);
     BasicBlock *createNewBasicBlock(int level);
@@ -44,7 +45,7 @@ public:
     const Symbol * getSymbol(std::string name) const;
 
     const std::map <std::string,const Symbol*> * getSymbolTableFromLevel(int level) const;
-    void setlastBasicBlockFromLevel(int level,BasicBlock* block);
+    void setLastBasicBlockFromLevel(int level,BasicBlock* block);
 
     const std::map <std::string, const Symbol*> & getSymbolsTable() const;
 
@@ -52,8 +53,15 @@ public:
     std::string getUsableBasicBlockName();
 
     void setCurrentBasicBlock(BasicBlock * bb);
+    const BasicBlock * getCurrentBasicBlock() const;
+
+    int getOffsetFromCurrentBasicBlock() const;
+    std::string getTempVariableName();
+    void addSymbolToCurrentBasicBlock(const Symbol * symbole);
+
     void setCurrentBasicBlockExitTrue(BasicBlock * bb);
     void setCurrentBasicBlockExitFalse(BasicBlock * bb);
+    void addInstructionInCurrentBasicBlock(const IRInstruction * instruction);
 
     void attachNewBasicBlock(BasicBlock * block);
 

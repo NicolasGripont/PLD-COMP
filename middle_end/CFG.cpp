@@ -5,6 +5,7 @@
 #include "../front_end/GlobalDeclarationVariable.h"
 #include "../front_end/DeclarationFunction.h"
 
+#include "IRInstruction.h"
 #include "BasicBlock.h"
 #include "Parser.h"
 
@@ -21,19 +22,34 @@ CFG::CFG() : function(nullptr)
 
 std::string CFG::toString() const
 {
-//    std::string s = "";
-//    for(BasicBlock * bb : blocks)
-//    {
-//        s += bb->toString();
-//        s += "\n";
-//    }
+    std::string s = "";
+
+    BasicBlock * current = rootBasicBlock;
+    BasicBlock * next;
+
+
+    while(current != currentBasicBlock)
+    {
+        next = current->getExitFalse();
+        if(next != nullptr)
+        {
+            s += next->toString();
+        }
+        else
+        {
+            next = current->getExitTrue();
+            s += next->toString();
+            current = next;
+        }
+    }
+
     return "not implemented";
 }
 
 BasicBlock * CFG::createNewBasicBlock(int level, const std::string &bbName)
 {
     BasicBlock * bb = new BasicBlock(level,this,bbName);
-    setlastBasicBlockFromLevel(level,bb);
+    setLastBasicBlockFromLevel(level,bb);
     return bb;
 }
 
@@ -41,7 +57,7 @@ BasicBlock * CFG::createNewBasicBlock(int level, const std::string &bbName)
 BasicBlock * CFG::createNewBasicBlock(int level)
 {
     BasicBlock * bb = new BasicBlock(level,this,getUsableBasicBlockName());
-    setlastBasicBlockFromLevel(level,bb);
+    setLastBasicBlockFromLevel(level,bb);
     return bb;
 }
 
@@ -71,7 +87,7 @@ const std::map<std::string, const Symbol *> * CFG::getSymbolTableFromLevel(int l
 
 }
 
-void CFG::setlastBasicBlockFromLevel(int level, BasicBlock *block)
+void CFG::setLastBasicBlockFromLevel(int level, BasicBlock *block)
 {
     lastBasicBlockbyLevel.insert(std::pair<int, BasicBlock *>(level,block));
 }
@@ -97,6 +113,26 @@ void CFG::setCurrentBasicBlock(BasicBlock *bb)
     currentBasicBlock = bb;
 }
 
+const BasicBlock * CFG::getCurrentBasicBlock() const
+{
+    return currentBasicBlock;
+}
+
+int CFG::getOffsetFromCurrentBasicBlock() const
+{
+    return currentBasicBlock->getLocalSymbolsTable().size();
+}
+
+std::string CFG::getTempVariableName()
+{
+    currentBasicBlock->getTempVariableName();
+}
+
+void CFG::addSymbolToCurrentBasicBlock(const Symbol *symbole)
+{
+    currentBasicBlock->addLocalSymbol(symbole);
+}
+
 void CFG::setCurrentBasicBlockExitTrue(BasicBlock *bb)
 {
     currentBasicBlock->setExitTrue(bb);
@@ -105,6 +141,11 @@ void CFG::setCurrentBasicBlockExitTrue(BasicBlock *bb)
 void CFG::setCurrentBasicBlockExitFalse(BasicBlock *bb)
 {
     currentBasicBlock->setExitFalse(bb);
+}
+
+void CFG::addInstructionInCurrentBasicBlock(const IRInstruction *instruction)
+{
+    currentBasicBlock->addIRInstruction(instruction);
 }
 
 void CFG::attachNewBasicBlock(BasicBlock *block)

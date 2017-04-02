@@ -11,6 +11,8 @@ public:
     IRJump(std::string lab);
     ~IRJump() = default;
 
+    std::string toString() const;
+
     std::string getLabel() const;
 
 private:

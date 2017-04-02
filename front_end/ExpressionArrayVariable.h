@@ -10,7 +10,9 @@ public:
 
 	ExpressionArrayVariable(char* _id, Expression* _expr, int _type);
 	virtual ~ExpressionArrayVariable();
-	virtual std::string toString() const;
+
+    virtual std::string toString() const;
+    virtual void buildIR(CFG* cfg) const;
 	
 private:
 	char* id;

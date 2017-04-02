@@ -2,9 +2,8 @@
 #define _DECLARATIONVARIABLE_H
 
 #include "Printable.h"
-#include "IRTranslatable.h"
 
-class DeclarationVariable : public Printable, public IRTranslatable
+class DeclarationVariable : public Printable
 {
 public:
     DeclarationVariable(char* _id, bool _array);
@@ -14,8 +13,6 @@ public:
     bool isDeclaration();
 
     std::string toString() const;
-
-    void buildIR(CFG * cfg) const;
 
 protected:
     char* id;

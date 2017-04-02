@@ -6,11 +6,6 @@ DeclarationArrayVariable::DeclarationArrayVariable(char* _id, int _size)
 
 }
 
-DeclarationArrayVariable::~DeclarationArrayVariable()
-{
-
-}
-
 std::string DeclarationArrayVariable::toString() const
 {
 	if(array) 

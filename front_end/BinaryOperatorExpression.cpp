@@ -109,4 +109,9 @@ std::string BinaryOperatorExpression::toString() const
     return txt + expr2->toString() + ")";
 }
 
+void BinaryOperatorExpression::buildIR(CFG *cfg) const
+{
+
+}
+
     

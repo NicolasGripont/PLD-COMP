@@ -13,11 +13,9 @@ class Expression : public Printable, public IRTranslatable
 {
 public:
     Expression();
-    virtual ~Expression();
+    virtual ~Expression() = default;
 
-    void buildIR(CFG * cfg) const;
-
-    int getType();
+    int getType() const;
     void setType(int _type);
 
     int getExpressionType();

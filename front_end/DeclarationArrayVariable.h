@@ -7,8 +7,8 @@ class DeclarationArrayVariable : public DeclarationVariable
 {
 public:
 	DeclarationArrayVariable(char* _id, int _size);
-	virtual ~DeclarationArrayVariable();
-	virtual std::string toString() const;
+    virtual ~DeclarationArrayVariable() = default;
+    std::string toString() const;
 	
 private:
 	int size;

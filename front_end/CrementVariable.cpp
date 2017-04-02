@@ -36,5 +36,10 @@ std::string CrementVariable::toString() const
 		txt = exprVar->toString() + crement;
 	}
 
-	return txt;
+    return txt;
+}
+
+void CrementVariable::buildIR(CFG *cfg) const
+{
+
 }

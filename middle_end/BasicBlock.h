@@ -33,18 +33,19 @@ class BasicBlock
 
     std::string toString() const;
 
-    void addIRInstruction(IRInstruction *instruction);
+    void addIRInstruction(const IRInstruction *instruction);
     const BasicBlock *getExitTrue() const;
     const BasicBlock *getExitFalse() const;
     const std::string & getLabel() const;
 
     const CFG *getCFG() const;
 
-    const std::vector<IRInstruction *> & getInstructions() const;
+    const std::vector<const IRInstruction *> & getInstructions() const;
 
-    // Utilisé dans les tests
     void setExitTrue(BasicBlock *_bbExitTrue);
     void setExitFalse(BasicBlock *_bbExitFalse);
+
+    std::string getTempVariableName();
 
     // Dans un BB prologue, on doit retourner la taille de l'AR de la fonction
 	// en octets
@@ -60,9 +61,12 @@ protected:
     BasicBlock *exit_true;  /**< pointer to the next basic block, true branch. If nullptr, return from procedure */
     BasicBlock *exit_false; /**< pointer to the next basic block, false branch. If nullptr, the basic block ends with an unconditional jump */
     std::string label;      /**< label of the BB, also will be the label in the generated code */
+
     int level;
+    int indexTempVariable;
+
     CFG * cfg;		    /** < the CFG where this block belongs */
-    std::vector<IRInstruction *> instructions;
+    std::vector<const IRInstruction *> instructions;
     std::map<std::string, const Symbol*> localSymbolsTable;
 };
 

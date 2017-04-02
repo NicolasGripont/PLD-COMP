@@ -20,5 +20,10 @@ ExpressionArrayVariable::~ExpressionArrayVariable()
 
 std::string ExpressionArrayVariable::toString() const
 {
-	return std::string(id) + "[" + expr->toString() + "]";
+    return std::string(id) + "[" + expr->toString() + "]";
+}
+
+void ExpressionArrayVariable::buildIR(CFG *cfg) const
+{
+
 }

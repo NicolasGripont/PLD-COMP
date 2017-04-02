@@ -6,17 +6,7 @@ Expression::Expression()
 
 }
 
-Expression::~Expression()
-{
-
-}
-
-void Expression::buildIR(CFG *cfg) const
-{
-
-}
-
-int Expression::getType()
+int Expression::getType() const
 {
     return type;
 }

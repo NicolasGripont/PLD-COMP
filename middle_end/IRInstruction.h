@@ -1,12 +1,14 @@
 #ifndef _IRINSTRUCTION_H
 #define _IRINSTRUCTION_H
 
-#include <iostream>
-
 #include "BasicBlock.h"
+
+#include "../front_end/Printable.h"
+
+#include <iostream>
 //! The class for one 3-address instruction
 
-class IRInstruction
+class IRInstruction : public Printable
 {
 public:
     enum class Type
@@ -20,7 +22,6 @@ public:
     IRInstruction();
     IRInstruction(BasicBlock* block, Type _type);
     virtual ~IRInstruction();
-    virtual std::string toString() const = 0;
 
     Type getOperation() const;
     BasicBlock * getBasicBlock() const;

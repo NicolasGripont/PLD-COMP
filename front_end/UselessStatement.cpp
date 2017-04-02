@@ -17,7 +17,5 @@ std::string UselessStatement::toString() const
 }
 
 void UselessStatement::buildIR(CFG *cfg) const
-{
-
-}
+{}
 

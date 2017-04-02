@@ -9,7 +9,9 @@ class AssignmentVariable : public Expression
 public:
 	AssignmentVariable(ExpressionVariable* _exprVar, Expression* _expr);
 	virtual ~AssignmentVariable();
-	virtual std::string toString() const;
+
+    std::string toString() const;
+    void buildIR(CFG* cfg) const;
 
 protected:
 	ExpressionVariable* exprVar;
