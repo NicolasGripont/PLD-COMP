@@ -12,6 +12,7 @@ public:
 
     virtual std::string toString() const;
     virtual void buildIR(CFG * cfg) const;
+    MultipleStatement* getMultipleStatement();
 
 private:
     MultipleStatement* multipleStatement;
