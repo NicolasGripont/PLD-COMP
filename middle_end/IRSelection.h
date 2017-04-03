@@ -15,7 +15,7 @@ public:
     IRSelection(BasicBlock* block, Symbol* condition, std::string ifLabel, std::string elseLabel = LABEL_NULL_NAME);
     ~IRSelection();
 
-    std::string toString() const;
+    virtual std::string toString() const;
 
     Symbol *getCondition() const;
     std::string getIfLabel() const;

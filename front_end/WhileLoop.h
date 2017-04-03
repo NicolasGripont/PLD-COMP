@@ -10,8 +10,8 @@ public:
     WhileLoop(Expression* _expr, Statement* _statement);
     virtual ~WhileLoop();
 
-    std::string toString() const;
-    void buildIR(CFG * cfg) const;
+    virtual std::string toString() const;
+    virtual void buildIR(CFG * cfg) const;
 
 private:
     Expression* expr;

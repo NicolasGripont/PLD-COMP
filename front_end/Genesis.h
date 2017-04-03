@@ -12,8 +12,8 @@ public:
     Genesis();
     virtual ~Genesis();
 
-    std::string toString() const;
-    void buildIR(CFG * cfg) const;
+    virtual std::string toString() const;
+    virtual void buildIR(CFG * cfg) const;
 
     void addDeclaration(Declaration* declaration);
     int countDeclaration();

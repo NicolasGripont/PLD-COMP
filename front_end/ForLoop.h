@@ -10,8 +10,8 @@ public:
     ForLoop(LoopExpression* _expr1, LoopExpression* _expr2, LoopExpression* _expr3, Statement* _statement);
 	virtual ~ForLoop();
 
-    std::string toString() const;
-    void buildIR(CFG * cfg) const;
+    virtual std::string toString() const;
+    virtual void buildIR(CFG * cfg) const;
 	
 private:
     LoopExpression* expr1;

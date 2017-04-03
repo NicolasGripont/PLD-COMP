@@ -123,7 +123,7 @@ int BasicBlock::getPrologMaximalOffset() const
     return 3*8;
 }
 
-const std::map<std::string, const Symbol *> &BasicBlock::getLocalSymbolsTable() const
+const std::map<const std::string, const Symbol *> &BasicBlock::getLocalSymbolsTable() const
 {
     return localSymbolsTable;
 }

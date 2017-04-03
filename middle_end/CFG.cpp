@@ -68,7 +68,7 @@ const Symbol* CFG::getSymbol(std::string name) const
         return nullptr;
 }
 
-const std::map<std::string, const Symbol *> * CFG::getSymbolTableFromLevel(int level) const
+const std::map<const std::string, const Symbol *> * CFG::getSymbolTableFromLevel(int level) const
 {
     auto bb = lastBasicBlockbyLevel.find(level);
     if(bb == lastBasicBlockbyLevel.end())
@@ -83,7 +83,7 @@ void CFG::setLastBasicBlockFromLevel(int level, BasicBlock *block)
     lastBasicBlockbyLevel.insert(std::pair<int, BasicBlock *>(level,block));
 }
 
-const std::map <std::string, const Symbol*> & CFG::getSymbolsTable() const
+const std::map <const std::string, const Symbol*> & CFG::getSymbolsTable() const
 {
     return symbolsTable;
 }

@@ -21,7 +21,8 @@ public:
 
     void generateIR(Genesis * genesis);
 
-    const std::map<std::string, const Symbol *> &getGlobalSymbolTable() const;
+    const std::map<const std::string, const int> &getGlobalValueTable() const;
+    const std::map<const std::string, const Symbol *> &getGlobalSymbolTable() const;
 
     std::map<std::string, CFG *> getFunctionCFG() const;
 

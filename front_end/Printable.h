@@ -10,7 +10,7 @@ class Printable
 public:
     Printable() = default;
     virtual ~Printable() = default;
-	virtual std::string toString() const = 0;
+    virtual std::string toString() const = 0;
 	friend std::ostream& operator<<(std::ostream& os, const Printable& dt);
 	friend std::ostream& operator<<(std::ostream& os, const Printable* dt);  
 };

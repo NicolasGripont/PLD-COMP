@@ -10,8 +10,8 @@ public:
 	ExpressionSimpleVariable(char* _id, int _type);
 	virtual ~ExpressionSimpleVariable();
 
-    std::string toString() const;
-    void buildIR(CFG * cfg) const;
+    virtual std::string toString() const;
+    virtual void buildIR(CFG * cfg) const;
 
 private:
 	char* id;

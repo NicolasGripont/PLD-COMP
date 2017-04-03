@@ -12,7 +12,7 @@ public:
     bool isArray();
     bool isDeclaration();
 
-    std::string toString() const;
+    virtual std::string toString() const;
 
 protected:
     char* id;

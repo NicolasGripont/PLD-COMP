@@ -10,7 +10,7 @@ public:
 	CrementVariable(ExpressionVariable* _exprVar, bool _increment, bool _preCrement);
 	virtual ~CrementVariable();
 
-	virtual std::string toString() const;
+    virtual std::string toString() const;
     virtual void buildIR(CFG* cfg) const;
 
 private:

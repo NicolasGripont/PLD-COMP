@@ -9,8 +9,8 @@ public:
 	FunctionCallExpression(char* _id, Expression* _expr, int _type);
 	virtual ~FunctionCallExpression();
 
-    std::string toString() const;
-    void buildIR(CFG * cfg) const;
+    virtual std::string toString() const;
+    virtual void buildIR(CFG * cfg) const;
 	
 private:
 	char* id;

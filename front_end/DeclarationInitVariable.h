@@ -9,7 +9,7 @@ class DeclarationInitVariable : public DeclarationVariable
 public:
 	DeclarationInitVariable(char* _id, Expression* _expr);
 	virtual ~DeclarationInitVariable();
-    std::string toString() const;
+    virtual std::string toString() const;
 
 	Expression* getExpr();
 private:

@@ -15,7 +15,7 @@ public:
     ~IRCall();
     void addParameter(Symbol* symbol);
 
-    std::string toString() const;
+    virtual std::string toString() const;
 
 protected:
 	std::string name;

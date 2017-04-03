@@ -35,7 +35,7 @@ public:
     CFG();
     ~CFG() = default;
 
-    std::string toString() const;
+    virtual std::string toString() const;
 
     BasicBlock *createNewBasicBlock(int level, const std::string & bbName);
     BasicBlock *createNewBasicBlock(int level);
@@ -44,10 +44,10 @@ public:
     // symbol table methods
     const Symbol * getSymbol(std::string name) const;
 
-    const std::map <std::string,const Symbol*> * getSymbolTableFromLevel(int level) const;
+    const std::map <const std::string,const Symbol*> * getSymbolTableFromLevel(int level) const;
     void setLastBasicBlockFromLevel(int level,BasicBlock* block);
 
-    const std::map <std::string, const Symbol*> & getSymbolsTable() const;
+    const std::map <const std::string, const Symbol*> & getSymbolsTable() const;
 
     std::string getName() const;
     std::string getUsableBasicBlockName();
@@ -73,7 +73,7 @@ private:
     int nextBBnumber;    /**< just for naming */
 
     DeclarationFunction * function;
-    std::map <std::string,const Symbol*> symbolsTable;
+    std::map <const std::string,const Symbol*> symbolsTable;
 
     BasicBlock * currentBasicBlock;
     BasicBlock * rootBasicBlock;

@@ -15,7 +15,7 @@ public:
     IRRWMemory(Type _type, Symbol* dest, Symbol* sour);
     ~IRRWMemory();
 
-    std::string toString() const;
+    virtual std::string toString() const;
 
     Type getType() const;
     Symbol* getSource() const;

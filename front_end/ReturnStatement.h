@@ -10,8 +10,8 @@ public:
     ReturnStatement(Return* _ret);
     virtual ~ReturnStatement();
 
-    std::string toString() const;
-    void buildIR(CFG * cfg) const;
+    virtual std::string toString() const;
+    virtual void buildIR(CFG * cfg) const;
 
 private:
     Return* ret;

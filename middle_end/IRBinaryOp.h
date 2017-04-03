@@ -19,7 +19,7 @@ public:
     IRBinaryOp(IRBinaryOp::Type _type, Symbol *dest, Symbol *op_1, Symbol *op_2);
     ~IRBinaryOp();
 
-    std::string toString() const;
+    virtual std::string toString() const;
 
     Type getType() const;
 

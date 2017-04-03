@@ -10,7 +10,7 @@ public:
 	AssignmentVariable(ExpressionVariable* _exprVar, Expression* _expr);
 	virtual ~AssignmentVariable();
 
-    std::string toString() const;
+    virtual std::string toString() const;
     void buildIR(CFG* cfg) const;
 
 protected:

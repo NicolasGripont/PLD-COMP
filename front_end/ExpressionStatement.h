@@ -10,8 +10,8 @@ public:
     ExpressionStatement(Expression* _expr);
     virtual ~ExpressionStatement();
 
-    std::string toString() const;
-    void buildIR(CFG * cfg) const;
+    virtual std::string toString() const;
+    virtual void buildIR(CFG * cfg) const;
 	
 private:
     Expression* expr;

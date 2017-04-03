@@ -31,7 +31,7 @@ class BasicBlock
     BasicBlock(int lvl, CFG *cfg, std::string entry_label);
     virtual ~BasicBlock();
 
-    std::string toString() const;
+    virtual std::string toString() const;
 
     void addIRInstruction(const IRInstruction *instruction);
     BasicBlock *getExitTrue() const;
@@ -51,7 +51,7 @@ class BasicBlock
 	// en octets
     int getPrologMaximalOffset() const;
 
-    const std::map<std::string, const Symbol *> & getLocalSymbolsTable() const;
+    const std::map<const std::string, const Symbol *> & getLocalSymbolsTable() const;
 
     void addLocalSymbol(const Symbol * sym);
 
@@ -67,7 +67,7 @@ protected:
 
     CFG * cfg;		    /** < the CFG where this block belongs */
     std::vector<const IRInstruction *> instructions;
-    std::map<std::string, const Symbol*> localSymbolsTable;
+    std::map<const std::string, const Symbol*> localSymbolsTable;
 };
 
 #endif

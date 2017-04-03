@@ -11,8 +11,8 @@ public:
     InitFunctionStatement(MultipleStatement* _multipleStatement);
     virtual ~InitFunctionStatement();
 
-    std::string toString() const;
-    void buildIR(CFG * cfg) const;
+    virtual std::string toString() const;
+    virtual void buildIR(CFG * cfg) const;
 
     int countStatements();
     SimpleStatement*& operator[] (int i);

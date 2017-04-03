@@ -9,8 +9,8 @@ public:
 	ExpressionInteger(int _value, int _type);
 	virtual ~ExpressionInteger();
 
-    std::string toString() const;
-    void buildIR(CFG * cfg) const;
+    virtual std::string toString() const;
+    virtual void buildIR(CFG * cfg) const;
 
 	int getValue();
 private:

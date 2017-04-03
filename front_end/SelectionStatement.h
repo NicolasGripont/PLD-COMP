@@ -11,8 +11,8 @@ public:
     SelectionStatement(Expression* _expr, Statement* _stat, Statement* _elseStat);
     virtual ~SelectionStatement();
 
-    std::string toString() const;
-    void buildIR(CFG * cfg) const;
+    virtual std::string toString() const;
+    virtual void buildIR(CFG * cfg) const;
 
 private:
     // Expression dans le if

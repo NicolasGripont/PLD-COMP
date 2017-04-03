@@ -10,7 +10,7 @@ public:
     BinaryOperatorExpression(Expression* _expr1, Expression* _expr2, int _op, int _type);
     virtual ~BinaryOperatorExpression();
 
-    std::string toString() const;
+    virtual std::string toString() const;
     void buildIR(CFG* cfg) const;
 
 private:

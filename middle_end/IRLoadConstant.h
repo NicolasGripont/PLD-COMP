@@ -10,7 +10,7 @@ public:
     IRLoadConstant(Symbol * dest,int val);
     ~IRLoadConstant();
 
-    std::string toString() const;
+    virtual std::string toString() const;
 
 private:
     int value;

@@ -13,8 +13,8 @@ public:
     MultipleStatement();
     virtual ~MultipleStatement();
 
-    std::string toString() const;
-    void buildIR(CFG * cfg) const;
+    virtual std::string toString() const;
+    virtual void buildIR(CFG * cfg) const;
 
     void addStatement(SimpleStatement* statement);
     int countStatements();

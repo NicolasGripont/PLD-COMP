@@ -12,10 +12,15 @@ public:
 	DeclarationFunction(Type* _type, char* _id, ArgumentList* _argumentList, DeclarationFunctionStatement* _decFunctionStatement);
 	virtual ~DeclarationFunction();
 
-    std::string toString() const;
+	virtual std::string toString() const;
+    virtual void buildIR(CFG* cfg) const;
+
+	ArgumentList* getArgumentList() const;
+	DeclarationFunctionStatement* getFunctionStatement() const;
+
 	std::string getId() const;
 
-    void buildIR(CFG* cfg) const;
+
 	
 private:
 	Type* type;

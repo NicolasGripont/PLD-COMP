@@ -34,10 +34,6 @@ std::string DeclarationFunction::toString() const
 	return type->toString() + " " + std::string(id) + "(" +  argumentList->toString() + ")" + decFunctionStatement->toString();
 }
 
-std::string DeclarationFunction::getId() const {
-    return id;
-}
-
 void DeclarationFunction::buildIR(CFG * cfg) const
 {
     // Creation prolog
@@ -70,3 +66,16 @@ void DeclarationFunction::buildIR(CFG * cfg) const
     BasicBlock * basicEpilog = cfg->createNewBasicBlock(0,"epilog_" + getId());
     cfg->attachNewBasicBlock(basicEpilog);
 }
+
+ArgumentList* DeclarationFunction::getArgumentList() const {
+    return argumentList;
+}
+
+DeclarationFunctionStatement* DeclarationFunction::getFunctionStatement() const {
+    return decFunctionStatement;
+}
+
+std::string DeclarationFunction::getId() const {
+    return id;
+}
+
