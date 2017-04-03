@@ -23,3 +23,8 @@ void Statement::buildIR(CFG *cfg) const
 {
 
 }
+
+MultipleStatement* Statement::getMultipleStatement()
+{
+    return multipleStatement;
+}
