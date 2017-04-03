@@ -45,7 +45,7 @@ void MultipleDeclarationVariable::buildIR(CFG *cfg) const
 {
     for (DeclarationVariable * decl : declarationsVariables)
     {
-        Symbol * destination = new Symbol(decl->getId(),this->getType()->getType(),cfg->getOffsetFromCurrentBasicBlock());
+        const Symbol * destination = new Symbol(decl->getId(),this->getType()->getType(),cfg->getOffsetFromCurrentBasicBlock());
 
         cfg->addSymbolToCurrentBasicBlock(destination);
 
@@ -63,7 +63,7 @@ void MultipleDeclarationVariable::buildIR(CFG *cfg) const
 
                 if(irOp != nullptr)
                 {
-                    Symbol * source = irOp->getDestination();
+                    const Symbol * source = irOp->getDestination();
                     IRRWMemory * instruction = new IRRWMemory(IRRWMemory::Type::WRITE_MEMORY,destination,source);
                     cfg->addInstructionInCurrentBasicBlock(instruction);
                 }

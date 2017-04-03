@@ -23,11 +23,10 @@
     #include "front_end/UnaryOperatorExpression.h"
     #include "front_end/ExpressionInteger.h"
     #include "front_end/CrementVariable.h"
-    #include "front_end/ExpressionVariable.h"
 
     #include "front_end/DeclarationFunctionStatement.h"
     #include "front_end/DeclarationFunction.h"
-    #include "front_end/ExpressionSimpleVariable.h"
+    #include "front_end/ExpressionVariable.h"
     #include "front_end/ExpressionArrayVariable.h"
     #include "front_end/AssignmentVariable.h"
     #include "front_end/AssignmentOperationVariable.h"
@@ -527,7 +526,7 @@ expr_var
     | ID
     {
         if(!checkVariableExist(g,$1)) YYABORT;
-        $$ = new ExpressionSimpleVariable($1, getVariableType($1));
+	$$ = new ExpressionVariable($1, getVariableType($1));
     }
     ;
 

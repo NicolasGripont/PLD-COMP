@@ -1,7 +1,7 @@
 #include "ExpressionArrayVariable.h"
 
 ExpressionArrayVariable::ExpressionArrayVariable(char* _id, Expression* _expr, int _type)
-	:ExpressionVariable(_type), id(_id), expr(_expr)
+    :ExpressionVariable(_id,_type), expr(_expr)
 {
     setExpressionType(EXPRESSION_ARRAY_VARIABLE);
 }
@@ -23,7 +23,8 @@ std::string ExpressionArrayVariable::toString() const
     return std::string(id) + "[" + expr->toString() + "]";
 }
 
-void ExpressionArrayVariable::buildIR(CFG *cfg) const
+Expression *ExpressionArrayVariable::getExpr() const
 {
-
+    return expr;
 }
+

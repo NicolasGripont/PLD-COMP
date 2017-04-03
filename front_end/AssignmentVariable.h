@@ -11,11 +11,12 @@ public:
 	virtual ~AssignmentVariable();
 
     virtual std::string toString() const;
-    void buildIR(CFG* cfg) const;
+    virtual void buildIR(CFG* cfg) const;
 
 protected:
 	ExpressionVariable* exprVar;
 	Expression* expr;
+
 };
 
 #endif

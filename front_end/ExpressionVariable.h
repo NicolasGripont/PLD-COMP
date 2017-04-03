@@ -6,8 +6,16 @@
 class ExpressionVariable : public Expression
 {
 public:
-	ExpressionVariable(int _type);
-	virtual ~ExpressionVariable();
+    ExpressionVariable(char* _id, int _type);
+    virtual ~ExpressionVariable();
+
+    virtual std::string toString() const;
+    virtual void buildIR(CFG * cfg) const;
+
+    const char *getId() const;
+
+protected:
+    char* id;
 };
 
 #endif

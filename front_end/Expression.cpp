@@ -16,12 +16,12 @@ void Expression::setType(int _type)
     type = _type;
 }
 
-int Expression::getExpressionType()
+ExpressionType Expression::getExpressionType()
 {
     return expressionType;
 }
 
-void Expression::setExpressionType(int _type)
+void Expression::setExpressionType(ExpressionType _type)
 {
     expressionType = _type;
 }

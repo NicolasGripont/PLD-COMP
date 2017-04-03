@@ -21,5 +21,5 @@ std::string ExpressionStatement::toString() const
 
 void ExpressionStatement::buildIR(CFG *cfg) const
 {
-
+    expr->buildIR(cfg);
 }

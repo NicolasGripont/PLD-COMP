@@ -12,11 +12,11 @@ public:
 	virtual ~ExpressionArrayVariable();
 
     virtual std::string toString() const;
-    virtual void buildIR(CFG* cfg) const;
 	
+    Expression *getExpr() const;
+
 private:
-	char* id;
-	Expression* expr;
+    Expression* expr;
 };
 
 #endif

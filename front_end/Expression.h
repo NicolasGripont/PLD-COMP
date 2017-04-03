@@ -18,12 +18,12 @@ public:
     int getType() const;
     void setType(int _type);
 
-    int getExpressionType();
-    void setExpressionType(int _type);
+    ExpressionType getExpressionType();
+    void setExpressionType(ExpressionType _type);
 
 protected:
     int type;
-    int expressionType;
+    ExpressionType expressionType;
 };
 
 #endif

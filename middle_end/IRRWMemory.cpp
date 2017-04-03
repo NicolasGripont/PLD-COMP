@@ -1,6 +1,6 @@
 #include "IRRWMemory.h"
 
-IRRWMemory::IRRWMemory(IRRWMemory::Type _type, Symbol *dest, Symbol *sour)
+IRRWMemory::IRRWMemory(IRRWMemory::Type _type, const Symbol *dest, const Symbol *sour)
     : IROperationWithDestination(dest), type(_type), source(sour)
 {}
 
@@ -32,7 +32,7 @@ IRRWMemory::Type IRRWMemory::getType() const
     return type;
 }
 
-Symbol *IRRWMemory::getSource() const
+const Symbol *IRRWMemory::getSource() const
 {
     return source;
 }
