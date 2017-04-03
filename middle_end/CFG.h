@@ -69,6 +69,7 @@ public:
     const BasicBlock * getRootBasicBlock() const;
 
 private:
+
     int nextBBnumber;    /**< just for naming */
 
     DeclarationFunction * function;

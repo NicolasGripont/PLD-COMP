@@ -32,7 +32,8 @@ private:
     void addNewFunctionInTable(CFG *controllFlowGraph);
     void generateCFG(DeclarationFunction * declaration);
 
-    std::map <std::string, const Symbol*> globalSymbolTable;
+    std::map <const std::string, const int> globalValueTable;
+    std::map <const std::string, const Symbol*> globalSymbolTable;
     std::map<std::string,CFG*> functionCFG;     //std::map<nom_de_fonction, CFG_de_la_fonction>
 };
 

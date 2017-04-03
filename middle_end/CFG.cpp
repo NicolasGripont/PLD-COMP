@@ -22,7 +22,7 @@ CFG::CFG() : function(nullptr)
 
 std::string CFG::toString() const
 {
-    std::string s = "___ " + this->getName() + " ___ \n";
+    std::string s = "===== " + this->getName() + " =====\n";
 
     BasicBlock * current = rootBasicBlock;
 

@@ -1,4 +1,5 @@
 #include "Parser.h"
+#include "DeclarationInitVariable.h"
 
 Parser::~Parser()
 {
@@ -40,8 +41,20 @@ void Parser::handleNewSymbolInTable(GlobalDeclarationVariable* declaration)
     for(int declarationId = 0; declarationId < multipleDeclarationVariable->countDeclaration() ; ++declarationId)
     {
         DeclarationVariable* declarationVariable = (*multipleDeclarationVariable)[declarationId];
+
+        // On ajoute le symbol à la table
         Symbol *s = new Symbol(declarationVariable->getId(), type , globalSymbolTable.size());
         this->addSymbolToTable(s);
+
+        if(!declarationVariable->isDeclaration())
+        {
+            DeclarationInitVariable * init = dynamic_cast<DeclarationInitVariable*>(declarationVariable);
+
+//            if(init != nullptr)
+//            {
+//                globalValueTable.insert(std::pair<const std::string, const int>(init->getExpr() );
+//            }
+        }
     }
 }
 
