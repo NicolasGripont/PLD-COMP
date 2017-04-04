@@ -150,6 +150,13 @@ void BasicBlock::addLocalSymbol(Symbol * sym)
     localSymbolsTable.insert(std::pair<std::string, Symbol *>(sym->getName(), sym));
 }
 
+Symbol* BasicBlock::getSymbol(std::string name) const
+{
+    Symbol * symbol = nullptr;
+    symbol = localSymbolsTable.find(name)->second;
+    return symbol;
+}
+
 int BasicBlock::getLevel() const
 {
     return level;

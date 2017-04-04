@@ -113,12 +113,29 @@ std::string BinaryOperatorExpression::toString() const
 void BinaryOperatorExpression::buildIR(CFG *cfg) const
 {
     IRBinaryOp * instruction = nullptr;
+    Symbol * expr1Symbol = nullptr;
+    ExpressionVariable *variable = dynamic_cast<ExpressionVariable *>(left);
+    if(variable != nullptr)
+    {
+        expr1Symbol = cfg->getCurrentBasicBlock()->getSymbol(variable->getId());
+    }
+    else
+    {
+        left->buildIR(cfg);
+        expr1Symbol = cfg->getLastInstructionDestination();
+    }
 
-    left->buildIR(cfg);
-    Symbol * expr1Symbol = cfg->getLastInstructionDestination();
-
-    right->buildIR(cfg);
-    Symbol * expr2Symbol = cfg->getLastInstructionDestination();
+    Symbol * expr2Symbol = nullptr;
+    variable = dynamic_cast<ExpressionVariable *>(right);
+    if(variable != nullptr)
+    {
+        expr2Symbol = cfg->getCurrentBasicBlock()->getSymbol(variable->getId());
+    }
+    else
+    {
+        right->buildIR(cfg);
+        expr2Symbol = cfg->getLastInstructionDestination();
+    }
 
     if(expr1Symbol != nullptr && expr2Symbol != nullptr)
     {

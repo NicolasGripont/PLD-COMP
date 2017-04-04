@@ -82,7 +82,7 @@ Symbol * FunctionCallExpression::computeParameters(CFG *cfg, Expression* binaryE
     Symbol * param;
     if(variable != nullptr)
     {
-        param = cfg->getCurrentBasicBlock()->getLocalSymbolsTable().find(variable->getId())->second;
+        param = cfg->getCurrentBasicBlock()->getSymbol(variable->getId());
     }
     else
     {
