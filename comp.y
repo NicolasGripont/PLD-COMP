@@ -84,6 +84,8 @@
     void pushVariablesInStack(Type* type, MultipleDeclarationVariable* multDecl);
     void pushVariablesInStack(Argument* arg);
     void popVariablesFromStack(ArgumentList* args, DeclarationFunctionStatement* stat);
+    void popStatVariablesFromStack(MultipleStatement* stat);
+    void popSimpleStatVariablesFromStack(SimpleStatement* stat);
 
     std::vector<VariableContainer*> globalVariables;
     std::vector<FunctionContainer*> functions;
@@ -429,8 +431,15 @@ statement
     {
         $$ = new Statement($2);
         if(checkVariableDuplicationInBlock(g,$2)) YYABORT;
+        popStatVariablesFromStack($2);
     }
-    | simple_statement {MultipleStatement* mult = new MultipleStatement(); mult->addStatement($1); $$ = new Statement(mult);}
+    | simple_statement
+    {
+        MultipleStatement* mult = new MultipleStatement();
+        mult->addStatement($1);
+        $$ = new Statement(mult);
+        popSimpleStatVariablesFromStack($1);
+    }
     ;
 
 loop_expression
@@ -858,6 +867,40 @@ void popVariablesFromStack(ArgumentList* args, DeclarationFunctionStatement* sta
         }
     }
 
+
+}
+
+void popSimpleStatVariablesFromStack(SimpleStatement* stat)
+{
+    if(stat->getType() == BLOCK_DECLARATION_VARIABLE)
+    {
+        BlockDeclarationVariable* blockDeclVar = (BlockDeclarationVariable*) stat;
+        MultipleDeclarationVariable* multDecl = blockDeclVar->getMultipleDeclarationVariable();
+        int countVars = multDecl->countDeclaration();
+
+        for(int i=0;i<countVars;++i)
+        {
+            VariableContainer* var = currentVars.back();
+            currentVars.pop_back();
+            delete var;
+        }
+    }
+}
+
+void popStatVariablesFromStack(MultipleStatement* stats)
+{
+    int countVars = 0;
+    for(int i=0;i<stats->countStatements();++i)
+    {
+        SimpleStatement* stat = (*stats)[i];
+        if(stat->getType() == BLOCK_DECLARATION_VARIABLE)
+        {
+            BlockDeclarationVariable* blockDeclVar = (BlockDeclarationVariable*) stat;
+            MultipleDeclarationVariable* multDecl = blockDeclVar->getMultipleDeclarationVariable();
+            countVars += multDecl->countDeclaration();
+        }
+    }
+
     for(int i=0;i<countVars;++i)
     {
         VariableContainer* var = currentVars.back();
@@ -1045,9 +1088,9 @@ Genesis* bison(int argc, char* argv[])
         std::cout << "Compilation abandonnée." << std::endl;
     }
 
-    if(status != 0) 
+    if(status != 0)
     {
-        if(g != nullptr) 
+        if(g != nullptr)
         {
             delete g;
             g = nullptr;
