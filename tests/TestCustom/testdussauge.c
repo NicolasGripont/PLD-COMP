@@ -1,15 +1,8 @@
 #include <stdint.h>
 
-int64_t yolo(int64_t a);
-
 int64_t yolo(int64_t a)
 {
-    int64_t b;
-}
-
-int64_t yolo(int64_t a)
-{
-    int64_t b;
+    yolo(18);
 }
 
 void main() {
