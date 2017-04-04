@@ -1,3 +1,8 @@
+#ifndef ERREUR_H
+#define ERREUR_H
+
+#include "ArgumentList.h"
+
 // Struct qui n'est pas utilisee dans la structure de donnees
 // mais qui sert a la detection des Erreur
 struct VariableContainer
@@ -16,6 +21,10 @@ struct FunctionContainer
     // Si vrai : Declaration, si faux : initialisation
     bool declaration;
 
-	FunctionContainer(char* _name, int _type, bool _declaration):
-    name(_name),type(_type),declaration(_declaration){}
+	ArgumentList* args;
+
+	FunctionContainer(char* _name, int _type, bool _declaration, ArgumentList* _args):
+    name(_name),type(_type),declaration(_declaration),args(_args){}
 };
+
+#endif

@@ -6,6 +6,7 @@
     #include <stack>
     #include <libgen.h>
     #include <string.h>
+    #include <unordered_map>
 
     #include "front_end/Enumeration.h"
     #include "front_end/Genesis.h"
@@ -73,7 +74,7 @@
     bool variableIsVoid(Genesis** g, Type* type);
     bool tryCallFunction(Genesis** g, char* functionName);
     bool tryDeclareGlobalVariable(Genesis** g,Type* type, MultipleDeclarationVariable* multDecl);
-    bool tryDefineFunction(Genesis** g, Type* type, char* name, DeclarationFunctionStatement* declFunc);
+    bool tryDefineFunction(Genesis** g, Type* type, char* name, DeclarationFunctionStatement* declFunc, ArgumentList* args);
     bool checkVariableDuplicationInFunction(Genesis** g, char* functionName, ArgumentList* args, DeclarationFunctionStatement* declFunc);
     bool checkVariableDuplicationInBlock(Genesis** g, MultipleStatement* multStat);
 
@@ -102,6 +103,20 @@
     bool checkArrayTypeConflitError(Genesis** g, int type1, int type2);
     std::string getNameOfType(int type);
     bool checkVariableExist(Genesis** g, char* name);
+
+    struct FunctionCall
+    {
+        std::string functionName;
+        int line;
+        int column;
+
+        FunctionCall(std::string _functionName, int _line, int _column)
+            : functionName(_functionName), line(_line), column(_column)
+        {
+        }
+    };
+    std::unordered_map<std::string, FunctionCall*> calledFunctions;
+    bool checkUndefinedFunctionErrors();
 %}
 
 /**************/
@@ -347,14 +362,14 @@ declaration_function
     {
         ArgumentList* args = new ArgumentList();
         $$ = new DeclarationFunction($1, $2, args, $5);
-        if(!tryDefineFunction(g,$1,$2,$5)) YYABORT;
+        if(!tryDefineFunction(g,$1,$2,$5, args)) YYABORT;
         if(checkVariableDuplicationInFunction(g,$2,args,$5)) YYABORT;
         popVariablesFromStack(nullptr,$5);
     }
     | type ID OPEN_PARENTHESIS arguments_list CLOSE_PARENTHESIS declaration_function_statement
     {
         $$ = new DeclarationFunction($1, $2, $4, $6);
-        if(!tryDefineFunction(g,$1,$2,$6)) YYABORT;
+        if(!tryDefineFunction(g,$1,$2,$6,$4)) YYABORT;
         if(checkVariableDuplicationInFunction(g,$2,$4,$6)) YYABORT;
         popVariablesFromStack($4,$6);
     }
@@ -560,6 +575,40 @@ bool variableIsVoid(Genesis** g, Type* type)
     return false;
 }
 
+bool checkUndefinedFunctionErrors()
+{
+    // On retire chaque fonction définie du set des fonctions appellées
+    for(int i=0;i<functions.size();++i)
+    {
+        FunctionContainer* currFunc = functions[i];
+
+        if(!currFunc->declaration)
+        {
+            auto it = calledFunctions.find(std::string(currFunc->name));
+            if (it != calledFunctions.end())
+            {
+                std::cout <<  it->second->functionName << std::endl;
+
+                delete(it->second);
+                calledFunctions.erase(std::string(currFunc->name));
+            }
+        }
+    }
+
+    int error = false;
+    for (auto& pair: calledFunctions)
+    {
+        FunctionCall* func = pair.second;
+        std::cout << filename << ":" << func->line << ":" << func->column <<" - erreur : "
+        << "Référence indéfinie vers la fonction " << std::string(func->functionName) << "." << std::endl;
+
+        delete(func);
+        error = true;
+    }
+
+    return error;
+}
+
 bool tryCallFunction(Genesis** g, char* functionName)
 {
     int state=0;
@@ -580,6 +629,10 @@ bool tryCallFunction(Genesis** g, char* functionName)
             if(currFunc->declaration)
             {
                 state = 1;
+
+                // Ajouter à la liste des fonctions appellées
+                FunctionCall* call = new FunctionCall(functionName, yylineno, column);
+                calledFunctions.insert(std::make_pair(std::string(functionName),call));
             }
             else
             {
@@ -595,11 +648,15 @@ bool tryCallFunction(Genesis** g, char* functionName)
         return false;
     }
 
+    // Faux car on peut définir la fonction plus tard
+    /*
     if(state == 1)
     {
         yyerror(g, ("La fonction "+std::string(functionName)+" est déclarée mais jamais définie.").c_str());
         return false;
     }
+    */
+
     return true;
 }
 
@@ -626,15 +683,45 @@ bool tryDeclareGlobalVariable(Genesis** g, Type* type, MultipleDeclarationVariab
 }
 
 
-bool tryDefineFunction(Genesis** g, Type* type, char* name, DeclarationFunctionStatement* declFunc)
+bool tryDefineFunction(Genesis** g, Type* type, char* name, DeclarationFunctionStatement* declFunc, ArgumentList* args)
 {
     FunctionContainer* func;
     bool isDeclaration = declFunc->isDeclaration();
-    func = new FunctionContainer(name, type->getType(), isDeclaration);
+    func = new FunctionContainer(name, type->getType(), isDeclaration, args);
 
     for(int i=0;i<functions.size();++i)
     {
         FunctionContainer* currFunc = functions[i];
+        
+        if(strcmp(func->name, currFunc->name)==0)
+        {
+            // Check si le type de retour est identique
+            if(func->type != currFunc->type)
+            {
+                yyerror(g, ("La fonction "+std::string(func->name)+" a déjà été déclarée avec un type de retour différent.").c_str());
+                delete func;
+                return false;
+            }
+
+            // Check si les paramètres d'appel sont identiques
+            if(func->args->countArguments() != currFunc->args->countArguments())
+            {
+                yyerror(g, ("La fonction "+std::string(func->name)+" a déjà été déclarée avec un nombre de paramètres différent.").c_str());
+                delete func;
+                return false;
+            }
+
+            for(int j=0;j<func->args->countArguments();++j)
+            {
+                int type1 = (*(func->args))[j]->getType()->getType();
+                int type2 = (*(currFunc->args))[j]->getType()->getType();
+
+                yyerror(g, ("La fonction "+std::string(func->name)+" a déjà été déclarée avec des paramètres différents.").c_str());
+                delete func;
+                return false;
+            }
+        }
+
         if(strcmp(func->name, currFunc->name)==0 && !(func->declaration) && !(currFunc->declaration))
         {
             yyerror(g, ("La fonction "+std::string(func->name)+" a déjà été définie.").c_str());
@@ -1068,6 +1155,11 @@ Genesis* bison(int argc, char* argv[])
     int status = yyparse(&g);
     fclose(yyin);
     yylex_destroy();
+
+    if(checkUndefinedFunctionErrors())
+    {
+        status = 3;
+    }
 
     // Error status
     if (status == 0) // Success
