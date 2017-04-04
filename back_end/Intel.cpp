@@ -123,7 +123,7 @@ int Intel::compile()
 
 void Intel::binaryOp(const IRBinaryOp* instruction)
 {
-    write("\t// binaryOp");
+    write("//binaryOp");
 
     const Symbol* destination = instruction->getDestination();
     const Symbol* operand1 = instruction->getOperand_1();
@@ -132,6 +132,9 @@ void Intel::binaryOp(const IRBinaryOp* instruction)
     switch (instruction->getType())
     {
         case IRBinaryOp::Type::ADD :
+            write("\tmovq -" + std::to_string(operand1->getOffset() * OFFSET_VALUE) + "(%rbp), %rax");
+            write("\tadd -" + std::to_string(operand2->getOffset() * OFFSET_VALUE) + "(%rbp), %rax");
+            write("\tmovq %rax, -" + std::to_string(destination->getOffset() * OFFSET_VALUE) + "(%rbp)");
             break;
         case IRBinaryOp::Type::SUB :
             break;
@@ -147,7 +150,7 @@ void Intel::binaryOp(const IRBinaryOp* instruction)
 
 void Intel::loadConstant(const IRLoadConstant* instruction)
 {
-    write("\t// loadConstant");
+    write("//loadConstant");
 
     const Symbol* destination = instruction->getDestination();
     const int value = instruction->getValue();
@@ -157,7 +160,7 @@ void Intel::loadConstant(const IRLoadConstant* instruction)
 
 void Intel::rwmemory(const IRRWMemory* instruction)
 {
-    write("\t// rwmemory");
+    write("//rwmemory");
 
     const Symbol* destination = instruction->getDestination();
     const Symbol* source = instruction->getSource();
@@ -178,57 +181,24 @@ void Intel::rwmemory(const IRRWMemory* instruction)
 
 void Intel::call(const IRCall* instruction)
 {
-    write("\t// call");
-
-    // Pour le moment que putchar (voir 5.3)
+    write("//call");
 
     std::vector<const Symbol*> params = instruction->getParams();
 
+    // Pour le moment que putchar (voir 5.3)
+    /* Putchar */
     write("\tmovl -" + std::to_string(params.at(0)->getOffset() * OFFSET_VALUE) + "(%rbp), %edi");
     write("\tcall putchar");
-
 }
 
 void Intel::jump(const IRJump* instruction)
 {
-    write("\t// jump");
+    write("//jump");
 }
 
 void Intel::selection(const IRSelection* instruction)
 {
-    write("\t// selection");
-}
-
-void Intel::putchar(const char character)
-{
-    std::string finalCharacter;
-    switch (character)
-    {
-        case '\n':
-            finalCharacter = "\\n";
-            break;
-        case '\t':
-            finalCharacter = "\\t";
-            break;
-        default:
-            finalCharacter = character;
-            break;
-    }
-    write(("\tmovl $'" + finalCharacter + "', %edi").c_str());
-    write("\tcall putchar");
-}
-
-void Intel::test()
-{
-    putchar('I');
-    putchar('N');
-    putchar('T');
-    putchar('E');
-    putchar('L');
-    putchar('\n');
-
-    write();
-    write("\tretq");
+    write("//selection");
 }
 
 Intel::~Intel()

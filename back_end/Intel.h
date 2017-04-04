@@ -37,10 +37,6 @@ public:
     void jump(const IRJump* instruction);
     void selection(const IRSelection* instruction);
 
-    void putchar(const char character);
-
-    void test();
-
 private:
     std::map<std::string, CFG*> listCFG;
 };
