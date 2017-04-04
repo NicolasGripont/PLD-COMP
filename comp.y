@@ -655,16 +655,16 @@ bool tryDeclareGlobalVariable(Genesis** g, Type* type, MultipleDeclarationVariab
                 delete var;
                 return false;
             }
+        }
 
-            if(!decVar->isDeclaration())
+        if(!decVar->isDeclaration())
+        {
+            DeclarationInitVariable* initVar = (DeclarationInitVariable*)decVar;
+            if(initVar->getExpr()->getExpressionType() != EXPRESSION_INTEGER)
             {
-                DeclarationInitVariable* initVar = (DeclarationInitVariable*)decVar;
-                if(initVar->getExpr()->getExpressionType() != EXPRESSION_INTEGER)
-                {
-                    yyerror(g, "Impossible d'assigner une expression non-constante à une variable globale.");
-                    delete var;
-                    return false;
-                }
+                yyerror(g, "Impossible d'assigner une expression non-constante à une variable globale.");
+                delete var;
+                return false;
             }
         }
 
