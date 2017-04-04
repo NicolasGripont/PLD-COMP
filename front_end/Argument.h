@@ -19,6 +19,9 @@ public:
     bool isArray();
 
 private:
+    static std::string unnamedBase;
+    static int unnamedCount;
+
     Type* type;
     char* id;
     bool array;
