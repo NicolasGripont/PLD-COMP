@@ -58,20 +58,12 @@ void FunctionCallExpression::buildIR(CFG *cfg) const
 
         while(binaryExpr != nullptr)
         {
-            binaryExpr->getRight()->buildIR(cfg);
-
-            const Symbol * param = cfg->getLastInstructionDestination();
-            vectorParameters.push_back(param);
-
-            std::cout << param->getName() << std::endl;
-
-            next = binaryExpr;
+            vectorParameters.push_back(computeParameters(cfg,binaryExpr->getRight()));
+            next = binaryExpr->getLeft();
             binaryExpr = dynamic_cast<BinaryOperatorExpression*>(binaryExpr->getLeft());
         }
 
-        next->buildIR(cfg);
-        const Symbol * param = cfg->getLastInstructionDestination();
-        vectorParameters.push_back(param);
+        vectorParameters.push_back(computeParameters(cfg,next));
 
         for(int i = vectorParameters.size()-1; i >= 0; --i)
         {
@@ -81,4 +73,22 @@ void FunctionCallExpression::buildIR(CFG *cfg) const
     }
 
     cfg->addInstructionInCurrentBasicBlock(instruction);
+}
+
+const Symbol * FunctionCallExpression::computeParameters(CFG *cfg, Expression* binaryExprRight) const
+{
+    ExpressionVariable * variable = dynamic_cast<ExpressionVariable*>(binaryExprRight);
+
+    const Symbol * param;
+    if(variable != nullptr)
+    {
+        param = cfg->getCurrentBasicBlock()->getLocalSymbolsTable().find(variable->getId())->second;
+    }
+    else
+    {
+        binaryExprRight->buildIR(cfg);
+        param = cfg->getLastInstructionDestination();
+    }
+
+    return param;
 }

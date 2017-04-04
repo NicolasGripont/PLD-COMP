@@ -2,11 +2,12 @@
 #define _FUNCTIONCALLEXPRESSION_H
 
 #include "Expression.h"
+#include "../middle_end/Symbol.h"
 
 class FunctionCallExpression : public Expression 
 {
 public:
-	FunctionCallExpression(char* _id, Expression* _expr, int _type);
+    FunctionCallExpression(char* _id, Expression* _expr, int _type);
 	virtual ~FunctionCallExpression();
 
     virtual std::string toString() const;
@@ -16,6 +17,8 @@ private:
 	char* id;
     // Peut etre nullptr si la fonction ne prend pas de parametres
 	Expression* expr;
+
+    const Symbol * computeParameters(CFG * cfg, Expression* binaryExpr) const;
 };
 
 #endif
