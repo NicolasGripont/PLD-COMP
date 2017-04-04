@@ -55,8 +55,11 @@ public:
     void setCurrentBasicBlock(BasicBlock * bb);
     const BasicBlock * getCurrentBasicBlock() const;
 
+    const Symbol * getLastInstructionDestination();
+
     int getOffsetFromCurrentBasicBlock() const;
     std::string getTempVariableName();
+
     void addSymbolToCurrentBasicBlock(const Symbol * symbole);
 
     void setCurrentBasicBlockExitTrue(BasicBlock * bb);

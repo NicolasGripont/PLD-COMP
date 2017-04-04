@@ -1,4 +1,8 @@
 #include "CrementVariable.h"
+#include "../middle_end/Symbol.h"
+#include "../middle_end/IRBinaryOp.h"
+#include "../middle_end/IRLoadConstant.h"
+#include "../middle_end/CFG.h"
 
 CrementVariable::CrementVariable(ExpressionVariable* _exprVar, bool _increment, bool _preCrement)
 	: Expression(), exprVar(_exprVar), increment(_increment), preCrement(_preCrement)
@@ -42,4 +46,32 @@ std::string CrementVariable::toString() const
 void CrementVariable::buildIR(CFG *cfg) const
 {
 
+    const Symbol * variableToIncrment = cfg->getCurrentBasicBlock()->getLocalSymbolsTable().find(exprVar->getId())->second;
+
+
+    if(variableToIncrment != nullptr)
+    {
+        const Symbol * constant = new Symbol(cfg->getTempVariableName(),getType(),cfg->getOffsetFromCurrentBasicBlock());
+
+        IRLoadConstant * prepConstant = new IRLoadConstant(constant,1);
+
+        cfg->addInstructionInCurrentBasicBlock(prepConstant);
+
+        IRBinaryOp * instruction;
+
+        if(increment)
+        {
+            instruction = new IRBinaryOp(IRBinaryOp::Type::ADD,variableToIncrment,variableToIncrment,constant);
+        }
+        else
+        {
+            instruction = new IRBinaryOp(IRBinaryOp::Type::SUB,variableToIncrment,variableToIncrment,constant);
+        }
+
+        cfg->addInstructionInCurrentBasicBlock(instruction);
+    }
+    else
+    {
+        std::cout << "Error : crement build IR" << std::endl;
+    }
 }

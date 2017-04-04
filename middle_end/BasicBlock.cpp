@@ -1,6 +1,7 @@
 #include "BasicBlock.h"
 #include "CFG.h"
 #include "IRInstruction.h"
+#include "IROperationWithDestination.h"
 
 BasicBlock::BasicBlock(int lvl, CFG *_cfg, std::string _entry_label)
     : cfg(_cfg), label(_entry_label), level(lvl), indexTempVariable(0)
@@ -100,6 +101,21 @@ const CFG *BasicBlock::getCFG() const
 const std::vector<const IRInstruction *> & BasicBlock::getInstructions() const
 {
     return instructions;
+}
+
+const Symbol *BasicBlock::getLastInstructionDestination()
+{
+    const IROperationWithDestination * irOp = dynamic_cast<const IROperationWithDestination*>
+            (instructions.back());
+
+    if(irOp != nullptr)
+    {
+        return irOp->getDestination();
+    }
+    else
+    {
+        return nullptr;
+    }
 }
 
 void BasicBlock::setExitTrue(BasicBlock *_bbExitTrue)

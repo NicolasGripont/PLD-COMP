@@ -109,6 +109,11 @@ const BasicBlock * CFG::getCurrentBasicBlock() const
     return currentBasicBlock;
 }
 
+const Symbol *CFG::getLastInstructionDestination()
+{
+    return currentBasicBlock->getLastInstructionDestination();
+}
+
 int CFG::getOffsetFromCurrentBasicBlock() const
 {
     return currentBasicBlock->getLocalSymbolsTable().size();

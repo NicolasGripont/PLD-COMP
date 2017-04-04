@@ -55,15 +55,12 @@ void MultipleDeclarationVariable::buildIR(CFG *cfg) const
 
             if(definition != nullptr)
             {
-                definition->getExpr()->buildIR(cfg); // On doit récupérer le résultat de l'expression
-                // et donc la derière instruction.
+                definition->getExpr()->buildIR(cfg);
 
-                const IROperationWithDestination * irOp = dynamic_cast<const IROperationWithDestination*>
-                        (cfg->getCurrentBasicBlock()->getInstructions().back());
+                const Symbol * source = cfg->getLastInstructionDestination();
 
-                if(irOp != nullptr)
+                if(source != nullptr)
                 {
-                    const Symbol * source = irOp->getDestination();
                     IRRWMemory * instruction = new IRRWMemory(IRRWMemory::Type::WRITE_MEMORY,destination,source);
                     cfg->addInstructionInCurrentBasicBlock(instruction);
                 }

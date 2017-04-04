@@ -1,6 +1,6 @@
 #include "IRBinaryOp.h"
 
-IRBinaryOp::IRBinaryOp(IRBinaryOp::Type _type, Symbol *dest, Symbol *op_1, Symbol *op_2)
+IRBinaryOp::IRBinaryOp(IRBinaryOp::Type _type,const Symbol *dest,const Symbol *op_1,const Symbol *op_2)
     : IROperationWithDestination(dest), type(_type), operand_1(op_1), operand_2(op_2)
 {}
 
@@ -41,12 +41,12 @@ IRBinaryOp::Type IRBinaryOp::getType() const
     return type;
 }
 
-Symbol *IRBinaryOp::getOperand_1() const
+const Symbol *IRBinaryOp::getOperand_1() const
 {
     return operand_1;
 }
 
-Symbol *IRBinaryOp::getOperand_2() const
+const Symbol *IRBinaryOp::getOperand_2() const
 {
     return operand_2;
 }

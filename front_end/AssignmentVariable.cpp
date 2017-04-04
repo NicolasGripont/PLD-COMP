@@ -66,15 +66,10 @@ void AssignmentVariable::buildIR(CFG *cfg) const
         // ON CONSTRUIT LA SOURCE
         expr->buildIR(cfg);
 
-        // On doit récupérer le résultat de l'expression et donc la derière instruction.
-        const IROperationWithDestination * irOp = dynamic_cast<const IROperationWithDestination*>
-                (cfg->getCurrentBasicBlock()->getInstructions().back());
+        const Symbol * source = cfg->getLastInstructionDestination();
 
-
-        if(irOp != nullptr)
+        if(source != nullptr)
         {
-            const Symbol * source = irOp->getDestination();
-
             // ON GENERE L'INSTRUCTION
             IRRWMemory * instruction = new IRRWMemory(IRRWMemory::Type::WRITE_MEMORY,destination,source);
             cfg->addInstructionInCurrentBasicBlock(instruction);

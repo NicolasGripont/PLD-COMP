@@ -42,6 +42,8 @@ class BasicBlock
 
     const std::vector<const IRInstruction *> & getInstructions() const;
 
+    const Symbol * getLastInstructionDestination();
+
     void setExitTrue(BasicBlock *_bbExitTrue);
     void setExitFalse(BasicBlock *_bbExitFalse);
 

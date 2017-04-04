@@ -7,7 +7,7 @@
 class IRLoadConstant : public IROperationWithDestination
 {
 public:
-    IRLoadConstant(Symbol * dest,int val);
+    IRLoadConstant(const Symbol * dest,int val);
     ~IRLoadConstant();
 
     virtual std::string toString() const;
