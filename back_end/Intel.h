@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <map>
 #include <stdlib.h>
 
 #include "Writer.h"
@@ -14,10 +15,10 @@
 class Intel : public Writer
 {
 public:
-    Intel(const std::string _filename);
+    Intel(const std::string _filename, std::map<std::string, CFG*> _listCFG);
     ~Intel();
 
-    void parse(CFG* _cfg);
+    void parse();
     int compile();
 
     void binaryOp();
@@ -31,7 +32,7 @@ public:
     void test();
 
 private:
-    CFG* cfg;
+    std::map<std::string, CFG*> listCFG;
 };
 
 #endif

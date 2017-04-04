@@ -1,7 +1,7 @@
 #include "Intel.h"
 
-Intel::Intel(const std::string _filename)
-    : Writer(_filename)
+Intel::Intel(const std::string _filename, std::map<std::string, CFG*> _listCFG)
+    : Writer(_filename), listCFG(_listCFG)
 {
     open();
 
@@ -11,80 +11,82 @@ Intel::Intel(const std::string _filename)
     write();
 }
 
-void Intel::parse(CFG* _cfg)
+void Intel::parse()
 {
-    cfg = _cfg;
-
     std::string label;
     std::vector<const IRInstruction*> instructions;
 
-    const BasicBlock* block = cfg->getRootBasicBlock();
-
-    bool prolog = true;
-    while (block != nullptr)
+    for (std::map<std::string, CFG*>::iterator itCFG = listCFG.begin(); itCFG != listCFG.end(); ++itCFG)
     {
-        label = block->getLabel();
-        write(label + ":");
+        const BasicBlock* block = itCFG->second->getRootBasicBlock();
 
-        if (prolog) // Prolog
+        bool prolog = true;
+        while (block != nullptr)
         {
-            write("\tpushq %rbp");
-            write("\tmovq %rsp, %rbp");
+            label = block->getLabel();
+            write(label + ":");
 
-            int offset = block->getPrologMaximalOffset();
-            if (offset%32 != 0) // Next multiple 32
+            if (prolog) // Prolog
             {
-                offset += (32 - (offset%32));
-            }
-            write("\tsubq $" + std::to_string(offset) + ", %rsp");
+                write("\tpushq %rbp");
+                write("\tmovq %rsp, %rbp");
 
-            prolog = false;
-        }
-        else // Other
-        {
-            instructions = block->getInstructions();
-            for (const IRInstruction* iri : instructions)
-            {
-                IRInstruction::Type instruction = iri->getOperation();
-
-                switch (instruction)
+                int offset = block->getPrologMaximalOffset();
+                if (offset%32 != 0) // Next multiple 32
                 {
-                    case IRInstruction::Type::BINARY_OP :
-                        binaryOp();
-                        break;
-                    case IRInstruction::Type::RWMEMORY :
-                        rwmemory();
-                        break;
-                    case IRInstruction::Type::CALL :
-                        call();
-                        break;
-                    case IRInstruction::Type::JUMP :
-                        jump();
-                        break;
-                    case IRInstruction::Type::SELECTION :
-                        selection();
-                        break;
-                    default:
-                        break;
+                    offset += (32 - (offset%32));
+                }
+                write("\tsubq $" + std::to_string(offset) + ", %rsp");
+
+                prolog = false;
+            }
+            else // Other
+            {
+                instructions = block->getInstructions();
+                for (const IRInstruction* iri : instructions)
+                {
+                    IRInstruction::Type instruction = iri->getOperation();
+
+                    switch (instruction)
+                    {
+                        case IRInstruction::Type::BINARY_OP :
+                            binaryOp();
+                            break;
+                        case IRInstruction::Type::RWMEMORY :
+                            rwmemory();
+                            break;
+                        case IRInstruction::Type::CALL :
+                            call();
+                            break;
+                        case IRInstruction::Type::JUMP :
+                            jump();
+                            break;
+                        case IRInstruction::Type::SELECTION :
+                            selection();
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
-        }
 
-        if (block->getExitTrue() != nullptr)
-        {
-            block = block->getExitTrue();
+            if (block->getExitTrue() != nullptr)
+            {
+                block = block->getExitTrue();
+            }
+            else if (block->getExitFalse() != nullptr)
+            {
+                block = block->getExitFalse();
+            }
+            else
+            {
+                block = nullptr;
+            }
         }
-        else if (block->getExitFalse() != nullptr)
-        {
-            block = block->getExitFalse();
-        }
-        else
-        {
-            block = nullptr;
-        }
+        write("\tleave");
+        write("\tret");
+        write();
     }
-    write("\tleave");
-    write("\tret");
 }
 
 int Intel::compile()
