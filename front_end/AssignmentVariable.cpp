@@ -46,7 +46,7 @@ void AssignmentVariable::buildIR(CFG *cfg) const
 {
     exprVar->buildIR(cfg);
 
-    const Symbol * destination;
+    Symbol * destination;
 
     auto pair = cfg->getCurrentBasicBlock()->getLocalSymbolsTable().find(exprVar->getId());
 
@@ -66,7 +66,7 @@ void AssignmentVariable::buildIR(CFG *cfg) const
         // ON CONSTRUIT LA SOURCE
         expr->buildIR(cfg);
 
-        const Symbol * source = cfg->getLastInstructionDestination();
+        Symbol * source = cfg->getLastInstructionDestination();
 
         if(source != nullptr)
         {

@@ -12,18 +12,18 @@ public:
         WRITE_MEMORY,
     };
 
-    IRRWMemory(Type _type, const Symbol* dest, const Symbol* sour);
+    IRRWMemory(Type _type, Symbol* dest, Symbol* sour);
     ~IRRWMemory();
 
     virtual std::string toString() const;
 
     Type getType() const;
-    const Symbol* getSource() const;
+    Symbol* getSource() const;
 
 private:
     Type type;
 
-    const Symbol* source;
+    Symbol* source;
 
 };
 

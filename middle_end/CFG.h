@@ -37,46 +37,46 @@ public:
 
     virtual std::string toString() const;
 
-    BasicBlock *createNewBasicBlock(int level, const std::string & bbName);
+    BasicBlock *createNewBasicBlock(int level, std::string bbName);
     BasicBlock *createNewBasicBlock(int level);
     void addSymbol(Symbol* symbol);
 
     // symbol table methods
-    const Symbol * getSymbol(std::string name) const;
+    Symbol * getSymbol(std::string name) const;
 
-    const std::map <const std::string,const Symbol*> * getSymbolTableFromLevel(int level) const;
+    const std::map <std::string,Symbol*> * getSymbolTableFromLevel(int level) const;
     void setLastBasicBlockFromLevel(int level,BasicBlock* block);
 
-    const std::map <const std::string, const Symbol*> & getSymbolsTable() const;
+    const std::map <std::string, Symbol*> & getSymbolsTable() const;
 
     std::string getName() const;
     std::string getUsableBasicBlockName();
 
     void setCurrentBasicBlock(BasicBlock * bb);
-    const BasicBlock * getCurrentBasicBlock() const;
+    BasicBlock * getCurrentBasicBlock() const;
 
-    const Symbol * getLastInstructionDestination();
+    Symbol * getLastInstructionDestination();
 
     int getOffsetFromCurrentBasicBlock() const;
     std::string getTempVariableName();
 
-    void addSymbolToCurrentBasicBlock(const Symbol * symbole);
+    void addSymbolToCurrentBasicBlock(Symbol * symbole);
 
     void setCurrentBasicBlockExitTrue(BasicBlock * bb);
     void setCurrentBasicBlockExitFalse(BasicBlock * bb);
-    void addInstructionInCurrentBasicBlock(const IRInstruction * instruction);
+    void addInstructionInCurrentBasicBlock(IRInstruction * instruction);
 
     void attachNewBasicBlock(BasicBlock * block);
 
     void setRootBasicBlock(BasicBlock * block);
-    const BasicBlock * getRootBasicBlock() const;
+    BasicBlock * getRootBasicBlock() const;
 
 private:
 
     int nextBBnumber;    /**< just for naming */
 
     DeclarationFunction * function;
-    std::map <const std::string,const Symbol*> symbolsTable;
+    std::map <std::string,Symbol*> symbolsTable;
 
     BasicBlock * currentBasicBlock;
     BasicBlock * rootBasicBlock;

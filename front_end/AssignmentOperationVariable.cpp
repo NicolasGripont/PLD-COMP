@@ -1,5 +1,7 @@
 #include "AssignmentOperationVariable.h"
 #include "../comp.tab.h"
+#include "../middle_end/CFG.h"
+#include "../middle_end/IRBinaryOp.h"
 
 AssignmentOperationVariable::AssignmentOperationVariable(ExpressionVariable* _exprVar, Expression* _expr, int _op)
     : AssignmentVariable(_exprVar,_expr), op(_op)
@@ -56,38 +58,50 @@ std::string AssignmentOperationVariable::toString() const
 
 void AssignmentOperationVariable::buildIR(CFG *cfg) const
 {
-
-    switch(op)
+    Symbol * symbol = cfg->getCurrentBasicBlock()->getLocalSymbolsTable().find(this->exprVar->getId())->second;
+    if(symbol != nullptr)
     {
-    case MUL_ASSIGN:
-        break;
-    case DIV_ASSIGN:
+            expr->buildIR(cfg);
+            Symbol * source = cfg->getLastInstructionDestination();
+            IRBinaryOp * instruction = nullptr;
+            switch(op)
+            {
+            case MUL_ASSIGN:
+                instruction = new IRBinaryOp(IRBinaryOp::Type::MUL,symbol,symbol,source);
+                break;
+            case DIV_ASSIGN:
+                instruction = new IRBinaryOp(IRBinaryOp::Type::DIV,symbol,symbol,source);
+                break;
+            case MOD_ASSIGN:
+                instruction = new IRBinaryOp(IRBinaryOp::Type::MOD,symbol,symbol,source);
+                break;
+            case PLUS_ASSIGN:
+                instruction = new IRBinaryOp(IRBinaryOp::Type::ADD,symbol,symbol,source);
+                break;
+            case MINUS_ASSIGN:
+                instruction = new IRBinaryOp(IRBinaryOp::Type::SUB,symbol,symbol,source);
+                break;
+            case LEFT_DEC_ASSIGN:
 
-        break;
-    case MOD_ASSIGN:
+                break;
+            case RIGHT_DEC_ASSIGN:
 
-        break;
-    case PLUS_ASSIGN:
+                break;
+            case AND_ASSIGN:
 
-        break;
-    case MINUS_ASSIGN:
+                break;
+            case OR_ASSIGN:
 
-        break;
-    case LEFT_DEC_ASSIGN:
+                break;
+            case OR_EXCL_ASSIGN:
 
-        break;
-    case RIGHT_DEC_ASSIGN:
+                break;
+            }
 
-        break;
-    case AND_ASSIGN:
-
-        break;
-    case OR_ASSIGN:
-
-        break;
-    case OR_EXCL_ASSIGN:
-
-        break;
+            if(instruction != nullptr)
+            {
+                cfg->addInstructionInCurrentBasicBlock(instruction);
+            }
     }
 }
 

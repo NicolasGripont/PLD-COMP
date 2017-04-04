@@ -1,4 +1,6 @@
 #include "ExpressionVariable.h"
+#include "../middle_end/CFG.h"
+#include "../middle_end/BasicBlock.h"
 
 ExpressionVariable::ExpressionVariable(char * _id, int _type)
     : Expression(), id(_id)
@@ -22,7 +24,7 @@ std::string ExpressionVariable::toString() const
 
 void ExpressionVariable::buildIR(CFG *cfg) const
 {
-
+    //Do nothing
 }
 
 const char *ExpressionVariable::getId() const

@@ -31,5 +31,3 @@ protected:
 };
 
 #endif
-
-/**< For 3-op instrs: d, x, y; for ldconst: d, c;  For call: label, d, params;  for wmem and rmem: choose yourself */

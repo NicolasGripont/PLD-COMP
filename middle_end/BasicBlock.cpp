@@ -62,7 +62,7 @@ std::string BasicBlock::toString() const
 {
     std::string ret = " ________" + this->getLabel() + "\n/\n";
 
-    for(const IRInstruction * inst : instructions)
+    for(IRInstruction * inst : instructions)
     {
         ret += inst->toString() + "\n";
     }
@@ -70,7 +70,7 @@ std::string BasicBlock::toString() const
     return ret + "____________________\n\n";
 }
 
-void BasicBlock::addIRInstruction(const IRInstruction* instruction)
+void BasicBlock::addIRInstruction(IRInstruction* instruction)
 {
     if (instruction != nullptr)
     {
@@ -98,14 +98,14 @@ const CFG *BasicBlock::getCFG() const
     return cfg;
 }
 
-const std::vector<const IRInstruction *> & BasicBlock::getInstructions() const
+const std::vector<IRInstruction *> & BasicBlock::getInstructions() const
 {
     return instructions;
 }
 
-const Symbol *BasicBlock::getLastInstructionDestination()
+Symbol *BasicBlock::getLastInstructionDestination()
 {
-    const IROperationWithDestination * irOp = dynamic_cast<const IROperationWithDestination*>
+    IROperationWithDestination * irOp = dynamic_cast<IROperationWithDestination*>
             (instructions.back());
 
     if(irOp != nullptr)
@@ -139,14 +139,14 @@ int BasicBlock::getPrologMaximalOffset() const
     return 3*8;
 }
 
-const std::map<const std::string, const Symbol *> &BasicBlock::getLocalSymbolsTable() const
+const std::map<std::string, Symbol *> &BasicBlock::getLocalSymbolsTable() const
 {
     return localSymbolsTable;
 }
 
-void BasicBlock::addLocalSymbol(const Symbol * sym)
+void BasicBlock::addLocalSymbol(Symbol * sym)
 {
-    localSymbolsTable.insert(std::pair<std::string,const Symbol *>(sym->getName(), sym));
+    localSymbolsTable.insert(std::pair<std::string, Symbol *>(sym->getName(), sym));
 }
 
 int BasicBlock::getLevel() const
