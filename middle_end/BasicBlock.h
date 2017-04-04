@@ -55,6 +55,7 @@ class BasicBlock
     const std::map<std::string, Symbol *> & getLocalSymbolsTable() const;
 
     void addLocalSymbol(Symbol * sym);
+    Symbol* getSymbol(std::string) const;
 
     int getLevel() const;
 

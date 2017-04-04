@@ -58,7 +58,7 @@ std::string AssignmentOperationVariable::toString() const
 
 void AssignmentOperationVariable::buildIR(CFG *cfg) const
 {
-    Symbol * symbol = cfg->getCurrentBasicBlock()->getLocalSymbolsTable().find(this->exprVar->getId())->second;
+    Symbol * symbol = cfg->getCurrentBasicBlock()->getSymbol(this->exprVar->getId());
     if(symbol != nullptr)
     {
             expr->buildIR(cfg);
