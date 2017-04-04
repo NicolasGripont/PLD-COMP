@@ -23,7 +23,7 @@ std::string ExpressionInteger::toString() const
 void ExpressionInteger::buildIR(CFG *cfg) const
 {
     std::string tmpName = cfg->getTempVariableName();
-    Symbol * destination = new Symbol(tmpName,getType(),cfg->getOffset());
+    Symbol * destination = new Symbol(tmpName,getType(),cfg->getOffsetFromCurrentBasicBlock());
     IRLoadConstant * instruction = new IRLoadConstant(destination, value);
 
     cfg->addInstructionInCurrentBasicBlock(instruction);

@@ -186,7 +186,7 @@ void Intel::call(const IRCall* instruction)
 {
     write("//call");
 
-    std::vector<const Symbol*> params = instruction->getParams();
+    std::vector<Symbol*> params = instruction->getParams();
 
     // Pour le moment que putchar (voir 5.3)
     /* Putchar */
