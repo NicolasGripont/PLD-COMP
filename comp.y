@@ -577,22 +577,25 @@ bool variableIsVoid(Genesis** g, Type* type)
     return false;
 }
 
-bool checkUndefinedFunctionErrors()
+bool checkUndeclaredFunctionErrors()
 {
     // On retire chaque fonction définie du set des fonctions appellées
     for(int i=0;i<functions.size();++i)
     {
         FunctionContainer* currFunc = functions[i];
 
-        if(!currFunc->declaration)
+        auto it = undefinedFunctionCall.find(std::string(currFunc->name));
+        if (it != undefinedFunctionCall.end())
         {
-            auto it = undefinedFunctionCall.find(std::string(currFunc->name));
-            if (it != undefinedFunctionCall.end())
-            {
-                std::cout <<  it->second->functionName << std::endl;
+            undefinedFunctionCall.erase(std::string(currFunc->name));
 
+            if(currFunc->declaration)
+            {
+                calledFunctions.insert(std::make_pair(std::string(currFunc->name),it->second));
+            }
+            else
+            {
                 delete(it->second);
-                undefinedFunctionCall.erase(std::string(currFunc->name));
             }
         }
     }
@@ -602,7 +605,7 @@ bool checkUndefinedFunctionErrors()
     {
         FunctionCall* func = pair.second;
         std::cout << filename << ":" << func->line << ":" << func->column <<" - erreur : "
-        << "Référence indéfinie vers la fonction " << std::string(func->functionName) << "." << std::endl;
+        << "La fonction " << std::string(func->functionName) << " n'a pas été déclarée." << std::endl;
 
         delete(func);
         error = true;
@@ -611,7 +614,7 @@ bool checkUndefinedFunctionErrors()
     return error;
 }
 
-bool checkUndeclaredFunctionErrors()
+bool checkUndefinedFunctionErrors()
 {
     // On retire chaque fonction définie du set des fonctions appellées
     for(int i=0;i<functions.size();++i)
@@ -623,8 +626,6 @@ bool checkUndeclaredFunctionErrors()
             auto it = calledFunctions.find(std::string(currFunc->name));
             if (it != calledFunctions.end())
             {
-                std::cout <<  it->second->functionName << std::endl;
-
                 delete(it->second);
                 calledFunctions.erase(std::string(currFunc->name));
             }

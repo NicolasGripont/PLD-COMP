@@ -1,8 +1,11 @@
 #include <stdint.h>
 
-int64_t yolo(int64_t a)
+int64_t b = 16;
+int64_t a = b;
+
+int64_t poutre2()
 {
-    yolo(18);
+    poutre(18);
 }
 
 void main() {
@@ -10,8 +13,6 @@ void main() {
     int32_t i;
     for(i=0;i<10;++i)
     {
-        int32_t b = yolo(1) + 'a';
+        int32_t b = poutre2(1) + 'a';
     }
-
-
 }
