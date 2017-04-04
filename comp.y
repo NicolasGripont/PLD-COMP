@@ -687,14 +687,17 @@ bool tryDefineFunction(Genesis** g, Type* type, char* name, DeclarationFunctionS
 {
     FunctionContainer* func;
     bool isDeclaration = declFunc->isDeclaration();
+
+
     func = new FunctionContainer(name, type->getType(), isDeclaration, args);
+    
 
     for(int i=0;i<functions.size();++i)
     {
         FunctionContainer* currFunc = functions[i];
         
         if(strcmp(func->name, currFunc->name)==0)
-        {
+        { 
             // Check si le type de retour est identique
             if(func->type != currFunc->type)
             {

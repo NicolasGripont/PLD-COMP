@@ -1,9 +1,23 @@
+#include <string.h>
+#include <iostream>
+
 #include "Argument.h"
+
+std::string Argument::unnamedBase = "UNNAMED_";
+int Argument::unnamedCount = 0;
 
 Argument::Argument(Type* _type, char* _id, bool _array)
     : Printable(), type(_type), id(_id), array(_array)
 {
+    if(id == nullptr)
+    {
+        id = (char*)unnamedBase.c_str();
+        char s[20];
+        sprintf(s, "%d", unnamedCount);
+        id = strdup(strcat(id, s));
 
+        ++unnamedCount;
+    }
 }
 
 Argument::~Argument() 
