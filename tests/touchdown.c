@@ -25,7 +25,7 @@ int64_t factoriel_recurcive(int64_t number)
 int64_t main () 
 {
 	int64_t factoriel1;
-	int i = 0;
+    int64_t i = 0;
 	
 	for( ; i < 6 ; i++)
 	{
@@ -48,8 +48,8 @@ int64_t main ()
 	putchar('O');
 	putchar('W');
 	putchar('N');
-	putchar(' ');
-	putchar('!');
+    putchar(' ');
+    putchar('!');
 	putchar('\n');
 	
 	return 0;
@@ -77,17 +77,17 @@ int64_t factoriel_while(int64_t number)
 
 void print(int64_t result)
 {
-	char sign = '+';
+    char sign = '+';
 	int64_t reverse = 0;
 	int64_t i = 1;
-	char base = '0';
+    char base = '0';
 	char currentChar;
 	int64_t currentDigit;
 
 	if(result < 0) 
 	{
 		result *= -1; 
-		putchar('-');
+        putchar('-');
 	} 
 
 	while((result / i) > 10) 
