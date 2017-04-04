@@ -186,7 +186,7 @@ CFG::LevelData *CFG::getLevelData(int level)
     if(pair == mapLevelData.end())
         return nullptr;
     else
-        &(pair->second);
+        return &(pair->second);
 }
 
 void CFG::addNewLevelData(int level, BasicBlock * firstBlock)
