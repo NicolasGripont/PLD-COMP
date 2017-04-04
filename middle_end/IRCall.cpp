@@ -1,7 +1,7 @@
 #include "IRCall.h"
 
-IRCall::IRCall(BasicBlock* _block, std::string _name, Symbol *_returnSymbol)
-	: IRInstruction(_block, IRInstruction::Type::CALL), name(_name), returnSymbol(_returnSymbol)
+IRCall::IRCall(std::string _name, Symbol *_returnSymbol, bool _isVoid)
+    : IRInstruction(IRInstruction::Type::CALL), name(_name), returnSymbol(_returnSymbol), isReturnVoid(_isVoid)
 {
 
 }
@@ -33,6 +33,11 @@ std::string IRCall::toString() const
 			paramsStr += s->getName() + ", ";
 		}
 	}
-    std::string res = "CALL " + name + "(" + + ")";
+    std::string res = "CALL " + name + "(" + paramsStr + ")";
 	return res;
+}
+
+bool IRCall::getIsReturnVoid() const
+{
+    return isReturnVoid;
 }

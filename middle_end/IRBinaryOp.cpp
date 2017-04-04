@@ -1,7 +1,7 @@
 #include "IRBinaryOp.h"
 
 IRBinaryOp::IRBinaryOp(IRBinaryOp::Type _type,const Symbol *dest,const Symbol *op_1,const Symbol *op_2)
-    : IROperationWithDestination(dest), type(_type), operand_1(op_1), operand_2(op_2)
+    : IROperationWithDestination(IRInstruction::Type::BINARY_OP, dest), type(_type), operand_1(op_1), operand_2(op_2)
 {}
 
 IRBinaryOp::~IRBinaryOp()

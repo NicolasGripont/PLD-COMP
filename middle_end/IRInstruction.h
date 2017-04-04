@@ -19,15 +19,13 @@ public:
         JUMP,
         SELECTION
     };
-    IRInstruction();
-    IRInstruction(BasicBlock* block, Type _type);
-    virtual ~IRInstruction();
+
+    IRInstruction(Type _type);
+    virtual ~IRInstruction() = default;
 
     Type getOperation() const;
-    BasicBlock * getBasicBlock() const;
 
 protected:
-    BasicBlock * block = nullptr; /**< The BB this instruction belongs to, which provides a pointer to the CFG this instruction belong to */
     Type type;
 };
 

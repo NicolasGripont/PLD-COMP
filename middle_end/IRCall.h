@@ -11,16 +11,19 @@
 class IRCall : public IRInstruction
 {
 public:
-    IRCall(BasicBlock* block, std::string name, Symbol *returnSymbol);
+    IRCall(std::string name, Symbol *returnSymbol, bool _isVoid);
     ~IRCall();
     void addParameter(Symbol* symbol);
 
     virtual std::string toString() const;
 
+    bool getIsReturnVoid() const;
+
 protected:
-	std::string name;
-	Symbol* returnSymbol;
+    std::string name;
+    Symbol* returnSymbol;
 	std::vector<Symbol*> params;
+    bool isReturnVoid;
 };
 
 #endif // IRCALL_H

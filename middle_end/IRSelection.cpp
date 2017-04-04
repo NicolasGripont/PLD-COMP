@@ -2,8 +2,8 @@
 
 const std::string IRSelection::LABEL_NULL_NAME = "null";
 
-IRSelection::IRSelection(BasicBlock* _block, Symbol* _condition, std::string _ifLabel, std::string _elseLabel)
-	: IRInstruction(block, IRInstruction::Type::SELECTION), condition(_condition), ifLabel(_ifLabel), elseLabel(_elseLabel)
+IRSelection::IRSelection(Symbol* _condition, std::string _ifLabel, std::string _elseLabel)
+    : IRInstruction(IRInstruction::Type::SELECTION), condition(_condition), ifLabel(_ifLabel), elseLabel(_elseLabel)
 {
 
 }

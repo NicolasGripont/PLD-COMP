@@ -6,7 +6,7 @@
 class IROperationWithDestination : public IRInstruction
 {
 public:
-    IROperationWithDestination(const Symbol * dest) : destination(dest) {}
+    IROperationWithDestination(IRInstruction::Type type, const Symbol * dest) : IRInstruction(type),destination(dest) {}
     ~IROperationWithDestination() { delete destination; }
 
     const Symbol * getDestination() const { return destination; }

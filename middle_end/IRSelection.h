@@ -12,7 +12,7 @@ class IRSelection : IRInstruction
 {
 public:
     static const std::string LABEL_NULL_NAME;
-    IRSelection(BasicBlock* block, Symbol* condition, std::string ifLabel, std::string elseLabel = LABEL_NULL_NAME);
+    IRSelection(Symbol* condition, std::string ifLabel, std::string elseLabel = LABEL_NULL_NAME);
     ~IRSelection();
 
     virtual std::string toString() const;
