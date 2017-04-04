@@ -57,7 +57,6 @@ public:
 
     const Symbol * getLastInstructionDestination();
 
-    int getOffsetFromCurrentBasicBlock() const;
     std::string getTempVariableName();
 
     void addSymbolToCurrentBasicBlock(const Symbol * symbole);
@@ -71,9 +70,12 @@ public:
     void setRootBasicBlock(BasicBlock * block);
     const BasicBlock * getRootBasicBlock() const;
 
+    int getOffset() const;
+
 private:
 
     int nextBBnumber;    /**< just for naming */
+    int offset;
 
     DeclarationFunction * function;
     std::map <const std::string,const Symbol*> symbolsTable;

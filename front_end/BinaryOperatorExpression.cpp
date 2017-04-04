@@ -122,7 +122,7 @@ void BinaryOperatorExpression::buildIR(CFG *cfg) const
 
     if(expr1Symbol != nullptr && expr2Symbol != nullptr)
     {
-        const Symbol * destination = new Symbol(cfg->getTempVariableName(),getType(),cfg->getOffsetFromCurrentBasicBlock());
+        const Symbol * destination = new Symbol(cfg->getTempVariableName(),getType(),cfg->getOffset());
 
         switch(op)
         {

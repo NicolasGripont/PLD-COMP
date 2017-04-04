@@ -10,7 +10,7 @@
 #include "Parser.h"
 
 CFG::CFG(const Parser * parser, DeclarationFunction * _function) :
-    function(_function), currentBasicBlock(nullptr), nextBBnumber(0)
+    offset(0), function(_function), currentBasicBlock(nullptr), nextBBnumber(0)
 {
     symbolsTable = parser->getGlobalSymbolTable();
     _function->buildIR(this);
@@ -114,11 +114,6 @@ const Symbol *CFG::getLastInstructionDestination()
     return currentBasicBlock->getLastInstructionDestination();
 }
 
-int CFG::getOffsetFromCurrentBasicBlock() const
-{
-    return currentBasicBlock->getLocalSymbolsTable().size();
-}
-
 std::string CFG::getTempVariableName()
 {
     return currentBasicBlock->getTempVariableName();
@@ -127,6 +122,7 @@ std::string CFG::getTempVariableName()
 void CFG::addSymbolToCurrentBasicBlock(const Symbol *symbole)
 {
     currentBasicBlock->addLocalSymbol(symbole);
+    ++offset;
 }
 
 void CFG::setCurrentBasicBlockExitTrue(BasicBlock *bb)
@@ -160,3 +156,7 @@ const BasicBlock *CFG::getRootBasicBlock() const
     return rootBasicBlock;
 }
 
+int CFG::getOffset() const
+{
+    return offset;
+}

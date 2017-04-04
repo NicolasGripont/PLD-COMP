@@ -43,7 +43,7 @@ void FunctionCallExpression::buildIR(CFG *cfg) const
 
     if(getType() != VOID)
     {
-        returnSymbol = new Symbol(cfg->getTempVariableName(),getType(),cfg->getOffsetFromCurrentBasicBlock());
+        returnSymbol = new Symbol(cfg->getTempVariableName(),getType(),cfg->getOffset());
     }
 
     instruction = new IRCall(id,returnSymbol,getType() == VOID);
