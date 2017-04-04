@@ -31,6 +31,14 @@ class BasicBlock;
 class CFG : public Printable
 {
 public:
+
+    struct LevelData
+    {
+        int offset = 0;
+        BasicBlock * lastBasicBlock = nullptr;
+
+    };
+
     CFG(const Parser * parser, DeclarationFunction * _function);
     CFG();
     ~CFG() = default;
@@ -44,7 +52,6 @@ public:
     // symbol table methods
     Symbol * getSymbol(std::string name) const;
 
-    const std::map <std::string,Symbol*> * getSymbolTableFromLevel(int level) const;
     void setLastBasicBlockFromLevel(int level,BasicBlock* block);
 
     const std::map <std::string, Symbol*> & getSymbolsTable() const;
@@ -71,9 +78,13 @@ public:
     void setRootBasicBlock(BasicBlock * block);
     BasicBlock * getRootBasicBlock() const;
 
+    LevelData * getLevelData(int level);
+    void addNewLevelData(int level, BasicBlock * firstBlock);
+
 private:
 
-    int nextBBnumber;    /**< just for naming */
+    int nextBBnumber;
+    int lastBasicBlockLevel;
 
     DeclarationFunction * function;
     std::map <std::string,Symbol*> symbolsTable;
@@ -81,7 +92,9 @@ private:
     BasicBlock * currentBasicBlock;
     BasicBlock * rootBasicBlock;
 
-    std::map <int, BasicBlock*> lastBasicBlockbyLevel;   /**< all the basic blocks of this CFG*/
+    std::map <int, LevelData> mapLevelData;   /**< all the basic blocks of this CFG*/
+
+    void cleanLevel(int level);
 };
 
 #endif

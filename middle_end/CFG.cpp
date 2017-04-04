@@ -10,11 +10,13 @@
 #include "Parser.h"
 
 CFG::CFG(const Parser * parser, DeclarationFunction * _function) :
-    function(_function), currentBasicBlock(nullptr), nextBBnumber(0)
+    nextBBnumber(0), lastBasicBlockLevel(0), function(_function), currentBasicBlock(nullptr)
 {
     symbolsTable = parser->getGlobalSymbolTable();
     _function->buildIR(this);
-    nextBBnumber = 0;
+
+    LevelData levelZeroData;
+    mapLevelData.insert(std::pair<int,LevelData>(0,levelZeroData));
 }
 
 CFG::CFG() : function(nullptr)
@@ -40,16 +42,21 @@ std::string CFG::toString() const
 BasicBlock * CFG::createNewBasicBlock(int level, std::string bbName)
 {
     BasicBlock * bb = new BasicBlock(level,this,bbName);
-    setLastBasicBlockFromLevel(level,bb);
+
+    if(level < lastBasicBlockLevel)
+    {
+        cleanLevel(lastBasicBlockLevel);
+    }
+
+    lastBasicBlockLevel = level;
+
     return bb;
 }
 
 
 BasicBlock * CFG::createNewBasicBlock(int level)
 {
-    BasicBlock * bb = new BasicBlock(level,this,getUsableBasicBlockName());
-    setLastBasicBlockFromLevel(level,bb);
-    return bb;
+    return createNewBasicBlock(level,getUsableBasicBlockName());
 }
 
 void CFG::addSymbol(Symbol *symbol)
@@ -68,19 +75,19 @@ Symbol* CFG::getSymbol(std::string name) const
         return nullptr;
 }
 
-const std::map<std::string, Symbol *> * CFG::getSymbolTableFromLevel(int level) const
-{
-    auto bb = lastBasicBlockbyLevel.find(level);
-    if(bb == lastBasicBlockbyLevel.end())
-        return nullptr;
-
-    return &(bb->second->getLocalSymbolsTable());
-
-}
-
 void CFG::setLastBasicBlockFromLevel(int level, BasicBlock *block)
 {
-    lastBasicBlockbyLevel.insert(std::pair<int, BasicBlock *>(level,block));
+    auto pair = mapLevelData.find(level);
+
+    if(pair != mapLevelData.end())
+    {
+        pair->second.lastBasicBlock = block;
+    }
+    else
+    {
+        std::cout << "Error CFG::setLastBasicBlockFromLevel no data for current level "
+                  << std::to_string(level) << std::endl;
+    }
 }
 
 const std::map <std::string, Symbol*> & CFG::getSymbolsTable() const
@@ -116,7 +123,15 @@ Symbol *CFG::getLastInstructionDestination()
 
 int CFG::getOffsetFromCurrentBasicBlock() const
 {
-    return currentBasicBlock->getLocalSymbolsTable().size();
+    auto pair = mapLevelData.find(currentBasicBlock->getLevel());
+
+    if(pair != mapLevelData.end())
+    {
+        return pair->second.offset;
+    }
+
+    std::cout << "Error CFG::getOffsetFromCurrentBasicBlock" << std::endl;
+    return -1;
 }
 
 std::string CFG::getTempVariableName()
@@ -127,6 +142,18 @@ std::string CFG::getTempVariableName()
 void CFG::addSymbolToCurrentBasicBlock(Symbol *symbole)
 {
     currentBasicBlock->addLocalSymbol(symbole);
+
+    auto pair = mapLevelData.find(currentBasicBlock->getLevel());
+
+    if(pair != mapLevelData.end())
+    {
+        pair->second.offset++;
+    }
+    else
+    {
+        std::cout << "Error CFG::addSymbolToCurrentBasicBlock no offset for current level "
+                  << std::to_string(currentBasicBlock->getLevel()) << std::endl;
+    }
 }
 
 void CFG::setCurrentBasicBlockExitTrue(BasicBlock *bb)
@@ -159,4 +186,39 @@ BasicBlock *CFG::getRootBasicBlock() const
 {
     return rootBasicBlock;
 }
+
+CFG::LevelData *CFG::getLevelData(int level)
+{
+    auto pair = mapLevelData.find(level);
+    if(pair == mapLevelData.end())
+        return nullptr;
+    else
+        &(pair->second);
+}
+
+void CFG::addNewLevelData(int level, BasicBlock * firstBlock)
+{
+    LevelData data;
+
+    auto pair = mapLevelData.find(level-1);
+
+    if(pair != mapLevelData.end())
+    {
+        data.offset = pair->second.offset;
+        data.lastBasicBlock = firstBlock;
+    }
+    else
+    {
+        std::cout << "Error CFG::addNewLevelData : previous level data not found for level " << std::to_string(level-1) << std::endl;
+        return;
+    }
+
+    mapLevelData.insert(std::pair<int,LevelData>(level,data));
+}
+
+void CFG::cleanLevel(int level)
+{
+    mapLevelData.erase(level);
+}
+
 

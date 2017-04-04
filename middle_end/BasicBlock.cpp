@@ -1,5 +1,4 @@
 #include "BasicBlock.h"
-#include "CFG.h"
 #include "IRInstruction.h"
 #include "IROperationWithDestination.h"
 
@@ -11,33 +10,25 @@ BasicBlock::BasicBlock(int lvl, CFG *_cfg, std::string _entry_label)
     {
         localSymbolsTable = cfg->getSymbolsTable();
     }
-    // sinon on va prendre le context d'avant (qui contiendra donc les globaux)
+    // sinon on va prendre le contexte d'avant (qui contiendra donc les globaux)
     else
     {
-        auto previousContextSymbolTable = cfg->getSymbolTableFromLevel(lvl);
+        auto levelData = cfg->getLevelData(lvl);
 
-        // Si on est pas le premier bloc du niveau, on prend le context d'avant
-        if(previousContextSymbolTable != nullptr)
+        // Si on est le premier bloc du niveau, on build par rapport au niveau n - 1
+        if(levelData == nullptr)
         {
-            for(auto pair : *previousContextSymbolTable)
-            {
-                localSymbolsTable.insert(pair);
-            }
+            this->buildFromUpperLevelData();
         }
-        // Sinon on prend le context du niveau d'au dessus
+        // Sinon on build avec les data du niveau
         else
         {
-            auto previousContextSymbolTable = cfg->getSymbolTableFromLevel(lvl - 1);
-
-            if(previousContextSymbolTable != nullptr)
-            {
-                for(auto pair : *previousContextSymbolTable)
-                {
-                    localSymbolsTable.insert(pair);
-                }
-            }
+            this->buildFromLevelData(levelData);
         }
     }
+
+    cfg->setLastBasicBlockFromLevel(level,this);
+
     exit_true = nullptr;
     exit_false = nullptr;
 }
@@ -152,4 +143,30 @@ void BasicBlock::addLocalSymbol(Symbol * sym)
 int BasicBlock::getLevel() const
 {
     return level;
+}
+
+// Privates functions
+void BasicBlock::buildFromUpperLevelData()
+{
+    auto levelData = cfg->getLevelData(level - 1);
+
+    if(levelData != nullptr)
+    {
+        buildFromLevelData(levelData);
+
+        cfg->addNewLevelData(level, this);
+    }
+    else
+    {
+        std::cout << "Error BasicBlock::buildWithUpperLevelData levelData : " << std::to_string(level-1) << std::endl;
+    }
+
+}
+
+void BasicBlock::buildFromLevelData(const CFG::LevelData* data)
+{
+    for(auto symbole : data->lastBasicBlock->getLocalSymbolsTable())
+    {
+        localSymbolsTable.insert(symbole);
+    }
 }
