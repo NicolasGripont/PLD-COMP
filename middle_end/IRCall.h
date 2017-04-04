@@ -13,13 +13,15 @@ class IRCall : public IRInstruction
 public:
     IRCall(std::string name, Symbol *returnSymbol, bool _isVoid);
     ~IRCall();
+
     void addParameter(Symbol* symbol);
+
+    const std::string getName() const;
     std::vector<Symbol *> getParams() const;
-
-    virtual std::string toString() const;
-
     bool getIsReturnVoid() const;
 
+    virtual std::string toString() const;
+    
 protected:
     std::string name;
     Symbol* returnSymbol;
@@ -27,4 +29,4 @@ protected:
     bool isReturnVoid;
 };
 
-#endif // IRCALL_H
+#endif // _IRCALL_H

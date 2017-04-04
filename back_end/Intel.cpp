@@ -33,7 +33,7 @@ void Intel::parse()
                 write("\tpushq %rbp");
                 write("\tmovq %rsp, %rbp");
 
-                int offset = block->getPrologMaximalOffset() * OFFSET_VALUE;
+                int offset = itCFG->second->getOffsetFromCurrentBasicBlock() * OFFSET_VALUE;
                 if (offset%OFFSET_VALUE != 0) // Next multiple OFFSET_VALUE
                 {
                     offset += (OFFSET_VALUE - (offset%OFFSET_VALUE));
@@ -78,10 +78,12 @@ void Intel::parse()
             if (block->getExitTrue() != nullptr)
             {
                 block = block->getExitTrue();
+                write("\tjmp " + block->getLabel());
             }
             else if (block->getExitFalse() != nullptr)
             {
                 block = block->getExitFalse();
+                write("\tjmp " + block->getLabel());
             }
             else
             {
@@ -134,13 +136,13 @@ void Intel::binaryOp(const IRBinaryOp* instruction)
     switch (instruction->getType())
     {
         case IRBinaryOp::Type::ADD :
-            write("\tadd %rbx, %rax");
+            write("\taddq %rbx, %rax");
             break;
         case IRBinaryOp::Type::SUB :
-            write("\tsub %rbx, %rax");
+            write("\tsubq %rbx, %rax");
             break;
         case IRBinaryOp::Type::MUL :
-            write("\timul %rbx, %rax");
+            write("\timulq %rbx, %rax");
             break;
         case IRBinaryOp::Type::DIV :
             break;
@@ -188,16 +190,43 @@ void Intel::call(const IRCall* instruction)
 
     std::vector<Symbol*> params = instruction->getParams();
 
-    // Pour le moment que putchar (voir 5.3)
-    /* Putchar */
-    write("\tmovl -" + std::to_string(params.at(0)->getOffset() * OFFSET_VALUE) + "(%rbp), %edi");
-    write("\tcall putchar");
+    // 6 parameters. 64 bits.
+    if (params.size() > 0)
+    {
+        write("\tmovq -" + std::to_string(params.at(0)->getOffset() * OFFSET_VALUE) + "(%rbp), %rdi");
+    }
+    if (params.size() > 1)
+    {
+        write("\tmovq -" + std::to_string(params.at(1)->getOffset() * OFFSET_VALUE) + "(%rbp), %rsi");
+    }
+    if (params.size() > 2)
+    {
+        write("\tmovq -" + std::to_string(params.at(2)->getOffset() * OFFSET_VALUE) + "(%rbp), %rdx");
+    }
+    if (params.size() > 3)
+    {
+        write("\tmovq -" + std::to_string(params.at(3)->getOffset() * OFFSET_VALUE) + "(%rbp), %rcx");
+    }
+    if (params.size() > 4)
+    {
+        write("\tmovq -" + std::to_string(params.at(4)->getOffset() * OFFSET_VALUE) + "(%rbp), %r8");
+    }
+    if (params.size() > 5)
+    {
+        write("\tmovq -" + std::to_string(params.at(5)->getOffset() * OFFSET_VALUE) + "(%rbp), %r9");
+    }
+    if (params.size() > 6)
+    {
+        std::cout << "Warning : appel de fonction avec plus de 6 paramètres [back_end:Intel:call()]." << std::endl;
+    }
+
+    write("\tcall " + instruction->getName());
 }
 
 void Intel::jump(const IRJump* instruction)
 {
     write("//jump");
-    write("\tjump " + instruction->getLabel());
+    write("\tjmp " + instruction->getLabel());
 }
 
 void Intel::selection(const IRSelection* instruction)

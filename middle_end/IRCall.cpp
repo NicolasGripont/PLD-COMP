@@ -8,36 +8,29 @@ IRCall::IRCall(std::string _name, Symbol *_returnSymbol, bool _isVoid)
 
 IRCall::~IRCall()
 {
-	delete returnSymbol;
-    for(Symbol* s : params)
-	{
-		delete s;
-	}
+    delete returnSymbol;
+    for (Symbol* s : params)
+    {
+        delete s;
+    }
 }
 
 void IRCall::addParameter(Symbol * symbol)
 {
-	if(symbol != nullptr)
-	{
-		params.push_back(symbol);
-	}
+    if (symbol != nullptr)
+    {
+        params.push_back(symbol);
+    }
 }
 
-std::string IRCall::toString() const
+const std::string IRCall::getName() const
 {
-	std::string paramsStr = "";
-    for( Symbol* symbol : params)
-	{
-        if(symbol != nullptr)
-		{
-            paramsStr += symbol->getName() + ", ";
-		}
-	}
+    return name;
+}
 
-    paramsStr = paramsStr.substr(0, paramsStr.size()-2);
-
-    std::string res = "CALL " + name + "(" + paramsStr + ")";
-	return res;
+std::vector<Symbol *> IRCall::getParams() const
+{
+    return params;
 }
 
 bool IRCall::getIsReturnVoid() const
@@ -45,7 +38,19 @@ bool IRCall::getIsReturnVoid() const
     return isReturnVoid;
 }
 
-std::vector<Symbol *> IRCall::getParams() const
+std::string IRCall::toString() const
 {
-    return params;
+    std::string paramsStr = "";
+    for (Symbol* symbol : params)
+    {
+        if (symbol != nullptr)
+        {
+            paramsStr += symbol->getName() + ", ";
+        }
+    }
+
+    paramsStr = paramsStr.substr(0, paramsStr.size()-2);
+
+    std::string res = "CALL " + name + "(" + paramsStr + ")";
+    return res;
 }
