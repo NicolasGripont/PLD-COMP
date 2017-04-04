@@ -39,6 +39,18 @@ int64_t main ()
 		factoriel1	= factoriel_recurcive(i);
 		print(factoriel1);
 	}
+	putchar('T');
+	putchar('O');
+	putchar('U');
+	putchar('C');
+	putchar('H');
+	putchar('D');
+	putchar('O');
+	putchar('W');
+	putchar('N');
+	putchar(' ');
+	putchar('!');
+	putchar('\n');
 	
 	return 0;
 }
