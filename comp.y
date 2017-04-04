@@ -526,7 +526,6 @@ global_expression
     | NOT_BIT global_expression {$$ = new UnaryOperatorExpression($2,NOT_BIT);}
     | NOT global_expression {$$ = new UnaryOperatorExpression($2,NOT);}
     | INT {$$ = new ExpressionInteger($1,INT32);}
-    | expr_var {$$ = $1;}
     | global_expression PLUS global_expression {$$ = new BinaryOperatorExpression($1,$3,PLUS); if(checkConflictError(g,$1,$3)) YYABORT;}
     | global_expression MINUS global_expression {$$ = new BinaryOperatorExpression($1,$3,MINUS); if(checkConflictError(g,$1,$3)) YYABORT;}
     | global_expression MUL global_expression {$$ = new BinaryOperatorExpression($1,$3,MUL); if(checkConflictError(g,$1,$3)) YYABORT;}
