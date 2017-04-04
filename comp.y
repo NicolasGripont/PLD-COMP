@@ -1093,6 +1093,18 @@ void checkAssignmentConstant(int leftExpressionType, Expression* rightExpression
 
 bool checkArrayTypeConflitError(Genesis** g, int type1, int type2)
 {
+    if(type1 == VOID)
+    {
+        yyerror(g, "Variable de type void !");
+        return true;
+    }
+
+    if(type2 == VOID)
+    {
+        yyerror(g, "Impossible d'affecter une expression de type void.");
+        return true;
+    }
+
     // Si un est un tableau et l'autre non -> erreur
     // Si elles sont tableau mais de type different
     if((isArrayType(type1) != isArrayType(type2))
