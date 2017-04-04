@@ -45,9 +45,7 @@ void MultipleDeclarationVariable::buildIR(CFG *cfg) const
 {
     for (DeclarationVariable * decl : declarationsVariables)
     {
-
         Symbol * destination = new Symbol(decl->getId(),this->getType()->getType(),cfg->getOffsetFromCurrentBasicBlock());
-
 
         cfg->addSymbolToCurrentBasicBlock(destination);
 
