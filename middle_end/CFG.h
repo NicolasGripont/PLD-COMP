@@ -62,6 +62,7 @@ public:
     void setCurrentBasicBlock(BasicBlock * bb);
     BasicBlock * getCurrentBasicBlock() const;
 
+
     Symbol * getLastInstructionDestination();
 
     int getOffsetFromCurrentBasicBlock();
@@ -86,7 +87,6 @@ private:
 
     int nextBBnumber;
     int lastBasicBlockLevel;
-
 
     DeclarationFunction * function;
     std::map <std::string,Symbol*> symbolsTable;

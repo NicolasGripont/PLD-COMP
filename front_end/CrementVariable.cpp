@@ -53,7 +53,6 @@ void CrementVariable::buildIR(CFG *cfg) const
     {
         Symbol * constant = new Symbol(cfg->getTempVariableName(),getType(),cfg->getOffsetFromCurrentBasicBlock());
 
-
         IRLoadConstant * prepConstant = new IRLoadConstant(constant,1);
 
         cfg->addInstructionInCurrentBasicBlock(prepConstant);

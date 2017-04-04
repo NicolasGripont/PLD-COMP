@@ -10,13 +10,9 @@
 #include "Parser.h"
 
 CFG::CFG(const Parser * parser, DeclarationFunction * _function) :
-
     nextBBnumber(0), lastBasicBlockLevel(0), function(_function), currentBasicBlock(nullptr)
 {
-<<<<<<< 48ca4a272f82937ab89379e87875e11515f8ff4b
-=======
     // Toujours avant de faire buildIR !
->>>>>>> Verification level system simple
     LevelData levelZeroData;
     mapLevelData.insert(std::pair<int,LevelData>(0,levelZeroData));
 
@@ -126,7 +122,6 @@ Symbol *CFG::getLastInstructionDestination()
     return currentBasicBlock->getLastInstructionDestination();
 }
 
-
 int CFG::getOffsetFromCurrentBasicBlock()
 {
     auto pair = mapLevelData.find(currentBasicBlock->getLevel());
@@ -222,4 +217,3 @@ void CFG::cleanLevel(int level)
 
     std::cout << "clean" << std::endl;
 }
-
