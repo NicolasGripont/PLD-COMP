@@ -13,6 +13,10 @@ CFG::CFG(const Parser * parser, DeclarationFunction * _function) :
 
     nextBBnumber(0), lastBasicBlockLevel(0), function(_function), currentBasicBlock(nullptr)
 {
+<<<<<<< 48ca4a272f82937ab89379e87875e11515f8ff4b
+=======
+    // Toujours avant de faire buildIR !
+>>>>>>> Verification level system simple
     LevelData levelZeroData;
     mapLevelData.insert(std::pair<int,LevelData>(0,levelZeroData));
 
@@ -122,6 +126,24 @@ Symbol *CFG::getLastInstructionDestination()
     return currentBasicBlock->getLastInstructionDestination();
 }
 
+
+int CFG::getOffsetFromCurrentBasicBlock()
+{
+    auto pair = mapLevelData.find(currentBasicBlock->getLevel());
+
+    if(pair != mapLevelData.end())
+    {
+        LevelData data = pair->second;
+        data.offset++;
+        mapLevelData[currentBasicBlock->getLevel()] = data;
+
+        return data.offset;
+    }
+
+    std::cout << "Error CFG::getOffsetFromCurrentBasicBlock" << std::endl;
+    return -1;
+}
+
 std::string CFG::getTempVariableName()
 {
     return currentBasicBlock->getTempVariableName();
@@ -130,18 +152,6 @@ std::string CFG::getTempVariableName()
 void CFG::addSymbolToCurrentBasicBlock(Symbol *symbole)
 {
     currentBasicBlock->addLocalSymbol(symbole);
-
-    auto pair = mapLevelData.find(currentBasicBlock->getLevel());
-
-    if(pair != mapLevelData.end())
-    {
-        pair->second.offset++;
-    }
-    else
-    {
-        std::cout << "Error CFG::addSymbolToCurrentBasicBlock no offset for current level "
-                  << std::to_string(currentBasicBlock->getLevel()) << std::endl;
-    }
 }
 
 void CFG::setCurrentBasicBlockExitTrue(BasicBlock *bb)
@@ -202,10 +212,14 @@ void CFG::addNewLevelData(int level, BasicBlock * firstBlock)
     }
 
     mapLevelData.insert(std::pair<int,LevelData>(level,data));
+
+    std::cout << "add New level" << std::endl;
 }
 
 void CFG::cleanLevel(int level)
 {
     mapLevelData.erase(level);
+
+    std::cout << "clean" << std::endl;
 }
 

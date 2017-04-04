@@ -64,6 +64,8 @@ public:
 
     Symbol * getLastInstructionDestination();
 
+    int getOffsetFromCurrentBasicBlock();
+
     std::string getTempVariableName();
 
     void addSymbolToCurrentBasicBlock(Symbol * symbole);

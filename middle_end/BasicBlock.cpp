@@ -161,7 +161,6 @@ void BasicBlock::buildFromUpperLevelData()
     if(levelData != nullptr)
     {
         buildFromLevelData(levelData);
-
         cfg->addNewLevelData(level, this);
     }
     else
