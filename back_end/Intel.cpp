@@ -1,6 +1,6 @@
 #include "Intel.h"
 
-const int Intel::OFFSET_VALUE = 32;
+const int Intel::OFFSET_VALUE = 8;
 
 Intel::Intel(const std::string _filename, std::map<std::string, CFG*> _listCFG)
     : Writer(_filename), listCFG(_listCFG)
@@ -33,10 +33,10 @@ void Intel::parse()
                 write("\tpushq %rbp");
                 write("\tmovq %rsp, %rbp");
 
-                int offset = block->getPrologMaximalOffset();
-                if (offset%32 != 0) // Next multiple 32
+                int offset = block->getPrologMaximalOffset() * OFFSET_VALUE;
+                if (offset%OFFSET_VALUE != 0) // Next multiple OFFSET_VALUE
                 {
-                    offset += (32 - (offset%32));
+                    offset += (OFFSET_VALUE - (offset%OFFSET_VALUE));
                 }
                 write("\tsubq $" + std::to_string(offset) + ", %rsp");
 
@@ -123,7 +123,7 @@ int Intel::compile()
 
 void Intel::binaryOp(const IRBinaryOp* instruction)
 {
-    write("\t//binaryOp");
+    write("\t// binaryOp");
 
     const Symbol* destination = instruction->getDestination();
     const Symbol* operand1 = instruction->getOperand_1();
@@ -178,17 +178,25 @@ void Intel::rwmemory(const IRRWMemory* instruction)
 
 void Intel::call(const IRCall* instruction)
 {
-    write("\t;//call");
+    write("\t// call");
+
+    // Pour le moment que putchar (voir 5.3)
+
+    std::vector<const Symbol*> params = instruction->getParams();
+
+    write("\tmovl -" + std::to_string(params.at(0)->getOffset() * OFFSET_VALUE) + "(%rbp), %edi");
+    write("\tcall putchar");
+
 }
 
 void Intel::jump(const IRJump* instruction)
 {
-    write("\t;//jump");
+    write("\t// jump");
 }
 
 void Intel::selection(const IRSelection* instruction)
 {
-    write("\t//selection");
+    write("\t// selection");
 }
 
 void Intel::putchar(const char character)
