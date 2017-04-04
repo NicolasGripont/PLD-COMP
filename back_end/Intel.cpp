@@ -1,5 +1,7 @@
 #include "Intel.h"
 
+const int Intel::OFFSET_VALUE = 32;
+
 Intel::Intel(const std::string _filename, std::map<std::string, CFG*> _listCFG)
     : Writer(_filename), listCFG(_listCFG)
 {
@@ -50,19 +52,22 @@ void Intel::parse()
                     switch (instruction)
                     {
                         case IRInstruction::Type::BINARY_OP :
-                            binaryOp();
+                            binaryOp((IRBinaryOp*) iri);
+                            break;
+                        case IRInstruction::Type::LOAD_CONSTANT :
+                            loadConstant((IRLoadConstant*) iri);
                             break;
                         case IRInstruction::Type::RWMEMORY :
-                            rwmemory();
+                            rwmemory((IRRWMemory*) iri);
                             break;
                         case IRInstruction::Type::CALL :
-                            call();
+                            call((IRCall*) iri);
                             break;
                         case IRInstruction::Type::JUMP :
-                            jump();
+                            jump((IRJump*) iri);
                             break;
                         case IRInstruction::Type::SELECTION :
-                            selection();
+                            selection((IRSelection*) iri);
                             break;
                         default:
                             break;
@@ -100,7 +105,7 @@ int Intel::compile()
 
     int result = 0;
     result = system(("as -o " + filename + ".o " + filename + ".s").c_str());
-    result = system(("gcc -o " + filename + ".out " + filename + ".o ").c_str());
+    result = system(("gcc -static -o " + filename + ".out " + filename + ".o").c_str());
 
     if (isOpen())
     {
@@ -116,29 +121,74 @@ int Intel::compile()
     return 0;
 }
 
-void Intel::binaryOp()
+void Intel::binaryOp(const IRBinaryOp* instruction)
 {
+    write("\t//binaryOp");
 
+    const Symbol* destination = instruction->getDestination();
+    const Symbol* operand1 = instruction->getOperand_1();
+    const Symbol* operand2 = instruction->getOperand_2();
+
+    switch (instruction->getType())
+    {
+        case IRBinaryOp::Type::ADD :
+            break;
+        case IRBinaryOp::Type::SUB :
+            break;
+        case IRBinaryOp::Type::MUL :
+            break;
+        case IRBinaryOp::Type::DIV :
+            break;
+        default:
+            std::cout << "Erreur : type d'instruction IRBinaryOp invalide [back_end:Intel:binaryOp()]." << std::endl;
+            break;
+    }
 }
 
-void Intel::rwmemory()
+void Intel::loadConstant(const IRLoadConstant* instruction)
 {
+    write("\t// loadConstant");
 
+    const Symbol* destination = instruction->getDestination();
+    const int value = instruction->getValue();
+
+    write("\tmovq $" + std::to_string(value) + ", -" + std::to_string(destination->getOffset() * OFFSET_VALUE) + "(%rbp)");
 }
 
-void Intel::call()
+void Intel::rwmemory(const IRRWMemory* instruction)
 {
+    write("\t// rwmemory");
 
+    const Symbol* destination = instruction->getDestination();
+    const Symbol* source = instruction->getSource();
+
+    switch (instruction->getType())
+    {
+        case IRRWMemory::Type::READ_MEMORY :
+            break;
+        case IRRWMemory::Type::WRITE_MEMORY :
+            write("\tmovq -" + std::to_string(source->getOffset() * OFFSET_VALUE) + "(%rbp), %rax");
+            write("\tmovq %rax, -" + std::to_string(destination->getOffset() * OFFSET_VALUE) + "(%rbp)");
+            break;
+        default:
+            std::cout << "Erreur : type d'instruction IRRWMemory invalide [back_end:Intel:rwmemory()]." << std::endl;
+            break;
+    }
 }
 
-void Intel::jump()
+void Intel::call(const IRCall* instruction)
 {
-
+    write("\t;//call");
 }
 
-void Intel::selection()
+void Intel::jump(const IRJump* instruction)
 {
+    write("\t;//jump");
+}
 
+void Intel::selection(const IRSelection* instruction)
+{
+    write("\t//selection");
 }
 
 void Intel::putchar(const char character)

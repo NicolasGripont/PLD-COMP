@@ -136,6 +136,7 @@ std::string BasicBlock::getTempVariableName()
 int BasicBlock::getPrologMaximalOffset() const
 {
     // Pour nos tests, 3 variables de 8 octets
+    // TODO: rendre générique
     return 3*8;
 }
 

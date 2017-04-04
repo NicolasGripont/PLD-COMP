@@ -12,6 +12,8 @@ public:
 
     virtual std::string toString() const;
 
+    const int getValue() const;
+
 private:
     int value;
 };
