@@ -6,8 +6,8 @@
 #include <string>
 #include <map>
 #include "Symbol.h"
+#include "CFG.h"
 
-class CFG;
 class IRInstruction;
 
 /**  The class for a basic block */
@@ -68,8 +68,16 @@ protected:
     int indexTempVariable;
 
     CFG * cfg;		    /** < the CFG where this block belongs */
+
     std::vector<IRInstruction *> instructions;
     std::map<std::string, Symbol*> localSymbolsTable;
+
+
+private:
+    void buildFromUpperLevelData();
+    void buildFromLevelData(const CFG::LevelData *data);
+
 };
+
 
 #endif
