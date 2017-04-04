@@ -74,7 +74,7 @@
     bool variableIsVoid(Genesis** g, Type* type);
     bool tryCallFunction(Genesis** g, char* functionName);
     bool tryDeclareGlobalVariable(Genesis** g,Type* type, MultipleDeclarationVariable* multDecl);
-    bool tryDefineFunction(Genesis** g, Type* type, char* name, DeclarationFunctionStatement* declFunc);
+    bool tryDefineFunction(Genesis** g, Type* type, char* name, DeclarationFunctionStatement* declFunc, ArgumentList* args);
     bool checkVariableDuplicationInFunction(Genesis** g, char* functionName, ArgumentList* args, DeclarationFunctionStatement* declFunc);
     bool checkVariableDuplicationInBlock(Genesis** g, MultipleStatement* multStat);
 
@@ -362,14 +362,14 @@ declaration_function
     {
         ArgumentList* args = new ArgumentList();
         $$ = new DeclarationFunction($1, $2, args, $5);
-        if(!tryDefineFunction(g,$1,$2,$5)) YYABORT;
+        if(!tryDefineFunction(g,$1,$2,$5, args)) YYABORT;
         if(checkVariableDuplicationInFunction(g,$2,args,$5)) YYABORT;
         popVariablesFromStack(nullptr,$5);
     }
     | type ID OPEN_PARENTHESIS arguments_list CLOSE_PARENTHESIS declaration_function_statement
     {
         $$ = new DeclarationFunction($1, $2, $4, $6);
-        if(!tryDefineFunction(g,$1,$2,$6)) YYABORT;
+        if(!tryDefineFunction(g,$1,$2,$6,$4)) YYABORT;
         if(checkVariableDuplicationInFunction(g,$2,$4,$6)) YYABORT;
         popVariablesFromStack($4,$6);
     }
@@ -683,15 +683,45 @@ bool tryDeclareGlobalVariable(Genesis** g, Type* type, MultipleDeclarationVariab
 }
 
 
-bool tryDefineFunction(Genesis** g, Type* type, char* name, DeclarationFunctionStatement* declFunc)
+bool tryDefineFunction(Genesis** g, Type* type, char* name, DeclarationFunctionStatement* declFunc, ArgumentList* args)
 {
     FunctionContainer* func;
     bool isDeclaration = declFunc->isDeclaration();
-    func = new FunctionContainer(name, type->getType(), isDeclaration);
+    func = new FunctionContainer(name, type->getType(), isDeclaration, args);
 
     for(int i=0;i<functions.size();++i)
     {
         FunctionContainer* currFunc = functions[i];
+        
+        if(strcmp(func->name, currFunc->name)==0)
+        {
+            // Check si le type de retour est identique
+            if(func->type != currFunc->type)
+            {
+                yyerror(g, ("La fonction "+std::string(func->name)+" a déjà été déclarée avec un type de retour différent.").c_str());
+                delete func;
+                return false;
+            }
+
+            // Check si les paramètres d'appel sont identiques
+            if(func->args->countArguments() != currFunc->args->countArguments())
+            {
+                yyerror(g, ("La fonction "+std::string(func->name)+" a déjà été déclarée avec un nombre de paramètres différent.").c_str());
+                delete func;
+                return false;
+            }
+
+            for(int j=0;j<func->args->countArguments();++j)
+            {
+                int type1 = (*(func->args))[j]->getType()->getType();
+                int type2 = (*(currFunc->args))[j]->getType()->getType();
+
+                yyerror(g, ("La fonction "+std::string(func->name)+" a déjà été déclarée avec des paramètres différents.").c_str());
+                delete func;
+                return false;
+            }
+        }
+
         if(strcmp(func->name, currFunc->name)==0 && !(func->declaration) && !(currFunc->declaration))
         {
             yyerror(g, ("La fonction "+std::string(func->name)+" a déjà été définie.").c_str());
