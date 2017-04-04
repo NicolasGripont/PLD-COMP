@@ -14,6 +14,7 @@ public:
     enum class Type
     {
         BINARY_OP,
+        LOAD_CONSTANT,
         RWMEMORY,
         CALL,
         JUMP,

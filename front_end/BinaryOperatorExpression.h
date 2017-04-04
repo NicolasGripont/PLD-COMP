@@ -6,16 +6,19 @@
 class BinaryOperatorExpression : public Expression
 {
 public:
-	BinaryOperatorExpression(Expression* _expr1, Expression* _expr2, int _op);
-    BinaryOperatorExpression(Expression* _expr1, Expression* _expr2, int _op, int _type);
+    BinaryOperatorExpression(Expression* _left, Expression* _right, int _op);
+    BinaryOperatorExpression(Expression* _left, Expression* _right, int _op, int _type);
     virtual ~BinaryOperatorExpression();
 
     virtual std::string toString() const;
     void buildIR(CFG* cfg) const;
 
+    Expression *getLeft() const;
+    Expression *getRight() const;
+
 private:
-	Expression* expr1;
-	Expression* expr2;
+    Expression* left;
+    Expression* right;
 	int op;
 };
 #endif
