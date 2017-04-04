@@ -690,14 +690,14 @@ bool tryDefineFunction(Genesis** g, Type* type, char* name, DeclarationFunctionS
 
 
     func = new FunctionContainer(name, type->getType(), isDeclaration, args);
-    
+
 
     for(int i=0;i<functions.size();++i)
     {
         FunctionContainer* currFunc = functions[i];
-        
+
         if(strcmp(func->name, currFunc->name)==0)
-        { 
+        {
             // Check si le type de retour est identique
             if(func->type != currFunc->type)
             {
@@ -719,9 +719,13 @@ bool tryDefineFunction(Genesis** g, Type* type, char* name, DeclarationFunctionS
                 int type1 = (*(func->args))[j]->getType()->getType();
                 int type2 = (*(currFunc->args))[j]->getType()->getType();
 
-                yyerror(g, ("La fonction "+std::string(func->name)+" a déjà été déclarée avec des paramètres différents.").c_str());
-                delete func;
-                return false;
+                if(type1 != type2)
+                {
+                    yyerror(g, ("La fonction "+std::string(func->name)+" a déjà été déclarée avec des paramètres différents.").c_str());
+                    yyerror(g, (std::string("(Argument n°")+std::to_string(j)+", type "+getNameOfType(type1)+" au lieu de "+getNameOfType(type2)+".").c_str());
+                    delete func;
+                    return false;
+                }
             }
         }
 
