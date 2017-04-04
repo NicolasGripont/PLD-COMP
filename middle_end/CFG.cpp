@@ -37,7 +37,7 @@ std::string CFG::toString() const
     return s;
 }
 
-BasicBlock * CFG::createNewBasicBlock(int level, const std::string &bbName)
+BasicBlock * CFG::createNewBasicBlock(int level, std::string bbName)
 {
     BasicBlock * bb = new BasicBlock(level,this,bbName);
     setLastBasicBlockFromLevel(level,bb);
@@ -59,7 +59,7 @@ void CFG::addSymbol(Symbol *symbol)
     }
 }
 
-const Symbol* CFG::getSymbol(std::string name) const
+Symbol* CFG::getSymbol(std::string name) const
 {
     auto it = symbolsTable.find(name);
     if (it != symbolsTable.end())
@@ -68,7 +68,7 @@ const Symbol* CFG::getSymbol(std::string name) const
         return nullptr;
 }
 
-const std::map<const std::string, const Symbol *> * CFG::getSymbolTableFromLevel(int level) const
+const std::map<std::string, Symbol *> * CFG::getSymbolTableFromLevel(int level) const
 {
     auto bb = lastBasicBlockbyLevel.find(level);
     if(bb == lastBasicBlockbyLevel.end())
@@ -83,7 +83,7 @@ void CFG::setLastBasicBlockFromLevel(int level, BasicBlock *block)
     lastBasicBlockbyLevel.insert(std::pair<int, BasicBlock *>(level,block));
 }
 
-const std::map <const std::string, const Symbol*> & CFG::getSymbolsTable() const
+const std::map <std::string, Symbol*> & CFG::getSymbolsTable() const
 {
     return symbolsTable;
 }
@@ -104,12 +104,12 @@ void CFG::setCurrentBasicBlock(BasicBlock *bb)
     currentBasicBlock = bb;
 }
 
-const BasicBlock * CFG::getCurrentBasicBlock() const
+BasicBlock * CFG::getCurrentBasicBlock() const
 {
     return currentBasicBlock;
 }
 
-const Symbol *CFG::getLastInstructionDestination()
+Symbol *CFG::getLastInstructionDestination()
 {
     return currentBasicBlock->getLastInstructionDestination();
 }
@@ -119,7 +119,7 @@ std::string CFG::getTempVariableName()
     return currentBasicBlock->getTempVariableName();
 }
 
-void CFG::addSymbolToCurrentBasicBlock(const Symbol *symbole)
+void CFG::addSymbolToCurrentBasicBlock(Symbol *symbole)
 {
     currentBasicBlock->addLocalSymbol(symbole);
     ++offset;
@@ -135,7 +135,7 @@ void CFG::setCurrentBasicBlockExitFalse(BasicBlock *bb)
     currentBasicBlock->setExitFalse(bb);
 }
 
-void CFG::addInstructionInCurrentBasicBlock(const IRInstruction *instruction)
+void CFG::addInstructionInCurrentBasicBlock(IRInstruction *instruction)
 {
     currentBasicBlock->addIRInstruction(instruction);
 }
@@ -151,7 +151,7 @@ void CFG::setRootBasicBlock(BasicBlock *block)
     rootBasicBlock = block;
 }
 
-const BasicBlock *CFG::getRootBasicBlock() const
+BasicBlock *CFG::getRootBasicBlock() const
 {
     return rootBasicBlock;
 }

@@ -16,7 +16,7 @@ Intel::Intel(const std::string _filename, std::map<std::string, CFG*> _listCFG)
 void Intel::parse()
 {
     std::string label;
-    std::vector<const IRInstruction*> instructions;
+    std::vector<IRInstruction*> instructions;
 
     for (std::map<std::string, CFG*>::iterator itCFG = listCFG.begin(); itCFG != listCFG.end(); ++itCFG)
     {

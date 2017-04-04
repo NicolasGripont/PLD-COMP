@@ -13,24 +13,25 @@ public:
         ADD,
         SUB,
         MUL,
-        DIV
+        DIV,
+        MOD
     };
 
-    IRBinaryOp(IRBinaryOp::Type _type, const Symbol *dest, const Symbol *op_1, const Symbol *op_2);
+    IRBinaryOp(IRBinaryOp::Type _type, Symbol *dest, Symbol *op_1, Symbol *op_2);
     ~IRBinaryOp();
 
     virtual std::string toString() const;
 
     Type getType() const;
 
-    const Symbol *getOperand_1() const;
-    const Symbol *getOperand_2() const;
+    Symbol *getOperand_1() const;
+    Symbol *getOperand_2() const;
 
 private:
     Type type;
 
-    const Symbol * operand_1 = nullptr;
-    const Symbol * operand_2 = nullptr;
+    Symbol * operand_1 = nullptr;
+    Symbol * operand_2 = nullptr;
 };
 
 #endif // IRBINARYOP_H

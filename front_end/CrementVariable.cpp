@@ -46,12 +46,13 @@ std::string CrementVariable::toString() const
 void CrementVariable::buildIR(CFG *cfg) const
 {
 
-    const Symbol * variableToIncrment = cfg->getCurrentBasicBlock()->getLocalSymbolsTable().find(exprVar->getId())->second;
+    Symbol * variableToIncrment = cfg->getCurrentBasicBlock()->getLocalSymbolsTable().find(exprVar->getId())->second;
 
 
     if(variableToIncrment != nullptr)
     {
-        const Symbol * constant = new Symbol(cfg->getTempVariableName(),getType(),cfg->getOffset());
+        Symbol * constant = new Symbol(cfg->getTempVariableName(),getType(),cfg->getOffsetFromCurrentBasicBlock());
+
 
         IRLoadConstant * prepConstant = new IRLoadConstant(constant,1);
 

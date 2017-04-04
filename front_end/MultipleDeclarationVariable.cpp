@@ -1,4 +1,4 @@
-#include "MultipleDeclarationVariable.h"
+ #include "MultipleDeclarationVariable.h"
 #include "DeclarationInitVariable.h"
 
 #include "../middle_end/IRRWMemory.h"
@@ -45,7 +45,9 @@ void MultipleDeclarationVariable::buildIR(CFG *cfg) const
 {
     for (DeclarationVariable * decl : declarationsVariables)
     {
-        const Symbol * destination = new Symbol(decl->getId(),this->getType()->getType(),cfg->getOffset());
+
+        Symbol * destination = new Symbol(decl->getId(),this->getType()->getType(),cfg->getOffsetFromCurrentBasicBlock());
+
 
         cfg->addSymbolToCurrentBasicBlock(destination);
 
@@ -57,7 +59,7 @@ void MultipleDeclarationVariable::buildIR(CFG *cfg) const
             {
                 definition->getExpr()->buildIR(cfg);
 
-                const Symbol * source = cfg->getLastInstructionDestination();
+                Symbol * source = cfg->getLastInstructionDestination();
 
                 if(source != nullptr)
                 {

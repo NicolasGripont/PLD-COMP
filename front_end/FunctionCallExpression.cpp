@@ -54,7 +54,7 @@ void FunctionCallExpression::buildIR(CFG *cfg) const
         BinaryOperatorExpression* binaryExpr = dynamic_cast<BinaryOperatorExpression*>(expr);
         Expression * next = expr;
 
-        std::vector<const Symbol *> vectorParameters;
+        std::vector<Symbol *> vectorParameters;
 
         while(binaryExpr != nullptr)
         {
@@ -75,11 +75,11 @@ void FunctionCallExpression::buildIR(CFG *cfg) const
     cfg->addInstructionInCurrentBasicBlock(instruction);
 }
 
-const Symbol * FunctionCallExpression::computeParameters(CFG *cfg, Expression* binaryExprRight) const
+Symbol * FunctionCallExpression::computeParameters(CFG *cfg, Expression* binaryExprRight) const
 {
     ExpressionVariable * variable = dynamic_cast<ExpressionVariable*>(binaryExprRight);
 
-    const Symbol * param;
+    Symbol * param;
     if(variable != nullptr)
     {
         param = cfg->getCurrentBasicBlock()->getLocalSymbolsTable().find(variable->getId())->second;

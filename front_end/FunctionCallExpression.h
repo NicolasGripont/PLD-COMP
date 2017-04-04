@@ -18,7 +18,7 @@ private:
     // Peut etre nullptr si la fonction ne prend pas de parametres
 	Expression* expr;
 
-    const Symbol * computeParameters(CFG * cfg, Expression* binaryExpr) const;
+    Symbol * computeParameters(CFG * cfg, Expression* binaryExpr) const;
 };
 
 #endif

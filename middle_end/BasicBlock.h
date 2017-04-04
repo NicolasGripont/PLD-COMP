@@ -5,7 +5,6 @@
 #include <vector>
 #include <string>
 #include <map>
-
 #include "Symbol.h"
 
 class CFG;
@@ -33,16 +32,16 @@ class BasicBlock
 
     virtual std::string toString() const;
 
-    void addIRInstruction(const IRInstruction *instruction);
+    void addIRInstruction(IRInstruction *instruction);
     BasicBlock *getExitTrue() const;
     BasicBlock *getExitFalse() const;
     const std::string & getLabel() const;
 
     const CFG *getCFG() const;
 
-    const std::vector<const IRInstruction *> & getInstructions() const;
+    const std::vector<IRInstruction *> & getInstructions() const;
 
-    const Symbol * getLastInstructionDestination();
+    Symbol * getLastInstructionDestination();
 
     void setExitTrue(BasicBlock *_bbExitTrue);
     void setExitFalse(BasicBlock *_bbExitFalse);
@@ -53,9 +52,9 @@ class BasicBlock
 	// en octets
     int getPrologMaximalOffset() const;
 
-    const std::map<const std::string, const Symbol *> & getLocalSymbolsTable() const;
+    const std::map<std::string, Symbol *> & getLocalSymbolsTable() const;
 
-    void addLocalSymbol(const Symbol * sym);
+    void addLocalSymbol(Symbol * sym);
 
     int getLevel() const;
 
@@ -68,8 +67,8 @@ protected:
     int indexTempVariable;
 
     CFG * cfg;		    /** < the CFG where this block belongs */
-    std::vector<const IRInstruction *> instructions;
-    std::map<const std::string, const Symbol*> localSymbolsTable;
+    std::vector<IRInstruction *> instructions;
+    std::map<std::string, Symbol*> localSymbolsTable;
 };
 
 #endif

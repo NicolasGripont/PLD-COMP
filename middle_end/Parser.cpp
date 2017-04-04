@@ -83,13 +83,13 @@ std::map<std::string, CFG *> Parser::getFunctionCFG() const
     return functionCFG;
 }
 
-const std::map<const std::string, const int> &Parser::getGlobalValueTable() const
+const std::map<std::string, int> &Parser::getGlobalValueTable() const
 {
     return globalValueTable;
 }
 
 
-const std::map<const std::string, const Symbol *> & Parser::getGlobalSymbolTable() const
+const std::map<std::string, Symbol *> & Parser::getGlobalSymbolTable() const
 {
     return globalSymbolTable;
 }

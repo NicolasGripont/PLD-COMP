@@ -21,8 +21,8 @@ public:
 
     void generateIR(Genesis * genesis);
 
-    const std::map<const std::string, const int> &getGlobalValueTable() const;
-    const std::map<const std::string, const Symbol *> &getGlobalSymbolTable() const;
+    const std::map<std::string,  int> &getGlobalValueTable() const;
+    const std::map<std::string,  Symbol *> &getGlobalSymbolTable() const;
 
     std::map<std::string, CFG *> getFunctionCFG() const;
 
@@ -33,8 +33,8 @@ private:
     void addNewFunctionInTable(CFG *controllFlowGraph);
     void generateCFG(DeclarationFunction * declaration);
 
-    std::map <const std::string, const int> globalValueTable;
-    std::map <const std::string, const Symbol*> globalSymbolTable;
+    std::map <std::string, int> globalValueTable;
+    std::map <std::string, Symbol*> globalSymbolTable;
     std::map<std::string,CFG*> functionCFG;     //std::map<nom_de_fonction, CFG_de_la_fonction>
 };
 

@@ -115,14 +115,14 @@ void BinaryOperatorExpression::buildIR(CFG *cfg) const
     IRBinaryOp * instruction = nullptr;
 
     left->buildIR(cfg);
-    const Symbol * expr1Symbol = cfg->getLastInstructionDestination();
+    Symbol * expr1Symbol = cfg->getLastInstructionDestination();
 
     right->buildIR(cfg);
-    const Symbol * expr2Symbol = cfg->getLastInstructionDestination();
+    Symbol * expr2Symbol = cfg->getLastInstructionDestination();
 
     if(expr1Symbol != nullptr && expr2Symbol != nullptr)
     {
-        const Symbol * destination = new Symbol(cfg->getTempVariableName(),getType(),cfg->getOffset());
+        Symbol * destination = new Symbol(cfg->getTempVariableName(),getType(),cfg->getOffsetFromCurrentBasicBlock());
 
         switch(op)
         {
@@ -155,13 +155,13 @@ void BinaryOperatorExpression::buildIR(CFG *cfg) const
             // " || ";
             break;
         case MUL:
-            // " * ";
+            instruction = new IRBinaryOp(IRBinaryOp::Type::MUL,destination,expr1Symbol,expr2Symbol);
             break;
         case DIV:
-            // " / ";
+            instruction = new IRBinaryOp(IRBinaryOp::Type::DIV,destination,expr1Symbol,expr2Symbol);
             break;
         case MOD:
-            // " % ";
+            instruction = new IRBinaryOp(IRBinaryOp::Type::MOD,destination,expr1Symbol,expr2Symbol);
             break;
         case PLUS:
             instruction = new IRBinaryOp(IRBinaryOp::Type::ADD,destination,expr1Symbol,expr2Symbol);
