@@ -4,6 +4,5 @@ int32_t foo()
  }
 
 int32_t a = 5;
-int32_t b = a;
 
 void main(){}

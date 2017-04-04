@@ -11,6 +11,7 @@
 
 chiffre    [0-9]
 lettre     [a-zA-Z]
+ascii_char [ -~]
 underscore _
 quote '
 
@@ -86,7 +87,7 @@ quote '
 "if"        { yylval.i = IF; compterColonne(); return IF; }
 "else"      { yylval.i = ELSE; compterColonne(); return ELSE; }
 
-{quote}{lettre}{quote} { compterColonne(); yylval.i = yytext[1]; return INT; }
+{quote}{ascii_char}{quote} { compterColonne(); yylval.i = yytext[1]; return INT; }
 
 {quote}\\b{quote} { compterColonne(); yylval.i = '\b'; return INT; }
 {quote}\\f{quote} { compterColonne(); yylval.i = '\f'; return INT; }
