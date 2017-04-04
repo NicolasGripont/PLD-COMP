@@ -129,16 +129,18 @@ void Intel::binaryOp(const IRBinaryOp* instruction)
     const Symbol* operand1 = instruction->getOperand_1();
     const Symbol* operand2 = instruction->getOperand_2();
 
+    write("\tmovq -" + std::to_string(operand1->getOffset() * OFFSET_VALUE) + "(%rbp), %rax");
+    write("\tmovq -" + std::to_string(operand2->getOffset() * OFFSET_VALUE) + "(%rbp), %rbx");
     switch (instruction->getType())
     {
         case IRBinaryOp::Type::ADD :
-            write("\tmovq -" + std::to_string(operand1->getOffset() * OFFSET_VALUE) + "(%rbp), %rax");
-            write("\tadd -" + std::to_string(operand2->getOffset() * OFFSET_VALUE) + "(%rbp), %rax");
-            write("\tmovq %rax, -" + std::to_string(destination->getOffset() * OFFSET_VALUE) + "(%rbp)");
+            write("\tadd %rbx, %rax");
             break;
         case IRBinaryOp::Type::SUB :
+            write("\tsub %rbx, %rax");
             break;
         case IRBinaryOp::Type::MUL :
+            write("\timul %rbx, %rax");
             break;
         case IRBinaryOp::Type::DIV :
             break;
@@ -146,6 +148,7 @@ void Intel::binaryOp(const IRBinaryOp* instruction)
             std::cout << "Erreur : type d'instruction IRBinaryOp invalide [back_end:Intel:binaryOp()]." << std::endl;
             break;
     }
+    write("\tmovq %rax, -" + std::to_string(destination->getOffset() * OFFSET_VALUE) + "(%rbp)");
 }
 
 void Intel::loadConstant(const IRLoadConstant* instruction)
@@ -194,6 +197,7 @@ void Intel::call(const IRCall* instruction)
 void Intel::jump(const IRJump* instruction)
 {
     write("//jump");
+    write("\tjump " + instruction->getLabel());
 }
 
 void Intel::selection(const IRSelection* instruction)
