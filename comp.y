@@ -131,14 +131,11 @@
     Genesis* g;
     Declaration* d;
     MultipleDeclarationVariable* mdv;
-    MultipleDeclarationVariable* gmdv;
 
     DeclarationFunction* df;
     DeclarationVariable* dv;
-    DeclarationVariable* gdv;
     Type* type;
     Expression* expr;
-    Expression* gexpr;
     ExpressionVariable* exprVar;
     AssignmentVariable* assignVar;
 
@@ -221,13 +218,10 @@
 %type <g> genesis
 %type <d> declaration
 %type <mdv> multiple_declaration_variable
-%type <gmdv> global_multiple_declaration_variable
 %type <df> declaration_function
 %type <dv> declaration_variable
-%type <gdv> global_declaration_variable
 %type <type> type
 %type <expr> expression
-%type <gexpr> global_expression
 %type <exprVar> expr_var
 %type <assignVar> assignment_variable
 %type <dfs> declaration_function_statement
@@ -289,7 +283,7 @@ genesis
     ;
 
 declaration
-    : type global_multiple_declaration_variable SEMICOLON
+    : type multiple_declaration_variable SEMICOLON
     {
         GlobalDeclarationVariable* dec = new GlobalDeclarationVariable($2);
         $$ = dec;
@@ -298,25 +292,6 @@ declaration
         if(!tryDeclareGlobalVariable(g,$1,$2)) YYABORT;
     }
     | declaration_function {$$ = $1;}
-    ;
-
-global_multiple_declaration_variable
-    : global_declaration_variable {$$ = new MultipleDeclarationVariable(); $$->addDeclarationVariable($1);}
-    | global_multiple_declaration_variable COMMA global_declaration_variable {$$ = $1; $1->addDeclarationVariable($3);}
-    ;
-
-global_declaration_variable
-    : ID {$$ = new DeclarationVariable($1,false);}
-    | ID OPEN_HOOK INT CLOSE_HOOK {$$ = new DeclarationArrayVariable($1, $3);}
-    | ID EQUAL global_expression
-    {
-        $$ = new DeclarationInitVariable($1, $3);
-        int type1 = currVariableType;
-        int type2 = $3->getType();
-        if(checkArrayTypeConflitError(g,type1,type2)) YYABORT;
-        // Si on a pas une constante à droite
-        checkAssignmentConstant(type1, $3);
-    }
     ;
 
 type
@@ -509,35 +484,6 @@ expression
     | expression RIGHT_DEC expression {$$ = new BinaryOperatorExpression($1,$3,RIGHT_DEC); if(checkConflictError(g,$1,$3)) YYABORT;}
     ;
 
-global_expression
-    : OPEN_PARENTHESIS global_expression CLOSE_PARENTHESIS {$$ = $2;}
-    | global_expression COMMA global_expression  {$$ = new BinaryOperatorExpression($1,$3,COMMA); }
-    | global_expression EQUAL_EQUAL global_expression {$$ = new BinaryOperatorExpression($1,$3,EQUAL_EQUAL,INT32); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | global_expression DIFF global_expression {$$ = new BinaryOperatorExpression($1,$3,DIFF,INT32); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | global_expression LESS_THAN global_expression {$$ = new BinaryOperatorExpression($1,$3,LESS_THAN,INT32); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | global_expression LESS_THAN_OR_EQUAL global_expression {$$ = new BinaryOperatorExpression($1,$3,LESS_THAN_OR_EQUAL,INT32); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | global_expression MORE_THAN global_expression {$$ = new BinaryOperatorExpression($1,$3,MORE_THAN,INT32); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | global_expression MORE_THAN_OR_EQUAL global_expression {$$ = new BinaryOperatorExpression($1,$3,MORE_THAN_OR_EQUAL,INT32); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | global_expression AND_AND global_expression {$$ = new BinaryOperatorExpression($1,$3,AND_AND,INT32); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | global_expression OR_OR global_expression {$$ = new BinaryOperatorExpression($1,$3,OR_OR,INT32); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | assignment_variable {$$ = $1;}
-    | PLUS global_expression {$$ = new UnaryOperatorExpression($2,PLUS);}
-    | MINUS global_expression %prec NEG {$$ = new UnaryOperatorExpression($2,MINUS);}
-    | NOT_BIT global_expression {$$ = new UnaryOperatorExpression($2,NOT_BIT);}
-    | NOT global_expression {$$ = new UnaryOperatorExpression($2,NOT);}
-    | INT {$$ = new ExpressionInteger($1,INT32);}
-    | global_expression PLUS global_expression {$$ = new BinaryOperatorExpression($1,$3,PLUS); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | global_expression MINUS global_expression {$$ = new BinaryOperatorExpression($1,$3,MINUS); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | global_expression MUL global_expression {$$ = new BinaryOperatorExpression($1,$3,MUL); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | global_expression DIV global_expression {$$ = new BinaryOperatorExpression($1,$3,DIV); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | global_expression MOD global_expression {$$ = new BinaryOperatorExpression($1,$3,MOD); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | global_expression AND global_expression {$$ = new BinaryOperatorExpression($1,$3,AND); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | global_expression OR global_expression {$$ = new BinaryOperatorExpression($1,$3,OR); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | global_expression POW global_expression {$$ = new BinaryOperatorExpression($1,$3,POW); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | global_expression LEFT_DEC global_expression {$$ = new BinaryOperatorExpression($1,$3,LEFT_DEC); if(checkConflictError(g,$1,$3)) YYABORT;}
-    | global_expression RIGHT_DEC global_expression {$$ = new BinaryOperatorExpression($1,$3,RIGHT_DEC); if(checkConflictError(g,$1,$3)) YYABORT;}
-    ;
-
 expr_var
     : ID OPEN_HOOK expression CLOSE_HOOK
     {
@@ -708,6 +654,17 @@ bool tryDeclareGlobalVariable(Genesis** g, Type* type, MultipleDeclarationVariab
                 yyerror(g, ("la variable globale "+ std::string(var->name)+" a deja ete declaree.").c_str());
                 delete var;
                 return false;
+            }
+
+            if(!decVar->isDeclaration())
+            {
+                DeclarationInitVariable* initVar = (DeclarationInitVariable*)decVar;
+                if(initVar->getExpr()->getExpressionType() != EXPRESSION_INTEGER)
+                {
+                    yyerror(g, "Impossible d'assigner une expression non-constante à une variable globale.");
+                    delete var;
+                    return false;
+                }
             }
         }
 
