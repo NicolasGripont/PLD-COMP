@@ -285,7 +285,7 @@ declaration
 
 global_multiple_declaration_variable
     : global_declaration_variable {$$ = new MultipleDeclarationVariable(); $$->addDeclarationVariable($1);}
-    | multiple_declaration_variable COMMA global_declaration_variable {$$ = $1; $1->addDeclarationVariable($3);}
+    | global_multiple_declaration_variable COMMA global_declaration_variable {$$ = $1; $1->addDeclarationVariable($3);}
     ;
 
 global_declaration_variable
