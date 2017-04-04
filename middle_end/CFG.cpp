@@ -96,7 +96,7 @@ std::string CFG::getName() const {
 
 std::string CFG::getUsableBasicBlockName()
 {
-    return "BB_" + std::to_string(nextBBnumber++);
+    return this->getName() + "_BB_" + std::to_string(nextBBnumber++);
 }
 
 void CFG::setCurrentBasicBlock(BasicBlock *bb)

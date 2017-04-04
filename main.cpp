@@ -6,9 +6,6 @@
 #include "middle_end/Parser.h"
 #include "back_end/Intel.h"
 
-/* Test */
-#include "back_end/testIR.h"
-
 int main(int argc, char* argv[])
 {
     std::cout << "-> Print du programme \n" << std::endl;
@@ -27,13 +24,12 @@ int main(int argc, char* argv[])
     std::cout << "\n-> Print de l'IR \n" << std::endl;
     std::cout << astToIRParser.getFunctionCFG().find("main")->second << std::endl;
 
-//	/* Backend Intel */
-//	Intel* intel = new Intel("intel");
-//	//intel->parse(testIR1()); // Valid
-//	intel->parse(testIR2());
-//	intel->compile();
+	/* Backend Intel */
+	Intel* intel = new Intel("intel", astToIRParser.getFunctionCFG());
+	intel->parse();
+	intel->compile();
 
-//	delete intel;
+	delete intel;
 
     if (genesis != nullptr)
     {
