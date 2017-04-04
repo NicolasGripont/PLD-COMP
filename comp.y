@@ -6,6 +6,7 @@
     #include <stack>
     #include <libgen.h>
     #include <string.h>
+    #include <unordered_map>
 
     #include "front_end/Enumeration.h"
     #include "front_end/Genesis.h"
@@ -102,6 +103,20 @@
     bool checkArrayTypeConflitError(Genesis** g, int type1, int type2);
     std::string getNameOfType(int type);
     bool checkVariableExist(Genesis** g, char* name);
+
+    struct FunctionCall
+    {
+        std::string functionName;
+        int line;
+        int column;
+
+        FunctionCall(std::string _functionName, int _line, int _column)
+            : functionName(_functionName), line(_line), column(_column)
+        {
+        }
+    };
+    std::unordered_map<std::string, FunctionCall*> calledFunctions;
+    bool checkUndefinedFunctionErrors();
 %}
 
 /**************/
@@ -560,6 +575,40 @@ bool variableIsVoid(Genesis** g, Type* type)
     return false;
 }
 
+bool checkUndefinedFunctionErrors()
+{
+    // On retire chaque fonction définie du set des fonctions appellées
+    for(int i=0;i<functions.size();++i)
+    {
+        FunctionContainer* currFunc = functions[i];
+
+        if(!currFunc->declaration)
+        {
+            auto it = calledFunctions.find(std::string(currFunc->name));
+            if (it != calledFunctions.end())
+            {
+                std::cout <<  it->second->functionName << std::endl;
+
+                delete(it->second);
+                calledFunctions.erase(std::string(currFunc->name));
+            }
+        }
+    }
+
+    int error = false;
+    for (auto& pair: calledFunctions)
+    {
+        FunctionCall* func = pair.second;
+        std::cout << filename << ":" << func->line << ":" << func->column <<" - erreur : "
+        << "Référence indéfinie vers la fonction " << std::string(func->functionName) << "." << std::endl;
+
+        delete(func);
+        error = true;
+    }
+
+    return error;
+}
+
 bool tryCallFunction(Genesis** g, char* functionName)
 {
     int state=0;
@@ -580,6 +629,10 @@ bool tryCallFunction(Genesis** g, char* functionName)
             if(currFunc->declaration)
             {
                 state = 1;
+
+                // Ajouter à la liste des fonctions appellées
+                FunctionCall* call = new FunctionCall(functionName, yylineno, column);
+                calledFunctions.insert(std::make_pair(std::string(functionName),call));
             }
             else
             {
@@ -595,11 +648,15 @@ bool tryCallFunction(Genesis** g, char* functionName)
         return false;
     }
 
+    // Faux car on peut définir la fonction plus tard
+    /*
     if(state == 1)
     {
         yyerror(g, ("La fonction "+std::string(functionName)+" est déclarée mais jamais définie.").c_str());
         return false;
     }
+    */
+
     return true;
 }
 
@@ -1068,6 +1125,11 @@ Genesis* bison(int argc, char* argv[])
     int status = yyparse(&g);
     fclose(yyin);
     yylex_destroy();
+
+    if(checkUndefinedFunctionErrors())
+    {
+        status = 3;
+    }
 
     // Error status
     if (status == 0) // Success
