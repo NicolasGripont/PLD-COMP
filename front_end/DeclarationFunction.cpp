@@ -11,19 +11,19 @@ DeclarationFunction::DeclarationFunction(Type* _type, char* _id, ArgumentList* _
 
 DeclarationFunction::~DeclarationFunction()
 {
-	if(id != nullptr) 
+    if(id != nullptr)
     {
         free(id);
     }
-    if(type != nullptr) 
+    if(type != nullptr)
     {
         delete type;
     }
-    if(decFunctionStatement != nullptr) 
+    if(decFunctionStatement != nullptr)
     {
         delete decFunctionStatement;
     }
-    if(argumentList != nullptr) 
+    if(argumentList != nullptr)
     {
         delete argumentList;
     }
@@ -31,40 +31,36 @@ DeclarationFunction::~DeclarationFunction()
 
 std::string DeclarationFunction::toString() const
 {
-	return type->toString() + " " + std::string(id) + "(" +  argumentList->toString() + ")" + decFunctionStatement->toString();
+    return type->toString() + " " + std::string(id) + "(" +  argumentList->toString() + ")" + decFunctionStatement->toString();
 }
 
 void DeclarationFunction::buildIR(CFG * cfg) const
 {
-    // Creation prolog
-    BasicBlock * basicProlog = cfg->createNewBasicBlock(0, getId());
-    cfg->setCurrentBasicBlock(basicProlog);
-    cfg->setRootBasicBlock(basicProlog);
-
-    for(Argument *  arg : argumentList->getArguments())
-    {
-        Symbol * symbol = new Symbol(arg->getName(),
-                                     arg->getType()->getType(),
-                                     basicProlog->getLocalSymbolsTable().size()
-                                     );
-
-        basicProlog->addLocalSymbol(symbol);
-    }
-
-    // Build IR de l'AST
     InitFunctionStatement * state = dynamic_cast<InitFunctionStatement*>(decFunctionStatement);
     if(state != nullptr)
     {
-        state->buildIR(cfg);
-    }
-    else
-    {
-        std::cout << "Error initFunctionState == nullptr " << std::endl;
-    }
+        // Creation prolog
+        BasicBlock * basicProlog = cfg->createNewBasicBlock(0, getId());
+        cfg->setCurrentBasicBlock(basicProlog);
+        cfg->setRootBasicBlock(basicProlog);
 
-    // CReation epilog
-    BasicBlock * basicEpilog = cfg->createNewBasicBlock(0, "epilog_" + getId());
-    cfg->attachNewBasicBlock(basicEpilog);
+        for(Argument *  arg : argumentList->getArguments())
+        {
+            Symbol * symbol = new Symbol(arg->getName(),
+                                         arg->getType()->getType(),
+                                         basicProlog->getLocalSymbolsTable().size()
+                                         );
+
+            basicProlog->addLocalSymbol(symbol);
+        }
+
+        // Build IR de l'AST
+        state->buildIR(cfg);
+
+        // CReation epilog
+        BasicBlock * basicEpilog = cfg->createNewBasicBlock(0, "epilog_" + getId());
+        cfg->attachNewBasicBlock(basicEpilog);
+    }
 }
 
 ArgumentList* DeclarationFunction::getArgumentList() const {
