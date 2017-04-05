@@ -1,5 +1,5 @@
-#ifndef _INTEL_H
-#define _INTEL_H
+#ifndef _JAVA_H
+#define _JAVA_H
 
 #include <iostream>
 #include <string>
@@ -19,15 +19,15 @@
 #include "../middle_end/IRSelection.h"
 #include "../middle_end/Symbol.h"
 
-/* To execute: ~$ ./filename.out */
-/*       e.g.: ~$ ./intel.out */
-class Intel : public Writer
+/* To execute: ~$ java filename */
+/*       e.g.: ~$ java java */
+class Java : public Writer
 {
 public:
     static const int OFFSET_VALUE;
 
-    Intel(const std::string _filename, std::map<std::string, CFG*> _listCFG);
-    ~Intel();
+    Java(const std::string _filename, std::map<std::string, CFG*> _listCFG);
+    ~Java();
 
     void parse();
     int compile();

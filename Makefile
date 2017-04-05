@@ -11,9 +11,9 @@ default: all
 FRONTEND = front_end
 MIDDLEEND = middle_end
 BACKEND = back_end
-DEPS_FRONTEND = $(shell ls $(FRONTEND)/*)
-DEPS_MIDDLEEND = $(shell ls $(MIDDLEEND)/*)
-DEPS_BACKEND = $(shell ls $(BACKEND)/*)
+DEPS_FRONTEND = $(shell ls $(FRONTEND)/*.h $(FRONTEND)/*.cpp)
+DEPS_MIDDLEEND = $(shell ls $(MIDDLEEND)/*.h $(MIDDLEEND)/*.cpp)
+DEPS_BACKEND = $(shell ls $(BACKEND)/*.h $(BACKEND)/*.cpp)
 CFLAGS = -g3 -std=c++11 -DYYDEBUG
 
 all: comp

@@ -5,6 +5,7 @@
 #include "comp.tab.h"
 #include "middle_end/Parser.h"
 #include "back_end/Intel.h"
+#include "back_end/Java.h"
 
 int main(int argc, char* argv[])
 {
@@ -29,7 +30,14 @@ int main(int argc, char* argv[])
 	intel->parse();
 	intel->compile();
 
-	delete intel;
+    delete intel;
+
+    /* Backend Java */
+    Java* java = new Java("java", astToIRParser.getFunctionCFG());
+    java->parse();
+    java->compile();
+
+	delete java;
 
     if (genesis != nullptr)
     {
