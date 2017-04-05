@@ -21,6 +21,10 @@
 
 /* To execute: ~$ java filename */
 /*       e.g.: ~$ java java */
+/* --- */
+/* Help: */
+/* http://web.mit.edu/javadev/packages/jasmin/doc/ */
+/* https://cs.au.dk/~mis/dOvs/jvmspec/ref-Java.html */
 class Java : public Writer
 {
 public:
