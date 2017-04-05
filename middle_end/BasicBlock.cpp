@@ -165,7 +165,7 @@ void BasicBlock::buildFromUpperLevelData()
     }
     else
     {
-        std::cout << "Error BasicBlock::buildWithUpperLevelData levelData : " << std::to_string(level-1) << std::endl;
+        std::cout << "Error BasicBlock::buildWithUpperLevelData levelData : " << std::to_string(level) << std::endl;
     }
 
 }

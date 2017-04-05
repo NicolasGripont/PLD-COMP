@@ -1,6 +1,7 @@
 #include "ExpressionVariable.h"
 #include "../middle_end/CFG.h"
 #include "../middle_end/BasicBlock.h"
+#include "../middle_end/IRRWMemory.h"
 
 ExpressionVariable::ExpressionVariable(char * _id, int _type)
     : Expression(), id(_id)
@@ -24,7 +25,16 @@ std::string ExpressionVariable::toString() const
 
 void ExpressionVariable::buildIR(CFG *cfg) const
 {
-    //Do nothing
+    Symbol * resultat = cfg->getCurrentBasicBlock()->getSymbol(id);
+    if(resultat == nullptr)
+    {
+        std::cout << "Error : ExpressionVariable::buildIR " << std::endl;
+    }
+    else
+    {
+        IRRWMemory * instruction = new IRRWMemory(IRRWMemory::Type::READ_MEMORY,resultat, resultat);
+        cfg->addInstructionInCurrentBasicBlock(instruction);
+    }
 }
 
 const char *ExpressionVariable::getId() const

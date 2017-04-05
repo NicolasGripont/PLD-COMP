@@ -24,7 +24,7 @@ std::string InitFunctionStatement::toString() const
 
 void InitFunctionStatement::buildIR(CFG *cfg) const
 {
-    BasicBlock * block = cfg->createNewBasicBlock(0,cfg->getUsableBasicBlockName());
+    BasicBlock * block = cfg->createNewBasicBlock(1,cfg->getUsableBasicBlockName());
     cfg->attachNewBasicBlock(block);
 
     multipleStatement->buildIR(cfg);

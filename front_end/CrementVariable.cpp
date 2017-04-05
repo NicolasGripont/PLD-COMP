@@ -45,9 +45,7 @@ std::string CrementVariable::toString() const
 
 void CrementVariable::buildIR(CFG *cfg) const
 {
-
     Symbol * variableToIncrment = cfg->getCurrentBasicBlock()->getSymbol(this->exprVar->getId());
-
 
     if(variableToIncrment != nullptr)
     {

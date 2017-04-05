@@ -2,8 +2,8 @@
 
 const std::string IRSelection::LABEL_NULL_NAME = "null";
 
-IRSelection::IRSelection(Symbol* _condition, std::string _ifLabel, std::string _elseLabel)
-    : IRInstruction(IRInstruction::Type::SELECTION), condition(_condition), ifLabel(_ifLabel), elseLabel(_elseLabel)
+IRSelection::IRSelection(Symbol* _condition, BasicBlock * bbCondition)
+    : IRInstruction(IRInstruction::Type::SELECTION), condition(_condition), blockCondition(bbCondition)
 {
 
 }
@@ -16,17 +16,17 @@ IRSelection::~IRSelection()
 std::string IRSelection::toString() const
 {
     std::string cond = "";
-	if(condition != nullptr)
-	{
-		cond = condition->getName();
-	}
-	std::string res = "if " + cond + " then " + ifLabel;
-	if(elseLabel != LABEL_NULL_NAME)
-	{
-		res += " else " + elseLabel;
-	}
+    if(condition != nullptr)
+    {
+        cond = condition->getName();
+    }
+    std::string res = "if " + cond + " then " + blockCondition->getExitTrue()->getLabel();
+    if(blockCondition->getExitFalse() != nullptr)
+    {
+        res += " else " + blockCondition->getExitFalse()->getLabel();
+    }
 
-    return cond;
+    return res;
 }
 
 Symbol *IRSelection::getCondition() const
@@ -34,12 +34,7 @@ Symbol *IRSelection::getCondition() const
     return condition;
 }
 
-std::string IRSelection::getIfLabel() const
+BasicBlock *IRSelection::getBlockCondition() const
 {
-    return ifLabel;
-}
-
-std::string IRSelection::getElseLabel() const
-{
-    return elseLabel;
+    return blockCondition;
 }

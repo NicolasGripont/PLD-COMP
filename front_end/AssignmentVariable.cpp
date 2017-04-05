@@ -62,7 +62,6 @@ void AssignmentVariable::buildIR(CFG *cfg) const
             destination = pair->second;
         }
 
-
         // ON CONSTRUIT LA SOURCE
         expr->buildIR(cfg);
 
@@ -74,7 +73,6 @@ void AssignmentVariable::buildIR(CFG *cfg) const
             IRRWMemory * instruction = new IRRWMemory(IRRWMemory::Type::WRITE_MEMORY,destination,source);
             cfg->addInstructionInCurrentBasicBlock(instruction);
         }
-
     }
     else
     {

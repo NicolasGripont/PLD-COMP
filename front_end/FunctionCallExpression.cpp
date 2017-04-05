@@ -69,26 +69,12 @@ void FunctionCallExpression::buildIR(CFG *cfg) const
         {
             instruction->addParameter(vectorParameters[i]);
         }
-
     }
-
     cfg->addInstructionInCurrentBasicBlock(instruction);
 }
 
 Symbol * FunctionCallExpression::computeParameters(CFG *cfg, Expression* binaryExprRight) const
-{
-    ExpressionVariable * variable = dynamic_cast<ExpressionVariable*>(binaryExprRight);
-
-    Symbol * param;
-    if(variable != nullptr)
-    {
-        param = cfg->getCurrentBasicBlock()->getSymbol(variable->getId());
-    }
-    else
-    {
-        binaryExprRight->buildIR(cfg);
-        param = cfg->getLastInstructionDestination();
-    }
-
-    return param;
+{   
+    binaryExprRight->buildIR(cfg);
+    return cfg->getLastInstructionDestination();;
 }

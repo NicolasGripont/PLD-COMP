@@ -21,7 +21,7 @@ std::string Statement::toString() const
 
 void Statement::buildIR(CFG *cfg) const
 {
-
+    multipleStatement->buildIR(cfg);
 }
 
 MultipleStatement* Statement::getMultipleStatement()

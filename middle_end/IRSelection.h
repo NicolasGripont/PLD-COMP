@@ -8,23 +8,22 @@
 #include "Symbol.h"
 #include "BasicBlock.h"
 
-class IRSelection : IRInstruction
+class IRSelection : public IRInstruction
 {
 public:
     static const std::string LABEL_NULL_NAME;
-    IRSelection(Symbol* condition, std::string ifLabel, std::string elseLabel = LABEL_NULL_NAME);
+    IRSelection(Symbol* condition, BasicBlock * bbCondition);
     ~IRSelection();
 
     virtual std::string toString() const;
 
     Symbol *getCondition() const;
-    std::string getIfLabel() const;
-    std::string getElseLabel() const;
+
+    BasicBlock *getBlockCondition() const;
 
 protected:
     Symbol *condition;
-    std::string ifLabel;
-	std::string elseLabel;
+    BasicBlock * blockCondition;
 };
 
 #endif // IRSELECTION_H

@@ -214,6 +214,5 @@ void CFG::addNewLevelData(int level, BasicBlock * firstBlock)
 void CFG::cleanLevel(int level)
 {
     mapLevelData.erase(level);
-
     std::cout << "clean" << std::endl;
 }
