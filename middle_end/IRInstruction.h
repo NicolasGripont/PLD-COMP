@@ -18,7 +18,8 @@ public:
         RWMEMORY,
         CALL,
         JUMP,
-        SELECTION
+        SELECTION,
+        RETURN
     };
 
     IRInstruction(Type _type);

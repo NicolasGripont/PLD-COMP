@@ -1,0 +1,11 @@
+int32_t main()
+{
+	int32_t a = 2;
+	int32_t b = 2;
+	int32_t c = 2;
+	int32_t d = 2;
+	
+	return a;
+	
+	int32_t g = 5;
+}

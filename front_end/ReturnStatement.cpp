@@ -21,5 +21,5 @@ std::string ReturnStatement::toString() const
 
 void ReturnStatement::buildIR(CFG *cfg) const
 {
-
+    ret->buildIR(cfg);
 }
