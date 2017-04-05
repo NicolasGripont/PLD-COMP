@@ -19,7 +19,7 @@ quote '
 
 [ \t\v\r\n\f]       { compterColonne(); }
 \/\/.*              { compterColonne(); }
-\/\*(.*\n)*.*\*\/   { compterColonne(); }
+\/\*(.*[\n\r])*.*\*\/   { compterColonne(); }
 ^"#"{lettre}+.+     { compterColonne(); }
 
 "..."       { yylval.i = ELLIPSE; compterColonne(); return ELLIPSE; }

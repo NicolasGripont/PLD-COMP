@@ -45,3 +45,4 @@ QtProject.*
 
 # Makefile dependance files
 *.d
+*.s
