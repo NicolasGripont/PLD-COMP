@@ -155,6 +155,11 @@ void X64::binaryOp(const IRBinaryOp* instruction)
         case IRBinaryOp::Type::DIFF :
             break;
         case IRBinaryOp::Type::LESS_THAN :
+            write("\tcmp %rbx, %rax");
+            write("\tmovq $0, %rax");
+            write("\tmovq $1, %rbx");
+            write("\tcmovl %rax, %rbx");
+            write("\tmovq %rbx, %rax");
             break;
         case IRBinaryOp::Type::LESS_THAN_OR_EQUAL :
             break;
