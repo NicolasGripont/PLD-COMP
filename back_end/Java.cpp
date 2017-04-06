@@ -185,13 +185,16 @@ void Java::call(const IRCall* instruction)
     write(";call");
 
     std::vector<Symbol*> params = instruction->getParams();
-    int offset = params.at(0)->getOffset();
 
-    // Only System.out.println() for the time being
+    if (params.size() > 0)
+    {
+        int offset = params.at(0)->getOffset();
 
-    write("\taload_0");
-    write("\taload " + std::to_string(offset));
-    write("\tinvokevirtual java/io/PrintStream/print(Ljava/lang/String;)V");
+        // Only System.out.println() for the time being
+        write("\taload_0");
+        write("\taload " + std::to_string(offset));
+        write("\tinvokevirtual java/io/PrintStream/print(Ljava/lang/String;)V");
+    }
 }
 
 void Java::jump(const IRJump* instruction)

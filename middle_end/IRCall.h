@@ -17,6 +17,7 @@ public:
     void addParameter(Symbol* symbol);
 
     const std::string getName() const;
+    Symbol* getReturnSymbol() const;
     std::vector<Symbol *> getParams() const;
     bool getIsReturnVoid() const;
 

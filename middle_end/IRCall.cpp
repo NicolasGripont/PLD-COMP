@@ -28,6 +28,11 @@ const std::string IRCall::getName() const
     return name;
 }
 
+Symbol* IRCall::getReturnSymbol() const
+{
+    return returnSymbol;
+}
+
 std::vector<Symbol *> IRCall::getParams() const
 {
     return params;

@@ -226,6 +226,11 @@ void X64::call(const IRCall* instruction)
     }
 
     write("\tcall " + instruction->getName());
+
+    if (!instruction->getIsReturnVoid())
+    {
+        write("\tmovq %rax, -" + std::to_string(instruction->getReturnSymbol()->getOffset() * OFFSET_VALUE) + "(%rbp)");
+    }
 }
 
 void X64::jump(const IRJump* instruction)
