@@ -35,14 +35,14 @@ public:
     void parse();
     int compile();
 
+private:
+    std::map<std::string, CFG*> listCFG;
+
     void binaryOp(const IRBinaryOp* instruction);
     void loadConstant(const IRLoadConstant* instruction);
     void rwmemory(const IRRWMemory* instruction);
     void call(const IRCall* instruction);
     void selection(const IRConditionnal* instruction);
-
-private:
-    std::map<std::string, CFG*> listCFG;
 };
 
 #endif

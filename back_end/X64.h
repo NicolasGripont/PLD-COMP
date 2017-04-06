@@ -34,7 +34,7 @@ private:
 
     std::map<std::string, CFG*> listCFG;
 
-    void parseBasicBlocks(const BasicBlock* block, bool prolog = false, int offsetBasicBlock = 0);
+    void parseBasicBlocks(const BasicBlock* block, bool prolog = false, int offsetBasicBlock = 0, BasicBlock* terminal = nullptr);
 
     void binaryOp(const IRBinaryOp* instruction);
     void loadConstant(const IRLoadConstant* instruction);

@@ -19,7 +19,7 @@ void X64::parse()
     {
         const BasicBlock* block = itCFG->second->getRootBasicBlock();
 
-        parseBasicBlocks(block, true, itCFG->second->getOffsetFromCurrentBasicBlock());
+        parseBasicBlocks(block, true, itCFG->second->getOffsetFromCurrentBasicBlock(), nullptr);
 
         write("\tleave");
         write("\tret");
@@ -54,12 +54,12 @@ int X64::compile()
     return 0;
 }
 
-void X64::parseBasicBlocks(const BasicBlock* block, bool prolog, int offsetBasicBlock)
+void X64::parseBasicBlocks(const BasicBlock* block, bool prolog, int offsetBasicBlock, BasicBlock* terminal)
 {
     std::string label;
     std::vector<IRInstruction*> instructions;
 
-    while (block != nullptr)
+    while (block != terminal)
     {
         label = block->getLabel();
         write(label + ":");
@@ -147,6 +147,34 @@ void X64::binaryOp(const IRBinaryOp* instruction)
             write("\timulq %rbx, %rax");
             break;
         case IRBinaryOp::Type::DIV :
+            break;
+        case IRBinaryOp::Type::MOD :
+            break;
+        case IRBinaryOp::Type::EQUAL_EQUAL :
+            break;
+        case IRBinaryOp::Type::DIFF :
+            break;
+        case IRBinaryOp::Type::LESS_THAN :
+            break;
+        case IRBinaryOp::Type::LESS_THAN_OR_EQUAL :
+            break;
+        case IRBinaryOp::Type::MORE_THAN :
+            break;
+        case IRBinaryOp::Type::MORE_THAN_OR_EQUAL :
+            break;
+        case IRBinaryOp::Type::AND_AND :
+            break;
+        case IRBinaryOp::Type::OR_OR :
+            break;
+        case IRBinaryOp::Type::OR :
+            break;
+        case IRBinaryOp::Type::AND :
+            break;
+        case IRBinaryOp::Type::LEFT_DEC :
+            break;
+        case IRBinaryOp::Type::RIGHT_DEC :
+            break;
+        case IRBinaryOp::Type::POW :
             break;
         default:
             std::cout << "Erreur : type d'instruction IRBinaryOp invalide [back_end:X64:binaryOp()]." << std::endl;
@@ -249,8 +277,9 @@ void X64::selection(const IRConditionnal *instruction)
         write("\tjmp " + blockCondition->getExitFalse()->getLabel());
 
         BasicBlock* block = blockCondition->getExitFalse();
+        BasicBlock* blockEnd = instruction->getBlockEnd();
         
-        parseBasicBlocks(block, false, 0);
+        parseBasicBlocks(block, false, 0, blockEnd);
     }
 }
 

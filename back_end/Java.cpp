@@ -137,6 +137,34 @@ void Java::binaryOp(const IRBinaryOp* instruction)
             break;
         case IRBinaryOp::Type::DIV :
             break;
+        case IRBinaryOp::Type::MOD :
+            break;
+        case IRBinaryOp::Type::EQUAL_EQUAL :
+            break;
+        case IRBinaryOp::Type::DIFF :
+            break;
+        case IRBinaryOp::Type::LESS_THAN :
+            break;
+        case IRBinaryOp::Type::LESS_THAN_OR_EQUAL :
+            break;
+        case IRBinaryOp::Type::MORE_THAN :
+            break;
+        case IRBinaryOp::Type::MORE_THAN_OR_EQUAL :
+            break;
+        case IRBinaryOp::Type::AND_AND :
+            break;
+        case IRBinaryOp::Type::OR_OR :
+            break;
+        case IRBinaryOp::Type::OR :
+            break;
+        case IRBinaryOp::Type::AND :
+            break;
+        case IRBinaryOp::Type::LEFT_DEC :
+            break;
+        case IRBinaryOp::Type::RIGHT_DEC :
+            break;
+        case IRBinaryOp::Type::POW :
+            break;
         default:
             std::cout << "Erreur : type d'instruction IRBinaryOp invalide [back_end:Java:binaryOp()]." << std::endl;
             break;
