@@ -26,5 +26,8 @@ std::string LoopExpression::toString() const
 
 void LoopExpression::buildIR(CFG *cfg) const
 {
-    expr->buildIR(cfg);
+    if(expr != nullptr)
+    {
+        expr->buildIR(cfg);
+    }
 }

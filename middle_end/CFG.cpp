@@ -142,15 +142,18 @@ Symbol *CFG::getLastInstructionDestination()
 
 int CFG::getOffsetFromCurrentBasicBlock()
 {
-    auto pair = mapLevelData.find(currentBasicBlock->getLevel());
-
-    if(pair != mapLevelData.end())
+    if(currentBasicBlock != nullptr)
     {
-        LevelData data = pair->second;
-        data.offset++;
-        mapLevelData[currentBasicBlock->getLevel()] = data;
+        auto pair = mapLevelData.find(currentBasicBlock->getLevel());
 
-        return data.offset;
+        if(pair != mapLevelData.end())
+        {
+            LevelData data = pair->second;
+            data.offset++;
+            mapLevelData[currentBasicBlock->getLevel()] = data;
+
+            return data.offset;
+        }
     }
 
     std::cout << "Error CFG::getOffsetFromCurrentBasicBlock" << std::endl;
