@@ -85,6 +85,6 @@ void SelectionStatement::buildIR(CFG *cfg) const
 
     cfg->setCurrentBasicBlock(bbEnd);
 
-    IRSelection * instruction = new IRSelection(result, bbCondition);
+    IRSelection * instruction = new IRSelection(result, bbCondition, bbEnd);
     bbCondition->addIRInstruction(instruction);
 }

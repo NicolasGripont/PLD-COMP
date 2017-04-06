@@ -2,8 +2,8 @@
 
 const std::string IRSelection::LABEL_NULL_NAME = "null";
 
-IRSelection::IRSelection(Symbol* _condition, BasicBlock * bbCondition)
-    : IRInstruction(IRInstruction::Type::SELECTION), condition(_condition), blockCondition(bbCondition)
+IRSelection::IRSelection(Symbol* _condition, BasicBlock * bbCondition, BasicBlock *bbEnd)
+    : IRInstruction(IRInstruction::Type::SELECTION), condition(_condition), blockCondition(bbCondition), end(bbEnd)
 {
 
 }
@@ -32,6 +32,11 @@ std::string IRSelection::toString() const
 Symbol *IRSelection::getCondition() const
 {
     return condition;
+}
+
+BasicBlock *IRSelection::getBlockEnd() const
+{
+    return end;
 }
 
 BasicBlock *IRSelection::getBlockCondition() const

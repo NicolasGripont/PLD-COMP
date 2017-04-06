@@ -12,7 +12,7 @@ class IRSelection : public IRInstruction
 {
 public:
     static const std::string LABEL_NULL_NAME;
-    IRSelection(Symbol* condition, BasicBlock * bbCondition);
+    IRSelection(Symbol* condition, BasicBlock * bbCondition, BasicBlock * end);
     ~IRSelection();
 
     virtual std::string toString() const;
@@ -20,10 +20,11 @@ public:
     Symbol *getCondition() const;
 
     BasicBlock *getBlockCondition() const;
-
+    BasicBlock *getBlockEnd() const;
 protected:
     Symbol *condition;
     BasicBlock * blockCondition;
+    BasicBlock * end;
 };
 
 #endif // IRSELECTION_H
