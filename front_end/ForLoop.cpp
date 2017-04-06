@@ -1,4 +1,7 @@
 #include "ForLoop.h"
+#include "../middle_end/CFG.h"
+#include "../middle_end/BasicBlock.h"
+#include "../middle_end/IRConditionnal.h"
 
 ForLoop::ForLoop(LoopExpression* _expr1, LoopExpression* _expr2, LoopExpression* _expr3, Statement* _statement)
     : IterationStatement(_statement), expr1(_expr1), expr2(_expr2), expr3(_expr3)
@@ -38,5 +41,50 @@ std::string ForLoop::toString() const
 
 void ForLoop::buildIR(CFG *cfg) const
 {
+    int level = cfg->getCurrentBasicBlock()->getLevel();
 
+    //Gestion de l'initialisation de la variable index
+    //l'initialisation se met dans le basic block avant celui de condition
+    if(expr1 != nullptr)
+    {
+        expr1->buildIR(cfg);
+        Symbol * init = cfg->getCurrentBasicBlock()->getLastInstructionDestination();
+    }
+
+    //Gestion de la condition
+    // On crée le nouveau basic block contenant la condition
+    BasicBlock * bbCondition = nullptr;
+    Symbol * condition = nullptr;
+    if(expr2 != nullptr)
+    {
+        bbCondition = cfg->createNewBasicBlock(level);
+        cfg->attachNewBasicBlock(bbCondition);
+        expr2->buildIR(cfg);
+        // On récupère le registre contenant le résultat
+       condition = cfg->getLastInstructionDestination();
+    }
+
+    //Gestion du statement
+    BasicBlock * bbStatement = cfg->createNewBasicBlock(level + 1,bbCondition->getLabel() + "_STATEMENT");
+    cfg->attachNewBasicBlock(bbStatement);
+
+    if(statement != nullptr)
+    {
+        statement->buildIR(cfg);
+    }
+
+    //Gestion de l'expression d'avancement dans la boucle
+    if(expr3 != nullptr)
+    {
+        expr3->buildIR(cfg);
+        Symbol * avanc = cfg->getCurrentBasicBlock()->getLastInstructionDestination();
+    }
+
+    BasicBlock * bbEnd = cfg->createNewBasicBlock(level);
+    cfg->attachNewBasicBlock(bbEnd);
+
+    cfg->setCurrentBasicBlock(bbEnd);
+
+    IRConditionnal * instruction = new IRConditionnal(IRConditionnal::Type::FOR, condition, bbCondition, bbEnd);
+    bbCondition->addIRInstruction(instruction);
 }
