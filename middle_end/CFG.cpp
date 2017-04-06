@@ -33,6 +33,7 @@ std::string CFG::toString() const
     while(current != currentBasicBlock)
     {
         s += current->toString();
+        std::cout << s << std::endl;
         if(current->getInstructions().size() != 0)
         {
             IRInstruction * instruction = current->getInstructions().back();
@@ -50,9 +51,6 @@ std::string CFG::toString() const
         {
             current = current->getExitTrue();
         }
-
-
-
     }
 
     s += current->toString();

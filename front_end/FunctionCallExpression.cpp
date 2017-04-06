@@ -58,9 +58,17 @@ void FunctionCallExpression::buildIR(CFG *cfg) const
 
         while(binaryExpr != nullptr)
         {
-            vectorParameters.push_back(computeParameters(cfg,binaryExpr->getRight()));
-            next = binaryExpr->getLeft();
-            binaryExpr = dynamic_cast<BinaryOperatorExpression*>(binaryExpr->getLeft());
+            if(binaryExpr->getType() != COMMA)
+            {
+                next = binaryExpr;
+                binaryExpr = nullptr;
+            }
+            else
+            {
+                vectorParameters.push_back(computeParameters(cfg,binaryExpr->getRight()));
+                next = binaryExpr->getLeft();
+                binaryExpr = dynamic_cast<BinaryOperatorExpression*>(binaryExpr->getLeft());
+            }
         }
 
         vectorParameters.push_back(computeParameters(cfg,next));
