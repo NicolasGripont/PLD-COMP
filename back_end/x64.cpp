@@ -1,8 +1,8 @@
-#include "Intel.h"
+#include "x64.h"
 
-const int Intel::OFFSET_VALUE = 8;
+const int x64::OFFSET_VALUE = 8;
 
-Intel::Intel(const std::string _filename, std::map<std::string, CFG*> _listCFG)
+x64::x64(const std::string _filename, std::map<std::string, CFG*> _listCFG)
     : Writer(_filename), listCFG(_listCFG)
 {
     open();
@@ -13,7 +13,7 @@ Intel::Intel(const std::string _filename, std::map<std::string, CFG*> _listCFG)
     write();
 }
 
-void Intel::parse()
+void x64::parse()
 {
     std::string label;
     std::vector<IRInstruction*> instructions;
@@ -96,11 +96,11 @@ void Intel::parse()
     }
 }
 
-int Intel::compile()
+int x64::compile()
 {
     if (!system(nullptr))
     {
-        std::cout << "Erreur : impossible de lancer une commande système [back_end:Intel:compile()]." << std::endl;
+        std::cout << "Erreur : impossible de lancer une commande système [back_end:x64:compile()]." << std::endl;
         return -1;
     }
     close();
@@ -116,14 +116,14 @@ int Intel::compile()
 
     if (result != 0)
     {
-        std::cout << "Erreur lors de la compilation de l'assembleur [back_end:Intel:compile()]." << std::endl;
+        std::cout << "Erreur lors de la compilation de l'assembleur [back_end:x64:compile()]." << std::endl;
         return -1;
     }    
 
     return 0;
 }
 
-void Intel::binaryOp(const IRBinaryOp* instruction)
+void x64::binaryOp(const IRBinaryOp* instruction)
 {
     write("//binaryOp");
 
@@ -147,13 +147,13 @@ void Intel::binaryOp(const IRBinaryOp* instruction)
         case IRBinaryOp::Type::DIV :
             break;
         default:
-            std::cout << "Erreur : type d'instruction IRBinaryOp invalide [back_end:Intel:binaryOp()]." << std::endl;
+            std::cout << "Erreur : type d'instruction IRBinaryOp invalide [back_end:x64:binaryOp()]." << std::endl;
             break;
     }
     write("\tmovq %rax, -" + std::to_string(destination->getOffset() * OFFSET_VALUE) + "(%rbp)");
 }
 
-void Intel::loadConstant(const IRLoadConstant* instruction)
+void x64::loadConstant(const IRLoadConstant* instruction)
 {
     write("//loadConstant");
 
@@ -163,7 +163,7 @@ void Intel::loadConstant(const IRLoadConstant* instruction)
     write("\tmovq $" + std::to_string(value) + ", -" + std::to_string(destination->getOffset() * OFFSET_VALUE) + "(%rbp)");
 }
 
-void Intel::rwmemory(const IRRWMemory* instruction)
+void x64::rwmemory(const IRRWMemory* instruction)
 {
     write("//rwmemory");
 
@@ -179,12 +179,12 @@ void Intel::rwmemory(const IRRWMemory* instruction)
             write("\tmovq %rax, -" + std::to_string(destination->getOffset() * OFFSET_VALUE) + "(%rbp)");
             break;
         default:
-            std::cout << "Erreur : type d'instruction IRRWMemory invalide [back_end:Intel:rwmemory()]." << std::endl;
+            std::cout << "Erreur : type d'instruction IRRWMemory invalide [back_end:x64:rwmemory()]." << std::endl;
             break;
     }
 }
 
-void Intel::call(const IRCall* instruction)
+void x64::call(const IRCall* instruction)
 {
     write("//call");
 
@@ -217,24 +217,94 @@ void Intel::call(const IRCall* instruction)
     }
     if (params.size() > 6)
     {
-        std::cout << "Warning : appel de fonction avec plus de 6 paramètres [back_end:Intel:call()]." << std::endl;
+        std::cout << "Warning : appel de fonction avec plus de 6 paramètres [back_end:x64:call()]." << std::endl;
     }
 
     write("\tcall " + instruction->getName());
 }
 
-void Intel::jump(const IRJump* instruction)
+void x64::jump(const IRJump* instruction)
 {
     write("//jump");
     write("\tjmp " + instruction->getLabel());
 }
 
-void Intel::selection(const IRSelection* instruction)
+void x64::selection(const IRSelection* instruction)
 {
     write("//selection");
+
+    // True/False -> condition
+
+    const Symbol* condition = instruction->getCondition();
+    const BasicBlock* blockCondition = instruction->getBlockCondition();
+
+    write("\tmovq -" + std::to_string(condition->getOffset() * OFFSET_VALUE) + "(%rbp), %rax");
+    write("\tcmp $0, %rax");
+    write("\tje " + blockCondition->getExitTrue()->getLabel()); // Jump Then
+
+    //write -> Else
+    if (blockCondition->getExitFalse() != nullptr)
+    {
+        write("\tjmp " + blockCondition->getExitFalse()->getLabel());
+
+        BasicBlock* block = blockCondition->getExitFalse();
+        std::string label;
+        std::vector<IRInstruction*> instructions;
+
+        while (block != nullptr)
+        {
+            label = block->getLabel();
+            write(label + ":");
+
+            instructions = block->getInstructions();
+            for (const IRInstruction* iri : instructions)
+            {
+                IRInstruction::Type instruction = iri->getOperation();
+
+                switch (instruction)
+                {
+                    case IRInstruction::Type::BINARY_OP :
+                        binaryOp((IRBinaryOp*) iri);
+                        break;
+                    case IRInstruction::Type::LOAD_CONSTANT :
+                        loadConstant((IRLoadConstant*) iri);
+                        break;
+                    case IRInstruction::Type::RWMEMORY :
+                        rwmemory((IRRWMemory*) iri);
+                        break;
+                    case IRInstruction::Type::CALL :
+                        call((IRCall*) iri);
+                        break;
+                    case IRInstruction::Type::JUMP :
+                        jump((IRJump*) iri);
+                        break;
+                    case IRInstruction::Type::SELECTION :
+                        selection((IRSelection*) iri);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            if (block->getExitTrue() != nullptr)
+            {
+                block = block->getExitTrue();
+                write("\tjmp " + block->getLabel());
+            }
+            else if (block->getExitFalse() != nullptr)
+            {
+                block = block->getExitFalse();
+                write("\tjmp " + block->getLabel());
+            }
+            else
+            {
+                block = nullptr;
+            }
+        }
+    }
 }
 
-Intel::~Intel()
+x64::~x64()
 {
     close();
 }

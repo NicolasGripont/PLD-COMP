@@ -20,17 +20,20 @@
 #include "../middle_end/Symbol.h"
 
 /* To execute: ~$ ./filename.out */
-/*       e.g.: ~$ ./intel.out */
-class Intel : public Writer
+/*       e.g.: ~$ ./x64.out */
+class x64 : public Writer
 {
 public:
-    static const int OFFSET_VALUE;
-
-    Intel(const std::string _filename, std::map<std::string, CFG*> _listCFG);
-    ~Intel();
+    x64(const std::string _filename, std::map<std::string, CFG*> _listCFG);
+    ~x64();
 
     void parse();
     int compile();
+
+private:
+    static const int OFFSET_VALUE;
+
+    std::map<std::string, CFG*> listCFG;
 
     void binaryOp(const IRBinaryOp* instruction);
     void loadConstant(const IRLoadConstant* instruction);
@@ -38,9 +41,6 @@ public:
     void call(const IRCall* instruction);
     void jump(const IRJump* instruction);
     void selection(const IRSelection* instruction);
-
-private:
-    std::map<std::string, CFG*> listCFG;
 };
 
 #endif

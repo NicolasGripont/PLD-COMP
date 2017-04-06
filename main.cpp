@@ -4,7 +4,7 @@
 
 #include "comp.tab.h"
 #include "middle_end/Parser.h"
-#include "back_end/Intel.h"
+#include "back_end/x64.h"
 #include "back_end/Java.h"
 
 int main(int argc, char* argv[])
@@ -25,8 +25,8 @@ int main(int argc, char* argv[])
     std::cout << "\n-> Print de l'IR \n" << std::endl;
     std::cout << astToIRParser.getFunctionCFG().find("main")->second << std::endl;
 
-	/* Backend Intel */
-	Intel* intel = new Intel("intel", astToIRParser.getFunctionCFG());
+	/* Backend x64 */
+	x64* intel = new x64("x64", astToIRParser.getFunctionCFG());
 	intel->parse();
 	intel->compile();
 
