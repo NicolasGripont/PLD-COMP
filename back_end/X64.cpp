@@ -151,8 +151,18 @@ void X64::binaryOp(const IRBinaryOp* instruction)
         case IRBinaryOp::Type::MOD :
             break;
         case IRBinaryOp::Type::EQUAL_EQUAL :
+            write("\tcmp %rbx, %rax");
+            write("\tmovq $0, %rax");
+            write("\tmovq $1, %rbx");
+            write("\tcmove %rax, %rbx");
+            write("\tmovq %rbx, %rax");
             break;
         case IRBinaryOp::Type::DIFF :
+            write("\tcmp %rbx, %rax");
+            write("\tmovq $0, %rax");
+            write("\tmovq $1, %rbx");
+            write("\tcmovne %rax, %rbx");
+            write("\tmovq %rbx, %rax");
             break;
         case IRBinaryOp::Type::LESS_THAN :
             write("\tcmp %rbx, %rax");
@@ -162,10 +172,25 @@ void X64::binaryOp(const IRBinaryOp* instruction)
             write("\tmovq %rbx, %rax");
             break;
         case IRBinaryOp::Type::LESS_THAN_OR_EQUAL :
+            write("\tcmp %rbx, %rax");
+            write("\tmovq $0, %rax");
+            write("\tmovq $1, %rbx");
+            write("\tcmovle %rax, %rbx");
+            write("\tmovq %rbx, %rax");
             break;
         case IRBinaryOp::Type::MORE_THAN :
+            write("\tcmp %rbx, %rax");
+            write("\tmovq $0, %rax");
+            write("\tmovq $1, %rbx");
+            write("\tcmovg %rax, %rbx");
+            write("\tmovq %rbx, %rax");
             break;
         case IRBinaryOp::Type::MORE_THAN_OR_EQUAL :
+            write("\tcmp %rbx, %rax");
+            write("\tmovq $0, %rax");
+            write("\tmovq $1, %rbx");
+            write("\tcmovge %rax, %rbx");
+            write("\tmovq %rbx, %rax");
             break;
         case IRBinaryOp::Type::AND_AND :
             break;
