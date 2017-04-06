@@ -11,5 +11,5 @@ int32_t factorial(int32_t n)
 
 void main()
 {
-	factorial(n);
+	factorial(5);
 }
