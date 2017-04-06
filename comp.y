@@ -949,7 +949,12 @@ void popVariablesFromStack(ArgumentList* args, DeclarationFunctionStatement* sta
         }
     }
 
-
+    for(int i=0;i<countVars;++i)
+    {
+        VariableContainer* var = currentVars.back();
+        currentVars.pop_back();
+        delete var;
+    }
 }
 
 void popSimpleStatVariablesFromStack(SimpleStatement* stat)
