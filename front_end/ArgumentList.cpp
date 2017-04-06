@@ -39,7 +39,7 @@ std::string ArgumentList::toString() const
 
 void ArgumentList::buildIR(CFG *cfg) const
 {
-
+    //do nothing
 }
 
 int ArgumentList::countArguments()

@@ -1,17 +1,17 @@
-#include "IRSelection.h"
+#include "IRLoop.h"
 
-IRSelection::IRSelection(Symbol* _condition, BasicBlock * bbCondition, BasicBlock *bbEnd)
+IRLoop::IRLoop(Symbol* _condition, BasicBlock * bbCondition, BasicBlock *bbEnd)
     : IRInstruction(IRInstruction::Type::SELECTION), condition(_condition), blockCondition(bbCondition), end(bbEnd)
 {
 
 }
 
-IRSelection::~IRSelection()
+IRLoop::~IRLoop()
 {
-	delete condition;
+    delete condition;
 }
 
-std::string IRSelection::toString() const
+std::string IRLoop::toString() const
 {
     std::string cond = "";
     if(condition != nullptr)
@@ -27,17 +27,17 @@ std::string IRSelection::toString() const
     return res;
 }
 
-Symbol *IRSelection::getCondition() const
+Symbol *IRLoop::getCondition() const
 {
     return condition;
 }
 
-BasicBlock *IRSelection::getBlockEnd() const
+BasicBlock *IRLoop::getBlockEnd() const
 {
     return end;
 }
 
-BasicBlock *IRSelection::getBlockCondition() const
+BasicBlock *IRLoop::getBlockCondition() const
 {
     return blockCondition;
 }

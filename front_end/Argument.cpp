@@ -52,7 +52,7 @@ std::string Argument::toString() const
 
 void Argument::buildIR(CFG *cfg) const
 {
-
+    //do nothing
 }
 
 Type* Argument::getType()

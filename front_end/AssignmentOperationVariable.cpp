@@ -82,19 +82,19 @@ void AssignmentOperationVariable::buildIR(CFG *cfg) const
                 instruction = new IRBinaryOp(IRBinaryOp::Type::SUB,symbol,symbol,source);
                 break;
             case LEFT_DEC_ASSIGN:
-
+                instruction = new IRBinaryOp(IRBinaryOp::Type::LEFT_DEC,symbol,symbol,source);
                 break;
             case RIGHT_DEC_ASSIGN:
-
+                instruction = new IRBinaryOp(IRBinaryOp::Type::RIGHT_DEC,symbol,symbol,source);
                 break;
             case AND_ASSIGN:
-
+                instruction = new IRBinaryOp(IRBinaryOp::Type::AND,symbol,symbol,source);
                 break;
             case OR_ASSIGN:
-
+                instruction = new IRBinaryOp(IRBinaryOp::Type::OR,symbol,symbol,source);
                 break;
             case OR_EXCL_ASSIGN:
-
+                std::cout << "OR_EXCL_ASSIGN not implemented" << std::endl;
                 break;
             }
 

@@ -14,7 +14,20 @@ public:
         SUB,
         MUL,
         DIV,
-        MOD
+        MOD,
+        EQUAL_EQUAL,
+        DIFF,
+        LESS_THAN,
+        LESS_THAN_OR_EQUAL,
+        MORE_THAN,
+        MORE_THAN_OR_EQUAL,
+        AND_AND,
+        OR_OR,
+        OR,
+        AND,
+        LEFT_DEC,
+        RIGHT_DEC,
+        POW
     };
 
     IRBinaryOp(IRBinaryOp::Type _type, Symbol *dest, Symbol *op_1, Symbol *op_2);

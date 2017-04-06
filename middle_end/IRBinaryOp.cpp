@@ -35,8 +35,59 @@ std::string IRBinaryOp::toString() const
     case Type::MOD :
         ret = destination->getName() + " <- " + operand_1->getName() + " % " + operand_2->getName();
         break;
-    }
 
+    case Type::EQUAL_EQUAL :
+        ret = destination->getName() + " <- " + operand_1->getName() + " == " + operand_2->getName();
+        break;
+
+    case Type::DIFF :
+        ret = destination->getName() + " <- " + operand_1->getName() + " != " + operand_2->getName();
+        break;
+
+    case Type::LESS_THAN :
+        ret = destination->getName() + " <- " + operand_1->getName() + " < " + operand_2->getName();
+        break;
+
+    case Type::LESS_THAN_OR_EQUAL :
+        ret = destination->getName() + " <- " + operand_1->getName() + " <= " + operand_2->getName();
+        break;
+
+    case Type::MORE_THAN :
+        ret = destination->getName() + " <- " + operand_1->getName() + " > " + operand_2->getName();
+        break;
+
+    case Type::MORE_THAN_OR_EQUAL :
+        ret = destination->getName() + " <- " + operand_1->getName() + " >= " + operand_2->getName();
+        break;
+
+    case Type::AND_AND :
+        ret = destination->getName() + " <- " + operand_1->getName() + " && " + operand_2->getName();
+        break;
+
+    case Type::OR_OR :
+        ret = destination->getName() + " <- " + operand_1->getName() + " || " + operand_2->getName();
+        break;
+
+    case Type::OR :
+        ret = destination->getName() + " <- " + operand_1->getName() + " | " + operand_2->getName();
+        break;
+
+    case Type::AND :
+        ret = destination->getName() + " <- " + operand_1->getName() + " & " + operand_2->getName();
+        break;
+
+    case Type::LEFT_DEC :
+        ret = destination->getName() + " <- " + operand_1->getName() + " << " + operand_2->getName();
+        break;
+
+    case Type::RIGHT_DEC :
+        ret = destination->getName() + " <- " + operand_1->getName() + " >> " + operand_2->getName();
+        break;
+
+    case Type::POW :
+        ret = destination->getName() + " <- " + operand_1->getName() + " ^ " + operand_2->getName();
+        break;
+    }
     return ret;
 }
 

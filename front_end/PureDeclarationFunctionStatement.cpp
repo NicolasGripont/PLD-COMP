@@ -18,5 +18,5 @@ std::string PureDeclarationFunctionStatement::toString() const
 
 void PureDeclarationFunctionStatement::buildIR(CFG *cfg) const
 {
-
+    //do nothing
 }

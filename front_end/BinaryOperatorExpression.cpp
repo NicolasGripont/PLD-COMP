@@ -129,28 +129,28 @@ void BinaryOperatorExpression::buildIR(CFG *cfg) const
         case COMMA:
             break;
         case EQUAL_EQUAL:
-            // " == ";
+            instruction = new IRBinaryOp(IRBinaryOp::Type::EQUAL_EQUAL,destination,expr1Symbol,expr2Symbol);
             break;
         case DIFF:
-            // " != ";
+            instruction = new IRBinaryOp(IRBinaryOp::Type::DIFF,destination,expr1Symbol,expr2Symbol);
             break;
         case LESS_THAN:
-            // " < ";
+            instruction = new IRBinaryOp(IRBinaryOp::Type::LESS_THAN,destination,expr1Symbol,expr2Symbol);
             break;
         case LESS_THAN_OR_EQUAL:
-            // " <= ";
+            instruction = new IRBinaryOp(IRBinaryOp::Type::LESS_THAN_OR_EQUAL,destination,expr1Symbol,expr2Symbol);
             break;
         case MORE_THAN:
-            // " > ";
+            instruction = new IRBinaryOp(IRBinaryOp::Type::MORE_THAN,destination,expr1Symbol,expr2Symbol);
             break;
         case MORE_THAN_OR_EQUAL:
-            // " >= ";
+            instruction = new IRBinaryOp(IRBinaryOp::Type::MORE_THAN_OR_EQUAL,destination,expr1Symbol,expr2Symbol);
             break;
         case AND_AND:
-            // " && ";
+            instruction = new IRBinaryOp(IRBinaryOp::Type::AND_AND,destination,expr1Symbol,expr2Symbol);
             break;
         case OR_OR:
-            // " || ";
+            instruction = new IRBinaryOp(IRBinaryOp::Type::OR_OR,destination,expr1Symbol,expr2Symbol);
             break;
         case MUL:
             instruction = new IRBinaryOp(IRBinaryOp::Type::MUL,destination,expr1Symbol,expr2Symbol);
@@ -168,19 +168,19 @@ void BinaryOperatorExpression::buildIR(CFG *cfg) const
             instruction = new IRBinaryOp(IRBinaryOp::Type::SUB,destination,expr1Symbol,expr2Symbol);
             break;
         case AND:
-            // " & ";
+            instruction = new IRBinaryOp(IRBinaryOp::Type::AND,destination,expr1Symbol,expr2Symbol);
             break;
         case OR:
-            // " | ";
+            instruction = new IRBinaryOp(IRBinaryOp::Type::OR,destination,expr1Symbol,expr2Symbol);
             break;
         case POW:
-            // " ^ ";
+            instruction = new IRBinaryOp(IRBinaryOp::Type::POW,destination,expr1Symbol,expr2Symbol);
             break;
         case LEFT_DEC:
-            // " << ";
+            instruction = new IRBinaryOp(IRBinaryOp::Type::LEFT_DEC,destination,expr1Symbol,expr2Symbol);
             break;
         case RIGHT_DEC:
-            // " >> ";
+            instruction = new IRBinaryOp(IRBinaryOp::Type::RIGHT_DEC,destination,expr1Symbol,expr2Symbol);
             break;
         }
 
