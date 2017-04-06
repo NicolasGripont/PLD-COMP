@@ -1,7 +1,7 @@
 #include "IRRWMemory.h"
 
 IRRWMemory::IRRWMemory(IRRWMemory::Type _type, Symbol *dest, Symbol *sour)
-    : IROperationWithDestination(IRInstruction::Type::RWMEMORY,dest), type(_type), source(sour)
+    : IROperationWithDestination(IRInstruction::Operation::RWMEMORY,dest), type(_type), source(sour)
 {}
 
 IRRWMemory::~IRRWMemory()

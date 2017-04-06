@@ -2,7 +2,7 @@
 
 #include "../middle_end/CFG.h"
 #include "../middle_end/BasicBlock.h"
-#include "../middle_end/IRSelection.h"
+#include "../middle_end/IRConditionnal.h"
 
 #include "ExpressionVariable.h"
 
@@ -85,6 +85,6 @@ void SelectionStatement::buildIR(CFG *cfg) const
 
     cfg->setCurrentBasicBlock(bbEnd);
 
-    IRSelection * instruction = new IRSelection(result, bbCondition, bbEnd);
+    IRConditionnal * instruction = new IRConditionnal(IRConditionnal::Type::SELECTION, result, bbCondition, bbEnd);
     bbCondition->addIRInstruction(instruction);
 }

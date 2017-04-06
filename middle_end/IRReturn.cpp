@@ -1,7 +1,7 @@
 #include "IRReturn.h"
 
 IRReturn::IRReturn(Symbol * symbol) :
-    IRInstruction(IRInstruction::Type::RETURN), returnValue(symbol)
+    IRInstruction(IRInstruction::Operation::RETURN), returnValue(symbol)
 {
 
 }

@@ -1,12 +1,12 @@
 #include "IRInstruction.h"
 
-IRInstruction::IRInstruction(IRInstruction::Type _type)
-    : type(_type)
+IRInstruction::IRInstruction(IRInstruction::Operation _op)
+    : type(_op)
 {
 
 }
 
-IRInstruction::Type IRInstruction::IRInstruction::getOperation() const
+IRInstruction::Operation IRInstruction::IRInstruction::getOperation() const
 {
 	return type;
 }

@@ -11,24 +11,23 @@
 class IRInstruction : public Printable
 {
 public:
-    enum class Type
+    enum class Operation
     {
         BINARY_OP,
         LOAD_CONSTANT,
         RWMEMORY,
         CALL,
-        JUMP,
-        SELECTION,
+        CONDITIONNAL,
         RETURN
     };
 
-    IRInstruction(Type _type);
+    IRInstruction(Operation _op);
     virtual ~IRInstruction() = default;
 
-    Type getOperation() const;
+    Operation getOperation() const;
 
 protected:
-    Type type;
+    Operation type;
 };
 
 #endif

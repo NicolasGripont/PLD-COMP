@@ -15,8 +15,7 @@
 #include "../middle_end/IRLoadConstant.h"
 #include "../middle_end/IRRWMemory.h"
 #include "../middle_end/IRCall.h"
-#include "../middle_end/IRJump.h"
-#include "../middle_end/IRSelection.h"
+#include "../middle_end/IRConditionnal.h"
 #include "../middle_end/Symbol.h"
 
 /* To execute: ~$ ./filename.out */
@@ -41,8 +40,7 @@ private:
     void loadConstant(const IRLoadConstant* instruction);
     void rwmemory(const IRRWMemory* instruction);
     void call(const IRCall* instruction);
-    void jump(const IRJump* instruction);
-    void selection(const IRSelection* instruction);
+    void selection(const IRConditionnal * instruction);
 };
 
 #endif

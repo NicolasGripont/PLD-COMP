@@ -1,7 +1,7 @@
 #include "IRLoadConstant.h"
 
 IRLoadConstant::IRLoadConstant(Symbol *dest, int val) :
-    IROperationWithDestination(IRInstruction::Type::LOAD_CONSTANT, dest), value(val)
+    IROperationWithDestination(IRInstruction::Operation::LOAD_CONSTANT, dest), value(val)
 {}
 
 IRLoadConstant::~IRLoadConstant()

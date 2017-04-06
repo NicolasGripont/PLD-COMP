@@ -83,27 +83,24 @@ void X64::parseBasicBlocks(const BasicBlock* block, bool prolog, int offsetBasic
             instructions = block->getInstructions();
             for (const IRInstruction* iri : instructions)
             {
-                IRInstruction::Type instruction = iri->getOperation();
+                IRInstruction::Operation instruction = iri->getOperation();
 
                 switch (instruction)
                 {
-                    case IRInstruction::Type::BINARY_OP :
+                    case IRInstruction::Operation::BINARY_OP :
                         binaryOp((IRBinaryOp*) iri);
                         break;
-                    case IRInstruction::Type::LOAD_CONSTANT :
+                    case IRInstruction::Operation::LOAD_CONSTANT :
                         loadConstant((IRLoadConstant*) iri);
                         break;
-                    case IRInstruction::Type::RWMEMORY :
+                    case IRInstruction::Operation::RWMEMORY :
                         rwmemory((IRRWMemory*) iri);
                         break;
-                    case IRInstruction::Type::CALL :
+                    case IRInstruction::Operation::CALL :
                         call((IRCall*) iri);
                         break;
-                    case IRInstruction::Type::JUMP :
-                        jump((IRJump*) iri);
-                        break;
-                    case IRInstruction::Type::SELECTION :
-                        selection((IRSelection*) iri);
+                    case IRInstruction::Operation::CONDITIONNAL :
+                        selection((IRConditionnal*) iri);
                         break;
                     default:
                         break;
@@ -233,13 +230,7 @@ void X64::call(const IRCall* instruction)
     }
 }
 
-void X64::jump(const IRJump* instruction)
-{
-    write("//jump");
-    write("\tjmp " + instruction->getLabel());
-}
-
-void X64::selection(const IRSelection* instruction)
+void X64::selection(const IRConditionnal *instruction)
 {
     write("//selection");
 

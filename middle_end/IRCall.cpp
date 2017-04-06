@@ -1,7 +1,7 @@
 #include "IRCall.h"
 
 IRCall::IRCall(std::string _name, Symbol *_returnSymbol, bool _isVoid)
-    : IRInstruction(IRInstruction::Type::CALL), name(_name), returnSymbol(_returnSymbol), isReturnVoid(_isVoid)
+    : IRInstruction(IRInstruction::Operation::CALL), name(_name), returnSymbol(_returnSymbol), isReturnVoid(_isVoid)
 {
 
 }
