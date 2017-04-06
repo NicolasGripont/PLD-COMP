@@ -1,4 +1,4 @@
-void main() {
+void main(void) {
 	char b;
     int32_t a;/*doit avoir une adresse multiple de 4*/
 
