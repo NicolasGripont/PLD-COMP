@@ -6,6 +6,7 @@
 #include "../front_end/DeclarationFunction.h"
 
 #include "IRInstruction.h"
+#include "IRConditionnal.h"
 #include "BasicBlock.h"
 #include "Parser.h"
 
@@ -32,7 +33,26 @@ std::string CFG::toString() const
     while(current != currentBasicBlock)
     {
         s += current->toString();
-        current = current->getExitTrue();
+        if(current->getInstructions().size() != 0)
+        {
+            IRInstruction * instruction = current->getInstructions().back();
+            if(instruction->getOperation() == IRInstruction::Operation::CONDITIONNAL)
+            {
+                current = dynamic_cast<IRConditionnal*>(instruction)->getBlockEnd();
+            }
+            else
+            {
+                current = current->getExitTrue();
+            }
+
+        }
+        else
+        {
+            current = current->getExitTrue();
+        }
+
+
+
     }
 
     s += current->toString();
@@ -214,5 +234,6 @@ void CFG::addNewLevelData(int level, BasicBlock * firstBlock)
 void CFG::cleanLevel(int level)
 {
     mapLevelData.erase(level);
+
     std::cout << "clean" << std::endl;
 }

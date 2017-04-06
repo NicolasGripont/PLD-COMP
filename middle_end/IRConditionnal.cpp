@@ -26,22 +26,21 @@ std::string IRConditionnal::toString() const
     {
     case Type::SELECTION :
 
-        res = "if " + cond + " then " + blockCondition->getExitTrue()->getLabel();
+        res = "IF " + cond + " then " + blockCondition->getExitTrue()->getLabel();
         if(blockCondition->getExitFalse() != nullptr)
         {
             res += " else " + blockCondition->getExitFalse()->getLabel();
         }
-        return res;
         break;
     case Type::FOR :
-
+        res = "FOR " + cond + " then " + blockCondition->getExitTrue()->getLabel();
         break;
     case Type::WHILE :
-
+        res = "WHILE " + cond + " then " + blockCondition->getExitTrue()->getLabel();
         break;
     }
 
-
+    return res;
 }
 
 Symbol *IRConditionnal::getCondition() const

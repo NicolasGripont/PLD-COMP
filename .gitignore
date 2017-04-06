@@ -48,3 +48,6 @@ QtProject.*
 *.s
 
 *.plist
+
+
+*.class
