@@ -4,7 +4,7 @@
 
 #include "comp.tab.h"
 #include "middle_end/Parser.h"
-#include "back_end/x64.h"
+#include "back_end/X64.h"
 #include "back_end/Java.h"
 
 int main(int argc, char* argv[])
@@ -26,11 +26,11 @@ int main(int argc, char* argv[])
     std::cout << astToIRParser.getFunctionCFG().find("main")->second << std::endl;
 
 	/* Backend x64 */
-	x64* intel = new x64("x64", astToIRParser.getFunctionCFG());
-	intel->parse();
-	intel->compile();
+	X64* x64 = new X64("x64", astToIRParser.getFunctionCFG());
+	x64->parse();
+	x64->compile();
 
-    delete intel;
+    delete x64;
 
     /* Backend Java */
     Java* java = new Java("java", astToIRParser.getFunctionCFG());

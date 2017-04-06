@@ -1,5 +1,5 @@
-#ifndef _INTEL_H
-#define _INTEL_H
+#ifndef _X64_H
+#define _X64_H
 
 #include <iostream>
 #include <string>
@@ -21,11 +21,11 @@
 
 /* To execute: ~$ ./filename.out */
 /*       e.g.: ~$ ./x64.out */
-class x64 : public Writer
+class X64 : public Writer
 {
 public:
-    x64(const std::string _filename, std::map<std::string, CFG*> _listCFG);
-    ~x64();
+    X64(const std::string _filename, std::map<std::string, CFG*> _listCFG);
+    ~X64();
 
     void parse();
     int compile();
@@ -34,6 +34,8 @@ private:
     static const int OFFSET_VALUE;
 
     std::map<std::string, CFG*> listCFG;
+
+    void parseBasicBlocks(const BasicBlock* block, bool prolog = false, int offsetBasicBlock = 0);
 
     void binaryOp(const IRBinaryOp* instruction);
     void loadConstant(const IRLoadConstant* instruction);
