@@ -11,31 +11,31 @@ ForLoop::ForLoop(LoopExpression* _expr1, LoopExpression* _expr2, LoopExpression*
 
 ForLoop::~ForLoop()
 {
-	if(expr1 != nullptr)
-	{
-		delete expr1;
-	}
-	if(expr2 != nullptr)
-	{
-		delete expr2;
-	}
-	if(expr3 != nullptr)
-	{
-		delete expr3;
-	}
+    if(expr1 != nullptr)
+    {
+        delete expr1;
+    }
+    if(expr2 != nullptr)
+    {
+        delete expr2;
+    }
+    if(expr3 != nullptr)
+    {
+        delete expr3;
+    }
 }
 
 std::string ForLoop::toString() const
 {
-	std::string txt = "for(" + expr1->toString() + "; " + expr2->toString() + "; " + expr3->toString() + ")";
-	if(statement != nullptr) 
-	{
-		txt += statement->toString();
-	}
-	else 
-	{
-		txt += "{}";
-	}
+    std::string txt = "for(" + expr1->toString() + "; " + expr2->toString() + "; " + expr3->toString() + ")";
+    if(statement != nullptr)
+    {
+        txt += statement->toString();
+    }
+    else
+    {
+        txt += "{}";
+    }
     return txt;
 }
 
@@ -48,20 +48,20 @@ void ForLoop::buildIR(CFG *cfg) const
     if(expr1 != nullptr)
     {
         expr1->buildIR(cfg);
-        Symbol * init = cfg->getCurrentBasicBlock()->getLastInstructionDestination();
     }
 
     //Gestion de la condition
     // On crée le nouveau basic block contenant la condition
-    BasicBlock * bbCondition = nullptr;
+    BasicBlock * bbCondition = cfg->createNewBasicBlock(level);;
+    cfg->attachNewBasicBlock(bbCondition);
+
     Symbol * condition = nullptr;
+
     if(expr2 != nullptr)
     {
-        bbCondition = cfg->createNewBasicBlock(level);
-        cfg->attachNewBasicBlock(bbCondition);
         expr2->buildIR(cfg);
         // On récupère le registre contenant le résultat
-       condition = cfg->getLastInstructionDestination();
+        condition = cfg->getLastInstructionDestination();
     }
 
     //Gestion du statement
@@ -77,11 +77,13 @@ void ForLoop::buildIR(CFG *cfg) const
     if(expr3 != nullptr)
     {
         expr3->buildIR(cfg);
-        Symbol * avanc = cfg->getCurrentBasicBlock()->getLastInstructionDestination();
     }
 
     BasicBlock * bbEnd = cfg->createNewBasicBlock(level);
-    cfg->attachNewBasicBlock(bbEnd);
+
+    bbCondition->setExitFalse(bbEnd);
+
+    cfg->getCurrentBasicBlock()->setExitTrue(bbCondition);
 
     cfg->setCurrentBasicBlock(bbEnd);
 

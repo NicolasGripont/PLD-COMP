@@ -1,11 +1,11 @@
 int32_t main()
 {
 	int32_t a = 2;
-	int32_t b = 2;
+	int32_t b = 20;
 	int32_t c = 2;
 	int32_t d = 2;
 	
-	while(a)
+	for(a = 0; a < b; a++)
 	{
 	   int32_t bob = 5;
 	}
