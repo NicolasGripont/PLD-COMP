@@ -9,9 +9,9 @@ int64_t factoriel_recurcive(int64_t number)
 	int64_t result = 1;
 	int64_t i = 2; 
 
-	if(number < 0)
+    if(number < 0) //impossible
 	{
-		return -1;
+        return 0;
 	}
 
 	if(number < 2) {
@@ -61,9 +61,9 @@ int64_t factoriel_while(int64_t number)
 	int64_t result = 1;
 	int64_t i = 2; 
 
-	if(number < 0)
+    if(number < 0) //impossible
 	{
-		return -1;
+        return 0;
 	}
 
 	while(i <= number) 

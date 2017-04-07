@@ -362,7 +362,6 @@ declaration_function_statement
 argument
     : type {
         $$=new Argument($1);
-        if(variableIsVoid(g, $1)) YYABORT;
     }
     | type ID {
         $$=new Argument($1,$2);

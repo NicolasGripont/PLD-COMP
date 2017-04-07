@@ -23,8 +23,14 @@ int main(int argc, char* argv[])
     astToIRParser.generateIR(genesis);
 
     std::cout << "\n-> Print de l'IR \n" << std::endl;
-    std::cout << astToIRParser.getFunctionCFG().find("main")->second << std::endl;
-
+    if(astToIRParser.getFunctionCFG().find("main") != astToIRParser.getFunctionCFG().end())
+    {
+        std::cout << astToIRParser.getFunctionCFG().find("main")->second << std::endl;
+    }
+    else
+    {
+        std::cout << "function main doesn't exist" << std::endl;
+    }
 	/* Backend x64 */
 	X64* x64 = new X64("x64", astToIRParser.getFunctionCFG());
 	x64->parse();

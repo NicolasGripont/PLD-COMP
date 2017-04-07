@@ -34,6 +34,7 @@ std::string CFG::toString() const
     while(current != currentBasicBlock)
     {
         s += current->toString();
+        std::cout << s << std::endl;
         if(current->getInstructions().size() != 0)
         {
             IRInstruction * instruction = current->getInstructions().back();
@@ -51,9 +52,6 @@ std::string CFG::toString() const
         {
             current = current->getExitTrue();
         }
-
-
-
     }
 
     s += current->toString();
@@ -145,19 +143,29 @@ Symbol *CFG::getLastInstructionDestination()
 
 int CFG::getOffsetFromCurrentBasicBlock()
 {
-    auto pair = mapLevelData.find(currentBasicBlock->getLevel());
-
-    if(pair != mapLevelData.end())
+    if(currentBasicBlock != nullptr)
     {
-        LevelData data = pair->second;
-        data.offset++;
-        updateMaximalOffset(data.offset);
-        mapLevelData[currentBasicBlock->getLevel()] = data;
+        auto pair = mapLevelData.find(currentBasicBlock->getLevel());
 
-        return data.offset;
+        if(pair != mapLevelData.end())
+        {
+            LevelData data = pair->second;
+            data.offset++;
+            updateMaximalOffset(data.offset);
+            mapLevelData[currentBasicBlock->getLevel()] = data;
+
+            return data.offset;
+        }
+        else
+        {
+            std::cout << "Error CFG::getOffsetFromCurrentBasicBlock : no level data found" << std::endl;
+        }
+    }
+    else
+    {
+        std::cout << "Error CFG::getOffsetFromCurrentBasicBlock : current basic block is null" << std::endl;
     }
 
-    std::cout << "Error CFG::getOffsetFromCurrentBasicBlock" << std::endl;
     return -1;
 }
 
