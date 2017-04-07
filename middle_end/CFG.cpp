@@ -53,9 +53,10 @@ std::string CFG::toString() const
             current = current->getExitTrue();
         }
     }
-
-    s += current->toString();
-
+    if(currentBasicBlock != nullptr)
+    {
+        s += current->toString();
+    }
     return s;
 }
 
