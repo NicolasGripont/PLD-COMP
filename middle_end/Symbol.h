@@ -12,6 +12,7 @@ public:
     int getOffset() const;
     void setOffset(int);
 
+    int size;
 private:
     std::string name;
     int type;

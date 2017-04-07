@@ -7,7 +7,6 @@
 DeclarationFunction::DeclarationFunction(Type* _type, char* _id, ArgumentList* _argumentList, DeclarationFunctionStatement* _decFunctionStatement)
     : Declaration(DECLARATION_FUNCTION), type(_type), id(_id), decFunctionStatement(_decFunctionStatement), argumentList(_argumentList)
 {
-
 }
 
 DeclarationFunction::~DeclarationFunction()
@@ -51,6 +50,7 @@ void DeclarationFunction::buildIR(CFG * cfg) const
                                          arg->getType()->getType(),
                                          cfg->getOffsetFromCurrentBasicBlock()
                                          );
+
             cfg->addSymbolToCurrentBasicBlock(symbol);
         }
 
@@ -63,15 +63,20 @@ void DeclarationFunction::buildIR(CFG * cfg) const
     }
 }
 
-ArgumentList* DeclarationFunction::getArgumentList() const {
+
+ArgumentList *DeclarationFunction::getArgumentList() const
+{
     return argumentList;
 }
 
-DeclarationFunctionStatement* DeclarationFunction::getFunctionStatement() const {
+
+DeclarationFunctionStatement *DeclarationFunction::getFunctionStatement() const
+{
     return decFunctionStatement;
 }
 
-std::string DeclarationFunction::getId() const {
+
+std::string DeclarationFunction::getId() const
+{
     return id;
 }
-

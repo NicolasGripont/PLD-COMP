@@ -80,5 +80,5 @@ void FunctionCallExpression::buildIR(CFG *cfg) const
 Symbol * FunctionCallExpression::computeParameters(CFG *cfg, Expression* binaryExprRight) const
 {   
     binaryExprRight->buildIR(cfg);
-    return cfg->getLastInstructionDestination();;
+    return cfg->getLastInstructionDestination();
 }

@@ -65,6 +65,7 @@ public:
     Symbol * getLastInstructionDestination();
 
     int getOffsetFromCurrentBasicBlock();
+    void incrementOffsetWithArraySize(int _size);
 
     std::string getTempVariableName();
 

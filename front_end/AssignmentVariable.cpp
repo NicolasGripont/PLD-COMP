@@ -3,15 +3,18 @@
 #include "../middle_end/CFG.h"
 #include "../middle_end/IROperationWithDestination.h"
 #include "../middle_end/IRRWMemory.h"
+#include "../middle_end/IRRWMemoryArray.h"
+#include "../middle_end/IRLoadConstant.h"
+#include "../middle_end/IRBinaryOp.h"
 #include "ExpressionArrayVariable.h"
 
-AssignmentVariable::AssignmentVariable(ExpressionVariable* _exprVar, Expression* _expr)
-    :Expression(),exprVar(_exprVar),expr(_expr)
+AssignmentVariable::AssignmentVariable(ExpressionVariable *_exprVar, Expression *_expr)
+    : Expression(), exprVar(_exprVar), expr(_expr)
 {
     int type1 = _exprVar->getType();
     int type2 = _expr->getType();
 
-    if(type1 == type2)
+    if (type1 == type2)
     {
         setType(type1);
     }
@@ -27,11 +30,11 @@ AssignmentVariable::AssignmentVariable(ExpressionVariable* _exprVar, Expression*
 
 AssignmentVariable::~AssignmentVariable()
 {
-    if(exprVar != nullptr)
+    if (exprVar != nullptr)
     {
         delete exprVar;
     }
-    if(expr != nullptr)
+    if (expr != nullptr)
     {
         delete expr;
     }
@@ -44,34 +47,48 @@ std::string AssignmentVariable::toString() const
 
 void AssignmentVariable::buildIR(CFG *cfg) const
 {
-    exprVar->buildIR(cfg);
-
-    Symbol * destination;
+    
+    Symbol *destination;
 
     auto pair = cfg->getCurrentBasicBlock()->getLocalSymbolsTable().find(exprVar->getId());
 
-    if(pair != cfg->getCurrentBasicBlock()->getLocalSymbolsTable().end())
+    if (pair != cfg->getCurrentBasicBlock()->getLocalSymbolsTable().end())
     {
-        ExpressionArrayVariable* arrayVariable = dynamic_cast<ExpressionArrayVariable*>(exprVar);
-        if(arrayVariable != nullptr)
-        {
-            std::cout << "not implemented yet ;)" << std::endl;
-        }
-        else
-        {
-            destination = pair->second;
-        }
+        ExpressionArrayVariable *arrayVariable = dynamic_cast<ExpressionArrayVariable *>(exprVar);
+        destination = pair->second;
 
         // ON CONSTRUIT LA SOURCE
         expr->buildIR(cfg);
 
-        Symbol * source = cfg->getLastInstructionDestination();
+        Symbol *source = cfg->getLastInstructionDestination();
 
-        if(source != nullptr)
+        if (source != nullptr)
         {
             // ON GENERE L'INSTRUCTION
-            IRRWMemory * instruction = new IRRWMemory(IRRWMemory::Type::WRITE_MEMORY,destination,source);
-            cfg->addInstructionInCurrentBasicBlock(instruction);
+            if (arrayVariable != nullptr)
+            {
+                arrayVariable->getExpr()->buildIR(cfg);
+                Symbol *target = cfg->getLastInstructionDestination();
+
+                // Multiplier la position par -1 (car les positions du tableau remontent dans l'AR)
+                std::string tmpName = cfg->getTempVariableName();
+                Symbol *negativeSymbol = new Symbol(tmpName, getType(), cfg->getOffsetFromCurrentBasicBlock());
+                IRLoadConstant *instructionLoadNeg = new IRLoadConstant(negativeSymbol, -1);
+                cfg->addInstructionInCurrentBasicBlock(instructionLoadNeg);
+
+                IRBinaryOp *multInstruction = new IRBinaryOp(IRBinaryOp::Type::MUL, target, target, negativeSymbol);
+                cfg->addInstructionInCurrentBasicBlock(multInstruction);
+                
+                IRRWMemoryArray *instruction = new IRRWMemoryArray(IRRWMemoryArray::Type::WRITE_MEMORY, destination, source, target);
+                cfg->addInstructionInCurrentBasicBlock(instruction);
+            }
+            else
+            {
+                exprVar->buildIR(cfg);
+
+                IRRWMemory *instruction = new IRRWMemory(IRRWMemory::Type::WRITE_MEMORY, destination, source);
+                cfg->addInstructionInCurrentBasicBlock(instruction);
+            }
         }
     }
     else
@@ -80,17 +97,12 @@ void AssignmentVariable::buildIR(CFG *cfg) const
     }
 }
 
-
-
-
-
 /// gestion tableau
 //            arrayVariable->getExpr()->buildIR(cfg);
 
 //            // On doit récupérer le résultat de l'expression et donc la derière instruction.
 //            const IROperationWithDestination * irOp = dynamic_cast<const IROperationWithDestination*>
 //                    (cfg->getCurrentBasicBlock()->getInstructions().back());
-
 
 //            if(irOp != nullptr)
 //            {

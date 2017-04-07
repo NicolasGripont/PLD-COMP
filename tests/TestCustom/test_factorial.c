@@ -2,11 +2,14 @@
 
 int32_t factorial(int32_t t)
 {
+
 	int32_t a = 0;
 	if(1 < t)
 	{
+
 		a = t * factorial(t-1);
 	}
+
 	else
 	{
 		a = 1;
@@ -16,6 +19,7 @@ int32_t factorial(int32_t t)
 
 void main()
 {
+
 	int32_t b = 0;
 	b = factorial(4);
 	putchar(3 * b);

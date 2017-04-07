@@ -131,6 +131,9 @@ void X64::parseBasicBlocks(CFG * cfg, const BasicBlock* block, bool prolog, int 
                     case IRInstruction::Operation::RWMEMORY :
                         rwmemory((IRRWMemory*) iri);
                         break;
+                    case IRInstruction::Operation::RWMEMORYARRAY :
+                        rwmemoryarray((IRRWMemoryArray*) iri);
+                        break;
                     case IRInstruction::Operation::CALL :
                         call((IRCall*) iri);
                         break;
@@ -276,6 +279,32 @@ void X64::rwmemory(const IRRWMemory* instruction)
             break;
         default:
             std::cout << "Erreur : type d'instruction IRRWMemory invalide [back_end:X64:rwmemory()]." << std::endl;
+            break;
+    }
+}
+
+void X64::rwmemoryarray(const IRRWMemoryArray* instruction)
+{
+    write("//rwmemoryarray");
+
+    const Symbol* destination = instruction->getDestination();
+    const Symbol* source = instruction->getSource();
+    const Symbol* targetPosition = instruction->getTargetPosition();
+
+    switch (instruction->getType())
+    {
+        case IRRWMemoryArray::Type::READ_MEMORY :
+            write("\tmovq -" + std::to_string(targetPosition->getOffset() * OFFSET_VALUE) + "(%rbp), %rcx");
+            write("\tmovq -" + std::to_string(source->getOffset() * OFFSET_VALUE) + "(%rbp, %rcx,8), %rax");
+            write("\tmovq %rax, -"+std::to_string(destination->getOffset() * OFFSET_VALUE)+"(%rbp)");
+            break;
+        case IRRWMemoryArray::Type::WRITE_MEMORY :
+            write("\tmovq -" + std::to_string(source->getOffset() * OFFSET_VALUE) + "(%rbp), %rax");
+            write("\tmovq -" + std::to_string(targetPosition->getOffset() * OFFSET_VALUE) + "(%rbp), %rcx");
+            write("\tmovq %rax, -" + std::to_string(destination->getOffset() * OFFSET_VALUE) + "(%rbp, %rcx,8)");
+            break;
+        default:
+            std::cout << "Erreur : type d'instruction IRRWMemoryArray invalide [back_end:X64:rwmemoryarray()]." << std::endl;
             break;
     }
 }

@@ -1,7 +1,7 @@
 #include "Symbol.h"
 
 Symbol::Symbol(std::string _name, int _type, int _offset)
-	: name(_name), type(_type), offset(_offset)
+	: name(_name), type(_type), offset(_offset), size(1)
 {
 
 }

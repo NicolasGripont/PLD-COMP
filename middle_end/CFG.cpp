@@ -10,6 +10,7 @@
 #include "BasicBlock.h"
 #include "Parser.h"
 
+
 CFG::CFG(const Parser * parser, DeclarationFunction * _function) :
     nextBBnumber(0), lastBasicBlockLevel(0), maximalOffset(1),
     function(_function), currentBasicBlock(nullptr)
@@ -23,7 +24,8 @@ CFG::CFG(const Parser * parser, DeclarationFunction * _function) :
 }
 
 CFG::CFG() : function(nullptr)
-{}
+{
+}
 
 std::string CFG::toString() const
 {
@@ -46,7 +48,6 @@ std::string CFG::toString() const
             {
                 current = current->getExitTrue();
             }
-
         }
         else
         {
@@ -74,7 +75,6 @@ BasicBlock * CFG::createNewBasicBlock(int level, std::string bbName)
     return bb;
 }
 
-
 BasicBlock * CFG::createNewBasicBlock(int level)
 {
     return createNewBasicBlock(level,getUsableBasicBlockName());
@@ -82,7 +82,9 @@ BasicBlock * CFG::createNewBasicBlock(int level)
 
 void CFG::addSymbol(Symbol *symbol)
 {
-    if(symbol != nullptr) {
+
+    if (symbol != nullptr)
+    {
         symbolsTable.insert(std::pair<std::string, Symbol*>(symbol->getName(), symbol));
     }
 }
@@ -116,7 +118,9 @@ const std::map <std::string, Symbol*> & CFG::getSymbolsTable() const
     return symbolsTable;
 }
 
-std::string CFG::getName() const {
+
+std::string CFG::getName() const
+{
     if(function != nullptr)
         return function->getId();
     return "undefined";
@@ -167,7 +171,28 @@ int CFG::getOffsetFromCurrentBasicBlock()
         std::cout << "Error CFG::getOffsetFromCurrentBasicBlock : current basic block is null" << std::endl;
     }
 
+
     return -1;
+}
+
+void CFG::incrementOffsetWithArraySize(int _size)
+{
+    auto pair = mapLevelData.find(currentBasicBlock->getLevel());
+
+    if (pair != mapLevelData.end())
+    {
+        LevelData data = pair->second;
+
+        if(_size < 1)
+        {
+            _size = 1;
+        }
+        
+        data.offset += _size-1;
+        mapLevelData[currentBasicBlock->getLevel()] = data;
+    }
+
+    std::cout << "Error CFG::incrementOffsetWithArraySize" << std::endl;
 }
 
 std::string CFG::getTempVariableName()

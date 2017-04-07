@@ -14,6 +14,7 @@
 #include "../middle_end/IRBinaryOp.h"
 #include "../middle_end/IRLoadConstant.h"
 #include "../middle_end/IRRWMemory.h"
+#include "../middle_end/IRRWMemoryArray.h"
 #include "../middle_end/IRCall.h"
 #include "../middle_end/IRConditionnal.h"
 #include "../middle_end/Symbol.h"
@@ -39,6 +40,7 @@ private:
     void binaryOp(const IRBinaryOp* instruction);
     void loadConstant(const IRLoadConstant* instruction);
     void rwmemory( const IRRWMemory* instruction);
+    void rwmemoryarray(const IRRWMemoryArray* instruction);
     void call(const IRCall* instruction);
     void selection(CFG* cfg, const IRConditionnal * instruction);
 };

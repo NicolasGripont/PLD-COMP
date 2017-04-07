@@ -14,3 +14,9 @@ std::string DeclarationArrayVariable::toString() const
 	} 
 	return "ERROR_DeclarationArrayVariable";
 }
+
+
+int DeclarationArrayVariable::getSize()
+{
+	return size;
+}

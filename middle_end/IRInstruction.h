@@ -16,6 +16,7 @@ public:
         BINARY_OP,
         LOAD_CONSTANT,
         RWMEMORY,
+        RWMEMORYARRAY,
         CALL,
         CONDITIONNAL,
         RETURN

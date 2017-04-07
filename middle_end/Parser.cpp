@@ -1,5 +1,8 @@
+#include <string>
+
 #include "Parser.h"
 #include "../front_end/DeclarationInitVariable.h"
+#include "../front_end/DeclarationArrayVariable.h"
 
 Parser::~Parser()
 {
@@ -46,7 +49,20 @@ void Parser::handleNewSymbolInTable(GlobalDeclarationVariable* declaration)
         Symbol *s = new Symbol(declarationVariable->getId(), type , globalSymbolTable.size());
         this->addSymbolToTable(s);
 
-        if(!declarationVariable->isDeclaration())
+        if (declarationVariable->isArray())
+        {
+            int currOffset = globalSymbolTable.size();
+            s->size = ((DeclarationArrayVariable *)declarationVariable)->getSize();
+
+            // A cause de l'offset donné par globalSymbolTable.size()
+            // on doit combler l'offset
+            for (int crado = 0; crado < s->size - 1; crado++)
+            {
+                Symbol *s = new Symbol(std::string("CRADO_")+std::to_string(crado), type, currOffset);
+                ++currOffset;
+            }
+        }
+        else if (!declarationVariable->isDeclaration())
         {
             DeclarationInitVariable * init = dynamic_cast<DeclarationInitVariable*>(declarationVariable);
 
@@ -60,7 +76,8 @@ void Parser::handleNewSymbolInTable(GlobalDeclarationVariable* declaration)
 
 void Parser::addNewFunctionInTable(CFG * controllFlowGraph)
 {
-    if(controllFlowGraph != nullptr) {
+    if (controllFlowGraph != nullptr)
+    {
         functionCFG.insert(std::pair<std::string, CFG*>(controllFlowGraph->getName(), controllFlowGraph));
     }
 }
@@ -71,7 +88,7 @@ void Parser::generateCFG(DeclarationFunction * declaration)
     if(declaration->getFunctionStatement() != nullptr && declaration->getFunctionStatement()->isDeclaration() == false)
     {
         std::cout << "Declaration " << declaration->getId() << std::endl;
-        CFG * controllFlowGraph = new CFG(this,declaration);
+    CFG *controllFlowGraph = new CFG(this, declaration);
         addNewFunctionInTable(controllFlowGraph);
     }
 }
@@ -86,7 +103,6 @@ const std::map<std::string, int> &Parser::getGlobalValueTable() const
     return globalValueTable;
 }
 
-
 const std::map<std::string, Symbol *> & Parser::getGlobalSymbolTable() const
 {
     return globalSymbolTable;
@@ -94,7 +110,9 @@ const std::map<std::string, Symbol *> & Parser::getGlobalSymbolTable() const
 
 void Parser::addSymbolToTable(Symbol * symbol)
 {
-    if(symbol != nullptr) {
+
+    if (symbol != nullptr)
+    {
         globalSymbolTable.insert(std::pair<std::string, Symbol*>(symbol->getName(), symbol));
     }
 }
