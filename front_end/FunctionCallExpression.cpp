@@ -37,24 +37,12 @@ std::string FunctionCallExpression::toString() const
 
 void FunctionCallExpression::buildIR(CFG *cfg) const
 {
-    IRCall * instruction;
-
-    Symbol * returnSymbol = nullptr;
-
-    if(getType() != VOID)
-    {
-        returnSymbol = new Symbol(cfg->getTempVariableName(),getType(),cfg->getOffsetFromCurrentBasicBlock());
-    }
-
-    instruction = new IRCall(id,returnSymbol,getType() == VOID);
-
+    std::vector<Symbol *> vectorParameters;
     // On ajoute les params
     if(expr != nullptr)
     {
         BinaryOperatorExpression* binaryExpr = dynamic_cast<BinaryOperatorExpression*>(expr);
         Expression * next = expr;
-
-        std::vector<Symbol *> vectorParameters;
 
         while(binaryExpr != nullptr)
         {
@@ -70,15 +58,23 @@ void FunctionCallExpression::buildIR(CFG *cfg) const
                 binaryExpr = dynamic_cast<BinaryOperatorExpression*>(binaryExpr->getLeft());
             }
         }
-
         vectorParameters.push_back(computeParameters(cfg,next));
-
-        for(int i = vectorParameters.size()-1; i >= 0; --i)
-        {
-            instruction->addParameter(vectorParameters[i]);
-        }
     }
+
+    IRCall * instruction;
+    Symbol * returnSymbol = nullptr;
+
+    if(getType() != VOID)
+    {
+        returnSymbol = new Symbol(cfg->getTempVariableName(),getType(),cfg->getOffsetFromCurrentBasicBlock());
+    }
+
+    instruction = new IRCall(id,returnSymbol,vectorParameters,getType() == VOID);
+
     cfg->addInstructionInCurrentBasicBlock(instruction);
+
+    std::cout << "ERROR buildIR FunctionCallExpression " << std::endl;
+
 }
 
 Symbol * FunctionCallExpression::computeParameters(CFG *cfg, Expression* binaryExprRight) const

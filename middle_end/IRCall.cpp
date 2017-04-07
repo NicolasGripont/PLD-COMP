@@ -1,7 +1,8 @@
 #include "IRCall.h"
 
-IRCall::IRCall(std::string _name, Symbol *_returnSymbol, bool _isVoid)
-    : IRInstruction(IRInstruction::Operation::CALL), name(_name), returnSymbol(_returnSymbol), isReturnVoid(_isVoid)
+IRCall::IRCall(std::string _name, Symbol *_returnSymbol, std::vector<Symbol*> _params, bool _isVoid)
+    : IRInstruction(IRInstruction::Operation::CALL), name(_name), returnSymbol(_returnSymbol),
+      params(_params),isReturnVoid(_isVoid)
 {
 
 }
@@ -12,14 +13,6 @@ IRCall::~IRCall()
     for (Symbol* s : params)
     {
         delete s;
-    }
-}
-
-void IRCall::addParameter(Symbol * symbol)
-{
-    if (symbol != nullptr)
-    {
-        params.push_back(symbol);
     }
 }
 

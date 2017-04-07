@@ -1,5 +1,6 @@
 #include "BasicBlock.h"
 #include "IRInstruction.h"
+#include "IRCall.h"
 #include "IROperationWithDestination.h"
 
 BasicBlock::BasicBlock(int lvl, CFG *_cfg, std::string _entry_label)
@@ -105,7 +106,15 @@ Symbol *BasicBlock::getLastInstructionDestination()
     }
     else
     {
-        return nullptr;
+        IRCall * irCall = dynamic_cast<IRCall*> (instructions.back());
+        if(irCall != nullptr)
+        {
+            return irCall->getReturnSymbol();
+        }
+        else
+        {
+            return nullptr;
+        }
     }
 }
 
