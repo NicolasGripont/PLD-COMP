@@ -19,7 +19,7 @@ void X64::parse()
     {
         const BasicBlock* block = itCFG->second->getRootBasicBlock();
 
-        parseBasicBlocks(block, true, itCFG->second->getOffsetFromCurrentBasicBlock(), nullptr);
+        parseBasicBlocks(block, true, itCFG->second->getPrologMaximalOffset(), nullptr);
 
         write("\tleave");
         write("\tret");

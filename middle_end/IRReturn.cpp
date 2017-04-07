@@ -8,7 +8,14 @@ IRReturn::IRReturn(Symbol * symbol) :
 
 std::string IRReturn::toString() const
 {
-    return "RETURN " + returnValue->getName();
+    if(returnValue != nullptr)
+    {
+        return "RETURN " + returnValue->getName();
+    }
+    else
+    {
+        return "RETURN ";
+    }
 }
 
 Symbol *IRReturn::getReturnValue() const
