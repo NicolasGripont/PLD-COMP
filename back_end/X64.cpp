@@ -60,7 +60,6 @@ void X64::parseBasicBlocks(CFG * cfg, const BasicBlock* block, bool prolog, int 
 {
     std::string label;
     std::vector<IRInstruction*> instructions;
-    bool printJump = true;
 
     while (block != terminal)
     {
@@ -79,8 +78,9 @@ void X64::parseBasicBlocks(CFG * cfg, const BasicBlock* block, bool prolog, int 
             }
             write("\tsubq $" + std::to_string(offset) + ", %rsp");
 
+            /*  Get parameters */
             int nbParam = cfg->getFunction()->getArgumentList()->countArguments();
-            int indice = 1;
+            int indice = 2;
             // 6 parameters. 64 bits.
             if (nbParam > 0)
             {
@@ -136,7 +136,6 @@ void X64::parseBasicBlocks(CFG * cfg, const BasicBlock* block, bool prolog, int 
                         break;
                     case IRInstruction::Operation::CONDITIONNAL :
                         selection(cfg, (IRConditionnal*) iri);
-                        printJump = false;
                         break;
                     default:
                         break;
@@ -147,18 +146,12 @@ void X64::parseBasicBlocks(CFG * cfg, const BasicBlock* block, bool prolog, int 
         if (block->getExitTrue() != nullptr)
         {
             block = block->getExitTrue();
-            if (printJump)
-            {
-                write("\tjmp " + block->getLabel());
-            }
+            write("\tjmp " + block->getLabel());
         }
         else if (block->getExitFalse() != nullptr)
         {
             block = block->getExitFalse();
-            if (printJump)
-            {
-                write("\tjmp " + block->getLabel());
-            }
+            write("\tjmp " + block->getLabel());
         }
         else
         {
