@@ -62,7 +62,6 @@ public:
     void setCurrentBasicBlock(BasicBlock * bb);
     BasicBlock * getCurrentBasicBlock() const;
 
-
     Symbol * getLastInstructionDestination();
 
     int getOffsetFromCurrentBasicBlock();
@@ -84,6 +83,8 @@ public:
     void addNewLevelData(int level, BasicBlock * firstBlock);
 
     int getPrologMaximalOffset();
+
+    DeclarationFunction *getFunction() const;
 
 private:
     void updateMaximalOffset(int offset);

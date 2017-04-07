@@ -2,6 +2,7 @@
 #include "InitFunctionStatement.h"
 #include "../middle_end/BasicBlock.h"
 #include "../middle_end/CFG.h"
+#include "../middle_end/IRRWMemory.h"
 
 DeclarationFunction::DeclarationFunction(Type* _type, char* _id, ArgumentList* _argumentList, DeclarationFunctionStatement* _decFunctionStatement)
     : Declaration(DECLARATION_FUNCTION), type(_type), id(_id), decFunctionStatement(_decFunctionStatement), argumentList(_argumentList)
@@ -48,10 +49,9 @@ void DeclarationFunction::buildIR(CFG * cfg) const
         {
             Symbol * symbol = new Symbol(arg->getName(),
                                          arg->getType()->getType(),
-                                         basicProlog->getLocalSymbolsTable().size()
+                                         cfg->getOffsetFromCurrentBasicBlock()
                                          );
-
-            basicProlog->addLocalSymbol(symbol);
+            cfg->addSymbolToCurrentBasicBlock(symbol);
         }
 
         // Build IR de l'AST

@@ -259,3 +259,8 @@ void CFG::cleanLevel(int level)
 
     std::cout << "clean" << std::endl;
 }
+
+DeclarationFunction *CFG::getFunction() const
+{
+    return function;
+}

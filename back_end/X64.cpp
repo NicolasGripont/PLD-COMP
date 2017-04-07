@@ -1,6 +1,8 @@
 #include "X64.h"
+#include "../front_end/DeclarationFunction.h"
 
 const int X64::OFFSET_VALUE = 8;
+
 
 X64::X64(const std::string _filename, std::map<std::string, CFG*> _listCFG)
     : Writer(_filename), listCFG(_listCFG)
@@ -19,7 +21,7 @@ void X64::parse()
     {
         const BasicBlock* block = itCFG->second->getRootBasicBlock();
 
-        parseBasicBlocks(block, true, itCFG->second->getPrologMaximalOffset(), nullptr);
+        parseBasicBlocks(itCFG->second, block, true, itCFG->second->getPrologMaximalOffset(), nullptr);
 
         write("\tleave");
         write("\tret");
@@ -54,7 +56,7 @@ int X64::compile()
     return 0;
 }
 
-void X64::parseBasicBlocks(const BasicBlock* block, bool prolog, int offsetBasicBlock, BasicBlock* terminal)
+void X64::parseBasicBlocks(CFG * cfg, const BasicBlock* block, bool prolog, int offsetBasicBlock, BasicBlock* terminal)
 {
     std::string label;
     std::vector<IRInstruction*> instructions;
@@ -76,6 +78,38 @@ void X64::parseBasicBlocks(const BasicBlock* block, bool prolog, int offsetBasic
                 offset += (OFFSET_VALUE - (offset%OFFSET_VALUE));
             }
             write("\tsubq $" + std::to_string(offset) + ", %rsp");
+
+            int nbParam = cfg->getFunction()->getArgumentList()->countArguments();
+            int indice = 1;
+            // 6 parameters. 64 bits.
+            if (nbParam > 0)
+            {
+                write("\tmovq %rdi, -" + std::to_string(indice++ * OFFSET_VALUE) + "(%rbp)");
+            }
+            if (nbParam > 1)
+            {
+                write("\tmovq %rsi, -" + std::to_string(indice++ * OFFSET_VALUE) + "(%rbp)");
+            }
+            if (nbParam > 2)
+            {
+                write("\tmovq %rdx, -" + std::to_string(indice++ * OFFSET_VALUE) + "(%rbp)");
+            }
+            if (nbParam > 3)
+            {
+                write("\tmovq %rcx, -" + std::to_string(indice++ * OFFSET_VALUE) + "(%rbp)");
+            }
+            if (nbParam > 4)
+            {
+                write("\tmovq %r8, -" + std::to_string(indice++ * OFFSET_VALUE) + "(%rbp)");
+            }
+            if (nbParam > 5)
+            {
+                write("\tmovq %r9, -" + std::to_string(indice++ * OFFSET_VALUE) + "(%rbp)");
+            }
+            if (nbParam > 6)
+            {
+                std::cout << "Warning : appel de fonction avec plus de 6 paramètres [back_end:X64:call()]." << std::endl;
+            }
 
             prolog = false;
         }
@@ -101,7 +135,7 @@ void X64::parseBasicBlocks(const BasicBlock* block, bool prolog, int offsetBasic
                         call((IRCall*) iri);
                         break;
                     case IRInstruction::Operation::CONDITIONNAL :
-                        selection((IRConditionnal*) iri);
+                        selection(cfg, (IRConditionnal*) iri);
                         printJump = false;
                         break;
                     default:
@@ -297,7 +331,7 @@ void X64::call(const IRCall* instruction)
     }
 }
 
-void X64::selection(const IRConditionnal *instruction)
+void X64::selection(CFG* cfg, const IRConditionnal *instruction)
 {
     write("//selection");
 
@@ -321,7 +355,7 @@ void X64::selection(const IRConditionnal *instruction)
                 BasicBlock* block = blockCondition->getExitFalse();
                 BasicBlock* blockEnd = instruction->getBlockEnd();
 
-                parseBasicBlocks(block, false, 0, blockEnd);
+                parseBasicBlocks(cfg, block, false, 0, blockEnd);
             }
             else
             {
@@ -340,7 +374,7 @@ void X64::selection(const IRConditionnal *instruction)
 
                     BasicBlock* block = blockCondition->getExitFalse();
 
-                    parseBasicBlocks(block, false, 0, blockCondition);
+                    parseBasicBlocks(cfg, block, false, 0, blockCondition);
                 }
             }
             break;
