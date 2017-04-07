@@ -70,6 +70,7 @@ void Parser::generateCFG(DeclarationFunction * declaration)
 {
     if(declaration->getFunctionStatement() != nullptr && declaration->getFunctionStatement()->isDeclaration() == false)
     {
+        std::cout << "Declaration " << declaration->getId() << std::endl;
         CFG * controllFlowGraph = new CFG(this,declaration);
         addNewFunctionInTable(controllFlowGraph);
     }

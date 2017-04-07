@@ -28,6 +28,8 @@ int main(int argc, char* argv[])
     {
         std::cout << pair.second << std::endl;
     }
+
+    std::cout << "\n-> Assemblage \n" << std::endl;
 	/* Backend x64 */
 	X64* x64 = new X64("x64", astToIRParser.getFunctionCFG());
 	x64->parse();
