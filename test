@@ -1,0 +1,10 @@
+
+int64_t foo2(int32_t, int64_t, int64_t);
+
+int64_t main() {
+	foo2(2+3, 8-9,2+3);
+}
+
+int64_t foo2(int32_t a, int64_t b, int64_t c) {
+	int64_t d  = 4;
+}
