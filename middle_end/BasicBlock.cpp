@@ -124,13 +124,6 @@ std::string BasicBlock::getTempVariableName()
     return label + "_tmp_" + std::to_string(indexTempVariable++);
 }
 
-int BasicBlock::getPrologMaximalOffset() const
-{
-    // Pour nos tests, 3 variables de 8 octets
-    // TODO: rendre générique
-    return 3*8;
-}
-
 const std::map<std::string, Symbol *> &BasicBlock::getLocalSymbolsTable() const
 {
     return localSymbolsTable;

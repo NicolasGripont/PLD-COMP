@@ -83,10 +83,16 @@ public:
     LevelData * getLevelData(int level);
     void addNewLevelData(int level, BasicBlock * firstBlock);
 
+    int getPrologMaximalOffset();
+
 private:
+    void updateMaximalOffset(int offset);
+    void cleanLevel(int level);
 
     int nextBBnumber;
     int lastBasicBlockLevel;
+
+    int maximalOffset;
 
     DeclarationFunction * function;
     std::map <std::string,Symbol*> symbolsTable;
@@ -95,8 +101,6 @@ private:
     BasicBlock * rootBasicBlock;
 
     std::map <int, LevelData> mapLevelData;   /**< all the basic blocks of this CFG*/
-
-    void cleanLevel(int level);
 };
 
 #endif

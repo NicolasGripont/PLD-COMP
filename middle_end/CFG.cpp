@@ -11,7 +11,8 @@
 #include "Parser.h"
 
 CFG::CFG(const Parser * parser, DeclarationFunction * _function) :
-    nextBBnumber(0), lastBasicBlockLevel(0), function(_function), currentBasicBlock(nullptr)
+    nextBBnumber(0), lastBasicBlockLevel(0), maximalOffset(0),
+    function(_function), currentBasicBlock(nullptr)
 {
     // Toujours avant de faire buildIR !
     LevelData levelZeroData;
@@ -150,6 +151,7 @@ int CFG::getOffsetFromCurrentBasicBlock()
     {
         LevelData data = pair->second;
         data.offset++;
+        updateMaximalOffset(data.offset);
         mapLevelData[currentBasicBlock->getLevel()] = data;
 
         return data.offset;
@@ -229,6 +231,17 @@ void CFG::addNewLevelData(int level, BasicBlock * firstBlock)
     mapLevelData.insert(std::pair<int,LevelData>(level,data));
 
     std::cout << "add New level" << std::endl;
+}
+
+int CFG::getPrologMaximalOffset()
+{
+    return maximalOffset;
+}
+
+void CFG::updateMaximalOffset(int offset)
+{
+    if(offset > maximalOffset)
+        maximalOffset = offset;
 }
 
 void CFG::cleanLevel(int level)

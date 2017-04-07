@@ -135,6 +135,7 @@ void X64::binaryOp(const IRBinaryOp* instruction)
 
     write("\tmovq -" + std::to_string(operand1->getOffset() * OFFSET_VALUE) + "(%rbp), %rax");
     write("\tmovq -" + std::to_string(operand2->getOffset() * OFFSET_VALUE) + "(%rbp), %rbx");
+
     switch (instruction->getType())
     {
         case IRBinaryOp::Type::ADD :
@@ -151,6 +152,11 @@ void X64::binaryOp(const IRBinaryOp* instruction)
         case IRBinaryOp::Type::MOD :
             break;
         case IRBinaryOp::Type::EQUAL_EQUAL :
+            write("\tmovq $0, %r10");
+            write("\tmovq $1, %r11");
+            write("\tcmpq %rbx, %rax");
+            write("\tcmovne %r10, %rax");
+            write("\tcmove %r11, %rax");
             break;
         case IRBinaryOp::Type::DIFF :
             break;
@@ -268,7 +274,7 @@ void X64::selection(const IRConditionnal *instruction)
     const BasicBlock* blockCondition = instruction->getBlockCondition();
 
     write("\tmovq -" + std::to_string(condition->getOffset() * OFFSET_VALUE) + "(%rbp), %rax");
-    write("\tcmp $0, %rax");
+    write("\tcmpq $0, %rax");
     write("\tje " + blockCondition->getExitTrue()->getLabel()); // Jump Then
 
     //write -> Else

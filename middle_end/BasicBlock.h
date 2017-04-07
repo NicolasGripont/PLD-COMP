@@ -48,10 +48,6 @@ class BasicBlock
 
     std::string getTempVariableName();
 
-    // Dans un BB prologue, on doit retourner la taille de l'AR de la fonction
-	// en octets
-    int getPrologMaximalOffset() const;
-
     const std::map<std::string, Symbol *> & getLocalSymbolsTable() const;
 
     void addLocalSymbol(Symbol * sym);
