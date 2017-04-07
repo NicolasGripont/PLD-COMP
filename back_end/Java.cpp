@@ -16,7 +16,7 @@ Java::Java(const std::string _filename, std::map<std::string, CFG*> _listCFG)
     write("\tinvokenonvirtual java/lang/Object/<init>()V");
     write("\treturn");
     write(".end method");
-    write("");
+    write();
     // For the time being, only one method is handled
     write(".method public static main([Ljava/lang/String;)V");
 }
@@ -35,9 +35,9 @@ void Java::parse()
         {
             if (prolog) // Prolog
             {
-                int offset = itCFG->second->getOffsetFromCurrentBasicBlock();
-                write("\t.limit locals " + std::to_string(offset));
-                write("\t.limit stack " + std::to_string(offset));
+                int offset = itCFG->second->getPrologMaximalOffset();
+                write("\t.limit locals " + std::to_string(offset + 1));
+                write("\t.limit stack " + std::to_string(offset + 1));
 
                 write("\tgetstatic java/lang/System/out Ljava/io/PrintStream;");
                 write("\tastore_0");
