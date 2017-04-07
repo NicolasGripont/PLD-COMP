@@ -27,6 +27,7 @@ public:
     Symbol *getCondition() const;
     BasicBlock *getBlockCondition() const;
     BasicBlock *getBlockEnd() const;
+    const Type getType() const;
 
 protected:
     Type type;

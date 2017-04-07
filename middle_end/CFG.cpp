@@ -11,7 +11,7 @@
 #include "Parser.h"
 
 CFG::CFG(const Parser * parser, DeclarationFunction * _function) :
-    nextBBnumber(0), lastBasicBlockLevel(0), maximalOffset(0),
+    nextBBnumber(0), lastBasicBlockLevel(0), maximalOffset(1),
     function(_function), currentBasicBlock(nullptr)
 {
     // Toujours avant de faire buildIR !

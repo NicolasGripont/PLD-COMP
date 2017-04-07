@@ -43,20 +43,22 @@ void WhileLoop::buildIR(CFG *cfg) const
     Symbol * result = cfg->getLastInstructionDestination();
 
     BasicBlock * bbStatement = cfg->createNewBasicBlock(level + 1,bbCondition->getLabel() + "_THEN");
-    cfg->attachNewBasicBlock(bbStatement);
+    cfg->setCurrentBasicBlock(bbStatement);
 
     if(statement != nullptr)
     {
         statement->buildIR(cfg);
         cfg->getCurrentBasicBlock()->setExitTrue(bbCondition);
+
+        bbCondition->setExitFalse(bbStatement);  
     }
     else
     {
-        bbCondition->setExitTrue(bbCondition);
-    }
+        bbCondition->setExitFalse(bbCondition);
+    }  
 
     BasicBlock * bbEnd = cfg->createNewBasicBlock(level);
-    bbCondition->setExitFalse(bbEnd);
+    bbCondition->setExitTrue(bbEnd);
 
     cfg->setCurrentBasicBlock(bbEnd);
 

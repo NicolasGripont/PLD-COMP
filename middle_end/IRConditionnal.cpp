@@ -57,3 +57,8 @@ BasicBlock *IRConditionnal::getBlockCondition() const
 {
     return blockCondition;
 }
+
+const IRConditionnal::Type IRConditionnal::getType() const
+{
+    return type;
+}

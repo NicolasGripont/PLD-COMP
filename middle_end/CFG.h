@@ -34,7 +34,7 @@ public:
 
     struct LevelData
     {
-        int offset = 0;
+        int offset = 1;
         BasicBlock * lastBasicBlock = nullptr;
 
     };

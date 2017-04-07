@@ -58,6 +58,7 @@ void X64::parseBasicBlocks(const BasicBlock* block, bool prolog, int offsetBasic
 {
     std::string label;
     std::vector<IRInstruction*> instructions;
+    bool printJump = true;
 
     while (block != terminal)
     {
@@ -101,6 +102,7 @@ void X64::parseBasicBlocks(const BasicBlock* block, bool prolog, int offsetBasic
                         break;
                     case IRInstruction::Operation::CONDITIONNAL :
                         selection((IRConditionnal*) iri);
+                        printJump = false;
                         break;
                     default:
                         break;
@@ -111,12 +113,18 @@ void X64::parseBasicBlocks(const BasicBlock* block, bool prolog, int offsetBasic
         if (block->getExitTrue() != nullptr)
         {
             block = block->getExitTrue();
-            write("\tjmp " + block->getLabel());
+            if (printJump)
+            {
+                write("\tjmp " + block->getLabel());
+            }
         }
         else if (block->getExitFalse() != nullptr)
         {
             block = block->getExitFalse();
-            write("\tjmp " + block->getLabel());
+            if (printJump)
+            {
+                write("\tjmp " + block->getLabel());
+            }
         }
         else
         {
@@ -296,21 +304,48 @@ void X64::selection(const IRConditionnal *instruction)
     // True/False -> condition
 
     const Symbol* condition = instruction->getCondition();
-    const BasicBlock* blockCondition = instruction->getBlockCondition();
+    BasicBlock* blockCondition = instruction->getBlockCondition();
 
     write("\tmovq -" + std::to_string(condition->getOffset() * OFFSET_VALUE) + "(%rbp), %rax");
     write("\tcmpq $0, %rax");
-    write("\tje " + blockCondition->getExitTrue()->getLabel()); // Jump Then
+    
 
-    //write -> Else
-    if (blockCondition->getExitFalse() != nullptr)
+    switch (instruction->getType())
     {
-        write("\tjmp " + blockCondition->getExitFalse()->getLabel());
+        case IRConditionnal::Type::SELECTION :
+            write("\tje " + blockCondition->getExitTrue()->getLabel()); // Jump Then
+            if (blockCondition->getExitFalse() != nullptr)
+            {
+                write("\tjmp " + blockCondition->getExitFalse()->getLabel());
 
-        BasicBlock* block = blockCondition->getExitFalse();
-        BasicBlock* blockEnd = instruction->getBlockEnd();
-        
-        parseBasicBlocks(block, false, 0, blockEnd);
+                BasicBlock* block = blockCondition->getExitFalse();
+                BasicBlock* blockEnd = instruction->getBlockEnd();
+
+                parseBasicBlocks(block, false, 0, blockEnd);
+            }
+            else
+            {
+                write("\tjmp " + instruction->getBlockEnd()->getLabel());
+            }
+            break;
+        case IRConditionnal::Type::FOR :
+            break;
+        case IRConditionnal::Type::WHILE :
+            {
+                if (blockCondition->getExitFalse() != nullptr)
+                {
+                    write("\tje " + blockCondition->getExitFalse()->getLabel()); // Jump Then
+
+                    write("\tjmp " + blockCondition->getExitTrue()->getLabel());
+
+                    BasicBlock* block = blockCondition->getExitFalse();
+
+                    parseBasicBlocks(block, false, 0, blockCondition);
+                }
+            }
+            break;
+        default:
+            break;
     }
 }
 
