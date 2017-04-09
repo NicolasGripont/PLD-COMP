@@ -11,9 +11,13 @@ default: all
 FRONTEND = front_end
 MIDDLEEND = middle_end
 BACKEND = back_end
+TEST = tests
+
 DEPS_FRONTEND = $(shell ls $(FRONTEND)/*.h $(FRONTEND)/*.cpp)
 DEPS_MIDDLEEND = $(shell ls $(MIDDLEEND)/*.h $(MIDDLEEND)/*.cpp)
 DEPS_BACKEND = $(shell ls $(BACKEND)/*.h $(BACKEND)/*.cpp)
+LIST_TEST = $(shell ls -d $(TEST)/*/)
+
 CFLAGS = -g3 -std=c++11 -DYYDEBUG
 
 all: comp
@@ -32,3 +36,6 @@ clean:
 	make -C $(MIDDLEEND) clean
 	make -C $(BACKEND) clean
 	rm -f comp comp.tab.c comp.tab.h comp.output lex.yy.c
+
+test: comp
+	$(foreach var, $(LIST_TEST), ./$(TEST)/scriptTestAuto.sh ./comp ./$(var);)

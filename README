@@ -1,0 +1,44 @@
+                |-----------------------------------------|
+                |    ___  __   ___    _____               |
+                |   / _ \/ /  / _ \  / ___/__  __ _  ___  |
+                |  / ___/ /__/ // / / /__/ _ \/  ' \/ _ \ |
+                | /_/  /____/____/  \___/\___/_/_/_/ .__/ |
+                |                                 /_/     |
+                |-----------------------------------------|
+                |   INSA Lyon   -   H4411   -   4IF 2017  |
+                |-----------------------------------------|
+                | François BAUDUIN                        |
+                |     Aurélien DUSSAUGE                   |
+                |         Arnaud FAVIER                   |
+                |             Nicolas GRIPONT             |
+                |                 Eric JORDAN             |
+                |                     Olivier STEIN       |
+                |                         Quentin VECCHIO |
+                |-----------------------------------------|
+
+Front-end : OK
+Middle-end : OK (pas d'optimisation spécifique)
+Back-end : OK (x64 et Java)
+
+                        ---[ Getting Started ]---
+Compiler le compilateur :
+    ~$ make
+Créer un fichier contenant du code et le compiler :
+    ~$ vim prog
+    ~$ ./comp prog
+Exécuter le back-end x64 :
+    ~$ ./x64.out
+Exécuter le back-end Java :
+    ~$ java java
+
+                            ---[ Détails ]---
+Elements manquants du Back-end x64 :
+    Boucle for, passage de tableau en paramètre (passage de pointeur, il
+faudrait passer la valeur absolue d'offset (non dépendante de rbp) de la
+première case du tableau pour pouvoir y accéder dans une fonction appelée),
+tableau en variable globale, opérateurs logiques, opérateurs bit à bit,
+opérateur ternaire.
+
+Elements présents du Back-end Java (compilation avec Jasmin) :
+    Déclaration de variables, affectation de variables, addition, putchar,
+if / then / else.

@@ -390,6 +390,18 @@ void X64::selection(CFG* cfg, const IRConditionnal *instruction)
             }
             break;
         case IRConditionnal::Type::FOR :
+            {
+                if (blockCondition->getExitFalse() != nullptr)
+                {
+                    write("\tje " + blockCondition->getExitFalse()->getLabel()); // Jump Then
+
+                    write("\tjmp " + blockCondition->getExitTrue()->getLabel());
+
+                    BasicBlock* block = blockCondition->getExitFalse();
+
+                    parseBasicBlocks(cfg, block, false, 0, blockCondition);
+                }
+            }
             break;
         case IRConditionnal::Type::WHILE :
             {
