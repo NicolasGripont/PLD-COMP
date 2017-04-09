@@ -186,8 +186,13 @@ void X64::binaryOp(const IRBinaryOp* instruction)
             write("\timulq %rbx, %rax");
             break;
         case IRBinaryOp::Type::DIV :
+            write("\tcdq");
+            write("\tdiv %rbx");
             break;
         case IRBinaryOp::Type::MOD :
+            write("\tcdq");
+            write("\tdiv %rbx");
+            write("\tmovq %rdx, %rax");
             break;
         case IRBinaryOp::Type::EQUAL_EQUAL :
             write("\tcmp %rbx, %rax");

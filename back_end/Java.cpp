@@ -127,9 +127,13 @@ void Java::binaryOp(const IRBinaryOp* instruction)
     const Symbol* operand1 = instruction->getOperand_1();
     const Symbol* operand2 = instruction->getOperand_2();
 
+    write("\tiload " + std::to_string(operand1->getOffset()));
+    write("\tiload " + std::to_string(operand2->getOffset()));
+
     switch (instruction->getType())
     {
         case IRBinaryOp::Type::ADD :
+            write("\tiadd");
             break;
         case IRBinaryOp::Type::SUB :
             break;
@@ -169,6 +173,7 @@ void Java::binaryOp(const IRBinaryOp* instruction)
             std::cout << "Erreur : type d'instruction IRBinaryOp invalide [back_end:Java:binaryOp()]." << std::endl;
             break;
     }
+    write("\tistore " + std::to_string(destination->getOffset()));
 }
 
 void Java::loadConstant(const IRLoadConstant* instruction)
@@ -179,9 +184,7 @@ void Java::loadConstant(const IRLoadConstant* instruction)
     const int value = instruction->getValue();
 
     write("\tbipush " + std::to_string(value));
-    //write("\ti2c"); // ToDo
-    write("\tinvokestatic java/lang/String/valueOf(I)Ljava/lang/String;");
-    write("\tastore " + std::to_string(destination->getOffset()));
+    write("\tistore " + std::to_string(destination->getOffset()));
 }
 
 void Java::rwmemory(const IRRWMemory* instruction)
@@ -196,8 +199,8 @@ void Java::rwmemory(const IRRWMemory* instruction)
         case IRRWMemory::Type::READ_MEMORY :
             break;
         case IRRWMemory::Type::WRITE_MEMORY :
-            write("\taload " + std::to_string(source->getOffset()));
-            write("\tastore " + std::to_string(destination->getOffset()));
+            write("\tiload " + std::to_string(source->getOffset()));
+            write("\tistore " + std::to_string(destination->getOffset()));
             break;
         default:
             std::cout << "Erreur : type d'instruction IRRWMemory invalide [back_end:Java:rwmemory()]." << std::endl;
@@ -217,7 +220,9 @@ void Java::call(const IRCall* instruction)
 
         // Only System.out.println() for the time being
         write("\taload_0");
-        write("\taload " + std::to_string(offset));
+        write("\tiload " + std::to_string(offset));
+        write("\ti2c");
+        write("\tinvokestatic java/lang/String/valueOf(C)Ljava/lang/String;");
         write("\tinvokevirtual java/io/PrintStream/print(Ljava/lang/String;)V");
     }
 }
