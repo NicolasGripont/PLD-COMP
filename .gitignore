@@ -41,3 +41,13 @@ lex.yy.c
 *.files
 *.includes
 *.config
+QtProject.*
+
+# Makefile dependance files
+*.d
+*.s
+
+*.plist
+
+
+*.class
